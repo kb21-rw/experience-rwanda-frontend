@@ -1,0 +1,30 @@
+{
+  "data": {
+    "id": 1,
+    "attributes": {
+      "title": null,
+      "description": null,
+      "createdAt": "2024-07-20T22:25:25.687Z",
+      "updatedAt": "2024-07-21T12:07:23.006Z",
+      "publishedAt": "2024-07-20T22:26:45.508Z",
+      "locale": "en",
+      "hero": {
+        "id": 1,
+        "title": "Lorem ipsum dolor sit amet,consectetur consequat.",
+        "description": "Lorem ipsum dolor sit amet,consectetur consequat,lorem ipsum dolor sit amet,consectetur consequat.",
+        "backgroundImage": {
+          "data": {
+            "id": 12,
+            "attributes": {
+              "name": "car.webp",
+              "alternativeText": null,
+              "url": "/images/safari.png",
+              "width": 1708,
+              "height": 1080
+            }
+          }
+        }
+      }
+    }
+  }
+}
