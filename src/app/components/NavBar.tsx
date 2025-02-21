@@ -23,7 +23,7 @@ const NavBar = () => {
   }
   
   return (
-    <nav className="bg-black text-white flex justify-between font-black p-6 md:px-32 md:py-12 md:flex md:justify-between md:items-center">
+    <nav className="bg-black text-white flex justify-between font-inter font-black p-6 md:px-32 md:py-12 md:flex md:justify-between md:items-center">
       <div className="text-xl">
         <a href="/">ExperienceRw</a>
       </div>
