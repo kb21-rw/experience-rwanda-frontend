@@ -1,5 +1,5 @@
 import React from "react";
-import { HeroProps } from "@/Hero";
+import { HeroProps } from "@/types/Hero";
 import HeroCard from "./Card";
 const Hero = ({ title, description, backgroundImage }: HeroProps) => {
   return (

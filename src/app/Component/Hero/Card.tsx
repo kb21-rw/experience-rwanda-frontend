@@ -1,4 +1,4 @@
-import { ImageProps } from "@/Hero";
+import { ImageProps } from "@/types/Hero";
 import Image from "next/image";
 
 const HeroCard = ({ name, url, width, height }: ImageProps) => {
