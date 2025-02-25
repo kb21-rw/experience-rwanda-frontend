@@ -28,17 +28,17 @@
                   "name": "NyungweForest.svg",
                   "alternativeText": null,
                   "url": "./../uploads/akagera.png",
-                  "width": 637,
-                  "height": 17
+                  "width": 307,
+                  "height": 117
                 }
               }
             }
           },
           {
             "id": 4,
-            "place": "Nyungwe National Forest",
+            "place": "Nyungwe National Park",
             "price": "150$",
-            "date": "2024-07-20T22:25:25.687Z",
+            "date": "2024-02-20",
             "url": "/trips",
             "image": {
               "data": {
@@ -47,15 +47,15 @@
                   "name": "NyungweForest.svg",
                   "alternativeText": null,
                   "url": "./../uploads/akagera.png",
-                  "width": 637,
-                  "height": 417
+                  "width": 307,
+                  "height": 117
                 }
               }
             }
           },
           {
             "id": 4,
-            "place": "Gishwati National Park",
+            "place": "Volcano National Park",
             "price": "200$",
             "date": "2024-07-20T22:25:25.687Z",
             "url": "/trips",
@@ -66,8 +66,8 @@
                   "name": "NyungweForest.svg",
                   "alternativeText": null,
                   "url": "./../uploads/akagera.png",
-                  "width": 637,
-                  "height": 417
+                  "width": 307,
+                  "height": 117
                 }
               }
             }
