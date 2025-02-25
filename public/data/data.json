@@ -1,0 +1,79 @@
+{
+  "data": {
+    "id": 1,
+    "attributes": {
+      "title": null,
+      "description": null,
+      "createdAt": "2024-07-20T22:25:25.687Z",
+      "updatedAt": "2024-07-21T12:07:23.006Z",
+      "publishedAt": "2024-07-20T22:26:45.508Z",
+      "locale": "en",
+
+      "trips": {
+        "id": 1,
+        "__component": "sections.row",
+        "title": "Available Trips",
+        "description": "Choose from a variety of trips that suit your needs.",
+        "cards": [
+          {
+            "id": 4,
+            "place": "Akagera National Park",
+            "price": "100$",
+            "date": "2024-07-20T22:25:25.687Z",
+            "url": "/trips",
+            "image": {
+              "data": {
+                "id": 17,
+                "attributes": {
+                  "name": "NyungweForest.svg",
+                  "alternativeText": null,
+                  "url": "./../uploads/akagera.png",
+                  "width": 637,
+                  "height": 17
+                }
+              }
+            }
+          },
+          {
+            "id": 4,
+            "place": "Nyungwe National Forest",
+            "price": "150$",
+            "date": "2024-07-20T22:25:25.687Z",
+            "url": "/trips",
+            "image": {
+              "data": {
+                "id": 17,
+                "attributes": {
+                  "name": "NyungweForest.svg",
+                  "alternativeText": null,
+                  "url": "./../uploads/akagera.png",
+                  "width": 637,
+                  "height": 417
+                }
+              }
+            }
+          },
+          {
+            "id": 4,
+            "place": "Gishwati National Park",
+            "price": "200$",
+            "date": "2024-07-20T22:25:25.687Z",
+            "url": "/trips",
+            "image": {
+              "data": {
+                "id": 17,
+                "attributes": {
+                  "name": "NyungweForest.svg",
+                  "alternativeText": null,
+                  "url": "./../uploads/akagera.png",
+                  "width": 637,
+                  "height": 417
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
