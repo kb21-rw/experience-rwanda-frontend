@@ -23,10 +23,10 @@ const NavBar = () => {
   
   return (
     <nav className="bg-black text-white flex justify-between font-inter font-black p-6 md:px-32 md:py-12 md:flex md:justify-between md:items-center">
-      <div className="text-xl">
+      <div className="text-lg">
         <a href="/">ExperienceRw</a>
       </div>
-      <div className="hidden text-lg md:space-x-12 md:flex md: justify-between md:items-center">
+      <div className="hidden text-base md:space-x-12 md:flex md: justify-between md:items-center">
         {MenuItems.map((item) => (
           <NavItem
           key={item.path}
