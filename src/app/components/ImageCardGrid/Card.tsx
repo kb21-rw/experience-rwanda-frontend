@@ -17,14 +17,16 @@ const ImageCard = ({ place, image, price, date }: Card): ReactElement => {
           height={height}
         />
       </div>
-      <div className="p-6 flex flex-col gap-5">
-        <h1 className="font-bold text-xl font-figtree">Place: {place}</h1>
+      <div className="flex flex-col gap-5 font-inter p-6">
+        <h1 className="font-bold text-xl h-12">Place: {place}</h1>
         <p className="font-medium text-base">Price: {price}/day</p>
         <p className="font-normal text-base">Date: {date}</p>
         <Button className="w-1/2" variant="outline">
           More Details
         </Button>
-        <Button variant="default">Book Now</Button>
+        <Button className="mb-1.5" variant="default">
+          Book Now
+        </Button>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import React from "react";
 import ImageCard from "./Card";
 import { Row } from "@/types/ImageCard";
 import { Button } from "@/components/ui/button";
+import RightArrow from "@/icons/RightArrow";
 
 const ImageCardGrid = ({
   title,
@@ -11,11 +12,11 @@ const ImageCardGrid = ({
 }: Omit<Row, "id" | "__component">): ReactElement => {
   return (
     <section className="bg-gray-100 w-screen">
-      <div className="content-wrapper py-[100px]">
+      <div className="content-wrapper py-25 font-inter">
         <div className="flex flex-col items-center text-center">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 font-inter">
             <h1 className="font-bold text-5xl">{title}</h1>
-            <p className="text-xl">{description}</p>
+            <p className="text-xl font-normal">{description}</p>
           </div>
           <div className="flex gap-5 py-10 pb-5">
             <Button className="border-t-2" variant={"outline"}>
@@ -34,8 +35,11 @@ const ImageCardGrid = ({
             <ImageCard key={data.id} {...data} />
           ))}
         </div>
-        <div className="flex justify-center mt-[84px]">
-          <Button variant="outline">See More Trips</Button>
+        <div className="flex justify-center mt-21">
+          <Button variant="outline">
+            See More Trips
+            <RightArrow />
+          </Button>
         </div>
       </div>
     </section>

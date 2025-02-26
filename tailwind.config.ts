@@ -10,6 +10,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      spacing: {
+        1.5: "0.375rem",
+        21: "5.25rem",
+        25: "6.25rem",
+      },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         Figtree: ["Figtree", "sans-serif"],
