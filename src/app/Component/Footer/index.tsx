@@ -21,10 +21,10 @@ const Footer = () => {
   };
 
   return (
-    <footer className="absolute bottom-0 w-full flex justify-between items-center p-10 bg-black text-white mb-0">
-      <h3>{data.logo}</h3>
+    <footer className="absolute bottom-0 w-full flex justify-between items-center p-3 text-sm md:p-10 bg-black text-white mb-0">
+      <h3 className="text-2xl font-bold md:text-base">{data.logo}</h3>
 
-      <div className="navigation flex gap-3">
+      <div className="navigation flex flex-col md:flex-row gap-3">
         {data.footerLinks.map((link) => (
           <Link href={"#"} key={link}>
             {link}
@@ -32,7 +32,7 @@ const Footer = () => {
         ))}
       </div>
 
-      <div className="social-icons flex gap-3">
+      <div className="social-icons flex flex-col md:flex-row md:gap-3">
         {data.footerIcons.map((icon) => {
           const IconComponent = iconComponents[icon.name];
           return <IconComponent key={icon.name} />;
