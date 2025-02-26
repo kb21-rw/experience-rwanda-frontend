@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import Instagram from "@/app/assets/Instagram.svg";
 import Twitter from "@/app/assets/Twitter.svg";
 import Youtube from "@/app/assets/Youtube.svg";
+import { FooterData, IconName } from "@/types/footer";
 
 const Footer = () => {
-  const [data, setData] = useState({ logo: "", footerLinks: [], footerIcons: [] });
+  const [data, setData] = useState<FooterData>({ logo: "", footerLinks: [], footerIcons: [] });
 
   useEffect(() => {
     fetch("/data/data.json")
@@ -14,7 +15,7 @@ const Footer = () => {
       .then((data) => setData(data));
   }, []);
 
-  const iconComponents = {
+  const iconComponents: Record<IconName, React.ComponentType> = {
     instagram: Instagram,
     twitter: Twitter,
     youtube: Youtube,
