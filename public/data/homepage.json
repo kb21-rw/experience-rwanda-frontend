@@ -16,10 +16,10 @@
           "data": {
             "id": 12,
             "attributes": {
-              "name": "car.webp",
+              "name": "car.png",
               "alternativeText": null,
-              "url": "/images/safar.png",
-              "width": 1708,
+              "url": "/uploads/safar.png",
+              "width": 1008,
               "height": 1080
             }
           }

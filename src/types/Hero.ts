@@ -1,12 +1,8 @@
-export type ImageProps = {
-  name: string;
-  url: string;
-  width: number;
-  height: number;
-};
+import { Image } from "./Image";
 
-export type HeroProps = {
+export type Hero = {
+  id: number;
   title: string;
   description: string;
-  backgroundImage: ImageProps;
+  backgroundImage: Image;
 };
