@@ -1,5 +1,5 @@
 import Hero from "./Component/Hero/Index";
-import data from "./../../public/data.json";
+import data from "./../../public/data/homepage.json";
 
 export default function Home() {
   const hero = {
