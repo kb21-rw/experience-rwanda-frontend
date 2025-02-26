@@ -1,6 +1,6 @@
 import { Row } from "@/types/ImageCard";
-import ImageCardGrid from "./Component/ImageCardGrid";
-import data from "./../../public/data/data.json";
+import data from "./../../public/data/homepage.json";
+import ImageCardGrid from "./components/ImageCardGrid";
 const { trips } = data.data.attributes;
 
 export default function Home() {

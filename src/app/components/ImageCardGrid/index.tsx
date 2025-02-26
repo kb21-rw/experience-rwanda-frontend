@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import React from "react";
 import ImageCard from "./Card";
 import { Row } from "@/types/ImageCard";
+import { Button } from "@/components/ui/button";
 
 const ImageCardGrid = ({
   title,
@@ -17,15 +18,15 @@ const ImageCardGrid = ({
             <p className="text-xl">{description}</p>
           </div>
           <div className="flex gap-5 py-10 pb-5">
-            <button className="border border-t-2 border-gray-700 rounded-lg px-3 py-2 hover:bg-black hover:text-white">
+            <Button className="border-t-2" variant={"outline"}>
               All trips
-            </button>
-            <button className="border border-t-2 border-gray-700 rounded-lg px-3 py-2 hover:bg-black hover:text-white">
+            </Button>
+            <Button className="border-t-2" variant={"outline"}>
               Nyungwe
-            </button>
-            <button className="border border-t-2 border-gray-700 rounded-lg px-3 py-2 hover:bg-black hover:text-white">
+            </Button>
+            <Button className="border-t-2" variant={"outline"}>
               Akagera
-            </button>
+            </Button>
           </div>
         </div>
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
@@ -34,9 +35,7 @@ const ImageCardGrid = ({
           ))}
         </div>
         <div className="flex justify-center mt-[84px]">
-          <button className="border border-t-2 font-bold border-gray-700 rounded-lg px-3 py-2 hover:bg-black hover:text-white">
-            See More
-          </button>
+          <Button variant="outline">See More Trips</Button>
         </div>
       </div>
     </section>

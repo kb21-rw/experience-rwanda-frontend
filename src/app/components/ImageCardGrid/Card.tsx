@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { Card } from "@/types/ImageCard";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const ImageCard = ({ place, image, price, date }: Card): ReactElement => {
   const { url, alternativeText, width, height } = image.data.attributes;
@@ -20,14 +21,10 @@ const ImageCard = ({ place, image, price, date }: Card): ReactElement => {
         <h1 className="font-bold text-xl font-figtree">Place: {place}</h1>
         <p className="font-medium text-base">Price: {price}/day</p>
         <p className="font-normal text-base">Date: {date}</p>
-
-        {/* Buttons soon will be replaced but button component */}
-        <button className="border border-gray-400 rounded-lg w-1/2 py-1">
+        <Button className="w-1/2" variant="outline">
           More Details
-        </button>
-        <button className="bg-black py-2 text-white rounded-full pt-1">
-          Book Now
-        </button>
+        </Button>
+        <Button variant="default">Book Now</Button>
       </div>
     </div>
   );
