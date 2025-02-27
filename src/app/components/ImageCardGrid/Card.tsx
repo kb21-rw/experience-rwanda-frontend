@@ -6,12 +6,11 @@ import { Button } from "@/components/ui/button";
 const ImageCard = ({ place, image, price, date }: Card): ReactElement => {
   const { url, alternativeText, width, height } = image.data.attributes;
 
-  console.log("object.........................", url);
   return (
     <div className="bg-white shadow rounded-3xl hover:border-2 hover:border-gray-400">
       <div className="pt-3 flex justify-center">
         <Image
-          src={"/uploads/akagera.png"}
+          src={url.startsWith("/") ? url : `/${url}`}
           alt={alternativeText || "image"}
           width={width}
           height={height}
