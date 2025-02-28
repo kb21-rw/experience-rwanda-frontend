@@ -1,8 +1,6 @@
-{
-    "menuItems": [
-      { "name": "Home", "path": "/" },
-      { "name": "About", "path": "/about" },
-      { "name": "Services", "path": "/services" },
-      { "name": "Contact", "path": "/contact" }
-    ]
-  }
+
+[
+  {"path": "/", "label": "Home"},
+   {"path": "/bookings", "label": "Bookings"} ,	 
+  { "path": "/about", "label": "About Us"}
+]
