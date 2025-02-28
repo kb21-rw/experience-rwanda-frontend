@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import NavItem from "../NavItem";
+import NavItem from "./NavItem";
 import MenuIcon from "../../assets/MenuIcon";
 import CloseIcon from "../../assets/CloseIcon";
 
