@@ -11,7 +11,9 @@ const config: Config = {
   theme: {
     extend: {
       spacing: {
+        12.5: "3.125rem",
         13.5: "3.375rem",
+        25: "6.25rem",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

@@ -6,7 +6,7 @@ import HeroCard from "./Card";
 const HeroContent = (props: Omit<Hero, "id">) => {
   const { title, description, backgroundImage } = props;
   return (
-    <section>
+    <section className="w-full h-screen">
       <div className="absolute -z-50 inset-0">
         <Image
           src={backgroundImage.data.attributes.url}
@@ -16,7 +16,7 @@ const HeroContent = (props: Omit<Hero, "id">) => {
         />
       </div>
       <div className="content-wrapper">
-        <div className="w-full xl:w-1/2">
+        <div className="md:w-1/2 w-full xl:pt-25 md:pt-12.5 pt-2">
           <HeroCard title={title} description={description} />
         </div>
       </div>
