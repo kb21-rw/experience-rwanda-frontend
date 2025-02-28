@@ -22,9 +22,9 @@
                 "data": {
                   "id": 1,
                   "attributes": {
-                    "name": "instagram.svg",
+                    "name": "instagram.png",
                     "alternativeText": null,
-                    "url": "../../../public/data/uploads/Instagram.svg",
+                    "url": "/uploads/instagram.png",
                     "width": 24,
                     "height": 24
                   }
@@ -38,9 +38,9 @@
                 "data": {
                   "id": 1,
                   "attributes": {
-                    "name": "instagram.svg",
+                    "name": "twitter.png",
                     "alternativeText": null,
-                    "url":"../../../public/data/uploads/Twitter.svg",
+                    "url":"/uploads/twitter.png",
                     "width": 24,
                     "height": 24
                   }
@@ -54,9 +54,9 @@
                 "data": {
                   "id": 1,
                   "attributes": {
-                    "name": "youtube.svg",
+                    "name": "youtube.png",
                     "alternativeText": null,
-                    "url": "../../../public/data/uploads/Youtube.svg",
+                    "url": "/uploads/youtube.png",
                     "width": 24,
                     "height": 24
                   }
