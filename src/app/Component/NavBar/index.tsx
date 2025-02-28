@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 import MenuIcon from "../../assets/MenuIcon";
 import CloseIcon from "../../assets/CloseIcon";
-import MenuItem from "../../../../public/MenuItems/siteconfig.json"
+import menuitems from "../../../../public/MenuItems/siteconfig.json"
 
 
 const NavBar = () => {
@@ -20,7 +20,7 @@ const NavBar = () => {
         <a href="/">ExperienceRw</a>
       </div>
       <div className="hidden text-base md:space-x-12 md:flex md: justify-between md:items-center">
-        {MenuItem.map((item) => (
+        {menuitems.map((item) => (
           <NavItem
           key={item.path}
           href={item.path}
@@ -36,7 +36,7 @@ const NavBar = () => {
       {isOpen && (
         <div className="text-start flex w-full p-24 bg-black md:hidden">
           <div className="flex absolute top-16 left-0 flex-col space-y-4 py-4 px-6">
-            {MenuItem.map((item) => (
+            {menuitems.map((item) => (
               <NavItem
                 key={item.path}
                 href={item.path}
