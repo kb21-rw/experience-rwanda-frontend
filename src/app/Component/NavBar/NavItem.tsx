@@ -9,7 +9,7 @@ const NavItem: React.FC<NavItemProps> = ({ href, pathname, children }) => {
   return (
     <Link
       href={href}
-      className={`hover:underline ${isActive ? "underline text-blue-700" : ""}`}
+      className={`hover:underline ${isActive ? "underline text-blue-300" : ""}`}
     >
      
       {children}

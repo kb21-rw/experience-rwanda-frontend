@@ -1,6 +1,0 @@
-
-[
-  {"path": "/", "label": "Home"},
-   {"path": "/bookings", "label": "Bookings"} ,	 
-  { "path": "/about", "label": "About Us"}
-]

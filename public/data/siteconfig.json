@@ -1,0 +1,33 @@
+{
+  "data": {
+    "id": 1,
+    "attributes": {
+      "createdAt": "2024-07-18T17:20:59.083Z",
+      "updatedAt": "2024-07-19T07:39:23.587Z",
+      "publishedAt": "2024-07-19T07:39:23.582Z",
+      "locale": "en",
+
+      "navItems": {
+        "logo": {
+          "title": "ExperienceRw",
+          "url": "/"
+        },
+
+        "navLinks": [
+          {
+            "path": "/",
+            "label": "Home"
+          },
+          {
+            "path": "/bookings",
+            "label": "Bookings"
+          },
+          {
+            "path": "/about",
+            "label": "About Us"
+          }
+        ]
+      }
+    }
+  }
+}

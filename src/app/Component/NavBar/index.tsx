@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 import MenuIcon from "../../assets/MenuIcon";
 import CloseIcon from "../../assets/CloseIcon";
-import menuitems from "../../../../public/MenuItems/siteconfig.json"
+import { NavItems } from "../../types/NavItems.types";
+import Link from "next/link";
 
-
-const NavBar = () => {
+const NavBar = ({logo, navLinks}:NavItems) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const toggleMenu = () => {
@@ -17,10 +17,10 @@ const NavBar = () => {
   return (
     <nav className="bg-black text-white flex justify-between font-inter font-black p-6 md:px-32 md:py-12 md:flex md:justify-between md:items-center">
       <div className="text-lg">
-        <a href="/">ExperienceRw</a>
+        <Link href={logo.url}>{logo.title}</Link>
       </div>
       <div className="hidden text-base md:space-x-12 md:flex md: justify-between md:items-center">
-        {menuitems.map((item) => (
+        {navLinks.map((item) => (
           <NavItem
           key={item.path}
           href={item.path}
@@ -36,7 +36,7 @@ const NavBar = () => {
       {isOpen && (
         <div className="text-start flex w-full p-24 bg-black md:hidden">
           <div className="flex absolute top-16 left-0 flex-col space-y-4 py-4 px-6">
-            {menuitems.map((item) => (
+            {navLinks.map((item) => (
               <NavItem
                 key={item.path}
                 href={item.path}
