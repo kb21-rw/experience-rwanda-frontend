@@ -8,22 +8,64 @@
         "locale": "en",
     "footer": {
         "logo": "ExperienceRw",
-        "footerLinks": ["Home", "Booking", "About Us", "Contact"],
+        "footerLinks": [
+          { "id": 1, "name": "Home", "url": "/home" },
+          { "id": 2, "name": "Booking", "url": "/booking" },
+          { "id": 3, "name": "About Us", "url": "/about-us" },
+          { "id": 4, "name": "Contact", "url": "/contact" }
+        ],
         "footerIcons": [
-            {
-                "name": "instagram",
-                "url": "/uploads/instagram.svg"
+          {
+              "title": "instagram",
+              "url": "/instagram",
+              "icon": {
+                "data": {
+                  "id": 1,
+                  "attributes": {
+                    "name": "instagram.svg",
+                    "alternativeText": null,
+                    "url": "../../../public/data/uploads/Instagram.svg",
+                    "width": 24,
+                    "height": 24
+                  }
+                }
+              }
             },
             {
-                "name": "twitter",
-                "url": "/uploads/twitter.svg"
+              "title": "twitter",
+              "url": "/twitter",
+              "icon": {
+                "data": {
+                  "id": 1,
+                  "attributes": {
+                    "name": "instagram.svg",
+                    "alternativeText": null,
+                    "url":"../../../public/data/uploads/Twitter.svg",
+                    "width": 24,
+                    "height": 24
+                  }
+                }
+              }
             },
             {
-                "name": "youtube",
-                "url": "/uploads/youtube.svg"
+              "title": "youtube",
+              "url": "/youtube",
+              "icon": {
+                "data": {
+                  "id": 1,
+                  "attributes": {
+                    "name": "youtube.svg",
+                    "alternativeText": null,
+                    "url": "../../../public/data/uploads/Youtube.svg",
+                    "width": 24,
+                    "height": 24
+                  }
+                }
+              }
             }
         ]
-    }
+      }
+      
       }
     },
     "meta": {}
