@@ -9,16 +9,16 @@ const ImageCardGrid = ({
   title,
   description,
   cards,
-}: Omit<Row, "id" | "__component">): ReactElement => {
+}: Omit<Row, "id">): ReactElement => {
   return (
     <section className="bg-gray-100 w-screen">
-      <div className="content-wrapper py-25 font-inter">
-        <div className="flex flex-col items-center text-center">
-          <div className="flex flex-col gap-6 font-inter">
-            <h1 className="font-bold text-5xl">{title}</h1>
-            <p className="text-xl font-normal">{description}</p>
+      <div className="content-wrapper md:py-25 py-12.5 font-inter">
+        <div className="flex flex-col justify-center items-center text-center">
+          <div className="flex flex-col gap-6 font-inter xl:w-1/2">
+            <h1 className="font-bold text-2xl md:text-5xl">{title}</h1>
+            <p className="md:text-xl text-base font-normal">{description}</p>
           </div>
-          <div className="flex gap-5 py-10 pb-5">
+          <div className="flex md:gap-5 gap-3 py-10 pb-5">
             <Button className="border-t-2" variant={"outline"}>
               All trips
             </Button>
@@ -35,7 +35,7 @@ const ImageCardGrid = ({
             <ImageCard key={data.id} {...data} />
           ))}
         </div>
-        <div className="flex justify-center mt-21">
+        <div className="flex justify-center md:mt-21 mt-10">
           <Button variant="outline">
             See More Trips
             <RightArrow />
