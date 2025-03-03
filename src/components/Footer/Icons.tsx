@@ -1,20 +1,22 @@
 "use client";
 
-import { FooterIcon, SiteConfig } from "@/types/footer";
+// import { FooterIcon, SiteConfig } from "@/types/footer";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, {useMemo } from "react";
+import { siteConfigData } from "../../../public/data/siteConfig";
 
 const Icons = () => {
-  const [icons, setIcons] = useState<FooterIcon[]>([]);
+  // const [icons, setIcons] = useState<FooterIcon[]>([]);
 
-  useEffect(() => {
-    fetch("/data/siteConfig.json")
-      .then((response) => response.json())
-      .then((config: SiteConfig) =>
-        setIcons(config.data.attributes.footer.footerIcons)
-      );
-  }, []);
+  // useEffect(() => {
+  //   fetch("/data/siteConfig.json")
+  //     .then((response) => response.json())
+  //     .then((config: SiteConfig) =>
+  //       setIcons(config.data.attributes.footer.footerIcons)
+  //     );
+  // }, []);
+const icons = siteConfigData.data.attributes.footer.footerIcons
 
   const socialIcons = useMemo(() => {
     return icons.map((icon) => {

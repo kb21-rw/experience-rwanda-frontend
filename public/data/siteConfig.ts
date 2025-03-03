@@ -1,4 +1,4 @@
-{
+export const siteConfigData = {
     "data": {
       "id": 1,
       "attributes": {
