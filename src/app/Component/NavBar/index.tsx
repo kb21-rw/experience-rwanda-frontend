@@ -6,7 +6,7 @@ import MenuIcon from "../../assets/MenuIcon";
 import CloseIcon from "../../assets/CloseIcon";
 import Link from "next/link";
 import {  navLink } from "@/app/types/NavItems.types";
-import { navigation } from "../../config/navigation";
+import { navigation } from "../../data/navigation";
 
 
 
