@@ -14,7 +14,7 @@ const FooterLinks = () => {
     ));
   }, [links]);
   return (
-    <div className="navigation flex flex-col md:flex-row gap-12">
+    <div className="navigation flex gap-6 md:gap-12">
       {renderedLinks}
     </div>
   );

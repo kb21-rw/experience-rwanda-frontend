@@ -7,15 +7,6 @@ import React, {useMemo } from "react";
 import { siteConfigData } from "../../../public/data/siteConfig";
 
 const Icons = () => {
-  // const [icons, setIcons] = useState<FooterIcon[]>([]);
-
-  // useEffect(() => {
-  //   fetch("/data/siteConfig.json")
-  //     .then((response) => response.json())
-  //     .then((config: SiteConfig) =>
-  //       setIcons(config.data.attributes.footer.footerIcons)
-  //     );
-  // }, []);
 const icons = siteConfigData.data.attributes.footer.footerIcons
 
   const socialIcons = useMemo(() => {
@@ -37,7 +28,7 @@ const icons = siteConfigData.data.attributes.footer.footerIcons
   }, [icons]);
 
   return (
-    <div className="social-icons flex flex-col md:flex-row md:gap-3">
+    <div className="social-icons flex gap-4">
       {socialIcons}
     </div>
   );
