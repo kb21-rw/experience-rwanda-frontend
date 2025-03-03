@@ -20,7 +20,7 @@ const Icons = () => {
     return icons.map((icon) => {
       const { url, alternativeText, width, height } = icon.icon.data.attributes;
       return (
-        <Link href={icon.url} key={icon.title}>
+        <Link href={icon.url} key={icon.title} aria-label={icon.title}>
           {url && (
             <Image
               src={url}
