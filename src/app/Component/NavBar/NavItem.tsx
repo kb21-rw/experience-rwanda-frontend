@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { NavItemProps } from "@/app/types/NavItems.types";
+import { NavItemProps } from "@/types/NavItems.types";
 
 const NavItem: React.FC<NavItemProps> = ({ href, pathname, children }) => {
   const isActive = pathname === href;

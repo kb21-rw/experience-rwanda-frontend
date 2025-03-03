@@ -1,4 +1,4 @@
-export const navBarData = {
+export const navbarData = {
   logo: {
     title: "ExperienceRw",
     url: "/"

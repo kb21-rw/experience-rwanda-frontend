@@ -5,8 +5,8 @@ import NavItem from "./NavItem";
 import MenuIcon from "../../assets/MenuIcon";
 import CloseIcon from "../../assets/CloseIcon";
 import Link from "next/link";
-import {  navLink } from "@/app/types/NavItems.types";
-import { navigation } from "../../data/navigation";
+import {  navLink } from "@/types/NavItems.types";
+import { navbarData } from "../../../data/navbarData";
 
 
 
@@ -14,7 +14,7 @@ import { navigation } from "../../data/navigation";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { logo, navLinks} = navigation
+  const { logo, navLinks} = navbarData
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
