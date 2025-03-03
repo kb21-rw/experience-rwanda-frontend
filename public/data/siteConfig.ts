@@ -1,11 +1,5 @@
 export const siteConfigData = {
     "data": {
-      "id": 1,
-      "attributes": {
-        "createdAt": "2024-07-18T17:20:59.083Z",
-        "updatedAt": "2024-07-19T07:39:23.587Z",
-        "publishedAt": "2024-07-19T07:39:23.582Z",
-        "locale": "en",
     "footer": {
         "logo": "ExperienceRw",
         "footerLinks": [
@@ -36,7 +30,7 @@ export const siteConfigData = {
               "url": "/twitter",
               "icon": {
                 "data": {
-                  "id": 1,
+                  "id": 2,
                   "attributes": {
                     "name": "twitter.png",
                     "alternativeText": null,
@@ -52,7 +46,7 @@ export const siteConfigData = {
               "url": "/youtube",
               "icon": {
                 "data": {
-                  "id": 1,
+                  "id": 13,
                   "attributes": {
                     "name": "youtube.png",
                     "alternativeText": null,
@@ -67,6 +61,4 @@ export const siteConfigData = {
       }
       
       }
-    },
-    "meta": {}
-  }
+    }

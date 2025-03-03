@@ -7,7 +7,7 @@ import React, {useMemo } from "react";
 import { siteConfigData } from "../../../public/data/siteConfig";
 
 const Icons = () => {
-const icons = siteConfigData.data.attributes.footer.footerIcons
+const icons = siteConfigData.data.footer.footerIcons
 
   const socialIcons = useMemo(() => {
     return icons.map((icon) => {

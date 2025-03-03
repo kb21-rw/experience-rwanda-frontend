@@ -5,7 +5,7 @@ import { siteConfigData } from "../../../public/data/siteConfig";
 import { useMemo } from "react";
 
 const FooterLinks = () => {
-  const links = siteConfigData.data.attributes.footer.footerLinks;
+  const links = siteConfigData.data.footer.footerLinks;
   const renderedLinks = useMemo(() => {
     return links.map((link) => (
       <Link href={"#"} key={link.id}>
