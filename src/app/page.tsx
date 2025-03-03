@@ -9,7 +9,6 @@ export default function Home() {
         <Button variant={"default"}>Book Now</Button>
         <Button variant={"secondary"}>Cancel</Button>
       </div>
-      
     </div>
   );
 }

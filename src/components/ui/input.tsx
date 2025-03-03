@@ -4,11 +4,13 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { InputProps as BaseInputProps } from "@/app/types/Input.type"
 
+
 type InputProps = BaseInputProps & React.InputHTMLAttributes<HTMLInputElement>
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, error,placeholder, ...props }, ref) => {
+  ({ className, type,error,placeholder, ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
       if (type === "name") {
         const value = e.target.value
         e.target.value = value
@@ -16,14 +18,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }
     
     return (
-      <div className="space-y-2">
-        {label && (
-          <label
-          htmlFor={props.id}
-           className="text-sm w-full max-w-md font-medium ">
-            {label}
-          </label>
-        )}
+      <div className="space-y-2 pt-1">
+        
         
         <input
           type={type}
