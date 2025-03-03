@@ -1,6 +1,5 @@
 import heroData from "./../data/heroData.json";
-import HeroContent from "./components/HeroContent/index";
-
+import HeroContent from "./components/HeroContent";
 export default function Home() {
   return (
     <div>

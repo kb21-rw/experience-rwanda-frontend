@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import HeroCard from "./Content";
 import type { HeroContent } from "@/types/Hero";
+import Content from "./Content";
 
 const HeroContent = ({ imageUrl, content }: Omit<HeroContent, "id">) => {
   return (
@@ -17,7 +17,7 @@ const HeroContent = ({ imageUrl, content }: Omit<HeroContent, "id">) => {
       </div>
       <div className="content-wrapper">
         <div className="md:w-1/2 w-full xl:pt-25 md:pt-12.5 pt-2">
-          <HeroCard title={content.title} description={content.description} />
+          <Content title={content.title} description={content.description} />
         </div>
       </div>
     </section>
