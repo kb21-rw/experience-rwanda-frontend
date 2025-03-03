@@ -1,23 +1,23 @@
 import React from "react";
-import { Hero } from "@/types/Hero";
 import Image from "next/image";
-import HeroCard from "./Card";
+import HeroCard from "./Content";
+import type { HeroContent } from "@/types/Hero";
 
-const HeroContent = (props: Omit<Hero, "id">) => {
-  const { title, description, backgroundImage } = props;
+const HeroContent = ({ imageUrl, content }: Omit<HeroContent, "id">) => {
   return (
     <section className="w-full h-screen">
       <div className="absolute -z-50 inset-0">
         <Image
-          src={backgroundImage.data.attributes.url}
-          alt={backgroundImage.data.attributes.name || ""}
-          width={backgroundImage.data.attributes.width}
-          height={backgroundImage.data.attributes.height}
+          src={imageUrl}
+          alt={"backgroundImage"}
+          layout="responsive"
+          width={1000}
+          height={1000}
         />
       </div>
       <div className="content-wrapper">
         <div className="md:w-1/2 w-full xl:pt-25 md:pt-12.5 pt-2">
-          <HeroCard title={title} description={description} />
+          <HeroCard title={content.title} description={content.description} />
         </div>
       </div>
     </section>

@@ -1,7 +1,6 @@
-import { Hero } from "@/types/Hero";
-type ContentProps = Omit<Hero, "__component" | "backgroundImage" | "id">;
+import type { Content } from "@/types/Hero";
 
-const HeroCard = ({ title, description }: ContentProps) => {
+const Content = ({ title, description }: Content) => {
   return (
     <div className="text-white">
       <h1 className="font-bold xl:text-6xl text-xl md:text-4xl font-Figtree">
@@ -14,4 +13,4 @@ const HeroCard = ({ title, description }: ContentProps) => {
   );
 };
 
-export default HeroCard;
+export default Content;

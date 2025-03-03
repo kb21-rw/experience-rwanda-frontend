@@ -1,8 +1,10 @@
-import { Image } from "./Image";
-
-export type Hero = {
-  id: number;
+export type Content = {
   title: string;
   description: string;
-  backgroundImage: Image;
+};
+
+export type HeroContent = {
+  id: number;
+  imageUrl: string;
+  content: Content;
 };
