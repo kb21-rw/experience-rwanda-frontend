@@ -2,18 +2,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useMemo } from "react";
-import { siteConfigData } from "../../../public/data/siteConfig";
+import { footerData } from "../../../public/data/siteConfig";
 
 const Icons = () => {
-  const icons = siteConfigData.footer.socialIcons;
+  const icons = footerData.footer.socialIcons;
 
   const socialIcons = useMemo(() => {
     return icons.map((icon) => {
-      const { url, width, height } = icon;
+      const { url, width, height, iconSrc,title } = icon;
       return (
-        <Link href={icon.url} key={icon.title} aria-label={icon.title}>
+        <Link href={url} key={title} aria-label={title} className="bg-slate-800 h-8 w-8 rounded-full flex items-center justify-center">
           {url && (
-            <Image src={url} alt={icon.title} width={width} height={height} />
+            <Image src={iconSrc} alt={title} width={width} height={height} />
           )}
         </Link>
       );

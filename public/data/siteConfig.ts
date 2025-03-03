@@ -1,4 +1,4 @@
-export const siteConfigData = {
+export const footerData = {
   footer: {
     logo: "ExperienceRw",
     links: [

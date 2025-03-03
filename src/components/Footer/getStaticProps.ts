@@ -1,9 +1,9 @@
-import { siteConfigData } from "../../../public/data/siteConfig";
+import { footerData } from "../../../public/data/siteConfig";
 
 export const getStaticProps = async () => {
-  const logo = siteConfigData.footer.logo;
-  const footerLinks = siteConfigData.footer.links;
-  const footerIcons = siteConfigData.footer.socialIcons;
+  const logo = footerData.footer.logo;
+  const footerLinks = footerData.footer.links;
+  const footerIcons = footerData.footer.socialIcons;
 
   return {
     props: {
