@@ -1,44 +1,25 @@
 "use client";
 import * as React from "react";
+import * as LabelPrimitive from "@radix-ui/react-label";
+import { cva, type VariantProps } from "class-variance-authority";
+
 import { cn } from "@/lib/utils";
-export type BaseInputProp = {
-  label?: string
-  error?: string
-  className?: string
-}
 
-type InputProp = BaseInputProp & React.InputHTMLAttributes<HTMLInputElement>;
-
-const Input = React.forwardRef<HTMLInputElement, InputProp>(
-  ({ className, type, error, placeholder, ...props }, ref) => {
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (type === "name") {
-        const value = e.target.value;
-        e.target.value = value;
-      }
-    };
-
-    return (
-      <div className="space-y-2 pt-1">
-        <input
-          type={type}
-          placeholder={placeholder}
-          className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm",
-            className
-          )}
-          ref={ref}
-          onChange={handleChange}
-          aria-invalid={!!error}
-          {...props}
-        />
-
-        {error && <p className="text-sm text-red-500">{error}</p>}
-      </div>
-    );
-  }
+const labelVariants = cva(
+  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 );
 
-Input.displayName = "Input";
+const Label = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
+    VariantProps<typeof labelVariants>
+>(({ className, ...props }, ref) => (
+  <LabelPrimitive.Root
+    ref={ref}
+    className={cn(labelVariants(), className)}
+    {...props}
+  />
+));
+Label.displayName = LabelPrimitive.Root.displayName;
 
-export { Input };
+export { Label };
