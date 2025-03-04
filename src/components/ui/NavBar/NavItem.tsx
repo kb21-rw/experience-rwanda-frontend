@@ -1,24 +1,28 @@
 import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 export type NavItemProp = {
-  href: string;
+  sectionId: string;
   children: React.ReactNode;
   onClick?: () => void;
+  isActive?: boolean
 };
-const NavItem: React.FC<NavItemProp> = ({ href, children, onClick }) => {
-  const pathname = usePathname();
-
-  const isActive = pathname === href;
+const NavItem: React.FC<NavItemProp> = ({ sectionId, children, onClick, isActive }) => {
+  const scrollToSection = (e:React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById(sectionId);
+    if(element) {
+      element.scrollIntoView({behavior:"smooth"});
+      if(onClick) onClick();
+    }
+  }
 
   return (
-    <Link
-      href={href}
-      onClick={onClick}
+    <button
+      
+      onClick={scrollToSection}
       className={`hover:underline ${isActive ? "underline text-blue-300" : ""}`}
     >
       {children}
-    </Link>
+    </button>
   );
 };
 

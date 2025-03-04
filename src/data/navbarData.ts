@@ -5,16 +5,18 @@ export const navbarData = {
   },
   navLinks: [
     {
-      path: "/",
+      sectionId: "home",
       label: "Home"
+      
     },
     {
-      path: "/bookings",
+      sectionId: "bookings",
       label: "Bookings"
+      
     },
     {
-      path: "/about",
-      label: "About Us"
+      sectionId: "about",
+      label: "About us"
     }
   ]
 } as const;

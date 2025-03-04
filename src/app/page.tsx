@@ -9,6 +9,15 @@ export default function Home() {
         <Button variant={"default"}>Book Now</Button>
         <Button variant={"secondary"}>Cancel</Button>
       </div>
+      <section id="home" className="min-h-screen">
+        {/* Home content */}
+      </section>
+      <section id="bookings" className="min-h-screen">
+        {/* Bookings content */}
+      </section>
+      <section id="about" className="min-h-screen">
+        {/* About content */}
+      </section>
     </div>
   );
 }
