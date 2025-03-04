@@ -1,17 +1,16 @@
-export type NavItemProps = {
+export type NavItemProp = {
   href: string;
-  pathname: string;
   children: React.ReactNode;
   onClick?: () => void;
 }
-export type navLink = {
+export type NavLink = {
   path: string;
   label: string;
 }
-export type NavItems = {
+export type NavItem = {
   logo: {
     title: string;
     url: string;
   };
-  navLinks: navLink[];
+  navLinks: NavLink[];
 }

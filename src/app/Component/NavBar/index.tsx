@@ -1,19 +1,14 @@
-"use client";
+"use client"
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 import MenuIcon from "../../assets/MenuIcon";
 import CloseIcon from "../../assets/CloseIcon";
 import Link from "next/link";
-import {  navLink } from "@/types/NavItems.types";
+import {  NavLink } from "@/types/NavItems.types";
 import { navbarData } from "../../../data/navbarData";
-
-
-
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
   const { logo, navLinks} = navbarData
 
   const toggleMenu = () => {
@@ -26,11 +21,10 @@ const NavBar = () => {
         <Link href={logo.url}>{logo.title}</Link>
       </div>
       <div className="hidden text-base md:space-x-12 md:flex md: justify-between md:items-center">
-        {navLinks.map((item:navLink)=> (
+        {navLinks.map((item:NavLink)=> (
           <NavItem
           key={item.path}
           href={item.path}
-          pathname={pathname}
           onClick={toggleMenu}>{item.label}</NavItem>
 
         ))}
@@ -42,11 +36,10 @@ const NavBar = () => {
       {isOpen && (
         <div className="text-start flex w-full p-24 bg-black md:hidden">
           <div className="flex absolute top-16 left-0 flex-col space-y-4 py-4 px-6">
-            {navLinks.map((item:navLink) => (
+            {navLinks.map((item:NavLink) => (
               <NavItem
                 key={item.path}
                 href={item.path}
-                pathname={pathname}
                 onClick={toggleMenu}
               >
                 {item.label}
