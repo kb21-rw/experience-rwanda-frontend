@@ -1,8 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import NavItem from "./NavItem";
-import MenuIcon from "../../assets/MenuIcon";
-import CloseIcon from "../../assets/CloseIcon";
+import MenuIcon from "../../../app/assets/MenuIcon";
+import CloseIcon from "../../../app/assets/CloseIcon";
 import Link from "next/link";
 import {  NavLink } from "@/types/NavItems.types";
 import { navbarData } from "../../../data/navbarData";
