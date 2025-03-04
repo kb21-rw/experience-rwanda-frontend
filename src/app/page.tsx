@@ -1,5 +1,5 @@
 import tripData from "./../data/tripData.json";
-import ImageCardGrid from "./components/ImageCardGrid";
+import ImageCardGrid from "../components/ImageCardGrid";
 
 export default function Home() {
   return (
