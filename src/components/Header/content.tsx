@@ -1,4 +1,4 @@
-import { HeaderProps } from "@/app/types/Header.types";
+import { HeaderProps } from "@/types/Header.types";
 import React from "react";
 
 const HeaderContent = ({ title, description }: HeaderProps) => {
