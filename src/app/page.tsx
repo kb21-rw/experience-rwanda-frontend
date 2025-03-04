@@ -1,15 +1,20 @@
 import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
+import HeroContent from "@/components/HeroContent";
+import heroData from "./../data/heroData.json";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-center font-bold text-4xl">Experience Rwanda</h1>
+    <>
+      <HeroContent
+        imageUrl={heroData.imageUrl}
+        content={{ title: heroData.title, description: heroData.description }}
+      />
       <ImageCardGrid
         title={tripData.title}
         description={tripData.description}
         cards={tripData.cards}
       />
-    </div>
+    </>
   );
 }
