@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import HeaderContent from "./HeaderContent";
-import { aboutUsData } from "../../../public/data/aboutUsData";
+import HeaderContent from "./content";
+import { aboutUsData } from "../../data/aboutUsData";
 
 const Header = () => {
   const { title, description } = aboutUsData;
