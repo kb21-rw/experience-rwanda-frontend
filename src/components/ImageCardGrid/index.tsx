@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import React from "react";
 import ImageCard from "./Card";
 import { Row } from "@/types/ImageCard";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import RightArrow from "@/icons/RightArrow";
 
 const ImageCardGrid = ({

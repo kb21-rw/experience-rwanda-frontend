@@ -1,30 +1,28 @@
 {
-  "trips": {
-    "id": 1,
-    "title": "Available Trips",
-    "description": "Our trips offer a seamless travel experience to popular destinations in Rwanda, combining comfort and flexibility for every journey.",
-    "cards": [
-      {
-        "id": 3,
-        "place": "Akagera National Park",
-        "price": "100$",
-        "date": "2024-07-20T22:25:25.687Z",
-        "url": "/uploads/akagera.png"
-      },
-      {
-        "id": 4,
-        "place": "Nyungwe National Park",
-        "price": "150$",
-        "date": "2024-02-20",
-        "url": "/uploads/akagera.png"
-      },
-      {
-        "id": 5,
-        "place": "Volcano National Park",
-        "price": "200$",
-        "date": "2024-07-20T22:25:25.687Z",
-        "url": "/uploads/akagera.png"
-      }
-    ]
-  }
+  "id": 1,
+  "title": "Available Trips",
+  "description": "Our trips offer a seamless travel experience to popular destinations in Rwanda, combining comfort and flexibility for every journey.",
+  "cards": [
+    {
+      "id": 3,
+      "place": "Akagera National Park",
+      "price": "100$",
+      "date": "2024-07-20T22:25:25.687Z",
+      "url": "/uploads/akagera.png"
+    },
+    {
+      "id": 4,
+      "place": "Nyungwe National Park",
+      "price": "150$",
+      "date": "2024-02-20",
+      "url": "/uploads/akagera.png"
+    },
+    {
+      "id": 5,
+      "place": "Volcano National Park",
+      "price": "200$",
+      "date": "2024-07-20T22:25:25.687Z",
+      "url": "/uploads/akagera.png"
+    }
+  ]
 }

@@ -6,9 +6,9 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-center font-bold text-4xl">Experience Rwanda</h1>
       <ImageCardGrid
-        title={tripData.trips.title}
-        description={tripData.trips.description}
-        cards={tripData.trips.cards}
+        title={tripData.title}
+        description={tripData.description}
+        cards={tripData.cards}
       />
     </div>
   );

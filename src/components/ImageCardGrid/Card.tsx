@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Card } from "@/types/ImageCard";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/Button";
 
 const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
   return (
