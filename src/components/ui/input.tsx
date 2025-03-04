@@ -1,11 +1,15 @@
 "use client";
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { InputProps as BaseInputProps } from "@/app/types/Input.type";
+export type BaseInputProp = {
+  label?: string
+  error?: string
+  className?: string
+}
 
-type InputProps = BaseInputProps & React.InputHTMLAttributes<HTMLInputElement>;
+type InputProp = BaseInputProp & React.InputHTMLAttributes<HTMLInputElement>;
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = React.forwardRef<HTMLInputElement, InputProp>(
   ({ className, type, error, placeholder, ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (type === "name") {
