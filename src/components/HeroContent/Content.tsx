@@ -1,0 +1,16 @@
+import type { Content } from "@/types/Hero";
+
+const Content = ({ title, description }: Content) => {
+  return (
+    <div className="text-white">
+      <h1 className="font-bold xl:text-6xl text-xl md:text-4xl font-Figtree">
+        {title}
+      </h1>
+      <p className="text-base font-normal md:text-lg xl:pt-13.5 pt-5 border-b-2 border-gray-500 font-inter">
+        {description}
+      </p>
+    </div>
+  );
+};
+
+export default Content;
