@@ -1,9 +1,11 @@
-"use client";
 import React from "react";
 import Link from "next/link";
-import { NavItemProp } from "@/types/NavItems.types";
 import { usePathname } from "next/navigation";
-
+export type NavItemProp = {
+  href: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+};
 const NavItem: React.FC<NavItemProp> = ({ href, children, onClick }) => {
   const pathname = usePathname();
 
