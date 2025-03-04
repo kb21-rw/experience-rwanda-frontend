@@ -1,30 +1,24 @@
-'use client'
+"use client";
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { InputProps as BaseInputProps } from "@/app/types/Input.type";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { InputProps as BaseInputProps } from "@/app/types/Input.type"
-
-
-type InputProps = BaseInputProps & React.InputHTMLAttributes<HTMLInputElement>
+type InputProps = BaseInputProps & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type,error,placeholder, ...props }, ref) => {
+  ({ className, type, error, placeholder, ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    
       if (type === "name") {
-        const value = e.target.value
-        e.target.value = value
+        const value = e.target.value;
+        e.target.value = value;
       }
-    }
-    
+    };
+
     return (
       <div className="space-y-2 pt-1">
-        
-        
         <input
           type={type}
-         
-          placeholder = {placeholder}
+          placeholder={placeholder}
           className={cn(
             "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm",
             className
@@ -34,17 +28,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           aria-invalid={!!error}
           {...props}
         />
-        
-        {error && (
-          <p className="text-sm text-red-500">
-            {error}
-          </p>
-        )}
+
+        {error && <p className="text-sm text-red-500">{error}</p>}
       </div>
-    )
+    );
   }
-)
+);
 
-Input.displayName = "Input"
+Input.displayName = "Input";
 
-export { Input }
+export { Input };
