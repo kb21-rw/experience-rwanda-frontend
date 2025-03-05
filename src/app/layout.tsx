@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased flex flex-col mt-auto`}>
+      <body className={`antialiased`}>
         <NavBar/>
         {children}
         <Footer />

@@ -1,5 +1,5 @@
 export const footerData = {
-  footer: {
+ 
     logo: "ExperienceRw",
     links: [
       { id: 1, name: "Home", url: "/home" },
@@ -30,5 +30,5 @@ export const footerData = {
         height: 24,
       },
     ],
-  },
+  
 };

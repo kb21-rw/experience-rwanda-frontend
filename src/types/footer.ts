@@ -33,16 +33,3 @@ export type IconAttributes = {
     footerIcons: FooterIcon[];
   };
   
-  export type SiteConfig = {
-    data: {
-      id: number;
-      attributes: {
-        createdAt: string;
-        updatedAt: string;
-        publishedAt: string;
-        locale: string;
-        footer: FooterData;
-      };
-    };
-    meta: Record<string, unknown>;
-  };
