@@ -6,7 +6,7 @@ import { aboutUsData } from "../../data/aboutUsData";
 const Header = () => {
   const { title, description } = aboutUsData;
   return (
-    <section className="px-20">
+    <section className="content-wrapper">
       <HeaderContent title={title} description={description} />
     </section>
   );
