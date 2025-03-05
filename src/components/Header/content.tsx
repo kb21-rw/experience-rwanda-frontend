@@ -4,7 +4,7 @@ import React from "react";
 const HeaderContent = ({ title, description }: HeaderProps) => {
   return (
     <div
-      className="flex flex-col gap-4 
+      className="flex flex-col gap-4 content-wrapper 
     "
     >
       <h2 className="text-3xl font-bold text-center">{title}</h2>
