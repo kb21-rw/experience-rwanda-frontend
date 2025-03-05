@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { footerData } from "../../../public/data/siteConfig";
+import { footerData } from "../../data/siteConfig";
 
 const FooterLinks = () => {
   const links = footerData.links;

@@ -1,6 +1,6 @@
 "use client";
 import FooterLinks from "./FooterLinks";
-import { footerData } from "../../../public/data/siteConfig";
+import { footerData } from "../../data/siteConfig";
 import FooterIcons from "./Icons";
 
 const Footer = () => {

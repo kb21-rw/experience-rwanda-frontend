@@ -1,4 +1,4 @@
-import { footerData } from "../../public/data/siteConfig";
+import { footerData } from "../data/siteConfig";
 
 export const getStaticProps = async () => {
   const logo = footerData.logo;

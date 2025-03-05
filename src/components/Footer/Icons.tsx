@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { footerData } from "../../../public/data/siteConfig";
+import { footerData } from "../../data/siteConfig";
 
 const FooterIcons = () => {
   const icons = footerData.socialIcons;
