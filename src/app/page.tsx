@@ -5,10 +5,13 @@ import BookingPopup from "@/components/PopUp/Booking";
 import CheckoutPopup from "@/components/PopUp/Checkout";
 import { Button } from "@/components/ui/Button";
 import { useState } from "react";
+import CardDetailsPopup from "@/components/PopUp/CardDetails";
 
 export default function Home() {
   const [showBooking, setShowBooking] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showCardDetails, setShowCardDetails] = useState(false);
+
   const handleProceedToCheckout = () => {
     setShowBooking(false);
     setTimeout(() => setShowCheckout(true), 200);
@@ -39,7 +42,13 @@ export default function Home() {
           />
         )}
         {showCheckout && (
-          <CheckoutPopup onClose={() => setShowCheckout(false)} />
+          <CheckoutPopup
+            onClose={() => setShowCheckout(false)}
+            onSelectCard={() => setShowCardDetails(true)}
+          />
+        )}
+        {showCardDetails && (
+          <CardDetailsPopup onClose={() => setShowCardDetails(false)} />
         )}
       </div>
     </div>

@@ -18,14 +18,16 @@ const CustomPopup: React.FC<CustomPopupProps> = ({
   children,
 }) => {
   return (
-    <Popover open={open} onOpenChange={onOpenChange}>
-      <PopoverTrigger asChild>
-        <span></span>
-      </PopoverTrigger>
-      <PopoverContent className="w-96 p-4 border border-gray-300 rounded-md bg-white shadow-md">
-        {children}
-      </PopoverContent>
-    </Popover>
+    <div className="flex justify-center py-10">
+      <Popover open={open} onOpenChange={onOpenChange}>
+        <PopoverTrigger asChild>
+          <span></span>
+        </PopoverTrigger>
+        <PopoverContent className="w-96 p-4 border border-gray-300 rounded-md bg-white shadow-md">
+          {children}
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 };
 
