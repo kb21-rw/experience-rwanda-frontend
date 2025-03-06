@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { useState } from "react";
 import {
   Popover,
@@ -58,7 +58,7 @@ const PopUp = () => {
                 variant="default"
                 onClick={handleContinueToCheckout}
               >
-                Continue to Checkout
+                Proceed to Checkout
               </Button>
             </div>
           </PopoverContent>
