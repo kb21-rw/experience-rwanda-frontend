@@ -1,7 +1,7 @@
 import { HeaderProps } from "@/types/Header.types";
 import React from "react";
 
-const HeaderContent = ({ title, description }: HeaderProps) => {
+const Content = ({ title, description }: HeaderProps) => {
   return (
     <div
       className="flex flex-col gap-4 content-wrapper 
@@ -13,4 +13,4 @@ const HeaderContent = ({ title, description }: HeaderProps) => {
   );
 };
 
-export default HeaderContent;
+export default Content;
