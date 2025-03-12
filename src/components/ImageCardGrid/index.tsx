@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import React from "react";
 import ImageCard from "./Card";
 import { Row } from "@/types/ImageCard";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import RightArrow from "@/icons/RightArrow";
 
 const ImageCardGrid = ({
@@ -10,8 +10,12 @@ const ImageCardGrid = ({
   description,
   cards,
 }: Omit<Row, "id">): ReactElement => {
+  const [visible, setVisible] = React.useState(3);
+  const handleShowMore = () => {
+    setVisible((prev) => prev + 3);
+  };
   return (
-    <section className="bg-gray-100 w-screen">
+    <section className="bg-gray-100">
       <div className="content-wrapper md:py-25 py-12.5 font-inter">
         <div className="flex flex-col justify-center items-center text-center">
           <div className="flex flex-col gap-6 font-inter xl:w-1/2">
@@ -35,12 +39,14 @@ const ImageCardGrid = ({
             <ImageCard key={data.id} {...data} />
           ))}
         </div>
-        <div className="flex justify-center md:mt-21 mt-10">
-          <Button variant="outline">
-            See More Trips
-            <RightArrow />
-          </Button>
-        </div>
+        {visible < cards.length && (
+          <div className="flex justify-center md:mt-21 mt-10">
+            <Button variant="outline" onClick={handleShowMore}>
+              See More Trips
+              <RightArrow />
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import BookingPopup from "./Booking";
 import CardDetailsPopup from "./CardDetails";
 import CheckoutPopup from "./Checkout";
+import { Dialog } from "@radix-ui/react-dialog";
 
 const PopUp = () => {
   const [showBooking, setShowBooking] = useState(false);
@@ -15,7 +16,7 @@ const PopUp = () => {
     setTimeout(() => setShowCheckout(true), 200);
   };
   return (
-    <>
+    <Dialog>
       <div className="flex justify-center mt-10">
         <Button variant="default" onClick={() => setShowBooking(true)}>
           Book Now
@@ -36,7 +37,7 @@ const PopUp = () => {
       {showCardDetails && (
         <CardDetailsPopup onClose={() => setShowCardDetails(false)} />
       )}
-    </>
+    </Dialog>
   );
 };
 

@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 import { Card } from "@/types/ImageCard";
 import Image from "next/image";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 
 const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
   return (
-    <div className="bg-white shadow rounded-3xl hover:border-2 hover:border-gray-400">
+    <div className="bg-white shadow rounded-3xl border hover:border-gray-400">
       <div className="pt-3 flex justify-center">
         <Image src={url} alt={"image"} width={312} height={312} />
       </div>

@@ -1,4 +1,4 @@
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import CustomPopup from "./Custom";
 import { Input } from "../ui/Input";
 import { Label } from "../ui/Label";
