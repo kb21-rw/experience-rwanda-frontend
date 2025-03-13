@@ -5,14 +5,18 @@ const CheckoutPopup =({ open, setOpen }: CheckoutPopupProps)=> {
   return (
     <Popup
       title="Checkout"
+      subTitle="Payment Methods"
+      
       inputs={[
-        { label: "Phone Number", type: "tel", name: "phone" },
+        {label: "Mobile Money", type: "radio", name: "momo"},
+        {label: "Credit/Debit Card", type: "radio", name: "card"},
+        {label: "Phone Number", type: "tel", name: "phone" },
       ]}
       onSubmit={(data) => {
         console.log("Checkout Data:", data);
         setOpen(false); 
       }}
-      submitText="Pay Now"
+      submitText="Proceed To Checkout"
       cancelText="Cancel"
       open={open}
       setOpen={setOpen}
