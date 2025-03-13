@@ -1,10 +1,5 @@
-"use client";
-import React from "react";
 import { aboutUsData } from "../../data/aboutUsData";
 import Content from "./content";
-
-
-
 
 const  AboutContent = () => {
   const { title, description } = aboutUsData;
