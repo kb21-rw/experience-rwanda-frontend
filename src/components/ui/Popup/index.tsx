@@ -3,6 +3,8 @@ import { Dialog, DialogContent } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { PopupProps } from "@/types/Popup";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Popup =({
   title,
@@ -15,6 +17,17 @@ const Popup =({
   setOpen,
   onProceed,
 }: PopupProps)=> {
+  const [selectedPayment, setSelectedPayment] = useState("");
+  const router = useRouter();
+
+  const handleCardPayment = (method: string) => {
+    setSelectedPayment(method);
+    if (method === "card") {
+      setOpen(false); 
+      router.push("/payment"); 
+    }
+  };
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -23,7 +36,10 @@ const Popup =({
       data[input.name] = formData.get(input.name) as string;
     });
     onSubmit(data, event);
-    if (onProceed) onProceed(); 
+    if (onProceed) {
+      onProceed();
+    }
+    setOpen(false);
   };
 
   return (
@@ -40,7 +56,10 @@ const Popup =({
                   <>
                     <Input
                       type={input.type}
-                      name={input.name}
+                      name="paymentMethod"
+                      value={input.name}
+                      checked={selectedPayment === input.name}
+                      onChange={() => handleCardPayment(input.name)}
                     />
                     <Label className="text-base font-medium">{input.label}</Label>
                   </>

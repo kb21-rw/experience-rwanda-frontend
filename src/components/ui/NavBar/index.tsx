@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import NavItem from "./NavItem";
-import MenuIcon from "../../../app/assets/MenuIcon";
-import CloseIcon from "../../../app/assets/CloseIcon";
+import MenuIcon from "../../../assets/MenuIcon";
+import CloseIcon from "../../../assets/CloseIcon";
 import { navbarData } from "@/data/navbarData";
+import Link from "next/link";
 
 export type NavLink = {
   sectionId: string;
@@ -55,9 +56,9 @@ const NavBar = () => {
 
   return (
     <nav className="bg-black text-white flex justify-between font-inter font-black p-6 md:px-32 md:py-12 md:flex md:justify-between md:items-center sticky top-0 z-50">
-      <div className="text-lg">
+      <Link href="/" className="text-lg">
         <span>{logo.title}</span>
-      </div>
+      </Link>
       <div className="hidden text-base md:space-x-12 md:flex md:justify-between md:items-center">
         {navLinks.map((item: NavLink) => (
           <NavItem

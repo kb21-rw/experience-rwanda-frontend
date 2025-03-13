@@ -23,7 +23,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
         <Button className="w-1/2" variant="outline">
           More Details
         </Button>
-        <Button className="mb-1.5" variant="default"onClick={() => setBookingOpen(true)}>
+        <Button aria-label="book-now" className="mb-1.5" variant="default"onClick={() => setBookingOpen(true)}>
           Book Now
         </Button>
   
