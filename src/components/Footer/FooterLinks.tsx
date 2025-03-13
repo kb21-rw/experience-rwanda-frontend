@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import { footerData } from "../../data/siteConfig";
 import React from "react";
