@@ -12,8 +12,7 @@ const CheckoutPopup =({ open, setOpen }: CheckoutPopupProps)=> {
         {label: "Credit/Debit Card", type: "radio", name: "card"},
         {label: "Phone Number", type: "tel", name: "phone" },
       ]}
-      onSubmit={(data) => {
-        console.log("Checkout Data:", data);
+      onSubmit={() => {
         setOpen(false); 
       }}
       submitText="Proceed to Checkout"

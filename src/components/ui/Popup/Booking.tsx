@@ -10,8 +10,7 @@ const BookingPopup = ({ open, setOpen, onProceed }: BookingPopupProps) => {
         { label: "Last Name", type: "text", name: "lastName" },
         { label: "Email", type: "email", name: "email" },
       ]}
-      onSubmit={(data) => {
-        console.log("Booking Data:", data);
+      onSubmit={() => {
         setOpen(false);
         onProceed(); 
       }}
