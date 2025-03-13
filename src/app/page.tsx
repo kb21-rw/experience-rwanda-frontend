@@ -4,7 +4,6 @@ import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
 import AboutContent from "@/components/About";
 
-
 export default function Home() {
   return (
     <>
