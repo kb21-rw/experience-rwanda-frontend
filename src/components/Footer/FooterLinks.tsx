@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link";
 import { footerData } from "../../data/siteConfig";
 import React from "react";
 
@@ -15,9 +14,9 @@ const FooterLinks = () => {
   return (
     <div className="navigation flex gap-6 md:gap-12">
       {links.map((link) => (
-        <Link href={`#${link.sectionId}`} key={link.sectionId} onClick={(e)=> handleScroll(e, link.sectionId)}>
+        <button key={link.sectionId} onClick={(e)=> handleScroll(e, link.sectionId)}>
           {link.label}
-        </Link>
+        </button>
       ))}
     </div>
   );
