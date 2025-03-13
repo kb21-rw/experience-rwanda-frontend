@@ -1,8 +1,9 @@
-import { ReactElement } from "react";
+"use client";
+import { ReactElement, useState } from "react";
 import React from "react";
 import ImageCard from "./Card";
 import { Row } from "@/types/ImageCard";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import RightArrow from "@/icons/RightArrow";
 
 const ImageCardGrid = ({
@@ -10,7 +11,8 @@ const ImageCardGrid = ({
   description,
   cards,
 }: Omit<Row, "id">): ReactElement => {
-  const [visible, setVisible] = React.useState(3);
+  const [visible, setVisible] = useState(3);
+
   const handleShowMore = () => {
     setVisible((prev) => prev + 3);
   };
@@ -35,11 +37,11 @@ const ImageCardGrid = ({
           </div>
         </div>
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
-          {cards.map((data) => (
+          {cards.slice(0,visible).map((data) => (
             <ImageCard key={data.id} {...data} />
           ))}
         </div>
-        {visible < cards.length && (
+        {cards.length >3 && visible < cards.length && (
           <div className="flex justify-center md:mt-21 mt-10">
             <Button variant="outline" onClick={handleShowMore}>
               See More Trips
