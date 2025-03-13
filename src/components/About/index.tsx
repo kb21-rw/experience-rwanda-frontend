@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { aboutUsData } from "../../data/aboutUsData";
-import Content from "./Content";
+import Content from "./content";
 
 
 
-const  HeaderContent = () => {
+
+const  AboutContent = () => {
   const { title, description } = aboutUsData;
   return (
     <section className="font-Inter w-full h-fit pb-9">
@@ -14,4 +15,4 @@ const  HeaderContent = () => {
   );
 };
 
-export default  HeaderContent;
+export default  AboutContent;
