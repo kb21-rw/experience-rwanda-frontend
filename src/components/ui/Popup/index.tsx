@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/Button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { PopupProps } from "@/types/Popup";
@@ -28,9 +28,9 @@ const Popup =({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <h1 className="text-lg font-bold text-center">{title}</h1>
-        <h4 className="font-bold text-xl">{subTitle}</h4>
+      <DialogContent className="sm:max-w-166.25">
+        <h1 className="text-3xl font-bold text-center font-inter">{title}</h1>
+        <h4 className="font-bold text-xl font-inter">{subTitle}</h4>
         <form onSubmit={handleSubmit} className="mt-3">
           {inputs.length > 0 ? (
             inputs.map((input, index) => (

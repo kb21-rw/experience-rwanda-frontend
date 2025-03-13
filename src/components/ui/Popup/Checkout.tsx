@@ -16,7 +16,7 @@ const CheckoutPopup =({ open, setOpen }: CheckoutPopupProps)=> {
         console.log("Checkout Data:", data);
         setOpen(false); 
       }}
-      submitText="Proceed To Checkout"
+      submitText="Proceed to Checkout"
       cancelText="Cancel"
       open={open}
       setOpen={setOpen}
