@@ -1,15 +1,15 @@
-import { ReactElement } from "react";
 import React from "react";
 import ImageCard from "./Card";
-import { Row } from "@/types/ImageCard";
+import { Card, Row } from "@/types/ImageCard";
 import { Button } from "@/components/ui/Button";
 import RightArrow from "@/icons/RightArrow";
 
-const ImageCardGrid = ({
+const ImageCardGrid = async ({
   title,
   description,
-  cards,
-}: Omit<Row, "id">): ReactElement => {
+}: Omit<Row, "id" | "cards">) => {
+  const data = await fetch(process.env.API_URL || "");
+  const trips = await data.json();
   return (
     <section className="bg-gray-100 w-screen">
       <div className="content-wrapper md:py-25 py-12.5 font-inter">
@@ -31,7 +31,7 @@ const ImageCardGrid = ({
           </div>
         </div>
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
-          {cards.map((data) => (
+          {trips.slice(1).map((data: Card) => (
             <ImageCard key={data.id} {...data} />
           ))}
         </div>

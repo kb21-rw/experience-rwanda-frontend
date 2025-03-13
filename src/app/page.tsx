@@ -6,9 +6,7 @@ import heroData from "./../data/heroData.json";
 export default function Home() {
   return (
     <>
-      <div className="flex items-center justify-center">
-        <h1 className="text-center font-bold text-4xl">Experience Rwanda</h1>
-      </div>
+      <div className="flex items-center justify-center"></div>
       <section id="home">{/* Home content */}</section>
       <section id="bookings">{/* Bookings content */}</section>
       <section id="about">{/* About content */}</section>
@@ -19,7 +17,6 @@ export default function Home() {
       <ImageCardGrid
         title={tripData.title}
         description={tripData.description}
-        cards={tripData.cards}
       />
     </>
   );
