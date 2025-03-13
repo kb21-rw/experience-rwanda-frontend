@@ -1,3 +1,4 @@
+"use client"
 import { HeaderProps } from "@/types/Header.types";
 import React from "react";
 
