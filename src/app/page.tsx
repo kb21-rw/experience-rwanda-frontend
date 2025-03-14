@@ -3,7 +3,6 @@ import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
 import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
-import Popup from "../components/ui/popup";
 
 export default function Home() {
   return (
@@ -18,7 +17,6 @@ export default function Home() {
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
       />
-      <Popup />
       <ImageCardGrid
         title={tripData.title}
         description={tripData.description}

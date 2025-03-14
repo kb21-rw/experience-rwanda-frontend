@@ -44,7 +44,7 @@ const Popup =({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-166.25">
+      <DialogContent className="sm:max-w-112.5">
         <h1 className="text-3xl font-bold text-center font-inter">{title}</h1>
         <h4 className="font-bold text-xl font-inter">{subTitle}</h4>
         <form onSubmit={handleSubmit} className="mt-3">

@@ -13,7 +13,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
 
   return (
     <div className="bg-white shadow rounded-3xl border hover:border-gray-400">
-      <div className="flex justify-center p-2 ">
+      <div className="p-2 ">
         <Image src={url} alt={"image"} width={500} height={390} />
       </div>
       <div className="flex flex-col gap-5 font-inter p-6">
