@@ -8,7 +8,7 @@ const ImageCardGrid = async ({
   title,
   description,
 }: Omit<Row, "id" | "cards">) => {
-  const data = await fetch(process.env.API_URL || "");
+  const data = await fetch(`${process.env.API_URL}/trips` || "");
   const trips = await data.json();
   return (
     <section className="bg-gray-100 w-screen">
