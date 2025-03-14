@@ -2,7 +2,7 @@ import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
 import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
-import AboutContent from "@/components/About";
+import AboutContent from "@/components/AboutContent";
 
 export default function Home() {
   return (
