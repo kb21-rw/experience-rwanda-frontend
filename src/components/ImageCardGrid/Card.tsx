@@ -56,7 +56,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   <Label className="text-sm font-medium">First Name</Label>
                   <Input
                     type="text"
-                    placeholder="First Name"
+                    placeholder="John"
                     className="w-full border p-2 rounded"
                     required
                     value={userInfo.firstName}
@@ -70,7 +70,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
 
                   <Input
                     type="text"
-                    placeholder="Last Name"
+                    placeholder="Doe"
                     className="w-full border p-2 rounded"
                     required
                     value={userInfo.lastName}
@@ -84,7 +84,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
 
                   <Input
                     type="email"
-                    placeholder="Email"
+                    placeholder="johndoe@gmail.com"
                     className="w-full border p-2 rounded"
                     required
                     value={userInfo.email}
