@@ -4,7 +4,7 @@ import React, { useState, ChangeEvent } from "react";
 import Popup from "../Popup";
 import { Label } from "../Label";
 import { Input } from "../Input";
-import { BookingPopupProps, FormErrors } from "@/types/Popup";
+import { BookingPopupProps, FormErrors, PaymentMethod } from "@/types/Popup";
 
 const BookingPopup = ({ isOpen, setIsOpen }: BookingPopupProps) => {
   const [userInfo, setUserInfo] = useState({
@@ -18,7 +18,7 @@ const BookingPopup = ({ isOpen, setIsOpen }: BookingPopupProps) => {
     email: "",
     phoneNumber: "",
   });
-  const [paymentMethod, setPaymentMethod] = useState<string>("card");
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
   const handleProceed = (step: number): boolean => {

@@ -25,3 +25,5 @@ export type FormErrors = {
   email: string;
   phoneNumber: string;
 };
+
+export type PaymentMethod = "card" | "momo";
