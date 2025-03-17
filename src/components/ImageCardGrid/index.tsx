@@ -1,8 +1,9 @@
+// import { useState } from "react";
 import React from "react";
 import ImageCard from "./Card";
 import { Card, Row } from "@/types/ImageCard";
 import { Button } from "@/components/ui/Button";
-import RightArrow from "@/icons/RightArrow";
+// import RightArrow from "@/icons/RightArrow";
 
 const ImageCardGrid = async ({
   title,
@@ -10,8 +11,12 @@ const ImageCardGrid = async ({
 }: Omit<Row, "id" | "cards">) => {
   const data = await fetch(`${process.env.API_URL}/trips` || "");
   const trips = await data.json();
+
+  // const handleShowMore = () => {
+  //   setVisible((prev) => prev + 3);
+  // };
   return (
-    <section className="bg-gray-100 w-screen">
+    <section className="bg-gray-100">
       <div className="content-wrapper md:py-25 py-12.5 font-inter">
         <div className="flex flex-col justify-center items-center text-center">
           <div className="flex flex-col gap-6 font-inter xl:w-1/2">
@@ -35,12 +40,14 @@ const ImageCardGrid = async ({
             <ImageCard key={data.id} {...data} />
           ))}
         </div>
-        <div className="flex justify-center md:mt-21 mt-10">
-          <Button variant="outline">
-            See More Trips
-            <RightArrow />
-          </Button>
-        </div>
+        {/* {trips.length > 3 && visible < trips.length && (
+          <div className="flex justify-center md:mt-21 mt-10">
+            <Button variant="outline" onClick={handleShowMore}>
+              See More Trips
+              <RightArrow />
+            </Button>
+          </div>
+        )} */}
       </div>
     </section>
   );

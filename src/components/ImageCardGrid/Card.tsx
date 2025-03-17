@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useState } from "react";
 import { ReactElement } from "react";
 import { Card } from "@/types/ImageCard";
 import Image from "next/image";
