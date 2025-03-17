@@ -1,23 +1,16 @@
-export type BookingPopupProps = {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    onProceed: () => void; 
-  }
+import { ReactNode } from "react";
 
-  
-export type CheckoutPopupProps = {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-  }
+export type Step = {
+  title: string;
+  subTitle?: string;
+  content: ReactNode;
+  showBack?: boolean;
+  showProceed?: boolean;
+  onProceed?: () => boolean | void;
+};
 
 export type PopupProps = {
-    title: string;
-    subTitle?: string;
-    inputs?: { label: string; type: string; name: string }[];
-    onSubmit: (data: Record<string, string>, event: React.FormEvent<HTMLFormElement>) => void;
-    submitText?: string;
-    cancelText?: string;
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    onProceed?: () => void;
-}
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  steps: Step[];
+};

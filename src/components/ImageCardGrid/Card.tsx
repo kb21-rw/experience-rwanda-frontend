@@ -6,6 +6,8 @@ import { Card } from "@/types/ImageCard";
 import Image from "next/image";
 import { Button } from "../ui/Button";
 import Popup from "../ui/Popup";
+import { Label } from "../ui/Label";
+import { Input } from "../ui/Input";
 
 const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,8 +53,8 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
             content: (
               <div className="space-y-4">
                 <div className="flex flex-col gap-1">
-                  <label className="text-base font-medium">First Name</label>
-                  <input
+                  <Label className="text-base font-medium">First Name</Label>
+                  <Input
                     type="text"
                     placeholder="First Name"
                     className="w-full border p-2 rounded"
@@ -64,9 +66,9 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="text-base font-medium">Last Name</label>
+                  <Label className="text-base font-medium">Last Name</Label>
 
-                  <input
+                  <Input
                     type="text"
                     placeholder="Last Name"
                     className="w-full border p-2 rounded"
@@ -78,9 +80,9 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="text-base font-medium">Email</label>
+                  <Label className="text-base font-medium">Email</Label>
 
-                  <input
+                  <Input
                     type="email"
                     placeholder="Email"
                     className="w-full border p-2 rounded"
@@ -118,7 +120,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   }`}
                   onClick={() => setPaymentMethod("card")}
                 >
-                  <input
+                  <Input
                     type="radio"
                     name="payment"
                     value="card"
@@ -137,7 +139,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   }`}
                   onClick={() => setPaymentMethod("mobile")}
                 >
-                  <input
+                  <Input
                     type="radio"
                     name="payment"
                     value="mobile"
@@ -148,7 +150,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   <span>Mobile Money</span>
 
                   {paymentMethod === "mobile" && (
-                    <input
+                    <Input
                       type="tel"
                       placeholder="Phone Number"
                       className="ml-2 border p-2 rounded w-full"

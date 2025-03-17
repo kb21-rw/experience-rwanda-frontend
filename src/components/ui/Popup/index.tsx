@@ -1,22 +1,8 @@
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../Button";
+import { PopupProps } from "@/types/Popup";
 
-interface Step {
-  title: string;
-  subTitle?: string;
-  content: ReactNode;
-  showBack?: boolean;
-  showProceed?: boolean;
-  onProceed?: () => boolean | void;
-}
-
-interface MultiStepPopupProps {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-  steps: Step[];
-}
-
-const Popup = ({ isOpen, setIsOpen, steps }: MultiStepPopupProps) => {
+const Popup = ({ isOpen, setIsOpen, steps }: PopupProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleProceed = () => {
