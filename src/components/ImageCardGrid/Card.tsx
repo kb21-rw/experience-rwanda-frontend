@@ -51,9 +51,9 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
           {
             title: "Book Your Trip",
             content: (
-              <div className="space-y-4">
+              <div className="space-y-4 font-inter">
                 <div className="flex flex-col gap-1">
-                  <Label className="text-base font-medium">First Name</Label>
+                  <Label className="text-sm font-semibold">First Name</Label>
                   <Input
                     type="text"
                     placeholder="First Name"
@@ -66,7 +66,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Label className="text-base font-medium">Last Name</Label>
+                  <Label className="text-sm font-semibold">Last Name</Label>
 
                   <Input
                     type="text"
@@ -80,7 +80,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Label className="text-base font-medium">Email</Label>
+                  <Label className="text-sm font-semibold">Email</Label>
 
                   <Input
                     type="email"
@@ -111,9 +111,9 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
             title: "Checkout",
             subTitle: "Payment Options",
             content: (
-              <div className="space-y-4">
+              <div className="space-y-4 font-inter">
                 <div
-                  className={`p-4 border rounded-lg cursor-pointer flex items-center space-x-2 ${
+                  className={`p-4 border rounded-lg cursor-pointer flex items-center space-x-2 text-base ${
                     paymentMethod === "card"
                       ? "border-gray-700 bg-white"
                       : "border-gray-300"
@@ -128,35 +128,42 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                     onChange={() => setPaymentMethod("card")}
                     className="w-4 h-4"
                   />
-                  <span>Credit/Debit Card</span>
+                  <span>Card Payment</span>
                 </div>
 
                 <div
-                  className={`p-4 border rounded-lg cursor-pointer flex items-center space-x-2 ${
-                    paymentMethod === "mobile"
+                  className={`p-4 border rounded-lg cursor-pointer flex flex-col gap-2 ${
+                    paymentMethod === "mobile-money"
                       ? "border-gray-700 bg-white"
                       : "border-gray-300"
                   }`}
-                  onClick={() => setPaymentMethod("mobile")}
+                  onClick={() => setPaymentMethod("mobile-money")}
                 >
-                  <Input
-                    type="radio"
-                    name="payment"
-                    value="mobile"
-                    checked={paymentMethod === "mobile"}
-                    onChange={() => setPaymentMethod("mobile")}
-                    className="w-4 h-4"
-                  />
-                  <span>Mobile Money</span>
-
-                  {paymentMethod === "mobile" && (
+                  <div className="flex items-center space-x-2">
                     <Input
-                      type="tel"
-                      placeholder="Phone Number"
-                      className="ml-2 border p-2 rounded w-full"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      type="radio"
+                      name="payment"
+                      value="mobile-money"
+                      checked={paymentMethod === "mobile-money"}
+                      onChange={() => setPaymentMethod("mobile-money")}
+                      className="w-4 h-4"
                     />
+                    <span>Mobile Payment</span>
+                  </div>
+
+                  {paymentMethod === "mobile-money" && (
+                    <div className="mt-5 flex flex-col ml-2 space-y-2">
+                      <Label className="text-sm font-semibold">
+                        Phone Number
+                      </Label>
+                      <Input
+                        type="tel"
+                        placeholder="+250 788 888 888"
+                        className="border p-2 rounded w-full"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                      />
+                    </div>
                   )}
                 </div>
               </div>

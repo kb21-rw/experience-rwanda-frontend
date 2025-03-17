@@ -25,15 +25,15 @@ const Popup = ({ isOpen, setIsOpen, steps }: PopupProps) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-        <div className="p-6">
-          <h2 className="text-xl font-bold text-center mb-10">
+        <div className="p-6 font-inter">
+          <h2 className="text-3xl font-bold text-center mb-10">
             {steps[currentStep].title}
           </h2>
-          <h2 className="mb-6 font-bold text-lg">
+          <h2 className="mb-6 font-bold text-xl">
             {steps[currentStep].subTitle}
           </h2>
           <div>{steps[currentStep].content}</div>
-          <div className="mt-6 flex gap-5">
+          <div className="mt-5 flex gap-5">
             {steps[currentStep].showBack && (
               <Button
                 onClick={handleBack}
