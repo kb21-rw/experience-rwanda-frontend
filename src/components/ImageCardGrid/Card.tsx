@@ -19,6 +19,20 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
   });
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [error, setError] = useState("");
+
+  const handleProceed = () => {
+    if (!userInfo.firstName || !userInfo.lastName || !userInfo.email) {
+      setError("Fill all the required fields.");
+      return false;
+    }
+    if (paymentMethod === "mobile-money" && !phoneNumber) {
+      setError("Phone number is required.");
+      return false;
+    }
+    setError("");
+    return true;
+  };
 
   return (
     <>
@@ -93,19 +107,11 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                     }
                   />
                 </div>
+                {error && <p className="text-sm text-red-500">{error}</p>}
               </div>
             ),
             showProceed: true,
-            onProceed: () => {
-              if (
-                !userInfo.firstName ||
-                !userInfo.lastName ||
-                !userInfo.email
-              ) {
-                alert("Please fill all required fields");
-                return false;
-              }
-            },
+            onProceed: () => handleProceed(),
           },
           {
             title: "Checkout",
@@ -165,18 +171,13 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
                       />
                     </div>
                   )}
+                  {error && <p className="text-red-500 text-sm">{error}</p>}
                 </div>
               </div>
             ),
             showBack: true,
             showProceed: true,
-            onProceed: () => {
-              if (paymentMethod === "mobile-money" && !phoneNumber) {
-                alert("Phone number required for mobile money");
-                return false;
-              }
-              alert("Proceeding to checkout...");
-            },
+            onProceed: () => handleProceed(),
           },
         ]}
       />
