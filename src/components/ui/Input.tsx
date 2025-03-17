@@ -2,10 +2,10 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 export type BaseInputProp = {
-  label?: string
-  error?: string
-  className?: string
-}
+  label?: string;
+  error?: string;
+  className?: string;
+};
 
 type InputProp = BaseInputProp & React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -24,7 +24,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProp>(
           type={type}
           placeholder={placeholder}
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm",
+            "flex h-10 w-full rounded-md border border-gray-700 bg-background px-3 py-2 text-sm",
             className
           )}
           ref={ref}
@@ -42,5 +42,3 @@ const Input = React.forwardRef<HTMLInputElement, InputProp>(
 Input.displayName = "Input";
 
 export { Input };
-
-
