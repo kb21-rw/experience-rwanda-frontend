@@ -1,4 +1,3 @@
-"use client";
 import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
 import tripData from "./../data/tripData.json";

@@ -38,6 +38,13 @@ const BookingPopup = ({ isOpen, setIsOpen }: BookingPopupProps) => {
       }
       if (!userInfo.email) {
         formErrors.email = "Email is required.";
+      } else {
+        const emailInput = document.createElement("input");
+        emailInput.type = "email";
+        emailInput.value = userInfo.email;
+        if (!emailInput.validity.valid) {
+          formErrors.email = "Please enter a valid email address.";
+        }
       }
     }
 
