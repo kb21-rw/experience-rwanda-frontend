@@ -8,7 +8,6 @@ import AboutContent from "@/components/AboutContent";
 export default function Home() {
   return (
     <>
-      <div className="flex items-center justify-center"></div>
       <HeroContent
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
