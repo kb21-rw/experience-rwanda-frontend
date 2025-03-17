@@ -1,19 +1,29 @@
-import Image from "next/image";
 import Link from "next/link";
+import { FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { footerData } from "../../data/siteConfig";
-
+import { IconType } from "react-icons";
+import { IconName, FooterIcon } from "../../types/footer";
 const FooterIcons = () => {
-  const icons = footerData.socialIcons;
-  return <div className="social-icons flex gap-4">{icons.map(({ url, width, height, iconSrc,title }) => 
- (
-      <Link href={url} key={title} aria-label={title} className="bg-slate-800 h-8 w-8 rounded-full flex items-center justify-center">
-        {url && (
-          <Image src={iconSrc} alt={title} width={width} height={height} />
-        )}
-      </Link>
-    )
-  
-  )}</div>;
+  const icons: Record<IconName, IconType> = {
+    linkedin: FaLinkedin,
+    twitter: FaXTwitter,
+    youtube: FaYoutube,
+  };
+
+  return (
+    <div className="flex justify-center gap-6">
+      {footerData.socialIcons.map((icon: FooterIcon) => {
+        const Icon = icons[icon.title];
+
+        return (
+          <Link key={icon.title} href={icon.url} target="_blank">
+            <Icon size={20} />
+          </Link>
+        );
+      })}
+    </div>
+  );
 };
 
 export default FooterIcons;
