@@ -171,7 +171,7 @@ const ImageCard = ({ place, url, price, date }: Card): ReactElement => {
             showBack: true,
             showProceed: true,
             onProceed: () => {
-              if (paymentMethod === "mobile" && !phoneNumber) {
+              if (paymentMethod === "mobile-money" && !phoneNumber) {
                 alert("Phone number required for mobile money");
                 return false;
               }
