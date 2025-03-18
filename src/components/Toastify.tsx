@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,7 +34,11 @@ const Toastify = () => {
     }
   }, [searchParams]);
 
-  return <ToastContainer />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ToastContainer />
+    </Suspense>
+  );
 };
 
 export default Toastify;
