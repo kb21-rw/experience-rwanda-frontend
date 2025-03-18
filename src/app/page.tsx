@@ -3,10 +3,12 @@ import heroData from "./../data/heroData.json";
 import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
 import AboutContent from "@/components/AboutContent";
-
+import Toastify from "@/components/Toastify";
 export default function Home() {
   return (
     <>
+      <Toastify />
+
       <HeroContent
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
