@@ -4,9 +4,10 @@ import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
 import AboutContent from "@/components/AboutContent";
 import Toastify from "@/components/Toastify";
+import { Suspense } from "react";
 export default function Home() {
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Toastify />
 
       <HeroContent
@@ -18,6 +19,6 @@ export default function Home() {
         title={tripData.title}
         description={tripData.description}
       />
-    </>
+    </Suspense>
   );
 }
