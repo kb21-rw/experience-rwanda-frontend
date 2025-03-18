@@ -1,9 +1,5 @@
 import { ReactNode } from "react";
 
-export interface BookingPopupProps {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-}
 export type Step = {
   title: string;
   subTitle?: string;
@@ -19,11 +15,15 @@ export type PopupProps = {
   steps: Step[];
 };
 
-export type FormErrors = {
+export interface ClientData {
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-};
+}
 
 export type PaymentMethod = "card" | "momo";
+
+export interface MomoFormInputs {
+  phoneNumber: string;
+}
