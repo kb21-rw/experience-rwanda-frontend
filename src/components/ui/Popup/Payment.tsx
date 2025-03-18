@@ -3,14 +3,10 @@ import { Input } from "../Input";
 import MomoPaymentForm from "./MomoPaymentForm";
 import { Button } from "../Button";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ClientData } from "@/types/Popup";
+import { ClientData, MomoFormInputs } from "@/types/Popup";
 import { postData } from "@/utils/request";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-
-interface Inputs {
-  phoneNumber: string;
-}
 
 const PaymentPopup = ({
   setCurrentStep,
@@ -25,11 +21,11 @@ const PaymentPopup = ({
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<Inputs>();
+  } = useForm<MomoFormInputs>();
   const [paymentMethod, setPaymentMethod] = useState<"card" | "momo">("momo");
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<MomoFormInputs> = async (data) => {
     if (paymentMethod === "momo") {
       const { phoneNumber } = data;
       const response = await postData(
@@ -103,7 +99,6 @@ const PaymentPopup = ({
           >
             Back
           </Button>
-          <div></div>
 
           <Button
             type="submit"

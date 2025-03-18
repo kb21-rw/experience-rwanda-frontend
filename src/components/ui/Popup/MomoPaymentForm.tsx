@@ -2,17 +2,14 @@ import { Label } from "@radix-ui/react-label";
 import React from "react";
 import { Input } from "../Input";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-
-interface Inputs {
-  phoneNumber: string;
-}
+import { MomoFormInputs } from "@/types/Popup";
 
 const MomoPaymentForm = ({
   register,
   errors,
 }: {
-  register: UseFormRegister<Inputs>;
-  errors: FieldErrors<Inputs>;
+  register: UseFormRegister<MomoFormInputs>;
+  errors: FieldErrors<MomoFormInputs>;
 }) => {
   return (
     <div className="mt-5 flex flex-col ml-2 space-y-2">
