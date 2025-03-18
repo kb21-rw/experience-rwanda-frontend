@@ -15,7 +15,6 @@ export default function Home() {
       <ImageCardGrid
         title={tripData.title}
         description={tripData.description}
-        cards={tripData.cards}
       />
     </>
   );

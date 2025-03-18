@@ -5,14 +5,13 @@ import Content from "./Content";
 
 const HeroContent = ({ imageUrl, content }: Omit<HeroContent, "id">) => {
   return (
-    <section className="w-full h-screen">
+    <section className="w-full h-[calc(100vh-7.75rem)]">
       <div className="absolute -z-50 inset-0">
         <Image
+          className="object-cover"
           src={imageUrl}
           alt={"backgroundImage"}
-          layout="responsive"
-          width={1000}
-          height={1000}
+          fill
         />
       </div>
       <div className="content-wrapper">
