@@ -1,7 +1,8 @@
+import { FooterData } from "@/types/footer";
 
-export const footerData = {
+export const footerData :FooterData = {
   logo: "ExperienceRw",
-  links: [
+  footerLinks: [
     {
       sectionId: "home",
       label: "Home",
@@ -20,23 +21,20 @@ export const footerData = {
   ],
   socialIcons: [
     {
-      title: "instagram",
-      url: "/instagram",
-      iconSrc: "/uploads/instagram.png",
+      title: "linkedin",
+      url: "/linkedin",
       width: 24,
       height: 24,
     },
     {
       title: "twitter",
       url: "/twitter",
-      iconSrc: "/uploads/twitter.png",
       width: 24,
       height: 24,
     },
     {
       title: "youtube",
       url: "/youtube",
-      iconSrc: "/uploads/youtube.png",
       width: 24,
       height: 24,
     },

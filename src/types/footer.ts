@@ -1,4 +1,4 @@
-export type IconName = "instagram" | "twitter" | "youtube";
+export type IconName = "linkedin" | "twitter" | "youtube";
 
 export type IconAttributes = {
     name: string;
@@ -16,20 +16,18 @@ export type IconAttributes = {
   export type FooterIcon = {
     title: IconName
     url: string;
-    icon: {
-      data: IconData;
-    };
+    width: number;
+    height: number;
   };
   
   export type FooterLink = {
-    id: number;
-    name: string;
-    url: string;
+  sectionId: string;
+  label: string;
   };
   
   export type FooterData = {
     logo: string;
     footerLinks: FooterLink[];
-    footerIcons: FooterIcon[];
+    socialIcons: FooterIcon[];
   };
   
