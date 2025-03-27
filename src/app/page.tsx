@@ -2,9 +2,11 @@ import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
 import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
-import AboutContent from "@/components/AboutContent";
 import Toastify from "@/components/Toastify";
 import { Suspense } from "react";
+import { aboutUsData } from "@/data/about";
+import Header from "@/components/Header";
+
 export default function Home() {
   return (
     <Suspense fallback={null}>
@@ -14,7 +16,11 @@ export default function Home() {
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
       />
-      <AboutContent />
+      <Header
+        title={aboutUsData.title}
+        description={aboutUsData.description}
+        variant={aboutUsData.variant}
+      />
       <ImageCardGrid
         title={tripData.title}
         description={tripData.description}
