@@ -1,4 +1,4 @@
-import { HeaderVariant } from "@/types/Header";
+import { HeaderVariant } from "@/enums/Header";
 
 export const aboutUsData = {
   title: "About Us",
