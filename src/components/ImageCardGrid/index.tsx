@@ -1,6 +1,8 @@
 import ImageCard from "./Card";
 import { Card, Row } from "@/types/ImageCard";
 import { Button } from "@/components/ui/Button";
+import TripPackageCard from "../TripPackage/Card";
+import icon from "../../../public/uploads/meal-icon.png";
 
 const ImageCardGrid = async ({
   title,
@@ -35,6 +37,13 @@ const ImageCardGrid = async ({
           {trips.map((data: Card) => (
             <ImageCard key={data.id} {...data} />
           ))}
+        </div>
+        <div className="bg-black p-5">
+          <TripPackageCard
+            title={"Dail Gourmet meal"}
+            icon={icon}
+            items={["Breakfast", "Lunch", "Dinner"]}
+          />
         </div>
       </div>
     </section>
