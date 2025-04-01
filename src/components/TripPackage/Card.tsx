@@ -2,7 +2,6 @@ import React from "react";
 import Image, { StaticImageData } from "next/image";
 import { FaRegCheckCircle } from "react-icons/fa";
 import IconContent from "../ui/IconContent";
-import { IconBaseProps } from "react-icons";
 
 interface TripPackageProps {
   title: string;
@@ -24,10 +23,6 @@ const TripPackageCard = ({ title, icon, items }: TripPackageProps) => {
             icon={() => <FaRegCheckCircle />}
             content={item}
           />
-          // <li key={index} className="">
-          //   <FaRegCheckCircle />
-          //   <span>{item}</span>
-          //   </li>
         ))}
       </ul>
     </div>
