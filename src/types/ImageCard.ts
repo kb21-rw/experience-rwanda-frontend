@@ -1,16 +1,16 @@
 export type Card = {
   id: string;
   title: string;
-  description: string;
-  destination: string;
+  description?: string;
+  trip: string;
   departureTime: string;
-  price: number;
+  price: number | string;
   seats: number;
-  seatsBooked: number;
-  currency: string;
+  seatsBooked?: number;
+  currency?: string;
   mainPicture: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type Row = {
