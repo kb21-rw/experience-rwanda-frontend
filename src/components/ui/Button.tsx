@@ -15,6 +15,8 @@ const buttonVariants = cva(
           "border border-gray-700 bg-background shadow-sm hover:bg-primary hover:text-background",
         secondary:
           "border border-gray-700 bg-background  text-primary hover:bg-primary shadow-sm rounded-full hover:text-background ",
+        primary:
+          "border border-gray-700 hover:bg-background hover:text-primary bg-primary shadow-sm text-background ",
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -51,4 +53,3 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
-
