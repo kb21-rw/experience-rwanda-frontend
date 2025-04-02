@@ -5,14 +5,14 @@ import { FaCalendar } from "react-icons/fa";
 import { format } from "date-fns";
 
 export const createTripDetails = (
-  location: string,
+  destination:string,
   date: string,
-  price: number | string,
+  price: number,
   seats: number
 ) => [
   {
     icon: IoLocationSharp,
-    content: location,
+    content: destination,
   },
   {
     icon: FaCalendar,
@@ -20,7 +20,7 @@ export const createTripDetails = (
   },
   {
     icon: GiPriceTag,
-    content: `${price}$ / day`,
+    content: price,
   },
   {
     icon: MdAirlineSeatReclineExtra,

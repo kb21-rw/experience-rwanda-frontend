@@ -3,14 +3,13 @@ export type Card = {
   title: string;
   description?: string;
   trip: string;
+  destination: string;
   departureTime: string;
-  price: number | string;
+  price: number;
   seats: number;
   seatsBooked?: number;
   currency?: string;
   mainPicture: string;
-  createdAt?: string;
-  updatedAt?: string;
 };
 
 export type Row = {

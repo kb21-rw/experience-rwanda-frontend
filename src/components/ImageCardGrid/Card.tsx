@@ -9,6 +9,7 @@ import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
 
 const ImageCard = ({
+destination,
   title: trip,
   mainPicture: url,
   price,
@@ -18,7 +19,7 @@ const ImageCard = ({
 }: Card): ReactElement => {
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
 
-  const details = createTripDetails("Akagera", date, price, seats);
+  const details = createTripDetails(destination, date, price, seats);
 
   return (
     <>
