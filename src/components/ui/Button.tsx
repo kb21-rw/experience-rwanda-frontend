@@ -16,7 +16,7 @@ const buttonVariants = cva(
         secondary:
           "border border-gray-700 bg-background  text-primary hover:bg-primary shadow-sm rounded-full hover:text-background ",
         primary:
-          "border border-gray-700 hover:bg-background hover:text-primary bg-primary shadow-sm text-background ",
+          "border border-gray-700 bg-primary shadow-sm text-background hover:opacity-80",
       },
       size: {
         default: "h-9 px-4 py-2",
