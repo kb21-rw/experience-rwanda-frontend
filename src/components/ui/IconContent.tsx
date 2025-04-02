@@ -11,9 +11,8 @@ type IconContentProps = {
 const IconContent:FC<IconContentProps> = ({icon:Icon, content, className}) => {
   return (
     <div className={`flex items-center gap-1 ${className}`}>
-        <Icon className= "text-xl"/>
-        <span className='text-lg font-inter font-normal'/>{content}<span/>
-
+        <Icon className="text-lg"/>
+        <span className='text-sm font-inter font-normal'>{content}</span>
     </div>
   )
 }

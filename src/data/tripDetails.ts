@@ -20,7 +20,7 @@ export const createTripDetails = (
   },
   {
     icon: GiPriceTag,
-    content: price,
+    content: `${price} RWF `,
   },
   {
     icon: MdAirlineSeatReclineExtra,
