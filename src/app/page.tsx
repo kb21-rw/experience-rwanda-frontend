@@ -6,9 +6,7 @@ import Toastify from "@/components/Toastify"
 import { Suspense } from "react"
 import { aboutUsData } from "@/data/about"
 import Header from "@/components/Header"
-import Gallery from "@/components/Gallery"
-import { HeaderVariant } from "@/enums/Header"
-import { galleryData } from "../data/gallery.json"
+
 export default function Home() {
   return (
     <Suspense fallback={null}>
@@ -25,12 +23,6 @@ export default function Home() {
       <ImageCardGrid
         title={tripData.title}
         description={tripData.description}
-      />
-      <Gallery
-        title="Gallery"
-        description="Discover Rwanda's magnificent wildlife through our stunning photo collection"
-        variant={HeaderVariant.PRIMARY}
-        images={galleryData}
       />
     </Suspense>
   )
