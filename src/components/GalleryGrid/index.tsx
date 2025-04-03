@@ -1,8 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import Header from "../Header"
-import { HeaderVariant } from "@/enums/Header"
 import defaultGalleryData from "../../data/gallery.json"
 
 type GalleryImage = {
@@ -14,26 +12,18 @@ type GalleryImage = {
 
 type GalleryProps = {
   title?: string
-  description?: string
-  variant?: HeaderVariant
   images?: GalleryImage[]
 }
 
-const Gallery = ({
-  title = "",
-  description = "",
-  variant = HeaderVariant.PRIMARY,
-  images,
-}: GalleryProps) => {
+const GalleryGrid = ({ images, title }: GalleryProps) => {
   const galleryImages = images || defaultGalleryData
 
   return (
     <section className="content-wrapper">
-      <Header
-        title={title}
-        description={description}
-        variant={variant}
-      />
+      <h1 className="font-bold text-2xl md:text-4xl text-center p-4 md:p-10">
+        {title}{" "}
+      </h1>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 py-2 md:py-6 mx-auto">
         {galleryImages.map((image) => (
           <div
@@ -56,4 +46,4 @@ const Gallery = ({
   )
 }
 
-export default Gallery
+export default GalleryGrid
