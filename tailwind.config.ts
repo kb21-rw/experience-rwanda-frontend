@@ -30,6 +30,7 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        5: "1.25rem",
       },
       colors: {
         background: "hsl(var(--background))",
@@ -72,6 +73,7 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        "gray-750": "#383838",
       },
     },
   },
