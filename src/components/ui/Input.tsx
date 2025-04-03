@@ -19,7 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProp>(
     };
 
     return (
-      <div className="space-y-2 pt-1">
+      <div className="space-y-2 pt-1 h-full">
         <input
           type={type}
           placeholder={placeholder}
