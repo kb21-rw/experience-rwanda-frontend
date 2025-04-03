@@ -1,18 +1,18 @@
 export type DateField = {
-  from: Date;
-  to: Date;
+  from: Date | undefined;
+  to: Date | undefined;
 };
 export type PriceField = {
-  from: number;
-  to: number;
+  min: number | undefined;
+  max: number | undefined;
 };
 
 export type LocationField = {
-  location?: string;
+  location: string;
 };
 
 export type FormValues = {
-  location?: string;
-  date?: DateField | null;
-  price?: PriceField;
+  location: string;
+  date: DateField;
+  price: PriceField;
 };

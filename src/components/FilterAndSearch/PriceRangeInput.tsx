@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Input } from "../ui/Input";
 import InputLabel from "./InputLabel";
-import { useController, UseControllerProps } from "react-hook-form";
-import { FormValues } from "@/types/searchAndFilter";
+import { PriceField } from "@/types/searchAndFilter";
 
-const PriceRangeInput = (props: UseControllerProps<FormValues>) => {
-  const { field } = useController(props);
-  const [price, setPrice] = useState({ min: "1000", max: "1000000" });
-
+const PriceRangeInput = ({
+  price,
+  setPrice,
+}: {
+  price: PriceField;
+  setPrice: Dispatch<SetStateAction<PriceField>>;
+}) => {
   return (
     <div className="flex flex-col space-y-1 w-full">
       <InputLabel label="Price" />
@@ -16,16 +18,15 @@ const PriceRangeInput = (props: UseControllerProps<FormValues>) => {
           type="number"
           placeholder="Min"
           value={price.min}
-          onChange={(e) => setPrice({ ...price, min: e.target.value })}
+          onChange={(e) => setPrice({ ...price, min: Number(e.target.value) })}
           className="w-full bg-transparent outline-none text-black border-none"
         />
         <span className="mx-2">-</span>
         <Input
-          {...field}
           type="number"
           placeholder="Max"
           value={price.max}
-          onChange={(e) => setPrice({ ...price, max: e.target.value })}
+          onChange={(e) => setPrice({ ...price, max: Number(e.target.value) })}
           className="w-full bg-transparent outline-none text-black border-none "
         />
         <span className="ml-2">RWF</span>

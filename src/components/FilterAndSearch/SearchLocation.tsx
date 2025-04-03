@@ -1,12 +1,15 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import InputLabel from "./InputLabel";
 import { Input } from "../ui/Input";
 import { MapPin } from "lucide-react";
-import { useController, UseControllerProps } from "react-hook-form";
-import { LocationField } from "@/types/searchAndFilter";
 
-const SearchLocation = (props: UseControllerProps<LocationField>) => {
-  const { field } = useController(props);
+const SearchLocation = ({
+  location,
+  setLocation,
+}: {
+  location?: string;
+  setLocation: Dispatch<SetStateAction<string>>;
+}) => {
   return (
     <div className="flex flex-col w-full max-w-sm gap-1.5">
       <InputLabel label="Location" />
@@ -14,7 +17,8 @@ const SearchLocation = (props: UseControllerProps<LocationField>) => {
         <MapPin className="h-5 w-5 text-gray-500 mr-2" />
         <div className="flex-1 w-full h-full ">
           <Input
-            {...field}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             type="text"
             id="location"
             placeholder="Search locations"

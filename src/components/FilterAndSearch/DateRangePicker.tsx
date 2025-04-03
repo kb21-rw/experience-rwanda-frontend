@@ -7,16 +7,16 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/Button";
 import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
 import InputLabel from "./InputLabel";
-import { useController, UseControllerProps } from "react-hook-form";
-import { FormValues } from "@/types/searchAndFilter";
-import { DateRange } from "react-day-picker";
+import { DateRange, SelectRangeEventHandler } from "react-day-picker";
 
-export function DateRangePicker(props: UseControllerProps<FormValues>) {
-  const { field } = useController(props);
-  const [date, setDate] = useState<DateRange>();
-
+export function DateRangePicker({
+  date,
+  setDate,
+}: {
+  date: DateRange;
+  setDate: SelectRangeEventHandler;
+}) {
   return (
     <div className="flex flex-col space-y-1 w-full">
       <InputLabel label="Date" />
@@ -40,7 +40,6 @@ export function DateRangePicker(props: UseControllerProps<FormValues>) {
           align="start"
         >
           <Calendar
-            {...field}
             mode="range"
             selected={date}
             onSelect={setDate}

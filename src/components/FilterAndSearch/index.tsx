@@ -1,47 +1,48 @@
 "use client";
-import React from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import DateRangePicker from "./DateRangePicker";
 import { Button } from "../ui/Button";
 import PriceRangeInput from "./PriceRangeInput";
 import { Label } from "../ui/Label";
 import { FaArrowRight } from "react-icons/fa";
 import SearchLocation from "./SearchLocation";
-import { useForm } from "react-hook-form";
-import { FormValues } from "@/types/searchAndFilter";
+import { DateField, FormValues, PriceField } from "@/types/searchAndFilter";
+import { SelectRangeEventHandler } from "react-day-picker";
 
-const FilterAndSearch = () => {
-  const { handleSubmit, control } = useForm<FormValues>({
-    defaultValues: {
-      location: "",
-      date: {
-        from: new Date(),
-        to: new Date(),
-      },
-      price: {
-        from: 1000,
-        to: 1000000,
-      },
-    },
-    mode: "onChange",
+const FilterAndSearch = ({
+  filters,
+  setFilters,
+}: {
+  filters: FormValues;
+  setFilters: Dispatch<SetStateAction<FormValues>>;
+}) => {
+  const [date, setDate] = useState<DateField>({
+    from: filters.date?.from,
+    to: filters.date?.to,
   });
-  const onSubmit = (data: FormValues) => {
-    console.log({ data });
-  };
+  const [price, setPrice] = useState<PriceField>({
+    min: filters.price?.min,
+    max: filters.price?.max,
+  });
+  const [location, setLocation] = useState<string>(filters.location);
 
   return (
-    <div className="bg-[#0F0F0F] content-wrapper bg-opacity-[60%] py-[30px] px-6 rounded-2xl">
+    <div className="bg-[#0F0F0F] bg-opacity-[60%] py-[30px] my-25 px-6 rounded-2xl">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(e) => e.preventDefault()}
         className="flex flex-col md:flex-row gap-12 md:items-end justify-between"
       >
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between flex-1">
-          <SearchLocation control={control} name="location" />
-          <DateRangePicker control={control} name="date" />
-          <PriceRangeInput control={control} name="price" />
+          <SearchLocation location={location} setLocation={setLocation} />
+          <PriceRangeInput price={price} setPrice={setPrice} />
+          <DateRangePicker
+            date={date}
+            setDate={setDate as SelectRangeEventHandler}
+          />
         </div>
         <Button
           variant="default"
-          type="submit"
+          onClick={() => setFilters({ location, date, price })}
           className="flex items-center gap-2 h-14 justify-self-end px-8"
         >
           <Label className="font-bold text-white text-base">Find trips</Label>
