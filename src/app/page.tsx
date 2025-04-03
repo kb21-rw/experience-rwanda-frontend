@@ -6,6 +6,7 @@ import Toastify from "@/components/Toastify";
 import { Suspense } from "react";
 import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
+import TripPackage from "@/components/TripPackage";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
         title={tripData.title}
         description={tripData.description}
       />
+      <TripPackage />
     </Suspense>
   );
 }
