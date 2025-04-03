@@ -30,8 +30,7 @@ const GalleryGrid = ({ images, title }: GalleryProps) => {
         {title}
       </h1>
 
-      <div
-        className={`${getGridClasses()} gap-8 lg:gap-10 py-2 md:py-6 mx-auto`}>
+      <div className={`${getGridClasses()} gap-4 lg:gap-10 md:py-6 mx-auto`}>
         {galleryImages.map((image) => (
           <div
             key={image.id}

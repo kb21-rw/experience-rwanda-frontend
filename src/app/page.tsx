@@ -6,8 +6,6 @@ import Toastify from "@/components/Toastify"
 import { Suspense } from "react"
 import { aboutUsData } from "@/data/about"
 import Header from "@/components/Header"
-import GalleryGrid from "@/components/GalleryGrid"
-import { galleryData } from "./../data/gallery.json"
 
 export default function Home() {
   return (
@@ -25,10 +23,6 @@ export default function Home() {
       <ImageCardGrid
         title={tripData.title}
         description={tripData.description}
-      />
-      <GalleryGrid
-        images={galleryData}
-        title="Gallery"
       />
     </Suspense>
   )
