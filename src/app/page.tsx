@@ -1,17 +1,16 @@
-import HeroContent from "@/components/HeroContent";
-import heroData from "./../data/heroData.json";
-import tripData from "./../data/tripData.json";
-import ImageCardGrid from "../components/ImageCardGrid";
-import Toastify from "@/components/Toastify";
-import { Suspense } from "react";
-import { aboutUsData } from "@/data/about";
-import Header from "@/components/Header";
+import HeroContent from "@/components/HeroContent"
+import heroData from "./../data/heroData.json"
+import tripData from "./../data/tripData.json"
+import ImageCardGrid from "../components/ImageCardGrid"
+import Toastify from "@/components/Toastify"
+import { Suspense } from "react"
+import { aboutUsData } from "@/data/about"
+import Header from "@/components/Header"
 
 export default function Home() {
   return (
     <Suspense fallback={null}>
       <Toastify />
-
       <HeroContent
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
@@ -26,5 +25,5 @@ export default function Home() {
         description={tripData.description}
       />
     </Suspense>
-  );
+  )
 }
