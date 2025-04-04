@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "../ui/Button";
 import { format } from "date-fns";
 import BookingPopup from "../ui/Popup";
+import { useRouter } from "next/navigation";
 
 const ImageCard = ({
   destination: place,
@@ -14,7 +15,13 @@ const ImageCard = ({
   departureTime: date,
   id: tripId,
 }: Card): ReactElement => {
+  const router = useRouter();
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
+
+  const handleMoreDetails = () => {
+    router.push(`/details/${tripId}`);
+  };
+
   return (
     <>
       <div className="bg-white shadow rounded-3xl hover:bg-op ease-in-out duration-300">
@@ -35,7 +42,11 @@ const ImageCard = ({
           <p className="font-normal text-base">
             Date: {format(date, "MMMM dd yyyy")}
           </p>
-          <Button className="w-1/2" variant="outline">
+          <Button
+            className="w-1/2"
+            variant="outline"
+            onClick={handleMoreDetails}
+          >
             More Details
           </Button>
           <Button
