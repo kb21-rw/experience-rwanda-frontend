@@ -26,7 +26,7 @@ export default function Home() {
         title={tripData.title}
         description={tripData.description}
       />
-      <TripPackage />
+      <TripPackage title="Trip Packages" />
     </Suspense>
   );
 }

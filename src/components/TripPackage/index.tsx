@@ -2,11 +2,15 @@ import React from "react";
 import TripPackageCard from "./Card";
 import { tripPackageData } from "../../data/tripPackageData";
 
-const TripPackage = () => {
+type TripPackageProps = {
+  title: string;
+};
+
+const TripPackage = ({ title }: TripPackageProps) => {
   return (
-    <div className="bg-black py-25">
-      <h1 className="text-2xl font-bold mb-10 text-center text-white ">
-        Trip Packages
+    <div className="bg-black md:py-30 py-12.5">
+      <h1 className="text-4xl font-bold md:mb-20 mb-10 text-center text-white ">
+        {title}
       </h1>
       <div className="flex flex-wrap gap-10 content-wrapper">
         {tripPackageData.map((item, index) => (
