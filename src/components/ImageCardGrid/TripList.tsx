@@ -3,20 +3,42 @@ import React, { useMemo, useState } from "react";
 import FilterAndSearch from "../FilterAndSearch";
 import ImageCard from "./Card";
 import { Card } from "@/types/ImageCard";
-import { FormValues } from "@/types/searchAndFilter";
+import NoResults from "../ui/NoResult";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SearchFormData, searchSchema } from "../FilterAndSearch/searchSchema";
 
 const TripList = ({ trips }: { trips: Card[] }) => {
-  const [filters, setFilters] = useState<FormValues>({
-    location: "",
-    date: {
-      from: undefined,
-      to: undefined,
-    },
-    price: {
-      min: undefined,
-      max: undefined,
-    },
+  const defaultFilters = useMemo(
+    () => ({
+      location: "",
+      date: {
+        from: new Date(),
+        to: undefined,
+      },
+      price: {
+        min: undefined,
+        max: undefined,
+      },
+    }),
+    []
+  );
+
+  const [filters, setFilters] = useState<SearchFormData>(defaultFilters);
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<SearchFormData>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: defaultFilters,
   });
+
+  const onSubmit: SubmitHandler<SearchFormData> = (data) => {
+    setFilters(data);
+  };
 
   const filteredTrips = useMemo(() => {
     return trips.filter((data) => {
@@ -25,28 +47,49 @@ const TripList = ({ trips }: { trips: Card[] }) => {
         .includes(filters.location.toLowerCase());
 
       const matchesDate =
-        filters.date?.from && filters.date?.to
+        filters.date?.from !== undefined && filters.date?.to !== undefined
           ? new Date(data.departureTime) >= filters.date.from &&
             new Date(data.departureTime) <= filters.date.to
-          : true; // If no date filter is applied, allow all trips
+          : true;
 
       const matchesPrice =
-        filters.price?.min && filters.price?.max
+        filters.price?.min !== undefined && filters.price?.max !== undefined
           ? data.price >= filters.price.min && data.price <= filters.price.max
-          : true; // If no price filter is applied, allow all trips
+          : true;
 
       return matchesLocation && matchesDate && matchesPrice;
     });
-  }, [trips, filters]);
-
+  }, [
+    filters.date.from,
+    filters.date.to,
+    filters.location,
+    filters.price.max,
+    filters.price.min,
+    trips,
+  ]);
   return (
     <div>
-      <FilterAndSearch filters={filters} setFilters={setFilters} />
-      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
-        {filteredTrips.map((data: Card) => (
-          <ImageCard key={data.id} {...data} />
-        ))}
-      </div>
+      <FilterAndSearch
+        watch={watch}
+        setValue={setValue}
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
+        errors={errors}
+      />
+      {filteredTrips.length >= 1 ? (
+        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
+          {filteredTrips.map((data: Card) => (
+            <ImageCard key={data.id} {...data} />
+          ))}
+        </div>
+      ) : (
+        <div className="max-w-2xl mx-auto mt-10">
+          <NoResults
+            message="Try to use different keywords"
+            onClearSearch={reset}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -7,10 +7,6 @@ export type PriceField = {
   max: number | undefined;
 };
 
-export type LocationField = {
-  location: string;
-};
-
 export type FormValues = {
   location: string;
   date: DateField;
