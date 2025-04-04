@@ -1,4 +1,3 @@
-import React from "react";
 import TripPackageCard from "./Card";
 import { tripPackageData } from "../../data/tripPackageData";
 
@@ -9,7 +8,7 @@ type TripPackageProps = {
 const TripPackage = ({ title }: TripPackageProps) => {
   return (
     <div className="bg-black md:py-30 py-12.5">
-      <h1 className="text-4xl font-bold md:mb-20 mb-10 text-center text-white ">
+      <h1 className="text-4xl font-bold md:mb-20 mb-10 text-center text-white">
         {title}
       </h1>
       <div className="flex flex-wrap gap-10 content-wrapper">
