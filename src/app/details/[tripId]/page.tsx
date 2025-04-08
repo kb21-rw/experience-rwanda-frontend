@@ -1,19 +1,21 @@
+import { Button } from "@/components/ui/Button";
 import { format } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 
-interface TripDetailsPageProps {
+type TripDetailsPageProps = {
   params: {
     tripId: string;
   };
-}
+};
 
-interface Trip {
+type Trip = {
   id: string;
   destination: string;
   price: number;
   departureTime: string;
   mainPicture: string;
-}
+};
 
 const TripDetailsPage = async ({ params }: TripDetailsPageProps) => {
   const { tripId } = params;
@@ -33,7 +35,13 @@ const TripDetailsPage = async ({ params }: TripDetailsPageProps) => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Trip to {trip.destination}</h1>
+      <div className="flex items-center justify-between mb-4">
+        <Link href="/">Back</Link>
+        <h1 className="text-3xl font-bold mb-4">Trip to {trip.destination}</h1>
+        <Button className="mb-1.5" variant="default">
+          Book Now
+        </Button>
+      </div>
 
       <div className="relative w-full h-96 mb-6">
         <Image
