@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { ReactElement } from "react";
-import { Card } from "@/types/ImageCard";
+import { TripDetails } from "@/types/ImageCard";
 import Image from "next/image";
 import { Button } from "../ui/Button";
 import { format } from "date-fns";
 import BookingPopup from "../ui/Popup";
+import Link from "next/link";
 
 const ImageCard = ({
   destination: place,
@@ -13,7 +14,7 @@ const ImageCard = ({
   price,
   departureTime: date,
   id: tripId,
-}: Card): ReactElement => {
+}: TripDetails): ReactElement => {
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
   return (
     <>
@@ -35,9 +36,11 @@ const ImageCard = ({
           <p className="font-normal text-base">
             Date: {format(date, "MMMM dd yyyy")}
           </p>
-          <Button className="w-1/2" variant="outline">
-            More Details
-          </Button>
+          <Link href={`/tripDetails/${tripId}`} className="w-1/2">
+            <Button className="w-full" variant="outline">
+              More Details
+            </Button>
+          </Link>
           <Button
             onClick={() => setSelectedTrip(tripId)}
             className="mb-1.5"

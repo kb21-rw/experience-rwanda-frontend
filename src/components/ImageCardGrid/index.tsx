@@ -1,5 +1,5 @@
 import ImageCard from "./Card";
-import { Card, Row } from "@/types/ImageCard";
+import { TripDetails, Row } from "@/types/ImageCard";
 import { Button } from "@/components/ui/Button";
 
 const ImageCardGrid = async ({
@@ -32,7 +32,7 @@ const ImageCardGrid = async ({
           </div>
         </div>
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
-          {trips.map((data: Card) => (
+          {trips.map((data: TripDetails) => (
             <ImageCard key={data.id} {...data} />
           ))}
         </div>
