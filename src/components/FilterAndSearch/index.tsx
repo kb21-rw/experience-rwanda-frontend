@@ -17,7 +17,7 @@ type InputProps = {
 const FilterAndSearch = ({ form, onSubmit }: InputProps) => {
   return (
     <Form {...form}>
-      <div className="bg-gray-750 bg-opacity-[60%] my-25 py-7.5 md:py-0 px-6 rounded-2xl">
+      <div className="bg-gray-850 bg-opacity-[60%] my-25 py-7.5 md:py-0 px-6 rounded-2xl">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col md:flex-row gap-12 md:items-center justify-between"
