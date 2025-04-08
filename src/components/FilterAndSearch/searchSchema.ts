@@ -1,32 +1,33 @@
+import { isNumeric } from "@/lib/utils";
 import { z } from "zod";
 
 export const searchSchema = z.object({
   location: z.string().max(50, "Location must not exceed 50 characters"),
 
-  date: z
+  dateRange: z
     .object({
-      from: z.date(),
+      from: z.date().optional(),
       to: z.date().optional(),
     })
-    .refine(
-      (data) => {
-        if (data.from && data.to) {
-          return data.from < data.to;
-        }
-        return true; // Allow if either date is missing
-      },
-      { message: "Start date must be before end date", path: ["from"] }
-    ),
+    .optional()
+    .refine((data) => !data?.from || !data?.to || data.from <= data.to, {
+      message: "End date must be after start date.",
+      path: ["to"],
+    }),
 
   price: z
     .object({
-      min: z.number().optional(),
-      max: z.number().optional(),
+      min: z.string().optional(),
+      max: z.string().optional(),
     })
+
     .refine(
       (data) => {
-        if (data.min !== undefined && data.max !== undefined) {
-          return data.min < data.max;
+        // if (isNumeric(data.min) && isNumeric(data.max)) {
+        //   return true;
+        // }
+        if (data.min !== "" && data.max !== "") {
+          return Number(data.min) < Number(data.max);
         }
         return true; // Allow if either min or max is missing
       },

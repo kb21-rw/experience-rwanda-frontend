@@ -4,41 +4,23 @@ import FilterAndSearch from "../FilterAndSearch";
 import ImageCard from "./Card";
 import { Card } from "@/types/ImageCard";
 import NoResults from "../ui/NoResult";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SearchFormData, searchSchema } from "../FilterAndSearch/searchSchema";
+import { searchSchema } from "../FilterAndSearch/searchSchema";
+import { z } from "zod";
 
 const TripList = ({ trips }: { trips: Card[] }) => {
-  const defaultFilters = useMemo(
-    () => ({
-      location: "",
-      date: {
-        from: new Date(),
-        to: undefined,
-      },
-      price: {
-        min: undefined,
-        max: undefined,
-      },
-    }),
-    []
-  );
-
-  const [filters, setFilters] = useState<SearchFormData>(defaultFilters);
-  const {
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<SearchFormData>({
-    resolver: zodResolver(searchSchema),
-    defaultValues: defaultFilters,
+  const [filters, setFilters] = useState<z.infer<typeof searchSchema>>({
+    location: "",
+    dateRange: {
+      from: new Date(),
+      to: undefined,
+    },
+    price: {
+      min: "",
+      max: "",
+    },
   });
-
-  const onSubmit: SubmitHandler<SearchFormData> = (data) => {
-    setFilters(data);
-  };
 
   const filteredTrips = useMemo(() => {
     return trips.filter((data) => {
@@ -47,35 +29,53 @@ const TripList = ({ trips }: { trips: Card[] }) => {
         .includes(filters.location.toLowerCase());
 
       const matchesDate =
-        filters.date?.from !== undefined && filters.date?.to !== undefined
-          ? new Date(data.departureTime) >= filters.date.from &&
-            new Date(data.departureTime) <= filters.date.to
+        filters.dateRange?.from !== undefined &&
+        filters.dateRange?.to !== undefined
+          ? new Date(data.departureTime) >= filters.dateRange?.from &&
+            new Date(data.departureTime) <= filters.dateRange?.to
           : true;
 
       const matchesPrice =
-        filters.price?.min !== undefined && filters.price?.max !== undefined
-          ? data.price >= filters.price.min && data.price <= filters.price.max
+        filters.price.min !== "" && filters.price.max !== ""
+          ? data.price >= Number(filters.price.min) &&
+            data.price <= Number(filters.price.max)
           : true;
 
       return matchesLocation && matchesDate && matchesPrice;
     });
   }, [
-    filters.date.from,
-    filters.date.to,
+    filters.dateRange?.from,
+    filters.dateRange?.to,
     filters.location,
     filters.price.max,
     filters.price.min,
     trips,
   ]);
+  const form = useForm<z.infer<typeof searchSchema>>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: {
+      location: "",
+      dateRange: {
+        from: new Date(),
+        to: undefined,
+      },
+      price: {
+        min: "",
+        max: "",
+      },
+    },
+  });
+  const onSubmit = (values: z.infer<typeof searchSchema>) => {
+    try {
+      setFilters(values);
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+  };
+
   return (
     <div>
-      <FilterAndSearch
-        watch={watch}
-        setValue={setValue}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-        errors={errors}
-      />
+      <FilterAndSearch searchForm={form} onSubmit={onSubmit} />
       {filteredTrips.length >= 1 ? (
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
           {filteredTrips.map((data: Card) => (
@@ -86,7 +86,7 @@ const TripList = ({ trips }: { trips: Card[] }) => {
         <div className="max-w-2xl mx-auto mt-10">
           <NoResults
             message="Try to use different keywords"
-            onClearSearch={reset}
+            onClearSearch={() => form.reset()}
           />
         </div>
       )}
