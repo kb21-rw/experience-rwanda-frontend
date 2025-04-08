@@ -5,14 +5,18 @@ import { Card } from "@/components/ui/card";
 import { Search, Smile } from "lucide-react";
 
 interface NoResultsProps {
+  title: string;
   message: string;
   onClearSearch?: () => void;
 }
 
-export default function NoResults({ message, onClearSearch }: NoResultsProps) {
+export default function NoResults({
+  title,
+  message,
+  onClearSearch,
+}: NoResultsProps) {
   return (
     <Card className="flex flex-col items-center justify-center p-6 text-center space-y-4">
-      {/* Animated Icon */}
       <div>
         <Search className="w-16 h-16 text-gray-500" />
       </div>
@@ -21,7 +25,7 @@ export default function NoResults({ message, onClearSearch }: NoResultsProps) {
 
       <div className="flex gap-3 mt-4">
         <Button variant="default" onClick={onClearSearch}>
-          <Smile className="w-4 h-4 mr-2" /> Try Again
+          <Smile className="w-4 h-4 mr-2" /> {title}
         </Button>
       </div>
     </Card>

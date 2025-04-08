@@ -7,15 +7,16 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { FormValues } from "@/types/searchAndFilter";
+import { searchSchema } from "./searchSchema";
+import { z } from "zod";
 
 type InputProps = {
-  searchForm: UseFormReturn<FormValues>;
+  form: UseFormReturn<z.infer<typeof searchSchema>>;
 };
 
-const PriceRangeInput = ({ searchForm }: InputProps) => {
+const PriceRangeInput = ({ form }: InputProps) => {
   return (
-    <div className="flex flex-col space-y-1 w-full relative md:py-[30px]">
+    <div className="flex flex-col space-y-1 w-full relative md:py-7.5">
       <FormLabel
         style={{
           color: "white",
@@ -27,9 +28,8 @@ const PriceRangeInput = ({ searchForm }: InputProps) => {
       </FormLabel>
       <div className="w-full flex items-center bg-white text-black border border-gray-300 rounded-md h-14 px-2 justify-between">
         <FormField
-          control={searchForm.control}
+          control={form.control}
           name="price.min"
-          // className="flex-1 flex items-center justify-end"
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -49,9 +49,8 @@ const PriceRangeInput = ({ searchForm }: InputProps) => {
 
         <span className="mx-2">-</span>
         <FormField
-          control={searchForm.control}
+          control={form.control}
           name="price.max"
-          // className="flex-1 flex items-center justify-end"
           render={({ field }) => (
             <FormItem>
               <FormControl>

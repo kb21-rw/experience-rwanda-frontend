@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import FilterAndSearch from "../FilterAndSearch";
 import ImageCard from "./Card";
 import { Card } from "@/types/ImageCard";
@@ -75,7 +75,7 @@ const TripList = ({ trips }: { trips: Card[] }) => {
 
   return (
     <div>
-      <FilterAndSearch searchForm={form} onSubmit={onSubmit} />
+      <FilterAndSearch form={form} onSubmit={onSubmit} />
       {filteredTrips.length >= 1 ? (
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
           {filteredTrips.map((data: Card) => (
@@ -86,6 +86,7 @@ const TripList = ({ trips }: { trips: Card[] }) => {
         <div className="max-w-2xl mx-auto mt-10">
           <NoResults
             message="Try to use different keywords"
+            title="Clear the search"
             onClearSearch={() => form.reset()}
           />
         </div>

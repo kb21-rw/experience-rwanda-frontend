@@ -1,4 +1,3 @@
-import { isNumeric } from "@/lib/utils";
 import { z } from "zod";
 
 export const searchSchema = z.object({
@@ -23,13 +22,10 @@ export const searchSchema = z.object({
 
     .refine(
       (data) => {
-        // if (isNumeric(data.min) && isNumeric(data.max)) {
-        //   return true;
-        // }
         if (data.min !== "" && data.max !== "") {
           return Number(data.min) < Number(data.max);
         }
-        return true; // Allow if either min or max is missing
+        return true;
       },
       { message: "Min price must be less than max price", path: ["min"] }
     ),

@@ -8,19 +8,20 @@ import {
   FormMessage,
 } from "../ui/form";
 import { UseFormReturn } from "react-hook-form";
-import { FormValues } from "@/types/searchAndFilter";
+import { z } from "zod";
+import { searchSchema } from "./searchSchema";
 
 type InputProps = {
-  searchForm: UseFormReturn<FormValues>;
+  form: UseFormReturn<z.infer<typeof searchSchema>>;
 };
 
-const SearchLocation = ({ searchForm }: InputProps) => {
+const SearchLocation = ({ form }: InputProps) => {
   return (
     <FormField
-      control={searchForm.control}
+      control={form.control}
       name="location"
       render={({ field }) => (
-        <FormItem className="flex flex-col w-full gap-1.5- relative md:py-[30px]">
+        <FormItem className="flex flex-col w-full gap-1.5- relative md:py-7.5">
           <FormLabel
             style={{
               color: "white",
@@ -38,7 +39,7 @@ const SearchLocation = ({ searchForm }: InputProps) => {
                   {...field}
                   type="text"
                   placeholder="Search locations"
-                  className="bg-transparent outline-none text-black border-none w-full h-full self-center-"
+                  className="bg-transparent outline-none text-black border-none w-full h-full"
                 />
               </div>
             </div>
