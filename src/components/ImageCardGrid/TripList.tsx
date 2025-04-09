@@ -9,18 +9,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { searchSchema } from "../FilterAndSearch/searchSchema";
 import { z } from "zod";
 
+const defaultFilters = {
+  location: "",
+  dateRange: {
+    from: new Date(),
+    to: undefined,
+  },
+  price: {
+    min: "",
+    max: "",
+  },
+};
+
 const TripList = ({ trips }: { trips: Card[] }) => {
-  const [filters, setFilters] = useState<z.infer<typeof searchSchema>>({
-    location: "",
-    dateRange: {
-      from: new Date(),
-      to: undefined,
-    },
-    price: {
-      min: "",
-      max: "",
-    },
-  });
+  const [filters, setFilters] =
+    useState<z.infer<typeof searchSchema>>(defaultFilters);
 
   const filteredTrips = useMemo(() => {
     return trips.filter((data) => {
@@ -53,17 +56,7 @@ const TripList = ({ trips }: { trips: Card[] }) => {
   ]);
   const form = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
-    defaultValues: {
-      location: "",
-      dateRange: {
-        from: new Date(),
-        to: undefined,
-      },
-      price: {
-        min: "",
-        max: "",
-      },
-    },
+    defaultValues: defaultFilters,
   });
   const onSubmit = (values: z.infer<typeof searchSchema>) => {
     try {
@@ -87,7 +80,10 @@ const TripList = ({ trips }: { trips: Card[] }) => {
           <NoResults
             message="Try to use different keywords"
             title="Clear the search"
-            onClearSearch={() => form.reset()}
+            onClearSearch={() => {
+              form.reset();
+              setFilters(defaultFilters);
+            }}
           />
         </div>
       )}
