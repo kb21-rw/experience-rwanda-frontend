@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       spacing: {
         1.5: "0.375rem",
+        7.5: "1.875rem",
         12.5: "3.125rem",
         13.5: "3.375rem",
         21: "5.25rem",
@@ -70,7 +71,10 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
-        "gray-750": "#383838",
+        gray: {
+          750: "#383838",
+          850: "#0F0F0F",
+        },
       },
     },
   },
