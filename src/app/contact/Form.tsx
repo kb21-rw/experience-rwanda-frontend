@@ -7,7 +7,7 @@ import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { contactSchema } from "@/utils/schema";
+import { contactSchema } from "@/utils/schemas/contactSchema";
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
