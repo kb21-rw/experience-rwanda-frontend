@@ -6,7 +6,7 @@ import { FaArrowRight } from "react-icons/fa";
 import SearchLocation from "./SearchLocation";
 import { Form } from "../ui/form";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { searchSchema } from "./searchSchema";
+import { searchSchema } from "../../utils/schemas/searchSchema";
 import { z } from "zod";
 
 type InputProps = {

@@ -17,13 +17,13 @@ import {
 } from "../ui/form";
 import { DateRange } from "react-day-picker";
 import { z } from "zod";
-import { searchSchema } from "./searchSchema";
+import { searchSchema } from "../../utils/schemas/searchSchema";
 
-type InputProps = {
+type DateRangePickerProps = {
   form: UseFormReturn<z.infer<typeof searchSchema>>;
 };
 
-export function DateRangePicker({ form }: InputProps) {
+const DateRangePicker = ({ form }: DateRangePickerProps) => {
   return (
     <FormField
       control={form.control}
@@ -67,6 +67,7 @@ export function DateRangePicker({ form }: InputProps) {
                 selected={field.value as DateRange}
                 onSelect={field.onChange}
                 numberOfMonths={2}
+                fromDate={new Date()}
               />
             </PopoverContent>
           </Popover>
@@ -75,6 +76,6 @@ export function DateRangePicker({ form }: InputProps) {
       )}
     />
   );
-}
+};
 
 export default DateRangePicker;

@@ -9,19 +9,19 @@ import {
 } from "../ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
-import { searchSchema } from "./searchSchema";
+import { searchSchema } from "../../utils/schemas/searchSchema";
 
-type InputProps = {
+type SearchLocationInputProps = {
   form: UseFormReturn<z.infer<typeof searchSchema>>;
 };
 
-const SearchLocation = ({ form }: InputProps) => {
+const SearchLocationInput = ({ form }: SearchLocationInputProps) => {
   return (
     <FormField
       control={form.control}
       name="location"
       render={({ field }) => (
-        <FormItem className="flex flex-col w-full gap-1.5- relative md:py-7.5">
+        <FormItem className="flex flex-col w-full relative md:py-7.5">
           <FormLabel
             style={{
               color: "white",
@@ -51,4 +51,4 @@ const SearchLocation = ({ form }: InputProps) => {
   );
 };
 
-export default SearchLocation;
+export default SearchLocationInput;

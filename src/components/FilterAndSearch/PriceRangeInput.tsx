@@ -7,14 +7,14 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { searchSchema } from "./searchSchema";
+import { searchSchema } from "../../utils/schemas/searchSchema";
 import { z } from "zod";
 
-type InputProps = {
+type PriceRangeInputProps = {
   form: UseFormReturn<z.infer<typeof searchSchema>>;
 };
 
-const PriceRangeInput = ({ form }: InputProps) => {
+const PriceRangeInput = ({ form }: PriceRangeInputProps) => {
   return (
     <div className="flex flex-col space-y-1 w-full relative md:py-7.5">
       <FormLabel

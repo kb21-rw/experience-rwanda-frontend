@@ -6,7 +6,7 @@ import { Card } from "@/types/ImageCard";
 import NoResults from "../ui/NoResult";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { searchSchema } from "../FilterAndSearch/searchSchema";
+import { searchSchema } from "../../utils/schemas/searchSchema";
 import { z } from "zod";
 
 const defaultFilters = {
