@@ -4,13 +4,17 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Search, Smile } from "lucide-react";
 
-interface NoResultsProps {
+interface SearchNotFoundProps {
   title: string;
   message: string;
   onClearSearch?: () => void;
 }
 
-const SearchNotFound = ({ title, message, onClearSearch }: NoResultsProps) => {
+const SearchNotFound = ({
+  title,
+  message,
+  onClearSearch,
+}: SearchNotFoundProps) => {
   return (
     <Card className="flex flex-col items-center justify-center p-6 text-center space-y-4">
       <div>

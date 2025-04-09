@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import FilterAndSearch from "../FilterAndSearch";
 import ImageCard from "./Card";
 import { Card } from "@/types/ImageCard";
-import NoResults from "../ui/NoResult";
+import SearchNotFound from "../ui/SearchNotFound";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { searchSchema } from "../../utils/schemas/searchSchema";
@@ -77,7 +77,7 @@ const TripList = ({ trips }: { trips: Card[] }) => {
         </div>
       ) : (
         <div className="max-w-2xl mx-auto mt-10">
-          <NoResults
+          <SearchNotFound
             message="Try to use different keywords"
             title="Clear the search"
             onClearSearch={() => {
