@@ -5,20 +5,18 @@ import { TripDetails } from "@/types/ImageCard";
 import Image from "next/image";
 import { Button } from "../ui/Button";
 import BookingPopup from "../ui/Popup";
-import Link from "next/link";
 import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
 
 const ImageCard = ({
-destination,
   title: trip,
   mainPicture: url,
   price,
   departureTime: date,
   id: tripId,
-}: TripDetails): ReactElement => {
+  destination,
   seats,
-}: Card): ReactElement => {
+}: TripDetails): ReactElement => {
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
 
   const details = createTripDetails(destination, date, price, seats);
@@ -29,25 +27,6 @@ destination,
         <div className="relative w-full h-64">
           <Image className="object-cover" src={url} alt={trip} fill priority />
         </div>
-
-        <div className="flex flex-col gap-5 font-inter p-6">
-          <h1 className="font-bold text-lg md:text-xl h-12">Place: {place}</h1>
-          <p className="font-medium text-base">Price: {price} RWF</p>
-          <p className="font-normal text-base">
-            Date: {format(date, "MMMM dd yyyy")}
-          </p>
-          <Link href={`/tripDetails/${tripId}`} className="w-1/2">
-            <Button className="w-full" variant="outline">
-              More Details
-            </Button>
-          </Link>
-          <Button
-            onClick={() => setSelectedTrip(tripId)}
-            className="mb-1.5"
-            variant="default"
-          >
-            Book Now
-          </Button>
         <div className="p-6 space-y-6 font-inter">
           <h2 className="text-xl font-semibold text-black">{trip}</h2>
 
