@@ -1,6 +1,8 @@
 import ImageCard from "./Card";
 import { TripDetails, Row } from "@/types/ImageCard";
 import { Button } from "@/components/ui/Button";
+import { Row } from "@/types/ImageCard";
+import TripList from "./TripList";
 
 const ImageCardGrid = async ({
   title,
@@ -36,6 +38,7 @@ const ImageCardGrid = async ({
             <ImageCard key={data.id} {...data} />
           ))}
         </div>
+        <TripList trips={trips} />
       </div>
     </section>
   );

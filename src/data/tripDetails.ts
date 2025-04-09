@@ -21,9 +21,11 @@ export const createTripDetails = (
   {
     icon: GiPriceTag,
     content: `${price} RWF/day`,
+    content: `${price} RWF `,
   },
   {
     icon: MdAirlineSeatReclineExtra,
     content: `${seats} Seats`,
   },
+];
 ];

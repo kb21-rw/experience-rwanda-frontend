@@ -1,16 +1,15 @@
 export type TripDetails = {
   id: string;
   title: string;
-  description: string;
+  description?: string;
+  trip: string;
   destination: string;
   departureTime: string;
   price: number;
   seats: number;
-  seatsBooked: number;
-  currency: string;
+  seatsBooked?: number;
+  currency?: string;
   mainPicture: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type Row = {

@@ -12,15 +12,21 @@ const config: Config = {
     extend: {
       spacing: {
         1.5: "0.375rem",
+        7.5: "1.875rem",
         12.5: "3.125rem",
         13.5: "3.375rem",
+        14.25: "3.5625rem",
         21: "5.25rem",
+        30: "7.5rem",
         25: "6.25rem",
         112.5: "28.125rem",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         Figtree: ["Figtree", "sans-serif"],
+      },
+      fontSize: {
+        10: "2.5rem",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -69,7 +75,10 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
-        "gray-750": "#383838",
+        gray: {
+          750: "#383838",
+          850: "#0F0F0F",
+        },
       },
     },
   },

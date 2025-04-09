@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "../components/ui/NavBar";
 import Footer from "../components/Footer";
-// import Toastify from "@/components/Toastify";
+import Toastify from "@/components/Toastify";
 
 export const metadata: Metadata = {
   title: "Experience Rwanda - Your Gateway to Unforgettable Adventures",
@@ -18,6 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
+        <Toastify />
+
         <NavBar />
         {children}
         <Footer />
