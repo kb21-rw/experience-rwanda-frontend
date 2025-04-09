@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/components/ui/Card";
 import { Search, Smile } from "lucide-react";
 
 interface NoResultsProps {
@@ -10,11 +10,7 @@ interface NoResultsProps {
   onClearSearch?: () => void;
 }
 
-export default function NoResults({
-  title,
-  message,
-  onClearSearch,
-}: NoResultsProps) {
+const SearchNotFound = ({ title, message, onClearSearch }: NoResultsProps) => {
   return (
     <Card className="flex flex-col items-center justify-center p-6 text-center space-y-4">
       <div>
@@ -30,4 +26,5 @@ export default function NoResults({
       </div>
     </Card>
   );
-}
+};
+export default SearchNotFound;
