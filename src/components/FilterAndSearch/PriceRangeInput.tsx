@@ -6,7 +6,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/Forms";
+} from "../ui/Form";
 import { searchSchema } from "../../utils/schemas/searchSchema";
 import { z } from "zod";
 

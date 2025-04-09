@@ -4,7 +4,7 @@ import PriceRangeInput from "./PriceRangeInput";
 import { Label } from "@/components/ui/Label";
 import { FaArrowRight } from "react-icons/fa";
 import SearchLocation from "./SearchLocation";
-import { Form } from "../ui/Forms";
+import { Form } from "../ui/Form";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { searchSchema } from "../../utils/schemas/searchSchema";
 import { z } from "zod";

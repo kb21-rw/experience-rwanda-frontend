@@ -6,7 +6,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/Forms";
+} from "../ui/Form";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { searchSchema } from "../../utils/schemas/searchSchema";
