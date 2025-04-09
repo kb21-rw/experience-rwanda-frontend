@@ -31,7 +31,7 @@ const TripHeroCard = ({ tripId }: { tripId: string }) => {
   }, [fetchTripDetails]);
 
   if (!tripDetails) {
-    return <div>Data not found</div>;
+    return <div className="text-center">Loading...</div>;
   }
   const details = createTripDetails(
     tripDetails.destination,
