@@ -15,6 +15,7 @@ const config: Config = {
         7.5: "1.875rem",
         12.5: "3.125rem",
         13.5: "3.375rem",
+        14.25: "3.5625rem",
         21: "5.25rem",
         30: "7.5rem",
         25: "6.25rem",
@@ -23,6 +24,9 @@ const config: Config = {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         Figtree: ["Figtree", "sans-serif"],
+      },
+      fontSize: {
+        10: "2.5rem",
       },
       borderRadius: {
         lg: "var(--radius)",
