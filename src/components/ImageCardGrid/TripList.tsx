@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import FilterAndSearch from "../FilterAndSearch";
 import ImageCard from "./Card";
-import { Card } from "@/types/ImageCard";
+import { TripDetails } from "@/types/ImageCard";
 import SearchNotFound from "../ui/SearchNotFound";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +21,7 @@ const defaultFilters = {
   },
 };
 
-const TripList = ({ trips }: { trips: Card[] }) => {
+const TripList = ({ trips }: { trips: TripDetails[] }) => {
   const [filters, setFilters] =
     useState<z.infer<typeof searchSchema>>(defaultFilters);
 
@@ -71,7 +71,7 @@ const TripList = ({ trips }: { trips: Card[] }) => {
       <FilterAndSearch form={form} onSubmit={onSubmit} />
       {filteredTrips.length >= 1 ? (
         <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
-          {filteredTrips.map((data: Card) => (
+          {filteredTrips.map((data: TripDetails) => (
             <ImageCard key={data.id} {...data} />
           ))}
         </div>

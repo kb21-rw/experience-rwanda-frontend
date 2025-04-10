@@ -3,6 +3,7 @@ import "./globals.css";
 import NavBar from "../components/ui/NavBar";
 import Footer from "../components/Footer";
 import Toastify from "@/components/Toastify";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Experience Rwanda - Your Gateway to Unforgettable Adventures",
@@ -18,11 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Toastify />
-
-        <NavBar />
-        {children}
-        <Footer />
+        <Suspense fallback={null}>
+          <Toastify />
+          <NavBar />
+          {children}
+          <Footer />
+        </Suspense>
       </body>
     </html>
   );

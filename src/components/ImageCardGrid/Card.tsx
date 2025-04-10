@@ -1,22 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { ReactElement } from "react";
-import { Card } from "@/types/ImageCard";
+import { TripDetails } from "@/types/ImageCard";
 import Image from "next/image";
 import { Button } from "../ui/Button";
 import BookingPopup from "../ui/Popup";
 import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
+import Link from "next/link";
 
 const ImageCard = ({
-  destination,
   title: trip,
   mainPicture: url,
   price,
   departureTime: date,
   id: tripId,
+  destination,
   seats,
-}: Card): ReactElement => {
+}: TripDetails): ReactElement => {
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
 
   const details = createTripDetails(destination, date, price, seats);
@@ -27,7 +28,6 @@ const ImageCard = ({
         <div className="relative w-full h-64">
           <Image className="object-cover" src={url} alt={trip} fill priority />
         </div>
-
         <div className="p-6 space-y-6 font-inter">
           <h2 className="text-xl font-semibold text-black">{trip}</h2>
 
@@ -42,12 +42,14 @@ const ImageCard = ({
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button
-              className="flex-1 bg-white text-black border border-black rounded-lg"
-              variant="outline"
-            >
-              More Details
-            </Button>
+            <Link href={`/trips/${tripId}`} className="w-1/2">
+              <Button
+                className="flex-1 bg-white text-black border border-black rounded-lg"
+                variant="outline"
+              >
+                More Details
+              </Button>
+            </Link>
             <Button
               onClick={() => setSelectedTrip(tripId)}
               className="flex-1 bg-black text-white rounded-lg"
