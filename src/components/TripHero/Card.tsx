@@ -27,7 +27,9 @@ const TripHeroCard = ({ tripDetails }: Props) => {
     <>
       <div className="content-wrapper">
         <div className="flex justify-between py-10">
-          <Link href="/">Back</Link>
+          <Link href="/" className="text-base">
+            ←Back
+          </Link>
           <h1 className="text-center text-4xl font-bold">
             {tripDetails.title}
           </h1>
@@ -59,7 +61,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           ))}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 pb-5">
           <h2 className="text-2xl font-bold mt-8">Description</h2>
           <p className="text-base mt-4">{tripDetails.description}</p>
         </div>
