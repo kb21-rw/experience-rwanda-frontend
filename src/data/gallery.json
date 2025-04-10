@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "imageUrl": "/uploads/elephant.webp",
+    "alt": "Elephant in savanna with acacia tree",
+    "variant": true
+  },
+  {
+    "id": 2,
+    "imageUrl": "/uploads/giraffe.jpg",
+    "alt": "Giraffes at sunset in African savanna"
+  },
+  {
+    "id": 3,
+    "imageUrl": "/uploads/tiger.jpg",
+    "alt": "Cheetah running through grassland"
+  }
+]

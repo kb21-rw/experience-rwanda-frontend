@@ -4,58 +4,64 @@ import { ReactElement } from "react";
 import { Card } from "@/types/ImageCard";
 import Image from "next/image";
 import { Button } from "../ui/Button";
-import { format } from "date-fns";
 import BookingPopup from "../ui/Popup";
 import { useRouter } from "next/navigation";
+import IconContent from "../ui/IconContent";
+import { createTripDetails } from "@/data/tripDetails";
 
 const ImageCard = ({
-  destination: place,
+  destination,
+  title: trip,
   mainPicture: url,
   price,
   departureTime: date,
   id: tripId,
+  seats,
 }: Card): ReactElement => {
   const router = useRouter();
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
 
+  const details = createTripDetails(destination, date, price, seats);
   const handleMoreDetails = () => {
     router.push(`/details/${tripId}`);
   };
 
   return (
     <>
-      <div className="bg-white shadow rounded-3xl hover:bg-op ease-in-out duration-300">
-        <div className="p-3 flex justify-center">
-          <div className="relative w-full h-80">
-            <Image
-              className="object-cover rounded-3xl"
-              src={url}
-              alt={"image"}
-              fill
-            />
-          </div>
+      <div className="bg-white shadow-lg rounded-3xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div className="relative w-full h-64">
+          <Image className="object-cover" src={url} alt={trip} fill priority />
         </div>
 
-        <div className="flex flex-col gap-5 font-inter p-6">
-          <h1 className="font-bold text-lg md:text-xl h-12">Place: {place}</h1>
-          <p className="font-medium text-base">Price: {price} RWF</p>
-          <p className="font-normal text-base">
-            Date: {format(date, "MMMM dd yyyy")}
-          </p>
-          <Button
-            className="w-1/2"
-            variant="outline"
-            onClick={handleMoreDetails}
-          >
-            More Details
-          </Button>
-          <Button
-            onClick={() => setSelectedTrip(tripId)}
-            className="mb-1.5"
-            variant="default"
-          >
-            Book Now
-          </Button>
+        <div className="p-6 space-y-6 font-inter">
+          <h2 className="text-xl font-semibold text-black">{trip}</h2>
+
+          <div className="gap-4 grid grid-cols-2">
+            {details.map((detail, index) => (
+              <IconContent
+                key={index}
+                icon={detail.icon}
+                content={detail.content}
+              />
+            ))}
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button
+              className="flex-1 bg-white text-black border border-black rounded-lg"
+              variant="outline"
+              onClick={handleMoreDetails}
+            >
+              More Details
+            </Button>
+            <Button
+              onClick={() => setSelectedTrip(tripId)}
+              className="flex-1 bg-black text-white rounded-lg"
+              variant="default"
+            >
+              Book Now
+            </Button>
+          </div>
         </div>
       </div>
       {selectedTrip && (

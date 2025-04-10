@@ -1,22 +1,27 @@
-"use client"
+"use client";
+import Link from "next/link";
 import { footerData } from "../../data/siteConfig";
 import React from "react";
 
 const FooterLinks = () => {
-  const {footerLinks }= footerData
-  const handleScroll = (event:React.MouseEvent, targetId:string) => {
+  const { footerLinks } = footerData;
+  const handleScroll = (event: React.MouseEvent, targetId: string) => {
     event.preventDefault();
     const section = document.getElementById(targetId);
-    if(section){
-      section.scrollIntoView({behavior:"smooth", block:"start"});
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
   return (
     <div className="navigation flex gap-6 md:gap-12">
       {footerLinks.map((link) => (
-        <button key={link.sectionId} onClick={(e)=> handleScroll(e, link.sectionId)}>
+        <Link
+          href={link.url}
+          key={link.sectionId}
+          onClick={(e) => handleScroll(e, link.sectionId)}
+        >
           {link.label}
-        </button>
+        </Link>
       ))}
     </div>
   );
