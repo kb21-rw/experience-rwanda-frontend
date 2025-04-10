@@ -1,5 +1,5 @@
 "use client";
-import { TripDetails } from "@/types/ImageCard";
+import { Card as TripDetails } from "@/types/ImageCard";
 import Image from "next/image";
 import { useState, useMemo, useEffect } from "react";
 import IconContent from "../ui/IconContent";
