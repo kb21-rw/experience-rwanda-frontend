@@ -1,5 +1,4 @@
 import { Row } from "@/types/ImageCard";
-import { Button } from "@/components/ui/Button";
 import TripList from "./TripList";
 
 const ImageCardGrid = async ({
@@ -18,17 +17,6 @@ const ImageCardGrid = async ({
           <div className="flex flex-col gap-6 font-inter xl:w-1/2">
             <h1 className="font-bold text-2xl md:text-5xl">{title}</h1>
             <p className="md:text-xl text-base font-normal">{description}</p>
-          </div>
-          <div className="flex md:gap-5 gap-3 py-10 pb-5">
-            <Button className="border-t-2" variant={"outline"}>
-              All trips
-            </Button>
-            <Button className="border-t-2" variant={"outline"}>
-              Nyungwe
-            </Button>
-            <Button className="border-t-2" variant={"outline"}>
-              Akagera
-            </Button>
           </div>
         </div>
         <TripList trips={trips} />
