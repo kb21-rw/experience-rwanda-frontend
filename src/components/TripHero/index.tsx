@@ -12,7 +12,7 @@ const TripHeroCard = ({ tripId }: { tripId: string }) => {
     () => async () => {
       try {
         const response = await fetch(
-          `${process.env.API_URL}/trips/${tripId}` || "",
+          `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}` || "",
           {
             next: { revalidate: 600 },
           }
