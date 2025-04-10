@@ -5,7 +5,6 @@ import { Card } from "@/types/ImageCard";
 import Image from "next/image";
 import { Button } from "../ui/Button";
 import BookingPopup from "../ui/Popup";
-import { useRouter } from "next/navigation";
 import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
 
@@ -18,13 +17,9 @@ const ImageCard = ({
   id: tripId,
   seats,
 }: Card): ReactElement => {
-  const router = useRouter();
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
 
   const details = createTripDetails(destination, date, price, seats);
-  const handleMoreDetails = () => {
-    router.push(`/details/${tripId}`);
-  };
 
   return (
     <>
@@ -50,7 +45,6 @@ const ImageCard = ({
             <Button
               className="flex-1 bg-white text-black border border-black rounded-lg"
               variant="outline"
-              onClick={handleMoreDetails}
             >
               More Details
             </Button>
