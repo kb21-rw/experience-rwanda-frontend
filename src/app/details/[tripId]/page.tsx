@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { HeaderVariant } from "@/enums/Header";
-
+import TripPackage from "@/components/TripPackage";
+import GalleryGrid from "@/components/GalleryGrid";
 const TripDetailsPage = async () => {
   return (
     <div>
@@ -11,6 +12,8 @@ const TripDetailsPage = async () => {
         }
         variant={HeaderVariant.SECONDARY}
       />
+      <TripPackage title="Trip Packages" />
+      <GalleryGrid title="Gallery" />
     </div>
   );
 };
