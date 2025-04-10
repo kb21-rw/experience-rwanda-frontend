@@ -6,7 +6,7 @@ export default function TripDetailsPage({
   params: { tripId: string };
 }) {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen">
       <TripHeroCard tripId={params.tripId} />
     </main>
   );

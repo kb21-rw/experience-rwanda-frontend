@@ -1,44 +1,29 @@
-"use client";
 import { TripDetails } from "@/types/ImageCard";
 import Image from "next/image";
-import { useState, useMemo, useEffect } from "react";
 import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
 
-const TripHeroCard = ({ tripId }: { tripId: string }) => {
-  const [tripDetails, setTripDetails] = useState<TripDetails | null>(null);
-
-  const fetchTripDetails = useMemo(
-    () => async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}` || "",
-          {
-            next: { revalidate: 600 },
-          }
-        );
-        const data = await response.json();
-        setTripDetails(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    },
-    [tripId]
+const TripHeroCard = async ({ tripId }: { tripId: string }) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}`,
+    {
+      next: { revalidate: 600 },
+    }
   );
 
-  useEffect(() => {
-    fetchTripDetails();
-  }, [fetchTripDetails]);
-
-  if (!tripDetails) {
-    return <div className="text-center">Loading...</div>;
+  if (!response.ok) {
+    throw new Error(`Failed to fetch trip details: ${response.statusText}`);
   }
+
+  const tripDetails: TripDetails = await response.json();
+
   const details = createTripDetails(
     tripDetails.destination,
     tripDetails.departureTime,
     tripDetails.price,
     tripDetails.seats
   );
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-center text-4xl font-bold p-12 ">

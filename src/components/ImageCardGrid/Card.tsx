@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { ReactElement } from "react";
 import { TripDetails } from "@/types/ImageCard";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import { Button } from "../ui/Button";
 import BookingPopup from "../ui/Popup";
 import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
+import Link from "next/link";
 
 const ImageCard = ({
   title: trip,
@@ -41,12 +42,14 @@ const ImageCard = ({
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button
-              className="flex-1 bg-white text-black border border-black rounded-lg"
-              variant="outline"
-            >
-              More Details
-            </Button>
+            <Link href={`/trips/${tripId}`} className="w-1/2">
+              <Button
+                className="flex-1 bg-white text-black border border-black rounded-lg"
+                variant="outline"
+              >
+                More Details
+              </Button>
+            </Link>
             <Button
               onClick={() => setSelectedTrip(tripId)}
               className="flex-1 bg-black text-white rounded-lg"
