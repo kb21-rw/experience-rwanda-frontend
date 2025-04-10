@@ -4,6 +4,3 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-export function isNumeric(str: string) {
-  return !isNaN(Number(str)) && !isNaN(parseFloat(str));
-}
