@@ -1,5 +1,4 @@
-import ImageCard from "./Card";
-import { TripDetails, Row } from "@/types/ImageCard";
+import { Row } from "@/types/ImageCard";
 import { Button } from "@/components/ui/Button";
 import TripList from "./TripList";
 
@@ -31,11 +30,6 @@ const ImageCardGrid = async ({
               Akagera
             </Button>
           </div>
-        </div>
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
-          {trips.map((data: TripDetails) => (
-            <ImageCard key={data.id} {...data} />
-          ))}
         </div>
         <TripList trips={trips} />
       </div>
