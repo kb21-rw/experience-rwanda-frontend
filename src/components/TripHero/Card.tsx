@@ -27,7 +27,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
     <>
       <div className="content-wrapper">
         <div className="flex justify-between py-10">
-          <Link href="/" className="text-base">
+          <Link href="/" className="text-base font-semibold">
             ←Back
           </Link>
           <h1 className="text-center text-4xl font-bold">
