@@ -5,16 +5,24 @@ export const navbarData = {
   },
   navLinks: [
     {
+      href: "/",
       sectionId: "home",
       label: "Home",
     },
     {
+      href: "/",
+      sectionId: "about",
+      label: "About us",
+    },
+    {
+      href: "/",
       sectionId: "bookings",
       label: "Bookings",
     },
     {
-      sectionId: "about",
-      label: "About us",
+      href: "/contact",
+      sectionId: "contact",
+      label: "Contact us",
     },
   ],
 } as const;

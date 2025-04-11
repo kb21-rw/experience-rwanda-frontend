@@ -9,6 +9,7 @@ import Link from "next/link";
 export type NavLink = {
   sectionId: string;
   label: string;
+  href: string;
 };
 
 export type NavData = {
@@ -64,6 +65,7 @@ const NavBar = () => {
           <NavItem
             key={item.sectionId}
             sectionId={item.sectionId}
+            href={item.href}
             onClick={toggleMenu}
             isActive={activeSection === item.sectionId}
           >
@@ -91,6 +93,7 @@ const NavBar = () => {
                 key={item.sectionId}
                 sectionId={item.sectionId}
                 onClick={toggleMenu}
+                href={item.href}
                 isActive={activeSection === item.sectionId}
               >
                 {item.label}
