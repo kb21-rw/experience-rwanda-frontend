@@ -22,13 +22,12 @@ const TripHeroCard = ({ tripDetails }: Props) => {
     tripDetails.price,
     tripDetails.seats
   );
-
   return (
     <>
       <div className="content-wrapper">
         <div className="flex justify-between py-10">
           <Link href="/" className="text-base font-semibold">
-            ←Back
+            <span className="mr-1 font-semibold">←</span>Back
           </Link>
           <h1 className="text-center text-4xl font-bold">
             {tripDetails.title}
