@@ -61,7 +61,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           ))}
         </div>
 
-        <div className="mt-8 pb-5">
+        <div className="py-20">
           <h2 className="text-2xl font-bold mt-8">Description</h2>
           <p className="text-base mt-4">{tripDetails.description}</p>
         </div>
