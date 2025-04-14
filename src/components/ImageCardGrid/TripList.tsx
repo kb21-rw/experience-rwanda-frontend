@@ -30,6 +30,9 @@ const TripList = ({ trips }: { trips: TripDetails[] }) => {
       const matchesLocation = data.destination
         .toLowerCase()
         .includes(filters.location.toLowerCase());
+      const matchesTitle = data.title
+        .toLowerCase()
+        .includes(filters.location.toLowerCase());
 
       const matchesDate =
         filters.dateRange?.from !== undefined &&
@@ -44,7 +47,7 @@ const TripList = ({ trips }: { trips: TripDetails[] }) => {
             data.price <= Number(filters.price.max)
           : true;
 
-      return matchesLocation && matchesDate && matchesPrice;
+      return (matchesLocation || matchesTitle) && matchesDate && matchesPrice;
     });
   }, [
     filters.dateRange?.from,
