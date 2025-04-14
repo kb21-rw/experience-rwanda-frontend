@@ -1,32 +1,34 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { TripDetails } from "@/types/ImageCard";
-import Image from "next/image";
-import IconContent from "../ui/IconContent";
-import Link from "next/link";
-import { Button } from "../ui/Button";
-import BookingPopup from "../ui/Popup";
-import { createTripDetails } from "@/data/tripDetails";
+import { useState } from "react"
+import { TripDetails } from "@/types/ImageCard"
+import Image from "next/image"
+import IconContent from "../ui/IconContent"
+import Link from "next/link"
+import { Button } from "../ui/Button"
+import BookingPopup from "../ui/Popup"
+import { createTripDetails } from "@/data/tripDetails"
 
 interface Props {
-  tripDetails: TripDetails;
+  tripDetails: TripDetails
 }
 
 const TripHeroCard = ({ tripDetails }: Props) => {
-  const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
+  const [selectedTrip, setSelectedTrip] = useState<string | null>(null)
 
   const details = createTripDetails(
     tripDetails.destination,
     tripDetails.departureTime,
     tripDetails.price,
     tripDetails.seats
-  );
+  )
   return (
     <>
       <div className="content-wrapper">
         <div className="flex justify-between py-10 items-center">
-          <Link href="/" className="text-base font-semibold">
+          <Link
+            href="/"
+            className="text-base font-semibold">
             <span className="mr-1 font-semibold">←</span>Back
           </Link>
           <h1 className="text-center text-4xl font-bold">
@@ -34,8 +36,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           </h1>
           <Button
             variant="default"
-            onClick={() => setSelectedTrip(tripDetails.id)}
-          >
+            onClick={() => setSelectedTrip(tripDetails.id)}>
             Book Now
           </Button>
         </div>
@@ -56,6 +57,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
               key={index}
               icon={detail.icon}
               content={detail.content}
+              className="bg-black p-3 rounded-full text-white"
             />
           ))}
         </div>
@@ -67,10 +69,13 @@ const TripHeroCard = ({ tripDetails }: Props) => {
       </div>
 
       {selectedTrip && (
-        <BookingPopup tripId={selectedTrip} setSelectedTrip={setSelectedTrip} />
+        <BookingPopup
+          tripId={selectedTrip}
+          setSelectedTrip={setSelectedTrip}
+        />
       )}
     </>
-  );
-};
+  )
+}
 
-export default TripHeroCard;
+export default TripHeroCard

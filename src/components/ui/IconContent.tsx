@@ -13,16 +13,14 @@ const IconContent: FC<IconContentProps> = ({
   className,
 }) => {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <div className="bg-black p-3 rounded-full">
+    <div className="flex items-center gap-3">
+      <div className={`${className}`}>
         <Icon
-          className="text-white text-xl"
+          className="text-xl"
           size={20}
         />
       </div>
-      <span className="text-md font-inter font-normal text-black">
-        {content}
-      </span>
+      <span className="text-lg font-inter font-normal">{content}</span>
     </div>
   )
 }
