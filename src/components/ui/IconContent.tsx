@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, { FC } from "react";
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
 
@@ -8,13 +8,17 @@ type IconContentProps = {
   className?: string;
 };
 
-const IconContent:FC<IconContentProps> = ({icon:Icon, content, className}) => {
+const IconContent: FC<IconContentProps> = ({
+  icon: Icon,
+  content,
+  className,
+}) => {
   return (
-    <div className={`flex items-center gap-1 ${className}`}>
-        <Icon className="text-lg"/>
-        <span className='text-sm font-inter font-normal'>{content}</span>
+    <div className={`flex items-center gap-3 ${className}`}>
+      <Icon className="text-lg" />
+      <span className="text-sm font-inter font-normal">{content}</span>
     </div>
-  )
-}
+  );
+};
 
-export default IconContent
+export default IconContent;
