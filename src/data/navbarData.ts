@@ -1,22 +1,28 @@
 export const navbarData = {
   logo: {
     title: "ExperienceRw",
-    url: "/"
+    url: "./",
   },
   navLinks: [
     {
+      href: "./#home",
       sectionId: "home",
-      label: "Home"
-      
+      label: "Home",
     },
     {
-      sectionId: "bookings",
-      label: "Bookings"
-      
-    },
-    {
+      href: "./#about",
       sectionId: "about",
-      label: "About us"
-    }
-  ]
+      label: "About us",
+    },
+    {
+      href: "./#trips",
+      sectionId: "trips",
+      label: "Trips",
+    },
+    {
+      href: "/contact",
+      sectionId: "/contact",
+      label: "Contact us",
+    },
+  ],
 } as const;

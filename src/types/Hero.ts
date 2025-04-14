@@ -4,7 +4,7 @@ export type Content = {
 };
 
 export type HeroContent = {
-  id: number;
+  id: string;
   imageUrl: string;
   content: Content;
 };
