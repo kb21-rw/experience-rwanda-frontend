@@ -5,6 +5,7 @@ import MenuIcon from "../../../assets/MenuIcon";
 import CloseIcon from "../../../assets/CloseIcon";
 import { navbarData } from "@/data/navbarData";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export type NavLink = {
   sectionId: string;
@@ -23,6 +24,7 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const { logo, navLinks } = navbarData;
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,12 +46,16 @@ const NavBar = () => {
         }
       });
     };
-
     window.addEventListener("scroll", handleScroll);
     handleScroll();
+    if (pathname === "/") {
+      setActiveSection("home");
+    } else {
+      setActiveSection(pathname);
+    }
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [navLinks]);
+  }, [navLinks, pathname]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
