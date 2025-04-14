@@ -1,4 +1,6 @@
-import Food from "../assets/meal.png";
+import Food from "../assets/meal.png"
+import attention from "../assets/attention.png"
+import driver from "../assets/driver.png"
 export const tripPackageData = [
   {
     title: "Daily gourmet meals",
@@ -7,12 +9,12 @@ export const tripPackageData = [
   },
   {
     title: "Crew team",
-    icon: Food,
+    icon: driver,
     items: ["Driver", "Tour Guide"],
   },
   {
     title: "Don't forget!",
-    icon: Food,
+    icon: attention,
     items: ["Rain coat", "Re-fillable water bottle", "Rain shoes"],
   },
-];
+]
