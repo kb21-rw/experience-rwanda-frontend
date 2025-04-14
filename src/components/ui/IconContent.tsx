@@ -20,7 +20,7 @@ const IconContent: FC<IconContentProps> = ({
           size={20}
         />
       </div>
-      <span className="text-lg font-inter font-normal">{content}</span>
+      <span className="text-sm font-inter font-normal">{content}</span>
     </div>
   )
 }
