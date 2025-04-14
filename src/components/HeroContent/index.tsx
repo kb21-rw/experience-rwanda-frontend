@@ -3,9 +3,9 @@ import Image from "next/image";
 import type { HeroContent } from "@/types/Hero";
 import Content from "./Content";
 
-const HeroContent = ({ imageUrl, content }: Omit<HeroContent, "id">) => {
+const HeroContent = ({ id, imageUrl, content }: HeroContent) => {
   return (
-    <section className="w-full h-[calc(100vh-7.75rem)]">
+    <section id={id} className="w-full h-[calc(100vh-7.75rem)]">
       <div className="absolute -z-50 inset-0">
         <Image
           className="object-cover"

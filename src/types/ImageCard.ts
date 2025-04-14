@@ -13,7 +13,7 @@ export type TripDetails = {
 };
 
 export type Row = {
-  id: number;
+  id: string;
   title: string;
   description: string;
 };

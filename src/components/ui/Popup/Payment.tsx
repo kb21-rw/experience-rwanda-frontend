@@ -29,7 +29,7 @@ const PaymentPopup = ({
     if (paymentMethod === "momo") {
       const { phoneNumber } = data;
       const response = await postData(
-        `${process.env.API_URL}/payments/charge-momo`,
+        `${process.env.NEXT_PUBLIC_API_URL}/payments/charge-momo`,
         { ...clientData, tripId, phoneNumber }
       );
       if (response.status === "success") {
@@ -37,7 +37,7 @@ const PaymentPopup = ({
       }
     } else if (paymentMethod === "card") {
       const response = await postData(
-        `${process.env.API_URL}/payments/charge-card`,
+        `${process.env.NEXT_PUBLIC_API_URL}/payments/charge-card`,
         { ...clientData, tripId }
       );
       if (response.data.status === "success") {

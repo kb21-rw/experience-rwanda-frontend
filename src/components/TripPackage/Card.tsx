@@ -11,7 +11,7 @@ type TripPackageProps = {
 
 const TripPackageCard = ({ title, icon, items }: TripPackageProps) => {
   return (
-    <div className="bg-gray-750 md:w-80 w-full bg-opacity-50 flex items-center flex-col rounded-5 py-6 text-white">
+    <div className="bg-gray-750 w-full bg-opacity-50 flex items-center flex-col rounded-5 py-6 text-white">
       <div className="bg-white h-32 w-32 mb-16 mt-6 rounded-full flex items-center justify-center">
         <Image src={icon} alt={title} layout="raw" />
       </div>

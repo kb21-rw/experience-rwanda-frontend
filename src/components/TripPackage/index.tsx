@@ -11,7 +11,7 @@ const TripPackage = ({ title }: TripPackageProps) => {
       <h1 className="text-4xl font-bold md:mb-20 mb-10 text-center text-white">
         {title}
       </h1>
-      <div className="flex flex-wrap gap-10 content-wrapper">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 content-wrapper">
         {tripPackageData.map((item, index) => (
           <TripPackageCard
             key={index}
