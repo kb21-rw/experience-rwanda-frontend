@@ -18,7 +18,11 @@ const FooterLinks = () => {
         <Link
           href={link.url}
           key={link.sectionId}
-          onClick={(e) => handleScroll(e, link.sectionId)}
+          onClick={(e) => {
+            if (link.url === "/") {
+              handleScroll(e, link.sectionId);
+            }
+          }}
         >
           {link.label}
         </Link>
