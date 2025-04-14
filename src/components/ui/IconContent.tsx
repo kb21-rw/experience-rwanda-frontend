@@ -1,12 +1,11 @@
-import React, { FC } from "react";
-import { ReactNode } from "react";
-import { IconType } from "react-icons";
+import { FC, ReactNode } from "react"
+import { IconType } from "react-icons"
 
 type IconContentProps = {
-  icon: IconType;
-  content: ReactNode;
-  className?: string;
-};
+  icon: IconType
+  content: ReactNode
+  className?: string
+}
 
 const IconContent: FC<IconContentProps> = ({
   icon: Icon,
@@ -14,11 +13,16 @@ const IconContent: FC<IconContentProps> = ({
   className,
 }) => {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <Icon className="text-lg" />
-      <span className="text-sm font-inter font-normal">{content}</span>
+    <div className="flex items-center gap-3">
+      <div className={`${className}`}>
+        <Icon
+          className="text-xl"
+          size={20}
+        />
+      </div>
+      <span className="text-lg font-inter font-normal">{content}</span>
     </div>
-  );
-};
+  )
+}
 
-export default IconContent;
+export default IconContent
