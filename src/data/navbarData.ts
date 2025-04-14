@@ -5,7 +5,7 @@ export const navbarData = {
   },
   navLinks: [
     {
-      href: "./",
+      href: "./#home",
       sectionId: "home",
       label: "Home",
     },
@@ -15,9 +15,9 @@ export const navbarData = {
       label: "About us",
     },
     {
-      href: "./#bookings",
-      sectionId: "bookings",
-      label: "Bookings",
+      href: "./#trips",
+      sectionId: "trips",
+      label: "Trips",
     },
     {
       href: "/contact",

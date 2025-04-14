@@ -20,7 +20,7 @@ export default function Home() {
         variant={aboutUsData.variant}
       />
       <ImageCardGrid
-        id="bookings"
+        id="trips"
         title={tripData.title}
         description={tripData.description}
       />
