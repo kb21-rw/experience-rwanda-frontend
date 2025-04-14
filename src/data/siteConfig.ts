@@ -6,17 +6,17 @@ export const footerData: FooterData = {
     {
       sectionId: "home",
       label: "Home",
-      url: "/",
+      url: "./#home",
     },
     {
-      sectionId: "bookings",
-      label: "Bookings",
-      url: "/bookings",
+      sectionId: "trips",
+      label: "Trips",
+      url: "./#trips",
     },
     {
       sectionId: "about",
       label: "About us",
-      url: "/about",
+      url: "./#about",
     },
     { sectionId: "contact", label: "Contact", url: "/contact" },
   ],
