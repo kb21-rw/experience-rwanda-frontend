@@ -42,7 +42,7 @@ const Signup = () => {
           <Label>Full Names</Label>
           <Input
             type="text"
-            placeholder="Experience Rwanda"
+            placeholder="Enter your full names"
             {...register("fullName")}
           />
           {errors.fullName && (
@@ -56,7 +56,7 @@ const Signup = () => {
           <Label>Email</Label>
           <Input
             type="email"
-            placeholder="experiencerwanda@gmail.com"
+            placeholder="enter your email"
             {...register("email")}
           />
           {errors.email && (
