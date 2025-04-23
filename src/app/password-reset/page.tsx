@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/Label";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { passwordResetSchema } from "@/utils/schemas/passwordResetSchema";
 
-type FormData = z.infer<typeof signupSchema>;
+type FormData = z.infer<typeof passwordResetSchema>;
 
 const PasswordReset = () => {
   const {
@@ -15,7 +16,7 @@ const PasswordReset = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(passwordResetSchema),
   });
 
   const onSubmit = (data: FormData) => {
