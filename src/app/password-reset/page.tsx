@@ -21,7 +21,7 @@ const PasswordReset = () => {
 
   const onSubmit = (data: FormData) => {
     console.log("Validated Form Data:", data);
-    // waiting for api.........
+    // waiting for api.........s
   };
 
   return (
@@ -36,12 +36,12 @@ const PasswordReset = () => {
         className="bg-white rounded-lg shadow-lg p-10 w-full max-w-md"
       >
         <h1 className="text-xl font-bold text-center">Reset Password</h1>
-        <p className="text-lg mb-6 font-medium">
+        <p className="text-lg py-10">
           Enter the email address you used when creating Experience Rwanda
           account we will send a code to reset password{" "}
         </p>
 
-        <div className="mb-4">
+        <div className="mb-7 flex flex-col gap-3">
           <Label>Email</Label>
           <Input
             type="email"
