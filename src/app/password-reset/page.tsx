@@ -19,16 +19,32 @@ const PasswordReset = () => {
     resolver: zodResolver(passwordResetSchema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Validated Form Data:", data);
-    // waiting for api.........s
+  const onSubmit = async (data: FormData) => {
+    try {
+      const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: data.email }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Something went wrong");
+      }
+
+      document.querySelector("form")?.reset();
+    } catch (error) {
+      console.error("Password reset error:", error);
+    }
   };
 
   return (
     <main
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center px-4"
+      className="min-h-screen flex items-center justify-center px-4"
       style={{
         backgroundImage: `url('/uploads/hand.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <form
@@ -36,25 +52,25 @@ const PasswordReset = () => {
         className="bg-white rounded-lg shadow-lg p-10 w-full max-w-md"
       >
         <h1 className="text-xl font-bold text-center">Reset Password</h1>
-        <p className="text-lg py-10">
-          Enter the email address you used when creating Experience Rwanda
-          account we will send a code to reset password{" "}
+        <p className="text-lg py-10 text-center">
+          Enter the email address you used when creating your Experience Rwanda
+          account. We will send a code to reset your password.
         </p>
 
-        <div className="mb-7 flex flex-col gap-3">
+        <div className="mb-7">
           <Label>Email</Label>
           <Input
             type="email"
-            placeholder="enter your email"
+            placeholder="Enter your email"
             {...register("email")}
           />
           {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            <span className="text-red-500 text-sm">{errors.email.message}</span>
           )}
         </div>
 
         <Button variant="primary" type="submit" className="w-full">
-          Create Account
+          Reset Password
         </Button>
       </form>
     </main>
