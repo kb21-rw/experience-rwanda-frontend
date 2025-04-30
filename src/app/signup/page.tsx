@@ -7,10 +7,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "@/utils/schemas/signupSchema";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 type FormData = z.infer<typeof signupSchema>;
 
 const Signup = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -19,10 +22,32 @@ const Signup = () => {
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Validated Form Data:", data);
-    // waiting for api.........
-  };
+  const onSubmit = useCallback(
+    async (data: FormData) => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/admin/signup`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          }
+        );
+
+        const result = await res.json();
+
+        if (!res.ok || result?.data?.status !== "success") {
+          throw new Error(result?.message || "Signup failed");
+        }
+
+        router.push("/login");
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Unexpected error";
+        console.error("Signup error:", message);
+      }
+    },
+    [router]
+  );
 
   return (
     <main
@@ -43,12 +68,10 @@ const Signup = () => {
           <Input
             type="text"
             placeholder="Enter your full names"
-            {...register("fullName")}
+            {...register("name")}
           />
-          {errors.fullName && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.fullName.message}
-            </p>
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
           )}
         </div>
 

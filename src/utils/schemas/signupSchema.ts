@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const signupSchema = z
   .object({
-    fullName: z
+    name: z
       .string()
       .min(2, "Full name is required")
       .max(20, "Full name should not exceed 20 characters"),
