@@ -58,7 +58,7 @@ const PasswordReset = () => {
           </Link>
           <h1 className="text-2xl font-bold text-center">Reset Password</h1>
         </div>
-        <p className="text-lg py-10">
+        <p className="text-lg py-8">
           Enter the email address you used when creating your Experience Rwanda
           account. We will send a code to reset your password.
         </p>
