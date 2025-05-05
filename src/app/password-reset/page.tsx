@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { passwordResetSchema } from "@/utils/schemas/passwordResetSchema";
+import Link from "next/link";
 
 type FormData = z.infer<typeof passwordResetSchema>;
 
@@ -51,7 +52,12 @@ const PasswordReset = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white rounded-lg shadow-lg p-10 w-full max-w-md"
       >
-        <h1 className="text-xl font-bold text-center">Reset Password</h1>
+        <div className="flex gap-5">
+          <Link href="/login" className="text-3xl font-bold mb-2">
+            ←
+          </Link>
+          <h1 className="text-2xl font-bold text-center">Reset Password</h1>
+        </div>
         <p className="text-lg py-10">
           Enter the email address you used when creating your Experience Rwanda
           account. We will send a code to reset your password.
