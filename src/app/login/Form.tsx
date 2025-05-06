@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,10 +19,23 @@ export default function LoginForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
   });
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail');
+    const savedPassword = localStorage.getItem('savedPassword');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+
+    if (rememberMe && savedEmail && savedPassword) {
+      setValue('email', savedEmail);
+      setValue('password', savedPassword);
+      setValue('rememberMe', true);
+    }
+  }, [setValue]);
 
   const onSubmit = useCallback(
     async (data: FormData) => {
@@ -30,8 +43,18 @@ export default function LoginForm() {
       setError(null);
 
       try {
+        if (data.rememberMe) {
+          localStorage.setItem('savedEmail', data.email);
+          localStorage.setItem('savedPassword', data.password);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('savedEmail');
+          localStorage.removeItem('savedPassword');
+          localStorage.removeItem('rememberMe');
+        }
+
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/admin/login`,
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -46,9 +69,15 @@ export default function LoginForm() {
         const result = await res.json();
 
         if (!res.ok) {
+          if (result?.message === "Account is not active") {
+            throw new Error("Your account is not active. Please check your email for an activation link.");
+          }
           throw new Error(result?.message || "Login failed");
         }
 
+        if (result.token) {
+          localStorage.setItem('token', result.token);
+        }
   
         router.push("/admin");
       } catch (err) {
