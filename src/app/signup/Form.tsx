@@ -53,10 +53,13 @@ const SignupForm = () => {
 
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/admin/signup`,
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/create-profile`,
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify({
               name: data.name,
               email: invitedEmail,
