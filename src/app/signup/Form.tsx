@@ -2,10 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback, useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signupSchema } from "@/utils/schemas/signupSchema";
 import { z } from "zod";
+import { jwtDecode } from "jwt-decode";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
@@ -14,8 +15,20 @@ type FormData = z.infer<typeof signupSchema>;
 
 const SignupForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+
+  const invitedEmail = useMemo(() => {
+    if (!token) return null;
+    try {
+      const decoded = jwtDecode<{ email: string }>(token);
+      return decoded.email;
+    } catch {
+      return null;
+    }
+  }, [token]);
 
   const {
     register,
@@ -23,12 +36,20 @@ const SignupForm = () => {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(signupSchema),
+    defaultValues: {
+      email: invitedEmail || "",
+    },
   });
 
   const onSubmit = useCallback(
     async (data: FormData) => {
       setLoading(true);
       setFormError(null);
+      if (!token || !invitedEmail) {
+        setFormError("Invalid or missing invite token.");
+        setLoading(false);
+        return;
+      }
 
       try {
         const res = await fetch(
@@ -38,7 +59,7 @@ const SignupForm = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               name: data.name,
-              email: data.email,
+              email: invitedEmail,
               password: data.password,
             }),
           }
@@ -60,7 +81,7 @@ const SignupForm = () => {
         setLoading(false);
       }
     },
-    [router]
+    [router, invitedEmail, token]
   );
 
   return (
@@ -94,6 +115,8 @@ const SignupForm = () => {
         <Input
           type="email"
           placeholder="Enter your email"
+          readOnly
+          value={invitedEmail ?? ""}
           {...register("email")}
         />
         {errors.email && (
