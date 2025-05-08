@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signupSchema } from "@/utils/schemas/signupSchema";
 import { z } from "zod";
@@ -18,21 +18,22 @@ const SignupForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [loading, setLoading] = useState(false);
-  const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!token) {
-      router.replace("/invalid-invite");
-      return;
-    }
+  const { verifiedEmail, isAuthorized, verifying } = useMemo(() => {
+    if (!token)
+      return { verifiedEmail: null, isAuthorized: false, verifying: false };
     try {
       const decoded = jwtDecode<{ email: string }>(token);
       if (!decoded.email) throw new Error();
-      setVerifiedEmail(decoded.email);
+      return {
+        verifiedEmail: decoded.email,
+        isAuthorized: true,
+        verifying: false,
+      };
     } catch {
-      router.replace("/invalid-invite");
+      return { verifiedEmail: null, isAuthorized: false, verifying: false };
     }
-  }, [token, router]);
+  }, [token]);
 
   const {
     register,
@@ -88,6 +89,9 @@ const SignupForm = () => {
     [router, verifiedEmail, token, setError]
   );
 
+  if (verifying)
+    return <p className="text-center py-10">Verifying invitation...</p>;
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -96,6 +100,11 @@ const SignupForm = () => {
       <h1 className="text-xl font-bold text-center">ExperienceRw</h1>
       <h2 className="text-lg text-center mb-6 font-medium">Sign Up</h2>
 
+      {!isAuthorized && (
+        <p className="text-red-600 text-center mb-6 text-sm font-medium">
+          You are not authorized create an account.
+        </p>
+      )}
       {errors.root && (
         <p className="text-red-600 text-center mb-4 text-sm font-medium">
           {errors.root.message}
@@ -107,6 +116,7 @@ const SignupForm = () => {
         <Input
           type="text"
           placeholder="Enter your full names"
+          disabled={!isAuthorized}
           {...register("name")}
         />
         {errors.name && (
@@ -121,6 +131,7 @@ const SignupForm = () => {
           placeholder="Enter your email"
           readOnly
           value={verifiedEmail ?? ""}
+          disabled
           {...register("email")}
         />
         {errors.email && (
@@ -130,7 +141,11 @@ const SignupForm = () => {
 
       <div className="mb-4">
         <Label>Password</Label>
-        <Input type="password" {...register("password")} />
+        <Input
+          type="password"
+          disabled={!isAuthorized}
+          {...register("password")}
+        />
         {errors.password && (
           <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
         )}
@@ -138,7 +153,11 @@ const SignupForm = () => {
 
       <div className="mb-6">
         <Label>Confirm Password</Label>
-        <Input type="password" {...register("confirmPassword")} />
+        <Input
+          type="password"
+          disabled={!isAuthorized}
+          {...register("confirmPassword")}
+        />
         {errors.confirmPassword && (
           <p className="text-red-500 text-sm mt-1">
             {errors.confirmPassword.message}
@@ -150,7 +169,7 @@ const SignupForm = () => {
         type="submit"
         variant="primary"
         className="w-full"
-        disabled={loading || isSubmitting}
+        disabled={loading || isSubmitting || !isAuthorized}
       >
         {loading ? "Creating Account..." : "Create Account"}
       </Button>
