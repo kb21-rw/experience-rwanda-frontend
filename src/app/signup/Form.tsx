@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signupSchema } from "@/utils/schemas/signupSchema";
 import { z } from "zod";
@@ -17,21 +17,18 @@ const SignupForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const [loading, setLoading] = useState(false);
 
-  const { verifiedEmail, isAuthorized, verifying } = useMemo(() => {
-    if (!token)
-      return { verifiedEmail: null, isAuthorized: false, verifying: false };
+  const { verifiedEmail, isAuthorized } = useMemo(() => {
+    if (!token) return { verifiedEmail: null, isAuthorized: false };
     try {
       const decoded = jwtDecode<{ email: string }>(token);
       if (!decoded.email) throw new Error();
       return {
         verifiedEmail: decoded.email,
         isAuthorized: true,
-        verifying: false,
       };
     } catch {
-      return { verifiedEmail: null, isAuthorized: false, verifying: false };
+      return { verifiedEmail: null, isAuthorized: false };
     }
   }, [token]);
 
@@ -49,8 +46,6 @@ const SignupForm = () => {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
-      setLoading(true);
-
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/create-profile`,
@@ -72,7 +67,6 @@ const SignupForm = () => {
 
         if (!res.ok) {
           setError("root", { message: result?.message || "Signup failed" });
-          setLoading(false);
           return;
         }
 
@@ -82,15 +76,10 @@ const SignupForm = () => {
           err instanceof Error ? err.message : "Something went wrong";
         setError("root", { message });
         console.error("Signup error:", message);
-      } finally {
-        setLoading(false);
       }
     },
     [router, verifiedEmail, token, setError]
   );
-
-  if (verifying)
-    return <p className="text-center py-10">Verifying invitation...</p>;
 
   return (
     <form
@@ -102,7 +91,7 @@ const SignupForm = () => {
 
       {!isAuthorized && (
         <p className="text-red-600 text-center mb-6 text-sm font-medium">
-          You are not authorized create an account.
+          You are not authorized to create an account.
         </p>
       )}
       {errors.root && (
@@ -169,9 +158,9 @@ const SignupForm = () => {
         type="submit"
         variant="primary"
         className="w-full"
-        disabled={loading || isSubmitting || !isAuthorized}
+        disabled={isSubmitting || !isAuthorized}
       >
-        {loading ? "Creating Account..." : "Create Account"}
+        {isSubmitting ? "Creating Account..." : "Create Account"}
       </Button>
     </form>
   );
