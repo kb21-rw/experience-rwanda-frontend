@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signupSchema } from "@/utils/schemas/signupSchema";
 import { z } from "zod";
@@ -18,38 +18,37 @@ const SignupForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [loading, setLoading] = useState(false);
-  const [formError, setFormError] = useState<string | null>(null);
+  const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
 
-  const invitedEmail = useMemo(() => {
-    if (!token) return null;
+  useEffect(() => {
+    if (!token) {
+      router.replace("/invalid-invite");
+      return;
+    }
     try {
       const decoded = jwtDecode<{ email: string }>(token);
-      return decoded.email;
+      if (!decoded.email) throw new Error();
+      setVerifiedEmail(decoded.email);
     } catch {
-      return null;
+      router.replace("/invalid-invite");
     }
-  }, [token]);
+  }, [token, router]);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    setError,
   } = useForm<FormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      email: invitedEmail || "",
+      email: verifiedEmail || "",
     },
   });
 
   const onSubmit = useCallback(
     async (data: FormData) => {
       setLoading(true);
-      setFormError(null);
-      if (!token || !invitedEmail) {
-        setFormError("Invalid or missing invite token.");
-        setLoading(false);
-        return;
-      }
 
       try {
         const res = await fetch(
@@ -62,7 +61,7 @@ const SignupForm = () => {
             },
             body: JSON.stringify({
               name: data.name,
-              email: invitedEmail,
+              email: verifiedEmail,
               password: data.password,
             }),
           }
@@ -71,20 +70,22 @@ const SignupForm = () => {
         const result = await res.json();
 
         if (!res.ok) {
-          throw new Error(result?.message || "Signup failed");
+          setError("root", { message: result?.message || "Signup failed" });
+          setLoading(false);
+          return;
         }
 
         router.push("/login");
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Something went wrong";
-        setFormError(message);
+        setError("root", { message });
         console.error("Signup error:", message);
       } finally {
         setLoading(false);
       }
     },
-    [router, invitedEmail, token]
+    [router, verifiedEmail, token, setError]
   );
 
   return (
@@ -95,9 +96,9 @@ const SignupForm = () => {
       <h1 className="text-xl font-bold text-center">ExperienceRw</h1>
       <h2 className="text-lg text-center mb-6 font-medium">Sign Up</h2>
 
-      {formError && (
+      {errors.root && (
         <p className="text-red-600 text-center mb-4 text-sm font-medium">
-          {formError}
+          {errors.root.message}
         </p>
       )}
 
@@ -119,7 +120,7 @@ const SignupForm = () => {
           type="email"
           placeholder="Enter your email"
           readOnly
-          value={invitedEmail ?? ""}
+          value={verifiedEmail ?? ""}
           {...register("email")}
         />
         {errors.email && (
@@ -149,7 +150,7 @@ const SignupForm = () => {
         type="submit"
         variant="primary"
         className="w-full"
-        disabled={loading}
+        disabled={loading || isSubmitting}
       >
         {loading ? "Creating Account..." : "Create Account"}
       </Button>
