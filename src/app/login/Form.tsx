@@ -13,7 +13,6 @@ type FormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -21,7 +20,7 @@ export default function LoginForm() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
   });
@@ -40,7 +39,6 @@ export default function LoginForm() {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
-      setIsLoading(true);
       setError(null);
 
       try {
@@ -69,17 +67,17 @@ export default function LoginForm() {
 
         const result = await res.json();
 
-        if (result.token) {
-          localStorage.setItem('token', result.token);
+        if (!res.ok || !result.token) {
+          setError(result.message || 'Invalid email or password');
+          return;
         }
-  
+
+        localStorage.setItem('token', result.token);
         router.push("/admin");
       } catch (err) {
         const message = err instanceof Error ? err.message : "Something went wrong";
         setError(message);
         console.error("Login error:", message);
-      } finally {
-        setIsLoading(false);
       }
     },
     [router]
