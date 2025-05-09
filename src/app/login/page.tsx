@@ -1,3 +1,4 @@
+
 import LoginForm from "./Form";
 
 export default function LoginPage() {
@@ -12,4 +13,3 @@ export default function LoginPage() {
         </main>
     );
 }
-
