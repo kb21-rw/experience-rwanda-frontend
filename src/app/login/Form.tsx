@@ -42,16 +42,7 @@ export default function LoginForm() {
       setError(null);
 
       try {
-        if (data.rememberMe) {
-          localStorage.setItem('savedEmail', data.email);
-          localStorage.setItem('savedPassword', data.password);
-          localStorage.setItem('rememberMe', 'true');
-        } else {
-          localStorage.removeItem('savedEmail');
-          localStorage.removeItem('savedPassword');
-          localStorage.removeItem('rememberMe');
-        }
-
+      
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
           {
@@ -67,12 +58,14 @@ export default function LoginForm() {
 
         const result = await res.json();
 
-        if (!res.ok || !result.token) {
+        if (!res.ok || !result.access_token) {
           setError(result.message || 'Invalid email or password');
           return;
         }
+        
 
-        localStorage.setItem('token', result.token);
+        localStorage.setItem('token', result.access_token);
+        console.log(result.token)
         router.push("/admin");
       } catch (err) {
         const message = err instanceof Error ? err.message : "Something went wrong";
