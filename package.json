@@ -19,7 +19,11 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^12.6.3",
+<<<<<<< HEAD
     "js-cookie": "^3.0.5",
+=======
+    "jwt-decode": "^4.0.0",
+>>>>>>> 615a2b9536e402d3035d84b09b976321be7362d0
     "lucide-react": "^0.475.0",
     "next": "14.2.24",
     "react": "^18",
@@ -33,7 +37,11 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/js-cookie": "^3.0.6",
+=======
+    "@types/jwt-decode": "^2.2.1",
+>>>>>>> 615a2b9536e402d3035d84b09b976321be7362d0
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
