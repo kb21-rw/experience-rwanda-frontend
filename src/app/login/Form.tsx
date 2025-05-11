@@ -83,14 +83,13 @@ export default function LoginForm() {
       } catch (err) {
         const message = err instanceof Error ? err.message : "Something went wrong";
         setError(message);
-        console.error("Login error:", message);
       }
     },
     [router]
   );
 
   return (
-    <div className="">
+    <div>
       <div className="text-center mb-8">
         <h1 className="text-xl font-medium">
           Welcome to <span className="font-bold">ExperienceRw</span> Admin
@@ -118,7 +117,7 @@ export default function LoginForm() {
           {errors.email && (
             <p className="text-red-500 text-md mt-1">{errors.email.message}</p>
           )}
-        </div>
+          </div>
 
         <div className="space-y-2">
           <Label htmlFor="password" className="text-gray-900">
