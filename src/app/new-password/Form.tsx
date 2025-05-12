@@ -1,57 +1,13 @@
 "use client";
-
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { resetPasswordSchema } from "@/utils/schemas/newPasswordSchema";
-
-type FormData = z.infer<typeof resetPasswordSchema>;
+import { useNewPassword } from "@/hooks/useNewPassword";
 
 const NewPasswordForm = () => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(resetPasswordSchema),
-  });
-
-  const onSubmit = async (data: FormData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: data.newPassword }),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok)
-        throw new Error(result.message || "Failed to reset password");
-
-      router.push("/login");
-    } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "An error accured, please try again later.";
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { register, handleSubmit, onSubmit, errors, isSubmitting } =
+    useNewPassword();
 
   return (
     <form
@@ -65,8 +21,10 @@ const NewPasswordForm = () => {
         <h2 className="text-2xl font-bold">Enter New Password</h2>
       </div>
 
-      {error && (
-        <p className="text-red-600 text-center text-sm mb-4">{error}</p>
+      {errors.root && (
+        <p className="text-red-600 text-center text-sm mb-4">
+          {errors.root.message}
+        </p>
       )}
 
       <div className="mb-4">
@@ -93,9 +51,9 @@ const NewPasswordForm = () => {
         type="submit"
         variant="primary"
         className="w-full"
-        disabled={loading}
+        disabled={isSubmitting}
       >
-        {loading ? "Resetting..." : "Reset Password"}
+        {isSubmitting ? "Resetting..." : "Reset Password"}
       </Button>
     </form>
   );
