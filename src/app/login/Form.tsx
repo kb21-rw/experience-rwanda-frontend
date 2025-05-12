@@ -43,16 +43,6 @@ export default function LoginForm() {
       setError(null);
 
       try {
-        if (data.rememberMe) {
-          localStorage.setItem('savedEmail', data.email);
-          localStorage.setItem('savedPassword', data.password);
-          localStorage.setItem('rememberMe', 'true');
-        } else {
-          localStorage.removeItem('savedEmail');
-          localStorage.removeItem('savedPassword');
-          localStorage.removeItem('rememberMe');
-        }
-
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
           {
@@ -75,8 +65,8 @@ export default function LoginForm() {
           throw new Error(result?.message || "Login failed");
         }
 
-        if (result.token) {
-          localStorage.setItem('token', result.token);
+        if (result.access_token) {
+          localStorage.setItem('token', result.access_token);
         }
   
         router.push("/admin");
