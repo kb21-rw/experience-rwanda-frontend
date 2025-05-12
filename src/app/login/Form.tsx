@@ -9,32 +9,39 @@ import { loginSchema } from '@/utils/schemas/loginSchema';
 import { EmailInput } from '../login/components/EmailInput';
 import { PasswordInput } from '../login/components/PasswordInput';
 import { RememberMe } from '../login/components/RememberMe';
-import ResetPopup from '../login/components/resetPopup';
+import ResetCodePopup from '@/components/ui/Popup/ResetCode';
+import { toast } from 'react-toastify';
 
 type FormData = z.infer<typeof loginSchema>;
 
+interface ApiResponse<T> {
+  data?: T;
+  message?: string;
+  errors?: Record<string, string>;
+}
+
 export default function LoginForm() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showResetPopup, setShowResetPopup] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
+  const [isRequestingReset, setIsRequestingReset] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isLoading },
     watch,
+    setError: setFormError,
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
+    mode: 'onChange',
   });
 
   const email = watch('email');
 
   const onSubmit = useCallback(
     async (data: FormData) => {
-      setError(null);
-
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
@@ -49,36 +56,79 @@ export default function LoginForm() {
           }
         );
 
-        const result = await res.json();
+        const result = await res.json() as ApiResponse<{ access_token: string }>;
 
-        if (!res.ok || !result.access_token) {
-          setError(result.message || 'Invalid email or password');
+        if (!res.ok) {
+          if (result.message) {
+            toast.error(result.message);
+          } else if (result.errors) {
+            Object.entries(result.errors).forEach(([field, message]) => {
+              setFormError(field as keyof FormData, {
+                type: 'manual',
+                message: message as string,
+              });
+            });
+          } else {
+            toast.error('Invalid email or password');
+          }
+          return;
+        }
+
+        if (!result.data?.access_token) {
+          toast.error('Invalid response from server');
           return;
         }
 
         if (data.rememberMe) {
-          localStorage.setItem('token', result.access_token);
+          localStorage.setItem('token', result.data.access_token);
         } else {
-          sessionStorage.setItem('token', result.access_token);
+          sessionStorage.setItem('token', result.data.access_token);
         }
 
+        toast.success('Login successful!');
         router.push("/admin");
       } catch (err) {
         const message = err instanceof Error ? err.message : "Something went wrong";
-        setError(message);
-        console.error("Login error:", message);
+        toast.error(message);
       }
     },
-    [router]
+    [router, setFormError]
   );
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = async () => {
     if (!email) {
-      setError('Please enter your email address first');
+      toast.error('Please enter your email address first');
       return;
     }
-    setResetEmail(email);
-    setShowResetPopup(true);
+
+    setIsRequestingReset(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const data = await response.json() as ApiResponse<unknown>;
+
+      if (response.ok) {
+        toast.success('Reset code sent to your email');
+        setResetEmail(email);
+        setShowResetPopup(true);
+      } else {
+        toast.error(data.message || 'Failed to request password reset');
+      }
+    } catch {
+      toast.error('Failed to request password reset. Please try again.');
+    } finally {
+      setIsRequestingReset(false);
+    }
   };
 
   return (
@@ -90,12 +140,6 @@ export default function LoginForm() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {error && (
-          <div className="text-red-500 text-sm text-center">
-            {error}
-          </div>
-        )}
-
         <EmailInput register={register} errors={errors} />
         <PasswordInput 
           register={register} 
@@ -108,9 +152,10 @@ export default function LoginForm() {
           <button
             type="button"
             onClick={handleForgotPassword}
-            className="text-sm text-blue-600 hover:text-blue-800"
+            disabled={isRequestingReset}
+            className="text-sm text-blue-600 hover:text-blue-800 disabled:opacity-50"
           >
-            Forgot Password?
+            {isRequestingReset ? 'Requesting...' : 'Forgot Password?'}
           </button>
         </div>
 
@@ -124,7 +169,7 @@ export default function LoginForm() {
       </form>
 
       {showResetPopup && (
-        <ResetPopup
+        <ResetCodePopup
           onClose={() => setShowResetPopup(false)}
           email={resetEmail}
         />
