@@ -22,10 +22,5 @@ export const RememberMe = ({ register }: RememberMeProps) => (
         Remember Me
       </Label>
     </div>
-    <div>
-      <a href="#" className="text-black hover:text-gray-700">
-        Forget password?
-      </a>
     </div>
-  </div>
 );

@@ -9,6 +9,7 @@ import { loginSchema } from '@/utils/schemas/loginSchema';
 import { EmailInput } from '../login/components/EmailInput';
 import { PasswordInput } from '../login/components/PasswordInput';
 import { RememberMe } from '../login/components/RememberMe';
+import ResetPopup from '../login/components/resetPopup';
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -16,14 +17,19 @@ export default function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [showResetPopup, setShowResetPopup] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
 
   const {
     register,
     handleSubmit,
     formState: { errors, isLoading },
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
   });
+
+  const email = watch('email');
 
   const onSubmit = useCallback(
     async (data: FormData) => {
@@ -66,6 +72,15 @@ export default function LoginForm() {
     [router]
   );
 
+  const handleForgotPassword = () => {
+    if (!email) {
+      setError('Please enter your email address first');
+      return;
+    }
+    setResetEmail(email);
+    setShowResetPopup(true);
+  };
+
   return (
     <div>
       <div className="text-center mb-8">
@@ -88,7 +103,16 @@ export default function LoginForm() {
           showPassword={showPassword} 
           setShowPassword={setShowPassword} 
         />
-        <RememberMe register={register} />
+        <div className="flex items-center justify-between">
+          <RememberMe register={register} />
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="text-sm text-blue-600 hover:text-blue-800"
+          >
+            Forgot Password?
+          </button>
+        </div>
 
         <Button
           type="submit"
@@ -98,6 +122,13 @@ export default function LoginForm() {
           {isLoading ? 'Logging in...' : 'Login'}
         </Button>
       </form>
+
+      {showResetPopup && (
+        <ResetPopup
+          onClose={() => setShowResetPopup(false)}
+          email={resetEmail}
+        />
+      )}
     </div>
   );
 }
