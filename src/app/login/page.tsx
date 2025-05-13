@@ -1,7 +1,14 @@
-"use client";
+import LoginForm from "./Form";
 
-const LoginPage = () => {
-  return <div>Welcome to the Login page</div>;
-};
-
-export default LoginPage;
+export default function LoginPage() {
+    return (
+        <main
+            className="min-h-screen flex items-center justify-center bg-cover bg-center"
+            style={{ backgroundImage: "url('/uploads/hand.png')" }}
+        >
+            <div className="bg-white rounded-xl shadow-lg p-10 w-full max-w-md">
+                <LoginForm />
+            </div>
+        </main>
+    );
+}
