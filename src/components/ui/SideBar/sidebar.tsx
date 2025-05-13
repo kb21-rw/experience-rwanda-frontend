@@ -1,3 +1,4 @@
+
 "use client"
 
 import {
@@ -396,13 +397,12 @@ const SidebarFooter =  forwardRef<
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn("flex flex-col gap-2 p-2 pb-10", className)}
       {...props}
     />
   )
 })
 SidebarFooter.displayName = "SidebarFooter"
-
 const SidebarSeparator =  forwardRef<
    ElementRef<typeof Separator>,
    ComponentProps<typeof Separator>
@@ -484,7 +484,6 @@ const SidebarGroupAction =  forwardRef<
       data-sidebar="group-action"
       className={cn(
         "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
-        // Increases the hit area of the button on mobile.
         "after:absolute after:-inset-2 after:md:hidden",
         "group-data-[collapsible=icon]:hidden",
         className

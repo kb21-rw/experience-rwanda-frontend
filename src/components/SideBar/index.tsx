@@ -1,11 +1,12 @@
 import { items } from "@/data/sidebarItems"
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/SideBar/sidebar"
+import { Sidebar, SidebarContent,  SidebarFooter,  SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/SideBar/sidebar"
+import { Button } from "../ui/Button"
 
 
 
 
 export function AppSidebar() {
-  return (
+   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
@@ -23,9 +24,14 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
-          </SidebarGroupContent>
+        </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-    </Sidebar>
+<SidebarFooter>
+        <Button >
+          Log out
+        </Button>
+      </SidebarFooter>    </Sidebar>
   )
 }
+
