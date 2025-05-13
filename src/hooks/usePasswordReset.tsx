@@ -34,17 +34,17 @@ export const usePasswordReset = () => {
 
       const result = await res.json();
       if (!res.ok) {
-        if (res.status === 404) {
-          setError("email", {
-            message: "Email not found. Please check and try again.",
-          });
-        } else {
-          setError("root", {
-            message: result?.message || "Failed to send OTP.",
-          });
-        }
+        const errorMessage =
+          res.status === 404
+            ? "Email not found. Please check and try again."
+            : result?.message || "Failed to send OTP.";
+
+        const errorField = res.status === 404 ? "email" : "root";
+
+        setError(errorField, { message: errorMessage });
         return;
       }
+
       toast.success("Reset code sent! Check your email.");
       router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`);
     } catch (err) {
