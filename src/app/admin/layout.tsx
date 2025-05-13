@@ -1,8 +1,10 @@
 import { AppSidebar } from "@/components/SideBar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/SideBar/sidebar";
+import { ReactNode } from "react";
 
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
