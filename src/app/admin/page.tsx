@@ -3,6 +3,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 
 const AdminPage = () => {
   const segment = useSelectedLayoutSegment()
+  console.log("segment -----------------------------", segment)
 
 
     return (
