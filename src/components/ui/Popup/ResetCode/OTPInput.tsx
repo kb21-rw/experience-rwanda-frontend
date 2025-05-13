@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { OTPInputProps } from "./types";
+import { OTPInputProps } from "../../../../utils/schemas/resetCodeSchema";
 
 export const OTPInput: React.FC<OTPInputProps> = ({
   code,

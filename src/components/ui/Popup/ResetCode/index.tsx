@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "../../Input";
+import { Button } from "../../Button";
+import { Loader2 } from "lucide-react";
 import { OTPInput } from "./OTPInput";
-import { ResetPasswordForm } from "./ResetPasswordForm";
-import { ApiResponse, ResetCodePopupProps } from "./types";
+import { ApiResponse, ResetCodePopupProps, ResetPasswordFormData, resetPasswordSchema } from "../../../../utils/schemas/resetCodeSchema";
 
 const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
   const [code, setCode] = useState<string[]>(Array(6).fill(""));
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [isResending, setIsResending] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
   const [otpExpiryTime, setOtpExpiryTime] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState<number | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isLoading: formLoading },
+    setValue,
+    watch,
+  } = useForm<ResetPasswordFormData>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      isVerified: false,
+    },
+  });
+
+  const isVerified = watch("isVerified");
 
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined;
@@ -21,11 +37,7 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
         const timeLeft = Math.ceil((otpExpiryTime - now) / 1000);
 
         if (timeLeft <= 0) {
-          setCode(Array(6).fill(""));
-          toast.error("OTP has expired. Please request a new one.");
-          setIsVerified(false);
-          setOtpExpiryTime(null);
-          setRemainingTime(null);
+          handleCodeExpired();
           if (timer) clearInterval(timer);
         } else {
           setRemainingTime(timeLeft);
@@ -40,13 +52,17 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
     };
   }, [otpExpiryTime]);
 
+  const handleCodeExpired = () => {
+    setCode(Array(6).fill(""));
+    setValue("isVerified", false);
+    toast.error("OTP has expired. Please request a new one.");
+    setOtpExpiryTime(null);
+    setRemainingTime(null);
+  };
+
   const verifyCode = async () => {
     if (otpExpiryTime && Date.now() >= otpExpiryTime) {
-      toast.error("OTP has expired. Please request a new one.");
-      setCode(Array(6).fill(""));
-      setIsVerified(false);
-      setOtpExpiryTime(null);
-      setRemainingTime(null);
+      handleCodeExpired();
       return;
     }
 
@@ -56,10 +72,9 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
       return;
     }
 
-    setIsVerifying(true);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`,
         {
           method: "POST",
           headers: {
@@ -77,27 +92,43 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
 
       if (response.ok) {
         toast.success("Code verified successfully!");
-        setIsVerified(true);
+        setValue("isVerified", true);
         const expiryTime = Date.now() + 2 * 60 * 1000;
         setOtpExpiryTime(expiryTime);
         setRemainingTime(120);
       } else {
-        toast.error(data.message || "Invalid verification code");
-        setCode(Array(6).fill(""));
+        handleVerificationError(response.status, data.message);
       }
-    } catch {
+    } catch (error) {
+      console.error("Verification error:", error);
       toast.error("Failed to verify code. Please try again.");
       setCode(Array(6).fill(""));
-    } finally {
-      setIsVerifying(false);
+      setValue("isVerified", false);
     }
   };
 
+  const handleVerificationError = (status: number, message?: string) => {
+    switch (status) {
+      case 400:
+        toast.error("Invalid verification code. Please try again.");
+        break;
+      case 404:
+        toast.error("No reset code found. Please request a new one.");
+        break;
+      case 410:
+        toast.error("Reset code has expired. Please request a new one.");
+        break;
+      default:
+        toast.error(message || "Failed to verify code. Please try again.");
+    }
+    setCode(Array(6).fill(""));
+    setValue("isVerified", false);
+  };
+
   const resendCode = async () => {
-    setIsResending(true);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/request-password`,
         {
           method: "POST",
           headers: {
@@ -121,29 +152,23 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
       }
     } catch {
       toast.error("Failed to resend code. Please try again.");
-    } finally {
-      setIsResending(false);
     }
   };
 
-  const onSubmit = async (data: { newPassword: string }) => {
+  const onSubmit = async (data: ResetPasswordFormData) => {
     if (!isVerified) {
       toast.error("Please verify your code first");
       return;
     }
 
     if (!otpExpiryTime || Date.now() >= otpExpiryTime) {
-      toast.error("OTP has expired. Please request a new one.");
-      setIsVerified(false);
-      setCode(Array(6).fill(""));
-      setOtpExpiryTime(null);
-      setRemainingTime(null);
+      handleCodeExpired();
       return;
     }
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
         {
           method: "POST",
           headers: {
@@ -171,6 +196,7 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
   };
 
   const isCodeExpired = Boolean(otpExpiryTime && Date.now() >= otpExpiryTime);
+  const isLoading = isSubmitting || formLoading;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
@@ -200,8 +226,8 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
               <OTPInput
                 code={code}
                 setCode={setCode}
-                isVerifying={isVerifying}
-                isResending={isResending}
+                isVerifying={isLoading}
+                isResending={isLoading}
                 isCodeExpired={isCodeExpired}
                 remainingTime={remainingTime}
                 onVerify={verifyCode}
@@ -209,11 +235,52 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
               />
             </>
           ) : (
-            <ResetPasswordForm
-              onSubmit={onSubmit}
-              isLoading={false}
-              isCodeExpired={isCodeExpired}
-            />
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <Input
+                  type="password"
+                  placeholder="New Password"
+                  {...register("newPassword")}
+                  className="w-full"
+                />
+                {errors.newPassword && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.newPassword.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <Input
+                  type="password"
+                  placeholder="Confirm Password"
+                  {...register("confirmPassword")}
+                  className="w-full"
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isLoading || isCodeExpired}
+                className="w-full bg-black text-white hover:bg-gray-800 rounded-md flex items-center justify-center"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Resetting...
+                  </>
+                ) : isCodeExpired ? (
+                  "Code Expired"
+                ) : (
+                  "Reset Password"
+                )}
+              </Button>
+            </form>
           )}
         </div>
       </div>
