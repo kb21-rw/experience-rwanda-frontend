@@ -1,10 +1,10 @@
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import VisibilityIcon from '@/icons/VisibilityIcon';
-import HideIcon from '@/icons/HideIcon';
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { z } from 'zod';
-import { loginSchema } from '@/utils/schemas/loginSchema';
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import VisibilityIcon from "@/icons/VisibilityIcon";
+import HideIcon from "@/icons/HideIcon";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { z } from "zod";
+import { loginSchema } from "@/utils/schemas/loginSchema";
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -15,7 +15,12 @@ interface PasswordInputProps {
   setShowPassword: (show: boolean) => void;
 }
 
-export const PasswordInput = ({ register, errors, showPassword, setShowPassword }: PasswordInputProps) => (
+export const PasswordInput = ({
+  register,
+  errors,
+  showPassword,
+  setShowPassword,
+}: PasswordInputProps) => (
   <div className="space-y-2 relative">
     <Label htmlFor="password" className="text-gray-900">
       Password
@@ -27,6 +32,7 @@ export const PasswordInput = ({ register, errors, showPassword, setShowPassword 
         placeholder="••••••••••••"
         {...register("password")}
         className="w-full rounded-md pr-10"
+        autoComplete="current-password"
       />
       <button
         type="button"
