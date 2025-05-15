@@ -1,6 +1,8 @@
 import { items } from "@/data/sidebarItems"
-import { Sidebar, SidebarContent,  SidebarFooter,  SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/SideBar/sidebar"
+import { Sidebar, SidebarContent,  SidebarFooter, Separator, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/SideBar/sidebar"
 import { Button } from "../ui/Button"
+import ProfileContent from "../ProfileContent.tsx"
+
 
 
 
@@ -12,6 +14,8 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Experience Rwanda Admin Panel</SidebarGroupLabel>
           <SidebarGroupContent>
+            <ProfileContent/>
+<Separator/>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
@@ -27,11 +31,12 @@ export function AppSidebar() {
         </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-<SidebarFooter>
+      <SidebarFooter>
         <Button >
           Log out
         </Button>
-      </SidebarFooter>    </Sidebar>
+      </SidebarFooter>    
+    </Sidebar>
   )
 }
 

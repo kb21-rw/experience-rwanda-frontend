@@ -514,9 +514,9 @@ export {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem, 
+  SidebarMenuItem,
   SidebarProvider,
   SidebarSeparator,
   SidebarTrigger,
-  useSidebar,
-}
+  useSidebar, Separator,
+};
