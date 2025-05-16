@@ -19,7 +19,7 @@ export const useNewPassword = () => {
       toast.error(
         "Unauthorized access. Please use the reset link from your email."
       );
-      router.replace("/reset-password");
+      router.replace("/change-password");
     }
   }, [email, router]);
 
@@ -35,7 +35,7 @@ export const useNewPassword = () => {
   const onSubmit = async (data: FormData) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
