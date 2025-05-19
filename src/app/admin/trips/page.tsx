@@ -33,9 +33,9 @@ const TripsPage = async () => {
         </div>
       </div>
 
-      <table className="w-full text-left text-sm">
+      <table className="w-full text-left font-inter">
         <thead>
-          <tr className="border-b">
+          <tr className="border-b text-base">
             <th className="py-2">No</th>
             <th>Title</th>
             <th>Date</th>

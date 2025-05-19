@@ -45,13 +45,13 @@ export const TripRow = ({
             </Button>
             {showDropdown && (
               <div className="absolute w-28 mt-2 bg-white border rounded shadow-lg">
-                <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
+                <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full">
                   View
                 </button>
-                <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
+                <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full">
                   Delete
                 </button>
-                <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100">
+                <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full">
                   Update
                 </button>
               </div>
