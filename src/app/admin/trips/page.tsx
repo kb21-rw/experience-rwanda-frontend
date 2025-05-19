@@ -1,16 +1,19 @@
-"use client";
-
 import { Button } from "@/components/ui/Button";
-import trips from "@/data/trips.json";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { StatCard } from "./Card/Stat";
 import { TripRow } from "./Card/TripRow";
 import Search from "./Search";
+import { getData } from "@/utils/request";
+import { Trip } from "@/types/ImageCard";
 
-const TripsPage = () => {
+const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
+
+const TripsPage = async () => {
   const totalTrips = 23;
-  const bookedTrips = 12;
   const pastTrips = 1;
+  const bookedTrips = 12;
+
+  const trips = await getData(apiUrl);
 
   return (
     <div className="p-6">
@@ -43,8 +46,13 @@ const TripsPage = () => {
           </tr>
         </thead>
         <tbody>
-          {trips.map((trip, idx) => (
-            <TripRow key={idx} {...trip} seats={Number(trip.seats)} />
+          {trips.map((trip: Trip, id: number) => (
+            <TripRow
+              key={id}
+              {...trip}
+              id={(id + 1).toString()}
+              seats={Number(trip.seats)}
+            />
           ))}
         </tbody>
       </table>

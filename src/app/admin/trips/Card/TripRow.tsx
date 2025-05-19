@@ -1,28 +1,38 @@
+"use client";
 import { Button } from "@/components/ui/Button";
+import { Trip } from "@/types/ImageCard";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-type Trip = {
-  id: string;
-  title: string;
-  date: string;
-  location: string;
-  seats: number;
-  status: string;
-};
-export const TripRow = ({ id, title, date, location, seats, status }: Trip) => {
+export const TripRow = ({
+  id,
+  title,
+  departureTime: date,
+  destination,
+  seatsBooked,
+  seats,
+  status = "ONGOING",
+}: Trip) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
+
+  const formatedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
   return (
     <>
       <tr className="text-sm border-t">
         <td className="py-3">{id}</td>
         <td>{title}</td>
-        <td>{date}</td>
-        <td>{location}</td>
-        <td>{seats}</td>
+        <td>{formatedDate}</td>
+        <td>{destination}</td>
+        <td>
+          {seatsBooked} of {seats}
+        </td>
         <td>{status}</td>
         <td>
           <div className="relative-">
