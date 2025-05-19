@@ -48,7 +48,7 @@ const SignupForm = () => {
     async (data: FormData) => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/create-profile`,
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
           {
             method: "POST",
             headers: {

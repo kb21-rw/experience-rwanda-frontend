@@ -47,12 +47,15 @@ export default function LoginForm() {
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({
               email: data.email,
               password: data.password,
               rememberMe: data.rememberMe,
             }),
+            credentials: "include",
           }
         );
 
@@ -141,11 +144,11 @@ export default function LoginForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <EmailInput register={register} errors={errors} />
-        <PasswordInput 
-          register={register} 
-          errors={errors} 
-          showPassword={showPassword} 
-          setShowPassword={setShowPassword} 
+        <PasswordInput
+          register={register}
+          errors={errors}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
         />
         <div className="flex items-center justify-between">
           <RememberMe register={register} />
@@ -164,7 +167,7 @@ export default function LoginForm() {
           disabled={isLoading}
           className="w-full bg-black text-white hover:bg-gray-800 rounded-md"
         >
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>
 
