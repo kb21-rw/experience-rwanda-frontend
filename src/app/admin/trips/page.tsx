@@ -9,11 +9,11 @@ import TripRow from "./Card/TripRow";
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
 
 const TripsPage = async () => {
-  const totalTrips = 23;
-  const pastTrips = 1;
-  const bookedTrips = 12;
-
   const trips = await getData(apiUrl);
+
+  const totalTrips = trips.length;
+  const pastTrips = 5;
+  const bookedTrips = trips.filter((trip: Trip) => trip.seatsBooked > 0).length;
 
   return (
     <div className="p-6">
@@ -50,8 +50,7 @@ const TripsPage = async () => {
             <TripRow
               key={id}
               {...trip}
-              id={(id + 1).toString()}
-              seats={Number(trip.seats)}
+              id={(id + 1).toString().padStart(3, "0")}
             />
           ))}
         </tbody>
