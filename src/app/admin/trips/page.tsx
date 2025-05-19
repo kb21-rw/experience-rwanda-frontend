@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { StatCard } from "./Card/Stat";
-import { TripRow } from "./Card/TripRow";
 import Search from "./Search";
 import { getData } from "@/utils/request";
 import { Trip } from "@/types/ImageCard";
+import TripStatusCard from "./Card/Statistics";
+import TripRow from "./Card/TripRow";
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
 
@@ -21,11 +21,11 @@ const TripsPage = async () => {
         <h1 className="text-2xl font-bold">Trips</h1>
         <Search />
       </div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between py-8">
         <div className="flex items-center gap-10">
-          <StatCard label="Total trips" value={totalTrips} />
-          <StatCard label="Booked Trips" value={bookedTrips} />
-          <StatCard label="Past Trips" value={pastTrips} />
+          <TripStatusCard label="Total trips" value={totalTrips} />
+          <TripStatusCard label="Booked Trips" value={bookedTrips} />
+          <TripStatusCard label="Past Trips" value={pastTrips} />
         </div>
 
         <div>

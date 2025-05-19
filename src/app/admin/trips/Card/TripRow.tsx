@@ -4,7 +4,7 @@ import { Trip } from "@/types/ImageCard";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-export const TripRow = ({
+const TripRow = ({
   id,
   title,
   departureTime: date,
@@ -62,3 +62,4 @@ export const TripRow = ({
     </>
   );
 };
+export default TripRow;
