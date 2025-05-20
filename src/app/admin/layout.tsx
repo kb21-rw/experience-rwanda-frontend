@@ -1,17 +1,15 @@
 import { AppSidebar } from "@/components/SideBar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/SideBar/sidebar";
+import { SidebarProvider } from "@/components/ui/SideBar/sidebar";
 import { ReactNode } from "react";
+import { cookies } from "next/headers";
 
-
-
-export default function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({ children }: { children: ReactNode }) {
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
+      <main>{children}</main>
     </SidebarProvider>
-  )
+  );
 }
