@@ -1,8 +1,8 @@
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { z } from 'zod';
-import { loginSchema } from '@/utils/schemas/loginSchema';
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { z } from "zod";
+import { loginSchema } from "@/utils/schemas/loginSchema";
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -22,6 +22,7 @@ export const EmailInput = ({ register, errors }: EmailInputProps) => (
       placeholder="experiencerwanda@gmail.com"
       {...register("email")}
       className="w-full rounded-md"
+      autoComplete="email"
     />
     {errors.email && (
       <p className="text-red-500 text-md mt-1">{errors.email.message}</p>

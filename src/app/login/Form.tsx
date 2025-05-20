@@ -1,14 +1,14 @@
 "use client";
-import { useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@/components/ui/Button';
-import { z } from 'zod';
-import { loginSchema } from '@/utils/schemas/loginSchema';
-import { EmailInput } from '../login/components/EmailInput';
-import { PasswordInput } from '../login/components/PasswordInput';
-import { RememberMe } from '../login/components/RememberMe';
+import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/Button";
+import { z } from "zod";
+import { loginSchema } from "@/utils/schemas/loginSchema";
+import { EmailInput } from "../login/components/EmailInput";
+import { PasswordInput } from "../login/components/PasswordInput";
+import { RememberMe } from "../login/components/RememberMe";
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -34,38 +34,33 @@ export default function LoginForm() {
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({
               email: data.email,
               password: data.password,
               rememberMe: data.rememberMe,
             }),
+            credentials: "include",
           }
         );
 
         const result = await res.json();
-
-        if (!res.ok || !result.access_token) {
-          setError(result.message || 'Invalid email or password');
+        if (!result.accessToken) {
+          setError(result.message || "Invalid email or password");
           return;
         }
-
-        if (data.rememberMe) {
-          localStorage.setItem('token', result.access_token);
-        } else {
-          sessionStorage.setItem('token', result.access_token);
-        }
-
         router.push("/admin");
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Something went wrong";
+        const message =
+          err instanceof Error ? err.message : "Something went wrong";
         setError(message);
         console.error("Login error:", message);
       }
     },
     [router]
   );
-
   return (
     <div>
       <div className="text-center mb-8">
@@ -76,17 +71,15 @@ export default function LoginForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {error && (
-          <div className="text-red-500 text-sm text-center">
-            {error}
-          </div>
+          <div className="text-red-500 text-sm text-center">{error}</div>
         )}
 
         <EmailInput register={register} errors={errors} />
-        <PasswordInput 
-          register={register} 
-          errors={errors} 
-          showPassword={showPassword} 
-          setShowPassword={setShowPassword} 
+        <PasswordInput
+          register={register}
+          errors={errors}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
         />
         <RememberMe register={register} />
 
@@ -95,7 +88,7 @@ export default function LoginForm() {
           disabled={isLoading}
           className="w-full bg-black text-white hover:bg-gray-800 rounded-md"
         >
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>
     </div>
