@@ -1,13 +1,12 @@
-
-"use client"
+"use client";
 // import type { Metadata } from "next"
-import "./globals.css"
-import NavBar from "../components/ui/NavBar"
-import Footer from "../components/Footer"
-import Toastify from "@/components/Toastify"
-import { Suspense } from "react"
+import "./globals.css";
+import NavBar from "../components/ui/NavBar";
+import Footer from "../components/Footer";
+import Toastify from "@/components/Toastify";
+import { Suspense } from "react";
 import { usePathname } from "next/navigation";
-
+import ContextProvider from "@/context/ContextProvider";
 
 // export const metadata: Metadata = {
 //   title: "Experience Rwanda - Your Gateway to Unforgettable Adventures",
@@ -18,22 +17,23 @@ import { usePathname } from "next/navigation";
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-    const pathname = usePathname();
-      const isAdminRoute = pathname.startsWith("/admin");
-
+  const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
 
   return (
     <html lang="en">
       <body className={`antialiased flex flex-col min-h-screen`}>
-        <Suspense fallback={null}>
-          <Toastify />
-{!isAdminRoute &&          <NavBar />
-}          <main className="flex-grow">{children}</main>
-{    !isAdminRoute &&      <Footer />
-}        </Suspense>
+        <ContextProvider>
+          <Suspense fallback={null}>
+            <Toastify />
+            {!isAdminRoute && <NavBar />}{" "}
+            <main className="flex-grow">{children}</main>
+            {!isAdminRoute && <Footer />}{" "}
+          </Suspense>
+        </ContextProvider>
       </body>
     </html>
-  )
+  );
 }

@@ -17,9 +17,23 @@ import ProfileContent from "../ProfileContent.tsx";
 import { LuPanelLeftClose } from "react-icons/lu";
 import { useSidebar } from "../ui/SideBar/sidebar";
 import { TbLogout2 } from "react-icons/tb";
+import Link from "next/link";
+import axios from "axios";
+
+import { useRouter } from "next/navigation";
 
 export function AppSidebar() {
   const { toggleSidebar, state } = useSidebar();
+  const router = useRouter();
+  const handleLogout = async () => {
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+      {},
+      { withCredentials: true }
+    );
+    router.push("/login");
+  };
+
   return (
     <Sidebar collapsible="icon">
       <SidebarContent className="bg-black text-white">
@@ -45,10 +59,10 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton variant="link" asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -58,7 +72,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="bg-black text-white">
         {
-          <Button>
+          <Button onClick={handleLogout}>
             <TbLogout2 />
             {state === "expanded" ? <span>Log out</span> : null}
           </Button>
