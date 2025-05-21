@@ -1,5 +1,4 @@
-
-function TripsPage() {
+const  TripsPage =()=> {
   return (
     <div>
       This is the trips page

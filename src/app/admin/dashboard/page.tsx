@@ -1,5 +1,4 @@
-
-function Dashboard() {
+const DashboardPage = ()=> {
   return (
     <div>
       Welcome to my youtube channel
@@ -7,4 +6,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+export default DashboardPage

@@ -1,5 +1,4 @@
-
-function InvitePage() {
+const InvitePage =()=> {
   return (
     <div>
       This is the invite new admin page
