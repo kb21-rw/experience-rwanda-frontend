@@ -80,8 +80,7 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
           </div>
 
           <p className="text-black text-base text-center mb-8">
-            We sent a 6-digit code to your email: <br />
-            <span className="font-semibold">{email}</span>
+            We sent a 6-digit code to your email
           </p>
           <OTPInput
             code={code}

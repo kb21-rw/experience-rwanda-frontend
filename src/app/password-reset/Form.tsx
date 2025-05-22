@@ -10,13 +10,13 @@ const PasswordResetForm = ({
 }: {
   onSuccess: (email: string) => void;
 }) => {
-  const { register, handleSubmit, onSubmit, errors, isSubmitting } =
+  const { register, onSubmit, errors, isSubmitting } =
     usePasswordReset(onSuccess);
 
   return (
     <form
-   onSubmit={handleSubmit(onSubmit)}
-  className="bg-white rounded-lg shadow-lg p-10 w-full max-w-md"
+      onSubmit={onSubmit}
+      className="bg-white rounded-lg shadow-lg p-10 w-full max-w-md"
     >
       <div className="flex gap-5 md:gap-x-20 text-center">
         <Link href="/login" className="text-3xl font-bold mb-2">
