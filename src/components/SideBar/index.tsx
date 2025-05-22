@@ -18,8 +18,8 @@ import { LuPanelLeft, LuPanelLeftClose } from "react-icons/lu";
 import { useSidebar } from "../ui/SideBar/sidebar";
 import { TbLogout2 } from "react-icons/tb";
 import Link from "next/link";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useRouter } from "next/navigation";
+import { useIsMobile } from "@/hooks/useMobile";
 
 export function AppSidebar() {
   const { toggleSidebar, state } = useSidebar();

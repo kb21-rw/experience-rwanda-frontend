@@ -17,7 +17,6 @@ import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
 import { LuPanelLeftClose } from "react-icons/lu";
 
-import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 import { Separator } from "@/components/ui/SideBar/separator";
@@ -36,6 +35,7 @@ import {
 } from "@/components/ui/SideBar/tooltip";
 import { Button } from "../Button";
 import { SidebarContextProps } from "@/types/SidebarContext";
+import { useIsMobile } from "@/hooks/useMobile";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
