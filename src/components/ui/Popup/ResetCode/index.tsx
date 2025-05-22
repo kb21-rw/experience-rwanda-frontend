@@ -63,7 +63,7 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-10 z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
         <div className="p-6 font-inter">
           <div className="flex items-center w-full mb-8">
@@ -90,19 +90,8 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
             isResending={false}
             isCodeExpired={false}
             remainingTime={null}
-            onResend={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+            onResend={resendCode}
           />
-          <div className="text-center mt-4">
-            <button
-              type="button"
-              onClick={resendCode}
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Resend Code
-            </button>
-          </div>
         </div>
       </div>
     </div>
