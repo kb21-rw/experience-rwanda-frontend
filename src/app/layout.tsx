@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 import Toastify from "@/components/Toastify";
 import { Suspense } from "react";
 import { usePathname } from "next/navigation";
-import ContextProvider from "@/context/ContextProvider";
 
 // export const metadata: Metadata = {
 //   title: "Experience Rwanda - Your Gateway to Unforgettable Adventures",
@@ -25,14 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased flex flex-col min-h-screen`}>
-        <ContextProvider>
-          <Suspense fallback={null}>
-            <Toastify />
-            {!isAdminRoute && <NavBar />}{" "}
-            <main className="flex-grow">{children}</main>
-            {!isAdminRoute && <Footer />}{" "}
-          </Suspense>
-        </ContextProvider>
+        <Suspense fallback={null}>
+          <Toastify />
+          {!isAdminRoute && <NavBar />}{" "}
+          <main className="flex-grow">{children}</main>
+          {!isAdminRoute && <Footer />}{" "}
+        </Suspense>
       </body>
     </html>
   );

@@ -18,7 +18,6 @@ import { LuPanelLeftClose } from "react-icons/lu";
 import { useSidebar } from "../ui/SideBar/sidebar";
 import { TbLogout2 } from "react-icons/tb";
 import Link from "next/link";
-import axios from "axios";
 
 import { useRouter } from "next/navigation";
 
@@ -26,11 +25,8 @@ export function AppSidebar() {
   const { toggleSidebar, state } = useSidebar();
   const router = useRouter();
   const handleLogout = async () => {
-    await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
-      {},
-      { withCredentials: true }
-    );
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     router.push("/login");
   };
 

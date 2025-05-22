@@ -1,16 +1,22 @@
+"use client";
 import { AppSidebar } from "@/components/SideBar";
 import { SidebarProvider } from "@/components/ui/SideBar/sidebar";
 import { ReactNode } from "react";
-import { cookies } from "next/headers";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default async function Layout({ children }: { children: ReactNode }) {
-  const cookieStore = await cookies();
-  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
+export default function Layout({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      router.push("/login");
+    }
+  }, [router]);
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
+    <SidebarProvider>
       <AppSidebar />
       <main>{children}</main>
     </SidebarProvider>
   );
 }
-
