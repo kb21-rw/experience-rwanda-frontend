@@ -1,9 +1,90 @@
+"use client"
+
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
+import { Button } from "@/components/ui/Button";
 import { FaCloudUploadAlt} from "react-icons/fa";
+import { useState } from "react";
+import MealPackageCard from "./MealPackageCard";
 
+const mealOptions = ["Breakfast", "Dinner", "Lunch", "Juices"];
+
+type MealPackage = {
+  id: number;
+  selectedMeals: string[];
+  customMeals: string[];
+  newMeal: string;
+}
 
 const CreateTrip = () => {
+  // Dynamic meal packages state
+  const [mealPackages, setMealPackages] = useState<MealPackage[]>([
+    { id: 1, selectedMeals: [], customMeals: [], newMeal: '' },
+  ]);
+
+  const addMealPackage = () => {
+    setMealPackages([
+      ...mealPackages,
+      { id: Date.now(), selectedMeals: [], customMeals: [], newMeal: '' },
+    ]);
+  };
+
+  const removeMealPackage = (id: number) => {
+    setMealPackages(mealPackages.filter((pkg) => pkg.id !== id));
+  };
+
+  const toggleMeal = (pkgId: number, meal: string) => {
+    setMealPackages((mealPackages) =>
+      mealPackages.map((pkg) =>
+        pkg.id === pkgId
+          ? {
+              ...pkg,
+              selectedMeals: pkg.selectedMeals.includes(meal)
+                ? pkg.selectedMeals.filter((m) => m !== meal)
+                : [...pkg.selectedMeals, meal],
+            }
+          : pkg
+      )
+    );
+  };
+
+  const updateNewMeal = (pkgId: number, value: string) => {
+    setMealPackages((mealPackages) =>
+      mealPackages.map((pkg) =>
+        pkg.id === pkgId ? { ...pkg, newMeal: value } : pkg
+      )
+    );
+  };
+
+  const addCustomMeal = (pkgId: number) => {
+    setMealPackages((mealPackages) =>
+      mealPackages.map((pkg) => {
+        if (pkg.id === pkgId && pkg.newMeal.trim() && ![...mealOptions, ...pkg.customMeals].includes(pkg.newMeal.trim())) {
+          return {
+            ...pkg,
+            customMeals: [...pkg.customMeals, pkg.newMeal.trim()],
+            newMeal: '',
+          };
+        }
+        return pkg;
+      })
+    );
+  };
+
+  const removeCustomMeal = (pkgId: number, meal: string) => {
+    setMealPackages((mealPackages) =>
+      mealPackages.map((pkg) =>
+        pkg.id === pkgId
+          ? {
+              ...pkg,
+              customMeals: pkg.customMeals.filter((mealName) => mealName !== meal),
+              selectedMeals: pkg.selectedMeals.filter((mealName) => mealName !== meal),
+            }
+          : pkg
+      )
+    );
+  };
+
   return (
     <div className=" p-10 bg-white font-inter">
       <div className="mb-8">
@@ -129,26 +210,30 @@ const CreateTrip = () => {
 
           <div>
             <h3 className="text-lg font-semibold text-black mb-6">
-              Trip packages
+              Trip Packages
             </h3>
 
-            {[1, 2, 3].map((index) => (
-              <div key={index} className="mb-6">
-                <Label className="block text-sm font-medium text-gray-700 mb-3">
-                  Meal
-                </Label>
-                <div className="flex gap-2">
-                  {["Breakfast", "Dinner", "Lunch", "Juices"].map((meal) => (
-                    <button
-                      key={meal}
-                      className="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      {meal}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            {mealPackages.map((pkg, idx) => (
+              <MealPackageCard
+                key={pkg.id}
+                pkg={pkg}
+                idx={idx}
+                mealOptions={mealOptions}
+                toggleMeal={toggleMeal}
+                updateNewMeal={updateNewMeal}
+                addCustomMeal={addCustomMeal}
+                removeCustomMeal={removeCustomMeal}
+                removeMealPackage={removeMealPackage}
+              />
             ))}
+            <Button
+              type="button"
+              onClick={addMealPackage}
+              className="mt-2 px-4 py-2 bg-black text-white rounded"
+              variant="primary"
+            >
+              Add trip package
+            </Button>
           </div>
 
           <div className="pt-20">
