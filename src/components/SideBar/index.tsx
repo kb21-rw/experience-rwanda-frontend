@@ -45,7 +45,7 @@ export function AppSidebar() {
       )}
       
       <Sidebar 
-        collapsible={isMobile ? "icon" : "offcanvas"}
+        collapsible={isMobile ? "offcanvas" : "icon"}
         className="z-20" 
       >
         <SidebarContent className="bg-black text-white">
