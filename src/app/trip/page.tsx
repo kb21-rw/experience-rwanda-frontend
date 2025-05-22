@@ -151,7 +151,7 @@ const CreateTrip = () => {
             ))}
           </div>
 
-          <div className="pt-6">
+          <div className="pt-20">
             <button className="w-full bg-black text-white py-3 px-6 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
               Create New Trip
             </button>
