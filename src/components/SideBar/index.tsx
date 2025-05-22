@@ -14,7 +14,7 @@ import {
 } from "../ui/SideBar/sidebar";
 import { Button } from "../ui/Button";
 import ProfileContent from "../ProfileContent.tsx";
-import { LuPanelLeftClose } from "react-icons/lu";
+import { LuPanelLeft, LuPanelLeftClose } from "react-icons/lu";
 import { useSidebar } from "../ui/SideBar/sidebar";
 import { TbLogout2 } from "react-icons/tb";
 import Link from "next/link";
@@ -34,11 +34,14 @@ export function AppSidebar() {
 
   return (
     <>
-      {isMobile && state === "expanded" && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-10"
+       {isMobile && (
+        <Button 
           onClick={toggleSidebar}
-        />
+          aria-label="Open sidebar"
+          className="bg-transparent text-black hover:bg-transparent shadow-none"
+        >
+          <LuPanelLeft />
+        </Button>
       )}
       
       <Sidebar 
