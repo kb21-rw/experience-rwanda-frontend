@@ -1,6 +1,4 @@
-
-
-function page() {
+const UsersPage=() => {
   return (
     <div>
       This is the users page
@@ -8,4 +6,4 @@ function page() {
   )
 }
 
-export default page
+export default UsersPage
