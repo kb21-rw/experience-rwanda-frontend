@@ -4,6 +4,8 @@ import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
 import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
+import { Button } from "@/components/ui/Button";
+import { MailOpen } from "lucide-react";
 
 export default function Home() {
   return (
@@ -19,6 +21,10 @@ export default function Home() {
         description={aboutUsData.description}
         variant={aboutUsData.variant}
       />
+      <Button icon={<MailOpen />} variant="outline">
+  Login with Email
+</Button>
+
       <ImageCardGrid
         id="trips"
         title={tripData.title}
