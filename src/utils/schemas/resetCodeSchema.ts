@@ -1,15 +1,8 @@
 import { z } from "zod";
 
-export const resetPasswordSchema = z
-  .object({
-    newPassword: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
-    isVerified: z.boolean(),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+export const resetPasswordSchema = z.object({
+  isVerified: z.boolean(),
+});
 
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
@@ -39,4 +32,4 @@ export interface ResetPasswordFormProps {
   onSubmit: (data: { newPassword: string }) => void;
   isLoading: boolean;
   isCodeExpired: boolean;
-} 
+}

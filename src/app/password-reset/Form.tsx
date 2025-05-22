@@ -4,14 +4,19 @@ import { Label } from "@/components/ui/Label";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { usePasswordReset } from "@/hooks/usePasswordReset";
-const PasswordResetForm = () => {
+
+const PasswordResetForm = ({
+  onSuccess,
+}: {
+  onSuccess: (email: string) => void;
+}) => {
   const { register, handleSubmit, onSubmit, errors, isSubmitting } =
-    usePasswordReset();
+    usePasswordReset(onSuccess);
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-lg shadow-lg p-10 w-full max-w-md"
+   onSubmit={handleSubmit(onSubmit)}
+  className="bg-white rounded-lg shadow-lg p-10 w-full max-w-md"
     >
       <div className="flex gap-5 md:gap-x-20 text-center">
         <Link href="/login" className="text-3xl font-bold mb-2">
