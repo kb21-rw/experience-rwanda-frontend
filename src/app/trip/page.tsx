@@ -5,65 +5,63 @@ import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
 import { FaCloudUploadAlt} from "react-icons/fa";
 import { useState } from "react";
-import MealPackageCard from "./MealPackageCard";
+import TripPackageCard from "./TripPackageCard";
 
-const mealOptions = ["Breakfast", "Dinner", "Lunch", "Juices"];
-
-type MealPackage = {
+type TripPackage = {
   id: number;
-  selectedMeals: string[];
-  customMeals: string[];
-  newMeal: string;
+  selectedOptions: string[];
+  customOptions: string[];
+  newOption: string;
 }
 
 const CreateTrip = () => {
-  // Dynamic meal packages state
-  const [mealPackages, setMealPackages] = useState<MealPackage[]>([
-    { id: 1, selectedMeals: [], customMeals: [], newMeal: '' },
+  // Dynamic trip packages state
+  const [tripPackages, setTripPackages] = useState<TripPackage[]>([
+    { id: 1, selectedOptions: [], customOptions: [], newOption: '' },
   ]);
 
-  const addMealPackage = () => {
-    setMealPackages([
-      ...mealPackages,
-      { id: Date.now(), selectedMeals: [], customMeals: [], newMeal: '' },
+  const addTripPackage = () => {
+    setTripPackages([
+      ...tripPackages,
+      { id: Date.now(), selectedOptions: [], customOptions: [], newOption: '' },
     ]);
   };
 
-  const removeMealPackage = (id: number) => {
-    setMealPackages(mealPackages.filter((pkg) => pkg.id !== id));
+  const removeTripPackage = (id: number) => {
+    setTripPackages(tripPackages.filter((pkg) => pkg.id !== id));
   };
 
-  const toggleMeal = (pkgId: number, meal: string) => {
-    setMealPackages((mealPackages) =>
-      mealPackages.map((pkg) =>
+  const toggleOption = (pkgId: number, option: string) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) =>
         pkg.id === pkgId
           ? {
               ...pkg,
-              selectedMeals: pkg.selectedMeals.includes(meal)
-                ? pkg.selectedMeals.filter((m) => m !== meal)
-                : [...pkg.selectedMeals, meal],
+              selectedOptions: pkg.selectedOptions.includes(option)
+                ? pkg.selectedOptions.filter((o) => o !== option)
+                : [...pkg.selectedOptions, option],
             }
           : pkg
       )
     );
   };
 
-  const updateNewMeal = (pkgId: number, value: string) => {
-    setMealPackages((mealPackages) =>
-      mealPackages.map((pkg) =>
-        pkg.id === pkgId ? { ...pkg, newMeal: value } : pkg
+  const updateNewOption = (pkgId: number, value: string) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) =>
+        pkg.id === pkgId ? { ...pkg, newOption: value } : pkg
       )
     );
   };
 
-  const addCustomMeal = (pkgId: number) => {
-    setMealPackages((mealPackages) =>
-      mealPackages.map((pkg) => {
-        if (pkg.id === pkgId && pkg.newMeal.trim() && ![...mealOptions, ...pkg.customMeals].includes(pkg.newMeal.trim())) {
+  const addCustomOption = (pkgId: number) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) => {
+        if (pkg.id === pkgId && pkg.newOption.trim() && !pkg.customOptions.includes(pkg.newOption.trim())) {
           return {
             ...pkg,
-            customMeals: [...pkg.customMeals, pkg.newMeal.trim()],
-            newMeal: '',
+            customOptions: [...pkg.customOptions, pkg.newOption.trim()],
+            newOption: '',
           };
         }
         return pkg;
@@ -71,14 +69,14 @@ const CreateTrip = () => {
     );
   };
 
-  const removeCustomMeal = (pkgId: number, meal: string) => {
-    setMealPackages((mealPackages) =>
-      mealPackages.map((pkg) =>
+  const removeCustomOption = (pkgId: number, option: string) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) =>
         pkg.id === pkgId
           ? {
               ...pkg,
-              customMeals: pkg.customMeals.filter((mealName) => mealName !== meal),
-              selectedMeals: pkg.selectedMeals.filter((mealName) => mealName !== meal),
+              customOptions: pkg.customOptions.filter((optionName) => optionName !== option),
+              selectedOptions: pkg.selectedOptions.filter((optionName) => optionName !== option),
             }
           : pkg
       )
@@ -213,22 +211,22 @@ const CreateTrip = () => {
               Trip Packages
             </h3>
 
-            {mealPackages.map((pkg, idx) => (
-              <MealPackageCard
+            {tripPackages.map((pkg, idx) => (
+              <TripPackageCard
                 key={pkg.id}
                 pkg={pkg}
                 idx={idx}
-                mealOptions={mealOptions}
-                toggleMeal={toggleMeal}
-                updateNewMeal={updateNewMeal}
-                addCustomMeal={addCustomMeal}
-                removeCustomMeal={removeCustomMeal}
-                removeMealPackage={removeMealPackage}
+                packageOptions={[]}
+                toggleOption={toggleOption}
+                updateNewOption={updateNewOption}
+                addCustomOption={addCustomOption}
+                removeCustomOption={removeCustomOption}
+                removeTripPackage={removeTripPackage}
               />
             ))}
             <Button
               type="button"
-              onClick={addMealPackage}
+              onClick={addTripPackage}
               className="mt-2 px-4 py-2 bg-black text-white rounded"
               variant="primary"
             >
