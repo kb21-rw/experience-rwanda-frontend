@@ -25,8 +25,8 @@ const TripRow = ({
   });
   return (
     <>
-      <tr className="text-sm border-t">
-        <td className="py-3">{id}</td>
+      <tr className="text-sm border-t w-full">
+        <td>{id}</td>
         <td>{title}</td>
         <td>{formatedDate}</td>
         <td>{destination}</td>
