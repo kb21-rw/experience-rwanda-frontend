@@ -1,27 +1,27 @@
 "use client";
 
 import React, { useRef } from "react";
-import { OTPInputProps } from "@/utils/schemas/resetCodeSchema";
-import { Button } from "../../Button";
+import { Input } from "../../Input";
+
+interface OTPInputProps {
+  code: string[];
+  setCode: (code: string[]) => void;
+  timeLeft: number;
+}
 
 export const OTPInput: React.FC<OTPInputProps> = ({
   code,
   setCode,
-  isVerifying,
-  isResending,
-  isCodeExpired,
-  remainingTime,
-  onVerify,
-  onResend,
+  timeLeft,
 }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (index: number, value: string) => {
-    if (isCodeExpired) return;
+    const sanitized = value.replace(/\D/g, "").slice(-1);
     const newCode = [...code];
-    newCode[index] = value.slice(-1);
+    newCode[index] = sanitized;
     setCode(newCode);
-    if (value && index < code.length - 1) {
+    if (sanitized && index < code.length - 1) {
       inputRefs.current[index + 1]?.focus();
     }
   };
@@ -30,14 +30,12 @@ export const OTPInput: React.FC<OTPInputProps> = ({
     index: number,
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    if (isCodeExpired) return;
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    if (isCodeExpired) return;
     e.preventDefault();
     const pasted = e.clipboardData
       .getData("text")
@@ -50,58 +48,26 @@ export const OTPInput: React.FC<OTPInputProps> = ({
     inputRefs.current[Math.min(pasted.length, 5)]?.focus();
   };
 
-  const isVerifyDisabled =
-    isVerifying || isCodeExpired || code.some((digit) => !digit);
-
   return (
-    <div className="space-y-6">
-      <div className="flex justify-center gap-2">
-        {code.map((digit, index) => (
-          <input
-            key={index}
-            ref={(el) => {
-              inputRefs.current[index] = el;
-            }}
-            type="text"
-            inputMode="numeric"
-            maxLength={1}
-            aria-label={`OTP digit ${index + 1}`}
-            value={digit}
-            onChange={(e) => handleChange(index, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(index, e)}
-            onPaste={handlePaste}
-            disabled={isCodeExpired}
-            className={`w-12 h-12 text-xl text-center border rounded-lg outline-none transition focus:ring-2 ${
-              isCodeExpired
-                ? "bg-red-50 border-red-300 text-red-500"
-                : "border-gray-300 focus:ring-blue-500"
-            }`}
-          />
-        ))}
-      </div>
-
-      <div className="space-y-4 w-full">
-        <div className="flex justify-between text-sm text-black">
-          <p>Code expires in 2 minutes</p>
-          <button
-            type="button"
-            onClick={onResend}
-            disabled={isResending || (!isCodeExpired && remainingTime !== null)}
-            className="underline"
-          >
-            {isResending ? "Sending..." : "Resend Code"}
-          </button>
-        </div>
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={onVerify}
-          type="button"
-          disabled={isVerifyDisabled}
-        >
-          {isVerifying ? "Verifying..." : "Verify Code"}
-        </Button>
-      </div>
+    <div className="flex justify-center gap-2">
+      {code.map((digit, index) => (
+        <Input
+          key={index}
+          ref={(el) => {
+            inputRefs.current[index] = el;
+          }}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          aria-label={`OTP digit ${index + 1}`}
+          value={digit}
+          onChange={(e) => handleChange(index, e.target.value)}
+          onKeyDown={(e) => handleKeyDown(index, e)}
+          onPaste={handlePaste}
+          disabled={timeLeft <= 0}
+          className="w-12 h-12 text-xl text-center border rounded-lg border-gray-500"
+        />
+      ))}
     </div>
   );
 };

@@ -1,35 +1,9 @@
 import { z } from "zod";
 
-export const resetPasswordSchema = z.object({
-  isVerified: z.boolean(),
+export const verifyOtpSchema = z.object({
+  email: z.string().email({ message: "Invalid email format" }),
+  code: z
+    .string()
+    .length(6, { message: "Code must be exactly 6 digits" })
+    .regex(/^\d{6}$/, { message: "Code must contain only digits" }),
 });
-
-export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
-
-export interface ApiResponse<T> {
-  message: string;
-  data?: T;
-  status?: number;
-}
-
-export interface ResetCodePopupProps {
-  onClose: () => void;
-  email: string;
-}
-
-export interface OTPInputProps {
-  code: string[];
-  setCode: (code: string[]) => void;
-  isVerifying: boolean;
-  isResending: boolean;
-  isCodeExpired: boolean;
-  remainingTime: number | null;
-  onVerify: () => void;
-  onResend: () => void;
-}
-
-export interface ResetPasswordFormProps {
-  onSubmit: (data: { newPassword: string }) => void;
-  isLoading: boolean;
-  isCodeExpired: boolean;
-}
