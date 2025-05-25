@@ -51,6 +51,9 @@ export default function LoginForm() {
           setError(result.message || "Invalid email or password");
           return;
         }
+        console.log(result);
+        localStorage.setItem("accessToken", result.accessToken);
+        localStorage.setItem("refreshToken", result.refreshToken);
         router.push("/admin");
       } catch (err) {
         const message =
