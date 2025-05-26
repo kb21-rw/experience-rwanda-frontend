@@ -5,6 +5,13 @@ import { getData } from "@/utils/request";
 import { Trip } from "@/types/ImageCard";
 import TripStatusCard from "./Card/Statistics";
 import TripRow from "./Card/TripRow";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Table";
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
 
@@ -34,32 +41,30 @@ const TripsPage = async () => {
           <Button variant="default">+ New Trip</Button>
         </div>
       </div>
-      <div className="md:w-full overflow-x-auto mt-5 w-fit">
-        <table className="w-full text-left font-inter">
-          <thead>
-            <tr className="text-base">
-              <th className="py-2">No</th>
-              <th>Title</th>
-              <th>Date</th>
-              <th>Location</th>
-              <th>Seats</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {trips.map((trip: Trip, id: number) => (
-              <TripRow
-                key={id}
-                {...trip}
-                id={(id + 1).toString().padStart(3, "0")}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>No</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead>Location</TableHead>
+            <TableHead>Seats</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {trips.map((trip: Trip, id: number) => (
+            <TripRow
+              key={id}
+              {...trip}
+              id={(id + 1).toString().padStart(3, "0")}
+            />
+          ))}
+        </TableBody>
+      </Table>
 
-      <div className="fixed bottom-0 left-64 right-0 bg-white py-4 flex items-center justify-center gap-2 border-t">
+      <div className="fixed bottom-0 left-64 left0 right-0 bg-white py-4 flex items-center justify-center gap-2 border-t">
         <button className="p-2 rounded-full bg-gray-200">
           <ChevronLeft size={16} />
         </button>

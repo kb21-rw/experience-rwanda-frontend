@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/Button";
+import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
@@ -25,17 +26,16 @@ const TripRow = ({
   });
   return (
     <>
-      <tr className="text-sm border-t w-full">
-        <td>{id}</td>
-        <td>{title}</td>
-        <td>{formatedDate}</td>
-        <td>{destination}</td>
-        <td>
+      <TableRow>
+        <TableCell>{id}</TableCell>
+        <TableCell>{title}</TableCell>
+        <TableCell>{formatedDate}</TableCell>
+        <TableCell>{destination}</TableCell>
+        <TableCell>
           {seatsBooked} of {seats}
-        </td>
-        <td>{status}</td>
-        <td>
-          <div className="relative-">
+        </TableCell>
+        <TableCell>{status}</TableCell>
+        <TableCell>
             <Button
               variant="primary"
               onClick={toggleDropdown}
@@ -56,9 +56,8 @@ const TripRow = ({
                 </button>
               </div>
             )}
-          </div>
-        </td>
-      </tr>
+        </TableCell>
+      </TableRow>
     </>
   );
 };
