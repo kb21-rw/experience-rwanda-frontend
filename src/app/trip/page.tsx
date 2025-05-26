@@ -1,29 +1,34 @@
-"use client"
+"use client";
 
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
-import { FaCloudUploadAlt} from "react-icons/fa";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import { useState } from "react";
-import TripPackageCard from "./TripPackageCard";
+import TripPackageCard from "../trip/tripPackageCard";
+import { CldUploadWidget, CldImage } from "next-cloudinary";
 
 type TripPackage = {
   id: number;
   selectedOptions: string[];
   customOptions: string[];
   newOption: string;
-}
+};
+type CloudinaryResult = {
+  public_id: string;
+};
 
 const CreateTrip = () => {
-  // Dynamic trip packages state
   const [tripPackages, setTripPackages] = useState<TripPackage[]>([
-    { id: 1, selectedOptions: [], customOptions: [], newOption: '' },
+    { id: 1, selectedOptions: [], customOptions: [], newOption: "" },
   ]);
+
+  const [publicId, setPublicId] = useState("");
 
   const addTripPackage = () => {
     setTripPackages([
       ...tripPackages,
-      { id: Date.now(), selectedOptions: [], customOptions: [], newOption: '' },
+      { id: Date.now(), selectedOptions: [], customOptions: [], newOption: "" },
     ]);
   };
 
@@ -57,11 +62,15 @@ const CreateTrip = () => {
   const addCustomOption = (pkgId: number) => {
     setTripPackages((tripPackages) =>
       tripPackages.map((pkg) => {
-        if (pkg.id === pkgId && pkg.newOption.trim() && !pkg.customOptions.includes(pkg.newOption.trim())) {
+        if (
+          pkg.id === pkgId &&
+          pkg.newOption.trim() &&
+          !pkg.customOptions.includes(pkg.newOption.trim())
+        ) {
           return {
             ...pkg,
             customOptions: [...pkg.customOptions, pkg.newOption.trim()],
-            newOption: '',
+            newOption: "",
           };
         }
         return pkg;
@@ -75,8 +84,12 @@ const CreateTrip = () => {
         pkg.id === pkgId
           ? {
               ...pkg,
-              customOptions: pkg.customOptions.filter((optionName) => optionName !== option),
-              selectedOptions: pkg.selectedOptions.filter((optionName) => optionName !== option),
+              customOptions: pkg.customOptions.filter(
+                (optionName) => optionName !== option
+              ),
+              selectedOptions: pkg.selectedOptions.filter(
+                (optionName) => optionName !== option
+              ),
             }
           : pkg
       )
@@ -150,12 +163,40 @@ const CreateTrip = () => {
                 </p>
               </div>
 
-              <div className="w-36 h-36 border border-white bg-white shadow-2xl rounded-md">
-                <FaCloudUploadAlt className=" h-12 w-12 mx-auto mt-5" />
-                <p className="text-sm text-black font-inter text-center p-3">
-                  Upload gallery photo or drag it here
-                </p>
-                
+              <div className="w-36 h-36 border border-white bg-white shadow-2xl rounded-md relative">
+                {publicId ? (
+                  <CldImage
+                    src={publicId}
+                    width={100}
+                    height={100}
+                    alt="Gallery photo"
+                    className="w-full h-full border border-green-700 object-cover rounded-md"
+                  />
+                ) : (
+                  <>
+                    <CldUploadWidget
+                      uploadPreset="s52y0p7m"
+                      onUpload={(result) => {
+                        if (result.event !== "success") return;
+                        const info = result.info as CloudinaryResult;
+                        setPublicId(info.public_id);
+                      }}
+                    >
+                      {({ open }) => (
+                        <FaCloudUploadAlt
+                          onClick={() => {
+                            console.log('Opening upload widget...');
+                            open();
+                          }}
+                          className="h-12 w-12 mx-auto mt-5 cursor-pointer hover:text-gray-600"
+                        />
+                      )}
+                    </CldUploadWidget>
+                    <p className="text-sm text-black font-inter text-center p-3">
+                      Upload gallery photo or drag it here
+                    </p>
+                  </>
+                )}
               </div>
             </div>
           </div>
