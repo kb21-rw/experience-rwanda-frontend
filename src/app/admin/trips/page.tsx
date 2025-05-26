@@ -25,12 +25,12 @@ const TripsPage = async () => {
 
   return (
     <div className="p-6 xl:p-10">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col gap-5 md:flex-row items-center md:justify-between mb-6">
         <h1 className="text-2xl font-bold">Trips</h1>
         <Search />
       </div>
-      <div className="flex flex-col md:flex-row gap-5 items-center justify-between py-10">
-        <div className="flex items-center gap-10">
+      <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
+        <div className="flex items-center gap-10 flex-wrap">
           <TripStatusCard label="Total trips" value={totalTrips} />
           <TripStatusCard label="Booked Trips" value={bookedTrips} />
           <TripStatusCard label="Past Trips" value={pastTrips} />
@@ -63,8 +63,7 @@ const TripsPage = async () => {
           ))}
         </TableBody>
       </Table>
-
-      <div className="fixed bottom-0 left-64 left0 right-0 bg-white py-4 flex items-center justify-center gap-2 border-t">
+      <div className="fixed w-fit bottom-4 left-10 xl:left-150 right-0 bg-white border-b-2 rounded-full shadow-md p-2 flex gap-2">
         <button className="p-2 rounded-full bg-gray-200">
           <ChevronLeft size={16} />
         </button>
