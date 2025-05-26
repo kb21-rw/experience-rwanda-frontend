@@ -1,0 +1,50 @@
+[
+  {
+    "id": "001",
+    "title": "Akagera National park exploration",
+    "date": "April 02, 2025",
+    "location": "Akagera National Park",
+    "seats": "30 of 30",
+    "status": "Canceled"
+  },
+  {
+    "id": "002",
+    "title": "Trip to Nyungwe",
+    "date": "April 02, 2025",
+    "location": "Akagera National Park",
+    "seats": "23 of 30",
+    "status": "ongoing"
+  },
+  {
+    "id": "003",
+    "title": "Virunga National park exploration",
+    "date": "April 02, 2025",
+    "location": "Virunga National Park",
+    "seats": "23 of 30",
+    "status": "Past"
+  },
+  {
+    "id": "004",
+    "title": "Nyandungu Park Kigali",
+    "date": "April 02, 2025",
+    "location": "Nyandungu Park",
+    "seats": "23 of 30",
+    "status": "Ongoing"
+  },
+  {
+    "id": "005",
+    "title": "Kigali Genocide Memorial",
+    "date": "April 02, 2025",
+    "location": "Kigali",
+    "seats": "23 of 30",
+    "status": "Ongoing"
+  },
+  {
+    "id": "006",
+    "title": "Volcanoes National Park",
+    "date": "April 02, 2025",
+    "location": "Musanze District",
+    "seats": "23 of 30",
+    "status": "Ongoing"
+  }
+]
