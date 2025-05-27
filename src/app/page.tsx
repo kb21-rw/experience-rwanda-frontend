@@ -19,6 +19,7 @@ export default function Home() {
         description={aboutUsData.description}
         variant={aboutUsData.variant}
       />
+
       <ImageCardGrid
         id="trips"
         title={tripData.title}
