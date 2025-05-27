@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Search from "./Search";
 import { getData } from "@/utils/request";
@@ -15,6 +14,8 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { useEffect } from "react";
+import { IoIosAddCircle } from "react-icons/io";
+import Link from "next/link";
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
 
@@ -38,7 +39,12 @@ const TripsPage = () => {
   const handleDelete = (id: string) => {
     setTrips((prev) => prev.filter((trip) => trip.id !== id));
   };
-  if (loading) return <p className="p-6">Loading trips...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center text-center h-screen">
+        <p className="animate-bounce text-2xl">Loading trips...</p>
+      </div>
+    );
 
   return (
     <div className="p-6 xl:p-10">
@@ -53,10 +59,12 @@ const TripsPage = () => {
           <TripStatusCard label="Past Trips" value={pastTrips} />
           <TripStatusCard label="Canceled Trips" value={canceledTrips} />
         </div>
-
-        <div>
-          <Button variant="default">+ New Trip</Button>
-        </div>
+        <Link href="/create-trips" className="flex items-center gap-2">
+          <IoIosAddCircle className="w-8 h-8" />
+          <p className="font-inter text-lg font-semibold hover:none">
+            New Trip
+          </p>
+        </Link>
       </div>
       <Table>
         <TableHeader>
