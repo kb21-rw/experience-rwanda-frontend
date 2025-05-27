@@ -79,7 +79,7 @@ const TripRow = ({
                       Do you want to delete this Trip?
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-lg text-black mb-6">
-                      By canceling this trip, all books made on this trip will
+                      By deleting this trip, all books made on this trip will
                       be disactivated means some refund will be made on the
                       clients.
                     </AlertDialogDescription>
