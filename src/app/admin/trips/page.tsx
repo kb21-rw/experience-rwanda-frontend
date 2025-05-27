@@ -1,3 +1,5 @@
+"use client";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Search from "./Search";
@@ -12,16 +14,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
+import { useEffect } from "react";
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
 
-const TripsPage = async () => {
-  const trips = await getData(apiUrl);
+const TripsPage = () => {
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchTrips = async () => {
+      const result = await getData(apiUrl);
+      setTrips(result);
+      setLoading(false);
+    };
+    fetchTrips();
+  }, []);
   const totalTrips = trips.length;
   const pastTrips = 5;
   const bookedTrips = trips.filter((trip: Trip) => trip.seatsBooked > 0).length;
   const canceledTrips = 0;
+
+  const handleDelete = (id: string) => {
+    setTrips((prev) => prev.filter((trip) => trip.id !== id));
+  };
+  if (loading) return <p className="p-6">Loading trips...</p>;
 
   return (
     <div className="p-6 xl:p-10">
@@ -54,11 +71,12 @@ const TripsPage = async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {trips.map((trip: Trip, id: number) => (
+          {trips.map((trip, index) => (
             <TripRow
-              key={id}
+              key={trip.id}
               {...trip}
-              id={(id + 1).toString().padStart(3, "0")}
+              displayId={(index + 1).toString().padStart(3, "0")}
+              onDelete={handleDelete}
             />
           ))}
         </TableBody>

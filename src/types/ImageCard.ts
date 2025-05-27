@@ -20,10 +20,12 @@ export type Row = {
 
 export type Trip = {
   id: string;
+  displayId: string;
   title: string;
   departureTime: string;
   destination: string;
   seatsBooked: number;
   seats: number;
   status: "ONGOING" | "CANCELLED" | "PAST";
+  onDelete?: (id: string) => void;
 };
