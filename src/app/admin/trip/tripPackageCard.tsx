@@ -42,7 +42,9 @@ const TripPackageCard: React.FC<TripPackageCardProps> = ({
         {packageOptions.map((option) => (
           <Badge
             key={option}
-            variant={pkg.selectedOptions.includes(option) ? "secondary" : "outline"}
+            variant={
+              pkg.selectedOptions.includes(option) ? "secondary" : "outline"
+            }
             className={pkg.selectedOptions.includes(option) ? "font-bold" : ""}
             style={{ cursor: "pointer" }}
             onClick={() => toggleOption(pkg.id, option)}
@@ -53,8 +55,12 @@ const TripPackageCard: React.FC<TripPackageCardProps> = ({
         {pkg.customOptions.map((option) => (
           <div key={option} className="relative inline-flex">
             <Badge
-              variant={pkg.selectedOptions.includes(option) ? "secondary" : "outline"}
-              className={pkg.selectedOptions.includes(option) ? "font-bold pr-6" : "pr-6"}
+              variant={
+                pkg.selectedOptions.includes(option) ? "secondary" : "outline"
+              }
+              className={
+                pkg.selectedOptions.includes(option) ? "font-bold pr-6" : "pr-6"
+              }
               style={{ cursor: "pointer" }}
               onClick={() => toggleOption(pkg.id, option)}
             >
@@ -75,7 +81,7 @@ const TripPackageCard: React.FC<TripPackageCardProps> = ({
       <div className="mt-3 flex items-center gap-2">
         <Input
           value={pkg.newOption}
-          onChange={e => updateNewOption(pkg.id, e.target.value)}
+          onChange={(e) => updateNewOption(pkg.id, e.target.value)}
           placeholder="Add option"
           className="flex-1 h-8 text-sm border-gray-200"
         />
@@ -93,4 +99,4 @@ const TripPackageCard: React.FC<TripPackageCardProps> = ({
   );
 };
 
-export default TripPackageCard; 
+export default TripPackageCard;

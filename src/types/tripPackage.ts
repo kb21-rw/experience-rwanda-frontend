@@ -14,4 +14,4 @@ export type TripPackage = {
   selectedOptions: string[];
   customOptions: string[];
   newOption: string;
-}; 
+};
