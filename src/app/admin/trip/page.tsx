@@ -9,6 +9,7 @@ import TripPackageCard from "./tripPackageCard";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { toast } from "react-toastify";
 
 type TripPackage = {
   id: number;
@@ -95,7 +96,7 @@ const CreateTrip = () => {
   // upload the main picture and the gallery pictures
 
   /// use the react hook form to get data
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, reset } = useForm();
   const [mainImage, setMainImage] = useState<File | null>(null);
   const [galleryImages, setGalleryImages] = useState<File[]>([]);
   const [galleryImageNames, setGalleryImageNames] = useState<string[]>([]);
@@ -152,14 +153,30 @@ const CreateTrip = () => {
       });
 
       const result = await response.json();
-      console.log("Success:", result);
+      reset();
+      console.log(result);
+      toast.success("🎉 Trip was created succesfully", {
+        position: "top-right",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
     } catch (error) {
       console.error("Error uploading:", error);
+      toast.error("Error creating trip", {
+        position: "top-right",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light",
+      });
     }
-    console.log(formData, "=====");
   };
-
-  console.log({ galleryImageNames });
 
   return (
     <div className=" p-10 bg-white font-inter">
