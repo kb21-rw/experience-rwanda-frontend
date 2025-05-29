@@ -2,9 +2,7 @@
 
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-// import { Button } from "@/components/ui/Button";
-import { FaCloudUploadAlt } from "react-icons/fa";
-// import { useState } from "react";
+import { FaCloudUploadAlt, FaTimes } from "react-icons/fa";
 import TripPackageCard from "./tripPackageCard";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useState } from "react";
@@ -93,19 +91,45 @@ const CreateTrip = () => {
     );
   };
 
-  // upload the main picture and the gallery pictures
-
-  /// use the react hook form to get data
   const { register, handleSubmit, control, reset } = useForm();
   const [mainImage, setMainImage] = useState<File | null>(null);
+  const [mainImagePreview, setMainImagePreview] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<File[]>([]);
-  const [galleryImageNames, setGalleryImageNames] = useState<string[]>([]);
-  const [mainImageName, setMainImageName] = useState<string | null>(null);
+  const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
 
   const handleMainImageChange = (file: File | null) => {
-    if (file) setMainImage(file);
-    setMainImageName(file ? file.name : null);
+    if (!file) return;
+    setMainImage(file);
+    const preview = URL.createObjectURL(file);
+    setMainImagePreview(preview);
   };
+
+  const handleGalleryImagesChange = (files: FileList | null) => {
+    if (!files) return;
+    const newFiles = Array.from(files);
+    setGalleryImages(prev => [...prev, ...newFiles]);
+    
+    // Create previews for new images
+    const newPreviews = newFiles.map(file => URL.createObjectURL(file));
+    setGalleryPreviews(prev => [...prev, ...newPreviews]);
+  };
+
+  const deleteMainImage = () => {
+    if (mainImagePreview) {
+      URL.revokeObjectURL(mainImagePreview);
+    }
+    setMainImage(null);
+    setMainImagePreview(null);
+  };
+
+  const deleteGalleryImage = (index: number) => {
+    // Revoke the object URL to prevent memory leaks
+    URL.revokeObjectURL(galleryPreviews[index]);
+    
+    setGalleryImages(prev => prev.filter((_, i) => i !== index));
+    setGalleryPreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
   const {
     fields: pricingOptions,
     append,
@@ -115,29 +139,10 @@ const CreateTrip = () => {
     name: "pricingOptions",
   });
 
-  const onGalleryImagesChange = (files: FileList | null) => {
-    handleGalleryImagesChange(files);
-    if (files) {
-      const names = Array.from(files).map((file) => file.name);
-
-      setGalleryImageNames((prev) => [...prev, ...names]); // <- This REPLACES the previous list
-    } else {
-      setGalleryImageNames([]);
-    }
-  };
-  const handleGalleryImagesChange = (files: FileList | null) => {
-    if (!files) return;
-
-    const newFiles = Array.from(files);
-
-    setGalleryImages((prev) => [...prev, ...newFiles]);
-  };
-
   const onSubmit = async (data: unknown) => {
     console.log(data);
     const formData = new FormData();
 
-    // Append text fields
     formData.append("createTrip", JSON.stringify(data));
     if (mainImage) {
       formData.append("mainPicture", mainImage);
@@ -244,39 +249,30 @@ const CreateTrip = () => {
               Gallery
             </Label>
             <div className="flex gap-12">
-              {/* Cover Photo Upload */}
               <div className="flex flex-col items-center">
                 <label className="w-48 h-52 border border-white bg-white shadow-md rounded-lg flex flex-col justify-center items-center cursor-pointer hover:shadow-lg transition">
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) =>
-                      handleMainImageChange(e.target.files?.[0] || null)
-                    }
+                    onChange={(e) => handleMainImageChange(e.target.files?.[0] || null)}
                     className="hidden"
                   />
-                  <FaCloudUploadAlt className="w-14 h-14 text-blue-600 mb-2" />
+                  <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
                   <p className="text-center text-base text-black font-medium px-2">
                     Upload Cover photo
                     <br />
                     or drag it here
                   </p>
                 </label>
-                {mainImageName && (
-                  <p className="text-sm text-gray-600 mt-2 text-center">
-                    {mainImageName}
-                  </p>
-                )}
               </div>
 
-              {/* Gallery Photo Upload */}
               <div className="flex flex-col items-center">
                 <label className="w-48 h-52 border border-white bg-white shadow-md rounded-lg flex flex-col justify-center items-center cursor-pointer hover:shadow-lg transition">
                   <input
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={(e) => onGalleryImagesChange(e.target.files)}
+                    onChange={(e) => handleGalleryImagesChange(e.target.files)}
                     className="hidden"
                   />
                   <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
@@ -286,14 +282,53 @@ const CreateTrip = () => {
                     or drag it here
                   </p>
                 </label>
-                {galleryImageNames.length > 0 && (
-                  <ul className="mt-2 text-sm text-gray-600 text-center space-y-1">
-                    {galleryImageNames.map((name, idx) => (
-                      <li key={idx}>{name}</li>
-                    ))}
-                  </ul>
-                )}
               </div>
+            </div>
+
+            <div className="mt-8">
+              {mainImagePreview && (
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold mb-4">Cover Photo</h3>
+                  <div className="relative inline-block">
+                    <img
+                      src={mainImagePreview}
+                      alt="Main"
+                      className="w-48 h-52 object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={deleteMainImage}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {galleryPreviews.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Gallery Photos</h3>
+                  <div className="grid grid-cols-4 gap-4">
+                    {galleryPreviews.map((preview, index) => (
+                      <div key={index} className="relative">
+                        <img
+                          src={preview}
+                          alt={`Gallery ${index + 1}`}
+                          className="w-32 h-32 object-cover rounded-lg"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => deleteGalleryImage(index)}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                        >
+                          <FaTimes size={12} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
