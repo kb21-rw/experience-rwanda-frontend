@@ -35,7 +35,7 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
 
   const verifyCode = async () => {
     const verificationCode = code.join("");
-    const result = verifyOtpSchema.safeParse({ email, code: verificationCode });
+    const result = verifyOtpSchema.safeParse({ email, otp: verificationCode });
 
     if (!result.success) {
       setValidationError(result.error.errors[0].message);
@@ -47,11 +47,11 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/forget-password`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, code: verificationCode }),
+          body: JSON.stringify({ email, otp: verificationCode }),
         }
       );
 
@@ -73,7 +73,6 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
   const resendCode = async () => {
     setIsResending(true);
     await resend(email);
-    toast.success("Code resent to your email.");
     setCode(Array(6).fill(""));
   };
 
