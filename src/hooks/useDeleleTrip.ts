@@ -9,7 +9,7 @@ export const useDeleteTrip = () => {
     setError(null);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/delete/${tripId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}`,
         {
           method: "DELETE",
         }

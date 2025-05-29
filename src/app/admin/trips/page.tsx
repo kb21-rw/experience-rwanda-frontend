@@ -16,6 +16,7 @@ import {
 import { useEffect } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Link from "next/link";
+import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
 
@@ -23,6 +24,7 @@ const TripsPage = () => {
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const { deleteTrip } = useDeleteTrip();
 
   useEffect(() => {
     const fetchTrips = async () => {
@@ -47,8 +49,12 @@ const TripsPage = () => {
   const bookedTrips = trips.filter((trip: Trip) => trip.seatsBooked > 0).length;
   const canceledTrips = 0;
 
-  const handleDelete = (id: string) => {
-    setTrips((prev) => prev.filter((trip) => trip.id !== id));
+  const handleDelete = async (id: string) => {
+    const success = await deleteTrip(id);
+    if (success) {
+      setTrips((prev) => prev.filter((trip) => trip.id !== id));
+    }
+    return success;
   };
   if (loading)
     return (
