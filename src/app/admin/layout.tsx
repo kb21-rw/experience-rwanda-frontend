@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/SideBar/sidebar";
 import { ReactNode } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Toastify from "@/components/Toastify";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -15,8 +16,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   }, [router]);
   return (
     <SidebarProvider>
+      <Toastify />
       <AppSidebar />
-      <main>{children}</main>
+      <main className="flex-1 w-full">{children}</main>
     </SidebarProvider>
   );
 }

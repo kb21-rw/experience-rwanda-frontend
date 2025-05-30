@@ -1,9 +1,8 @@
-const  TripsPage =()=> {
+export const TripsPage = ( ) => {
   return (
     <div>
-      This is the trips page
+      <h1>Trips Page</h1>
+      <p>This is the admin trips page.</p>
     </div>
-  )
+  );
 }
-
-export default TripsPage
