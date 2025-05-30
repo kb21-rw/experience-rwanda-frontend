@@ -76,7 +76,7 @@ const TripsPage = () => {
           <TripStatusCard label="Past Trips" value={pastTrips} />
           <TripStatusCard label="Canceled Trips" value={canceledTrips} />
         </div>
-        <Link href="/create-trips" className="flex items-center gap-2">
+        <Link href="/admin/new-trip" className="flex items-center gap-2">
           <IoIosAddCircle className="w-8 h-8" />
           <p className="font-inter text-lg font-semibold hover:none">
             New Trip
@@ -134,5 +134,4 @@ const TripsPage = () => {
     </div>
   );
 };
-
 export default TripsPage;
