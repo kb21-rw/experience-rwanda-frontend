@@ -2,12 +2,17 @@
 import React from "react";
 import { Label } from "@/components/ui/Label";
 import { Input } from "@/components/ui/Input";
+import { PricingOptions } from "@/types/trip";
+import { FieldErrors } from "react-hook-form";
+import { Trip } from "@/types/trip";
 
 interface PricingOptionProps {
-  pricingOptions: any[];
+  pricingOptions: PricingOptions[];
   register: any;
   remove: (index: number) => void;
-  append: (field: unknown) => void;
+  append: (field: PricingOptions) => void;
+  errors: FieldErrors<Trip>;
+  name: string;
 }
 
 const PricingOption: React.FC<PricingOptionProps> = ({
@@ -15,6 +20,8 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   register,
   remove,
   append,
+  errors,
+  name,
 }) => {
   return (
     <div className="mt-8">
@@ -22,7 +29,8 @@ const PricingOption: React.FC<PricingOptionProps> = ({
 
       {pricingOptions.map((field, index) => (
         <div
-          key={field.id}
+          {...register(name)}
+          key={index}
           className="border border-gray-300 p-4 rounded-md mb-4"
         >
           <div className="mb-2">
@@ -33,6 +41,11 @@ const PricingOption: React.FC<PricingOptionProps> = ({
               className="w-full p-2 border border-black rounded-md"
               placeholder="Option name"
             />
+            {errors?.pricingOptions?.[index]?.name && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors?.pricingOptions?.[index]?.name?.message?.toString()}
+              </p>
+            )}
           </div>
 
           <div className="mb-2">
@@ -66,7 +79,13 @@ const PricingOption: React.FC<PricingOptionProps> = ({
 
       <button
         type="button"
-        onClick={() => append({ name: "", price: "", description: "" })}
+        onClick={() =>
+          append({
+            name: "",
+            amount: "0",
+            description: "",
+          })
+        }
         className="mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
       >
         Add Pricing Option
