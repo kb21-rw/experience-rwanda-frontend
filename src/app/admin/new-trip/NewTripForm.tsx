@@ -1,15 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import PricingOption from "./PricingOption";
 import TripPackage from "./TripPackage";
 import FormInput from "@/components/FormInput";
 import ImageUploader from "./ImageUploader";
-import { TripPackageType } from "@/types/trip";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tripSchema } from "@/utils/schemas/tripSchema";
+import { useTripFormSubmit } from "@/hooks/useTripFormSubmit";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -23,11 +22,14 @@ const NewTripForm = () => {
   } = useForm<FormData>({
     resolver: zodResolver(tripSchema),
   });
-  const [mainImage, setMainImage] = useState<File | null>(null);
-  const [galleryImages, setGalleryImages] = useState<File[]>([]);
-  const [tripPackages, setTripPackages] = useState<TripPackageType[]>([
-    { id: 0, selectedOptions: [], customOptions: [], newOption: "" },
-  ]);
+  const {
+    onSubmit,
+    setMainImage,
+    setGalleryImages,
+    tripPackages,
+    setTripPackages,
+  } = useTripFormSubmit();
+
   const {
     fields: pricingOptions,
     append,
@@ -37,38 +39,9 @@ const NewTripForm = () => {
     name: "pricingOptions",
   });
 
-  const onSubmit = async (data: unknown) => {
-    const formData = new FormData();
-    formData.append("createTrip", JSON.stringify(data));
-
-    if (mainImage) {
-      formData.append("mainPicture", mainImage);
-    }
-
-    galleryImages?.forEach((file) => {
-      formData.append("pictures", file);
-    });
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips`, {
-        method: "POST",
-        body: formData,
-      });
-      if (!response.ok) {
-        throw new Error("Failed to create trip");
-      }
-      await response.json();
-      reset();
-      toast.success("Trip was created successfully");
-    } catch (error) {
-      console.error("Error uploading:", error);
-      toast.error("Error creating trip");
-    }
-  };
-
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data) => onSubmit(data, reset))}
       className="grid grid-cols-1 lg:grid-cols-2 gap-16"
     >
       <div className="space-y-6">
