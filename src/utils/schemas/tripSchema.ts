@@ -15,7 +15,16 @@ export const tripSchema = z
     returnTime: z.date(),
     seats: z.string().min(1, "Seats is required"),
     coverImage: z.string().optional(),
-    galleryImages: z.string().array().optional(),
+    galleryImages: z
+      .array(
+        z.object({
+          url: z.string(),
+          deleted: z.boolean().optional(),
+          id: z.string().optional(),
+          tripId: z.string().optional(),
+        })
+      )
+      .optional(),
     pricingOptions: z
       .array(pricingOptionSchema)
       .min(1, "At least one pricing option is required"),

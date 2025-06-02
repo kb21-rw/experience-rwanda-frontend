@@ -7,12 +7,16 @@ import { tripSchema } from "@/utils/schemas/tripSchema";
 type FormData = z.infer<typeof tripSchema>;
 
 export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
-  console.log("=======");
   const [mainImage, setMainImage] = useState<File | null>(null);
   const [galleryImages, setGalleryImages] = useState<File[]>([]);
-  const [defaultGalleryImages, setDefaultGalleryImages] = useState<string[]>(
-    defaultValues.galleryImages?.map((image) => image) || []
-  );
+  const [defaultGalleryImages, setDefaultGalleryImages] = useState<
+    {
+      url: string;
+      deleted?: boolean;
+      id?: string;
+      tripId?: string;
+    }[]
+  >(defaultValues.galleryImages || []);
   const [defaultMainImage, setDefaultMainImage] = useState<string>(
     defaultValues.coverImage || ""
   );
@@ -21,6 +25,7 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
   ]);
 
   const onSubmit = async (data: FormData, reset: () => void) => {
+    console.log(data, "--------");
     const formData = new FormData();
     formData.append("tripData", JSON.stringify(data));
 
@@ -31,7 +36,6 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
     galleryImages?.forEach((file) => {
       formData.append("pictures", file);
     });
-    console.log({ data, tripId }, "======");
     try {
       const response = await fetch(
         tripId

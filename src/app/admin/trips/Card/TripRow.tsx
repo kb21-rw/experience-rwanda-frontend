@@ -17,6 +17,7 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { IoIosAlert } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 const TripRow = ({
   id,
@@ -30,6 +31,7 @@ const TripRow = ({
   onDelete,
 }: Trip) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const router = useRouter();
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
@@ -53,7 +55,10 @@ const TripRow = ({
         <TableCell>
           <Button
             variant="primary"
-            onClick={toggleDropdown}
+            onClick={() => {
+              toggleDropdown();
+              router.push(`/admin/edit-trip/${id}`);
+            }}
             className="flex items-center gap-2"
           >
             Modify <ChevronDown size={14} />

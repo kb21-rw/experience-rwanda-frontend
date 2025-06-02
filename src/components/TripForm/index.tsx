@@ -55,7 +55,7 @@ const TripForm = ({
     setValue("coverImage", defaultMainImage);
     setValue("galleryImages", defaultGalleryImages);
   }, [setValue, defaultMainImage, defaultGalleryImages]);
-
+  console.log({ errors });
   return (
     <form
       onSubmit={handleSubmit((data) => onSubmit(data, reset))}
@@ -145,12 +145,11 @@ const TripForm = ({
           remove={remove}
           append={append}
           errors={errors}
-          name="pricingOptions"
         />
 
         <div className="pt-20">
           <button className="w-full bg-black text-white py-3 px-6 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
-            Create New Trip
+            {tripId ? "Update Trip" : "Create New Trip"}
           </button>
         </div>
       </div>

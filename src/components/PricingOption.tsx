@@ -22,21 +22,18 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   errors,
 }) => {
   console.log({ pricingOptions });
+
   return (
     <div className="mt-8">
       <h3 className="text-lg font-semibold text-black mb-4">Pricing Options</h3>
 
       {pricingOptions.map((field, index) => (
-        <div
-          {...register(`pricingOptions.${index}`)}
-          key={index}
-          className="border border-gray-300 p-4 rounded-md mb-4"
-        >
+        <div key={index} className="border border-gray-300 p-4 rounded-md mb-4">
           <div className="mb-2">
             <Label className="block text-sm text-black mb-1">Name</Label>
             <Input
               type="text"
-              {...register(`pricingOptions.${index}.${field.name}`)}
+              {...register(`pricingOptions.${index}.name`)}
               className="w-full p-2 border border-black rounded-md"
               placeholder="Option name"
             />

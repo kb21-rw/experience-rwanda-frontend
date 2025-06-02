@@ -14,14 +14,26 @@ const ImageUploader = ({
   setMainImage: Dispatch<SetStateAction<File | null>>;
   setGalleryImages: Dispatch<SetStateAction<File[]>>;
   defaultMainImage: string;
-  defaultGalleryImages: string[];
+  defaultGalleryImages: {
+    url: string;
+    deleted?: boolean;
+    id?: string;
+    tripId?: string;
+  }[];
   setDefaultMainImage: Dispatch<SetStateAction<string>>;
-  setDefaultGalleryImages: Dispatch<SetStateAction<string[]>>;
+  setDefaultGalleryImages: Dispatch<
+    SetStateAction<
+      { url: string; deleted?: boolean; id?: string; tripId?: string }[]
+    >
+  >;
 }) => {
   const [mainImagePreview, setMainImagePreview] = useState<string | null>(
     defaultMainImage || null
   );
   const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
+  const [defaultGalleryPreviews, setDefaultGalleryPreviews] = useState<
+    string[]
+  >(defaultGalleryImages.map((image) => image.url));
   const handleMainImageChange = (file: File | null) => {
     if (!file) return;
     setMainImage(file);
@@ -30,10 +42,8 @@ const ImageUploader = ({
   };
 
   const handleGalleryImagesChange = (files: FileList | null) => {
-    console.log(files, "=======");
     if (!files) return;
     const newFiles = Array.from(files);
-    console.log(newFiles, "=======++++++");
     setGalleryImages((prev) => [...prev, ...newFiles]);
     const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
     setGalleryPreviews((prev) => [...prev, ...newPreviews]);
@@ -51,21 +61,18 @@ const ImageUploader = ({
   const deleteGalleryImage = (index: number) => {
     URL.revokeObjectURL(galleryPreviews[index]);
     setGalleryImages((prev) => prev.filter((_, i) => i !== index));
-
     setGalleryPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const deleteDefaultGalleryImage = (index: number) => {
-    setDefaultGalleryImages((prev) => prev?.filter((_, i) => i !== index));
-    setDefaultGalleryImages((prev) => prev.filter((_, i) => i !== index));
+    setDefaultGalleryImages((prev) =>
+      prev.map((image, i) =>
+        i === index ? { ...image, deleted: true } : image
+      )
+    );
+    setDefaultGalleryPreviews((prev) => prev.filter((_, i) => i !== index));
   };
-
-  // const deleteDefaultMainImage = () => {
-  //   setDefaultMainImage(null);
-  //   setDefaultMainImagePreview(null);
-  // };
-
-  console.log({ defaultGalleryImages, galleryPreviews });
+  console.log(defaultGalleryPreviews);
 
   return (
     <div>
@@ -134,10 +141,10 @@ const ImageUploader = ({
           {(defaultGalleryImages.length > 0 || galleryPreviews.length > 0) && (
             <h3 className="text-lg font-semibold mb-2">Gallery Photos</h3>
           )}
-          {defaultGalleryImages.length > 0 && (
+          {defaultGalleryPreviews.length > 0 && (
             <div>
               <div className="grid grid-cols-4 gap-4">
-                {defaultGalleryImages?.map((preview, index) => (
+                {defaultGalleryPreviews?.map((preview, index) => (
                   <div key={index} className="relative">
                     <img
                       src={preview}

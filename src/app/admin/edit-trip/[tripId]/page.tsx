@@ -7,7 +7,6 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     { cache: "no-cache" }
   );
   const tripData = await trip.json();
-  console.log(tripData);
   const defaultValues = {
     title: tripData.title,
     destination: tripData.destination,
@@ -16,10 +15,10 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     returnTime: new Date(tripData.returnTime),
     seats: tripData.seats.toString(),
     coverImage: tripData.mainPicture,
-    galleryImages: tripData.pictures.map((image: { url: string }) => image.url),
+    galleryImages: tripData.pictures,
     pricingOptions: tripData.pricingOptions.map((option: PricingOption) => ({
       name: option.name,
-      amount: option.amount.toString(),
+      amount: option.amount,
       description: option.description,
     })),
   };
