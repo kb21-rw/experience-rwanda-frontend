@@ -30,11 +30,11 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
     formData.append("tripData", JSON.stringify(data));
 
     if (mainImage) {
-      formData.append("mainPicture", mainImage);
+      formData.append("coverImage", mainImage);
     }
 
     galleryImages?.forEach((file) => {
-      formData.append("pictures", file);
+      formData.append("galleryImages", file);
     });
     try {
       const response = await fetch(
