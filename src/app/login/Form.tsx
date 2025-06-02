@@ -9,35 +9,26 @@ import { loginSchema } from "@/utils/schemas/loginSchema";
 import { EmailInput } from "../login/components/EmailInput";
 import { PasswordInput } from "../login/components/PasswordInput";
 import { RememberMe } from "../login/components/RememberMe";
-import { toast } from "react-toastify";
 
 type FormData = z.infer<typeof loginSchema>;
 
-interface ApiResponse<T> {
-  data?: T;
-  message?: string;
-  errors?: Record<string, string>;
-}
-
 export default function LoginForm() {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    watch,
-    setError: setFormError,
+    formState: { errors, isLoading },
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
-    mode: "onChange",
   });
-
-  const email = watch("email");
 
   const onSubmit = useCallback(
     async (data: FormData) => {
+      setError(null);
+
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
@@ -55,56 +46,23 @@ export default function LoginForm() {
           }
         );
 
-        const result = (await res.json()) as ApiResponse<{
-          access_token: string;
-        }>;
-
-        if (!res.ok) {
-          if (result.message) {
-            toast.error(result.message);
-          } else if (result.errors) {
-            Object.entries(result.errors).forEach(([field, message]) => {
-              setFormError(field as keyof FormData, {
-                type: "manual",
-                message: message as string,
-              });
-            });
-          } else {
-            toast.error("Invalid email or password");
-          }
+        const result = await res.json();
+        if (!result.accessToken) {
+          setError(result.message || "Invalid email or password");
           return;
         }
-
-        if (!result.data?.access_token) {
-          toast.error("Invalid response from server");
-          return;
-        }
-
-        if (data.rememberMe) {
-          localStorage.setItem("token", result.data.access_token);
-        } else {
-          sessionStorage.setItem("token", result.data.access_token);
-        }
-
-        toast.success("Login successful!");
+        localStorage.setItem("accessToken", result.accessToken);
+        localStorage.setItem("refreshToken", result.refreshToken);
         router.push("/admin");
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Something went wrong";
-        toast.error(message);
+        setError(message);
+        console.error("Login error:", message);
       }
     },
-    [router, setFormError]
+    [router]
   );
-
-  const handleForgotPassword = async () => {
-    if (!email) {
-      toast.error("Please enter your email address first");
-      return;
-    }
-    router.push("/password-reset");
-  };
-
   return (
     <div>
       <div className="text-center mb-8">
@@ -114,6 +72,10 @@ export default function LoginForm() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {error && (
+          <div className="text-red-500 text-sm text-center">{error}</div>
+        )}
+
         <EmailInput register={register} errors={errors} />
         <PasswordInput
           register={register}
@@ -121,24 +83,14 @@ export default function LoginForm() {
           showPassword={showPassword}
           setShowPassword={setShowPassword}
         />
-        <div className="flex items-center justify-between">
-          <RememberMe register={register} />
-          <button
-            type="button"
-            onClick={handleForgotPassword}
-            disabled={isSubmitting}
-            className="text-sm text-blue-600 hover:text-blue-800 disabled:opacity-50"
-          >
-            {isSubmitting ? "Sending..." : "Forgot Password?"}
-          </button>
-        </div>
+        <RememberMe register={register} />
 
         <Button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isLoading}
           className="w-full bg-black text-white hover:bg-gray-800 rounded-md"
         >
-          {isSubmitting ? "Logging in..." : "Login"}
+          {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>
     </div>
