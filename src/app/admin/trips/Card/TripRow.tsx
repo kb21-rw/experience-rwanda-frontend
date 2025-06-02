@@ -63,7 +63,7 @@ const TripRow = ({
               <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full">
                 View
               </button>
-              <AlertDialog >
+              <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">
                     Delete
@@ -72,15 +72,15 @@ const TripRow = ({
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <div className="flex justify-center items-center text-center">
-                    <IoIosAlert className="w-12 h-12"/>
+                      <IoIosAlert className="w-12 h-12" />
                     </div>
 
                     <AlertDialogTitle className="text-bold text-center text-2xl mb-6">
                       Do you want to delete this Trip?
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-lg text-black mb-6">
-                      By deleting this trip, all books made on this trip will
-                      be disactivated means some refund will be made on the
+                      By deleting this trip, all books made on this trip will be
+                      disactivated means some refund will be made on the
                       clients.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
@@ -88,11 +88,11 @@ const TripRow = ({
                     <AlertDialogAction
                       onClick={async () => {
                         const success = await onDelete?.(id);
-                        if (success) {
-                          toast.success("Trip deleted successfully");
-                        } else {
+                        if (!success) {
                           toast.error("Failed to delete trip");
+                          return;
                         }
+                        toast.success("Trip deleted successfully");
                       }}
                     >
                       Delete
