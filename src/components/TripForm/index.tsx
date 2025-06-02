@@ -26,7 +26,8 @@ const TripForm = ({
     getValues,
     reset,
     setValue,
-    formState: { errors },
+
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(tripSchema),
     defaultValues,
@@ -55,7 +56,6 @@ const TripForm = ({
     setValue("coverImage", defaultMainImage);
     setValue("galleryImages", defaultGalleryImages);
   }, [setValue, defaultMainImage, defaultGalleryImages]);
-  console.log({ errors });
   return (
     <form
       onSubmit={handleSubmit((data) => onSubmit(data, reset))}
@@ -99,31 +99,33 @@ const TripForm = ({
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-3 gap-4">
-          <FormInput
-            register={register}
-            control={control}
-            name="departureTime"
-            label="Departure Time"
-            type="date"
-            errors={errors}
-            onDisabled={(date) =>
-              date < new Date(new Date().setHours(0, 0, 0, 0))
-            }
-          />
+        <div className=" flex flex-col gap-4">
+          <div className="flex flex-col xl:flex-row gap-4">
+            <FormInput
+              register={register}
+              control={control}
+              name="departureTime"
+              label="Departure Time"
+              type="date"
+              errors={errors}
+              onDisabled={(date) =>
+                date < new Date(new Date().setHours(0, 0, 0, 0))
+              }
+            />
 
-          <FormInput
-            register={register}
-            control={control}
-            name="returnTime"
-            label="Return Time"
-            type="date"
-            errors={errors}
-            onDisabled={(date) =>
-              !getValues("departureTime") ||
-              date < new Date(getValues("departureTime").setHours(0, 0, 0, 0))
-            }
-          />
+            <FormInput
+              register={register}
+              control={control}
+              name="returnTime"
+              label="Return Time"
+              type="date"
+              errors={errors}
+              onDisabled={(date) =>
+                !getValues("departureTime") ||
+                date < new Date(getValues("departureTime").setHours(0, 0, 0, 0))
+              }
+            />
+          </div>
 
           <FormInput
             register={register}
@@ -153,6 +155,13 @@ const TripForm = ({
           </button>
         </div>
       </div>
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50">
+          <div className="flex items-center justify-center h-full">
+            <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
+      )}
     </form>
   );
 };

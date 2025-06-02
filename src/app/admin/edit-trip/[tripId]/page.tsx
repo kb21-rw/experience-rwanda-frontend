@@ -16,9 +16,9 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     seats: tripData.seats.toString(),
     coverImage: tripData.mainPicture,
     galleryImages: tripData.pictures,
-    pricingOptions: tripData.pricingOptions.map((option: PricingOption) => ({
+    pricingOptions: tripData.pricingOptions?.map((option: PricingOption) => ({
       name: option.name,
-      amount: option.amount,
+      amount: option.amount.toString(),
       description: option.description,
     })),
   };
@@ -26,7 +26,7 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     <div className="p-10 bg-white font-inter">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-gray-900">
-          Trips | New Trip
+          Trips | Edit Trip
         </h1>
       </div>
 

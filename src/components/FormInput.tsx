@@ -38,7 +38,7 @@ const FormInput = ({
   switch (type) {
     case "date":
       return (
-        <div>
+        <div className="w-52.5">
           <Label
             htmlFor={name}
             className="block text-sm font-medium text-black mb-2"
@@ -98,7 +98,7 @@ const FormInput = ({
       );
     case "number":
       return (
-        <div>
+        <div className="w-52.5">
           <Label
             htmlFor={name}
             className="block text-sm font-medium text-black mb-2="
@@ -108,7 +108,7 @@ const FormInput = ({
           <Input
             type="number"
             {...register(name)}
-            className="w-[10.625rem] px-3 h-9 border border-black rounded-md"
+            className="w-full px-3 h-9 border border-black rounded-md"
             placeholder={placeholder}
           />
           {errors?.[name] && (

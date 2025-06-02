@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { TripPackageType } from "@/types/trip";
 import { z } from "zod";
 import { tripSchema } from "@/utils/schemas/tripSchema";
+import { UseFormReset } from "react-hook-form";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -24,8 +25,7 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
     { id: 0, selectedOptions: [], customOptions: [], newOption: "" },
   ]);
 
-  const onSubmit = async (data: FormData, reset: () => void) => {
-    console.log(data, "--------");
+  const onSubmit = async (data: FormData, reset: UseFormReset<FormData>) => {
     const formData = new FormData();
     formData.append("tripData", JSON.stringify(data));
 
@@ -49,8 +49,12 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
       if (!response.ok) {
         throw new Error("Failed to create trip");
       }
-      await response.json();
-      reset();
+      const formResult = await response.json();
+      if (tripId) {
+        reset(formResult);
+      } else {
+        reset();
+      }
       toast.success("Trip was created successfully");
     } catch (error) {
       console.error("Error uploading:", error);

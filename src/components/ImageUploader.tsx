@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { Label } from "@/components/ui/Label";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
+import Image from "next/image";
 
 const ImageUploader = ({
   setMainImage,
@@ -72,7 +73,6 @@ const ImageUploader = ({
     );
     setDefaultGalleryPreviews((prev) => prev.filter((_, i) => i !== index));
   };
-  console.log(defaultGalleryPreviews);
 
   return (
     <div>
@@ -122,11 +122,14 @@ const ImageUploader = ({
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-4">Cover Photo</h3>
             <div className="relative inline-block">
-              <img
-                src={mainImagePreview}
-                alt="Main"
-                className="w-48 h-52 object-cover rounded-lg"
-              />
+              <div className="w-48 h-52">
+                <Image
+                  src={mainImagePreview}
+                  alt="Main"
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
               <button
                 type="button"
                 onClick={deleteMainImage}
@@ -146,11 +149,14 @@ const ImageUploader = ({
               <div className="grid grid-cols-4 gap-4">
                 {defaultGalleryPreviews?.map((preview, index) => (
                   <div key={index} className="relative">
-                    <img
-                      src={preview}
-                      alt={`Gallery ${index + 1}`}
-                      className="w-32 h-32 object-cover rounded-lg"
-                    />
+                    <div className="w-48 h-52">
+                      <Image
+                        src={preview}
+                        alt={`Gallery ${index + 1}`}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
                     <button
                       type="button"
                       onClick={() => deleteDefaultGalleryImage(index)}
@@ -168,11 +174,14 @@ const ImageUploader = ({
               <div className="grid grid-cols-4 gap-4">
                 {galleryPreviews.map((preview, index) => (
                   <div key={index} className="relative">
-                    <img
-                      src={preview}
-                      alt={`Gallery ${index + 1}`}
-                      className="w-32 h-32 object-cover rounded-lg"
-                    />
+                    <div className="w-48 h-52">
+                      <Image
+                        src={preview}
+                        alt={`Gallery ${index + 1}`}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
                     <button
                       type="button"
                       onClick={() => deleteGalleryImage(index)}

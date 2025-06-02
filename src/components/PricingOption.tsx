@@ -21,8 +21,6 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   append,
   errors,
 }) => {
-  console.log({ pricingOptions });
-
   return (
     <div className="mt-8">
       <h3 className="text-lg font-semibold text-black mb-4">Pricing Options</h3>
