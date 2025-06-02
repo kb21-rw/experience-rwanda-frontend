@@ -1,13 +1,27 @@
 import NewTripForm from "@/components/TripForm";
 import { PricingOption } from "@/types/trip";
+import { tripSchema } from "@/utils/schemas/tripSchema";
+import { z } from "zod";
+
+type FormData = z.infer<typeof tripSchema>;
 
 const EditTrip = async ({ params }: { params: { tripId: string } }) => {
-  const trip = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/trips/${params.tripId}`,
-    { cache: "no-cache" }
-  );
-  const tripData = await trip.json();
-  const defaultValues = {
+  let tripData;
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/trips/${params.tripId}`,
+      { cache: "no-cache" }
+    );
+    if (!res.ok) {
+      throw new Error(`Failed to fetch trip: ${res.status}`);
+    }
+
+    tripData = await res.json();
+  } catch (error) {
+    console.error("Error fetching trip:", error);
+    throw new Error("Trip not found or failed to load.");
+  }
+  const defaultValues: FormData = {
     title: tripData.title,
     destination: tripData.destination,
     description: tripData.description,
