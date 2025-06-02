@@ -6,11 +6,21 @@ import { FaTimes } from "react-icons/fa";
 const ImageUploader = ({
   setMainImage,
   setGalleryImages,
+  defaultMainImage,
+  defaultGalleryImages,
+  setDefaultMainImage,
+  setDefaultGalleryImages,
 }: {
   setMainImage: Dispatch<SetStateAction<File | null>>;
   setGalleryImages: Dispatch<SetStateAction<File[]>>;
+  defaultMainImage: string;
+  defaultGalleryImages: string[];
+  setDefaultMainImage: Dispatch<SetStateAction<string>>;
+  setDefaultGalleryImages: Dispatch<SetStateAction<string[]>>;
 }) => {
-  const [mainImagePreview, setMainImagePreview] = useState<string | null>(null);
+  const [mainImagePreview, setMainImagePreview] = useState<string | null>(
+    defaultMainImage || null
+  );
   const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
   const handleMainImageChange = (file: File | null) => {
     if (!file) return;
@@ -20,8 +30,10 @@ const ImageUploader = ({
   };
 
   const handleGalleryImagesChange = (files: FileList | null) => {
+    console.log(files, "=======");
     if (!files) return;
     const newFiles = Array.from(files);
+    console.log(newFiles, "=======++++++");
     setGalleryImages((prev) => [...prev, ...newFiles]);
     const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
     setGalleryPreviews((prev) => [...prev, ...newPreviews]);
@@ -31,6 +43,7 @@ const ImageUploader = ({
     if (mainImagePreview) {
       URL.revokeObjectURL(mainImagePreview);
     }
+    setDefaultMainImage("");
     setMainImage(null);
     setMainImagePreview(null);
   };
@@ -38,8 +51,22 @@ const ImageUploader = ({
   const deleteGalleryImage = (index: number) => {
     URL.revokeObjectURL(galleryPreviews[index]);
     setGalleryImages((prev) => prev.filter((_, i) => i !== index));
+
     setGalleryPreviews((prev) => prev.filter((_, i) => i !== index));
   };
+
+  const deleteDefaultGalleryImage = (index: number) => {
+    setDefaultGalleryImages((prev) => prev?.filter((_, i) => i !== index));
+    setDefaultGalleryImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // const deleteDefaultMainImage = () => {
+  //   setDefaultMainImage(null);
+  //   setDefaultMainImagePreview(null);
+  // };
+
+  console.log({ defaultGalleryImages, galleryPreviews });
+
   return (
     <div>
       <Label className="block text-2xl font-bold text-black mb-6">
@@ -60,7 +87,7 @@ const ImageUploader = ({
             <p className="text-center text-base text-black font-medium px-2">
               Upload Cover photo
               <br />
-              or drag it here
+              {/* or drag it here */}
             </p>
           </label>
         </div>
@@ -77,7 +104,7 @@ const ImageUploader = ({
             <p className="text-center text-base text-black font-medium px-2">
               Upload gallery photo
               <br />
-              or drag it here
+              {/* or drag it here */}
             </p>
           </label>
         </div>
@@ -103,30 +130,55 @@ const ImageUploader = ({
             </div>
           </div>
         )}
-
-        {galleryPreviews.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Gallery Photos</h3>
-            <div className="grid grid-cols-4 gap-4">
-              {galleryPreviews.map((preview, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={preview}
-                    alt={`Gallery ${index + 1}`}
-                    className="w-32 h-32 object-cover rounded-lg"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => deleteGalleryImage(index)}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
-                  >
-                    <FaTimes size={12} />
-                  </button>
-                </div>
-              ))}
+        <div className="flex flex-col gap-2">
+          {(defaultGalleryImages.length > 0 || galleryPreviews.length > 0) && (
+            <h3 className="text-lg font-semibold mb-2">Gallery Photos</h3>
+          )}
+          {defaultGalleryImages.length > 0 && (
+            <div>
+              <div className="grid grid-cols-4 gap-4">
+                {defaultGalleryImages?.map((preview, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={preview}
+                      alt={`Gallery ${index + 1}`}
+                      className="w-32 h-32 object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => deleteDefaultGalleryImage(index)}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                    >
+                      <FaTimes size={12} />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          {galleryPreviews.length > 0 && (
+            <div>
+              <div className="grid grid-cols-4 gap-4">
+                {galleryPreviews.map((preview, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={preview}
+                      alt={`Gallery ${index + 1}`}
+                      className="w-32 h-32 object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => deleteGalleryImage(index)}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                    >
+                      <FaTimes size={12} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

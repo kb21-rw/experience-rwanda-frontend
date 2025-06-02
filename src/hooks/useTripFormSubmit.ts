@@ -6,16 +6,23 @@ import { tripSchema } from "@/utils/schemas/tripSchema";
 
 type FormData = z.infer<typeof tripSchema>;
 
-export function useTripFormSubmit() {
+export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
+  console.log("=======");
   const [mainImage, setMainImage] = useState<File | null>(null);
   const [galleryImages, setGalleryImages] = useState<File[]>([]);
+  const [defaultGalleryImages, setDefaultGalleryImages] = useState<string[]>(
+    defaultValues.galleryImages?.map((image) => image) || []
+  );
+  const [defaultMainImage, setDefaultMainImage] = useState<string>(
+    defaultValues.coverImage || ""
+  );
   const [tripPackages, setTripPackages] = useState<TripPackageType[]>([
     { id: 0, selectedOptions: [], customOptions: [], newOption: "" },
   ]);
 
   const onSubmit = async (data: FormData, reset: () => void) => {
     const formData = new FormData();
-    formData.append("createTrip", JSON.stringify(data));
+    formData.append("tripData", JSON.stringify(data));
 
     if (mainImage) {
       formData.append("mainPicture", mainImage);
@@ -24,12 +31,17 @@ export function useTripFormSubmit() {
     galleryImages?.forEach((file) => {
       formData.append("pictures", file);
     });
-
+    console.log({ data, tripId }, "======");
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        tripId
+          ? `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/trips`,
+        {
+          method: tripId ? "PUT" : "POST",
+          body: formData,
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to create trip");
       }
@@ -50,5 +62,9 @@ export function useTripFormSubmit() {
     setGalleryImages,
     tripPackages,
     setTripPackages,
+    defaultGalleryImages,
+    defaultMainImage,
+    setDefaultGalleryImages,
+    setDefaultMainImage,
   };
 }

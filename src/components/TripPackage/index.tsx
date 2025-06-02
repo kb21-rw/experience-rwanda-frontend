@@ -1,26 +1,111 @@
-import TripPackageCard from "./Card";
-import { tripPackageData } from "../../data/tripPackageData";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { Dispatch, SetStateAction } from "react";
+import { Button } from "@/components/ui/Button";
+import type { TripPackage } from "@/types/tripPackage";
+import TripPackageCard from "./TripPackageCard";
 
-type TripPackageProps = {
-  title: string;
-};
+const TripPackage = ({
+  setTripPackages,
+  tripPackages,
+}: {
+  setTripPackages: Dispatch<SetStateAction<TripPackage[]>>;
+  tripPackages: TripPackage[];
+}) => {
+  const addTripPackage = () => {
+    setTripPackages([
+      ...tripPackages,
+      { id: Date.now(), selectedOptions: [], customOptions: [], newOption: "" },
+    ]);
+  };
 
-const TripPackage = ({ title }: TripPackageProps) => {
+  const removeTripPackage = (id: number) => {
+    setTripPackages(tripPackages.filter((pkg) => pkg.id !== id));
+  };
+
+  const toggleOption = (pkgId: number, option: string) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) =>
+        pkg.id === pkgId
+          ? {
+              ...pkg,
+              selectedOptions: pkg.selectedOptions.includes(option)
+                ? pkg.selectedOptions.filter((o) => o !== option)
+                : [...pkg.selectedOptions, option],
+            }
+          : pkg
+      )
+    );
+  };
+
+  const updateNewOption = (pkgId: number, value: string) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) =>
+        pkg.id === pkgId ? { ...pkg, newOption: value } : pkg
+      )
+    );
+  };
+
+  const addCustomOption = (pkgId: number) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) => {
+        if (
+          pkg.id === pkgId &&
+          pkg.newOption.trim() &&
+          !pkg.customOptions.includes(pkg.newOption.trim())
+        ) {
+          return {
+            ...pkg,
+            customOptions: [...pkg.customOptions, pkg.newOption.trim()],
+            newOption: "",
+          };
+        }
+        return pkg;
+      })
+    );
+  };
+
+  const removeCustomOption = (pkgId: number, option: string) => {
+    setTripPackages((tripPackages) =>
+      tripPackages.map((pkg) =>
+        pkg.id === pkgId
+          ? {
+              ...pkg,
+              customOptions: pkg.customOptions.filter(
+                (optionName) => optionName !== option
+              ),
+              selectedOptions: pkg.selectedOptions.filter(
+                (optionName) => optionName !== option
+              ),
+            }
+          : pkg
+      )
+    );
+  };
   return (
-    <div className="bg-black md:py-30 py-12.5">
-      <h1 className="text-4xl font-bold md:mb-20 mb-10 text-center text-white">
-        {title}
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 content-wrapper">
-        {tripPackageData.map((item, index) => (
-          <TripPackageCard
-            key={index}
-            title={item.title}
-            icon={item.icon}
-            items={item.items}
-          />
-        ))}
-      </div>
+    <div>
+      <h3 className="text-lg font-semibold text-black mb-6">Trip Packages</h3>
+
+      {tripPackages.map((pkg, idx) => (
+        <TripPackageCard
+          key={pkg.id}
+          pkg={pkg}
+          idx={idx}
+          packageOptions={[]}
+          toggleOption={toggleOption}
+          updateNewOption={updateNewOption}
+          addCustomOption={addCustomOption}
+          removeCustomOption={removeCustomOption}
+          removeTripPackage={removeTripPackage}
+        />
+      ))}
+      <Button
+        type="button"
+        onClick={addTripPackage}
+        className="mt-2 px-4 py-2 bg-black text-white rounded"
+        variant="primary"
+      >
+        Add trip package
+      </Button>
     </div>
   );
 };

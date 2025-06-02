@@ -5,10 +5,10 @@ export interface Trip {
   departureTime: Date;
   returnTime: Date;
   seats: number;
-  pricingOptions: PricingOptions[];
+  pricingOptions: PricingOption[];
 }
 
-export interface PricingOptions {
+export interface PricingOption {
   amount: string;
   name: string;
   description?: string;

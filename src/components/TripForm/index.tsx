@@ -1,26 +1,35 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import PricingOption from "./PricingOption";
-import TripPackage from "./TripPackage";
 import FormInput from "@/components/FormInput";
-import ImageUploader from "./ImageUploader";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tripSchema } from "@/utils/schemas/tripSchema";
 import { useTripFormSubmit } from "@/hooks/useTripFormSubmit";
+import ImageUploader from "@/components/ImageUploader";
+import PricingOption from "@/components/PricingOption";
+import TripPackage from "@/components/TripPackage";
 
 type FormData = z.infer<typeof tripSchema>;
 
-const NewTripForm = () => {
+const TripForm = ({
+  defaultValues,
+  tripId,
+}: {
+  defaultValues: FormData;
+  tripId?: string;
+}) => {
   const {
     register,
     handleSubmit,
     control,
+    getValues,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(tripSchema),
+    defaultValues,
   });
   const {
     onSubmit,
@@ -28,8 +37,11 @@ const NewTripForm = () => {
     setGalleryImages,
     tripPackages,
     setTripPackages,
-  } = useTripFormSubmit();
-
+    defaultGalleryImages,
+    defaultMainImage,
+    setDefaultGalleryImages,
+    setDefaultMainImage,
+  } = useTripFormSubmit(defaultValues, tripId);
   const {
     fields: pricingOptions,
     append,
@@ -38,6 +50,11 @@ const NewTripForm = () => {
     control,
     name: "pricingOptions",
   });
+
+  useEffect(() => {
+    setValue("coverImage", defaultMainImage);
+    setValue("galleryImages", defaultGalleryImages);
+  }, [setValue, defaultMainImage, defaultGalleryImages]);
 
   return (
     <form
@@ -74,6 +91,10 @@ const NewTripForm = () => {
         <ImageUploader
           setMainImage={setMainImage}
           setGalleryImages={setGalleryImages}
+          defaultMainImage={defaultMainImage}
+          defaultGalleryImages={defaultGalleryImages}
+          setDefaultMainImage={setDefaultMainImage}
+          setDefaultGalleryImages={setDefaultGalleryImages}
         />
       </div>
 
@@ -81,18 +102,27 @@ const NewTripForm = () => {
         <div className="grid grid-cols-3 gap-4">
           <FormInput
             register={register}
+            control={control}
             name="departureTime"
             label="Departure Time"
             type="date"
             errors={errors}
+            onDisabled={(date) =>
+              date < new Date(new Date().setHours(0, 0, 0, 0))
+            }
           />
 
           <FormInput
             register={register}
+            control={control}
             name="returnTime"
             label="Return Time"
             type="date"
             errors={errors}
+            onDisabled={(date) =>
+              !getValues("departureTime") ||
+              date < new Date(getValues("departureTime").setHours(0, 0, 0, 0))
+            }
           />
 
           <FormInput
@@ -128,4 +158,4 @@ const NewTripForm = () => {
   );
 };
 
-export default NewTripForm;
+export default TripForm;

@@ -2,17 +2,16 @@
 import React from "react";
 import { Label } from "@/components/ui/Label";
 import { Input } from "@/components/ui/Input";
-import { PricingOptions } from "@/types/trip";
+import type { PricingOption } from "@/types/trip";
 import { FieldErrors } from "react-hook-form";
 import { Trip } from "@/types/trip";
 
 interface PricingOptionProps {
-  pricingOptions: PricingOptions[];
+  pricingOptions: PricingOption[];
   register: any;
   remove: (index: number) => void;
-  append: (field: PricingOptions) => void;
+  append: (field: PricingOption) => void;
   errors: FieldErrors<Trip>;
-  name: string;
 }
 
 const PricingOption: React.FC<PricingOptionProps> = ({
@@ -21,15 +20,15 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   remove,
   append,
   errors,
-  name,
 }) => {
+  console.log({ pricingOptions });
   return (
     <div className="mt-8">
       <h3 className="text-lg font-semibold text-black mb-4">Pricing Options</h3>
 
       {pricingOptions.map((field, index) => (
         <div
-          {...register(name)}
+          {...register(`pricingOptions.${index}`)}
           key={index}
           className="border border-gray-300 p-4 rounded-md mb-4"
         >
@@ -37,7 +36,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             <Label className="block text-sm text-black mb-1">Name</Label>
             <Input
               type="text"
-              {...register(`pricingOptions.${index}.name`)}
+              {...register(`pricingOptions.${index}.${field.name}`)}
               className="w-full p-2 border border-black rounded-md"
               placeholder="Option name"
             />

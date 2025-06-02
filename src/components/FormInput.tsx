@@ -1,12 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  Control,
+  Controller,
+} from "react-hook-form";
 import { Trip } from "@/types/trip";
+import { DatePicker } from "./DatePicker";
+import { z } from "zod";
+import { tripSchema } from "@/utils/schemas/tripSchema";
+type FormData = z.infer<typeof tripSchema>;
 
 // type or  react hook form register
 const FormInput = ({
+  control,
   register,
   name,
   label,
@@ -14,14 +23,17 @@ const FormInput = ({
   type,
   size,
   errors,
+  onDisabled,
 }: {
-  register: UseFormRegister<any>;
+  control?: Control<FormData>;
+  register: UseFormRegister<FormData>;
   name: keyof Trip;
   label: string;
   placeholder?: string;
   type?: "text" | "number" | "date";
   size?: "small" | "large";
-  errors?: FieldErrors<any>;
+  errors?: FieldErrors<FormData>;
+  onDisabled?: (date: Date) => boolean;
 }) => {
   switch (type) {
     case "date":
@@ -33,11 +45,16 @@ const FormInput = ({
           >
             {label}
           </Label>
-          <Input
-            id={name}
-            type="date"
-            {...register(name)}
-            className="w-32 p-2 border border-black rounded-md"
+          <Controller
+            name={name}
+            control={control}
+            render={({ field }) => (
+              <DatePicker
+                onDisabled={onDisabled || (() => false)} // example logic
+                value={field.value as Date}
+                onChange={field.onChange}
+              />
+            )}
           />
           {errors?.[name] && (
             <p className="text-red-500 text-sm mt-1">
@@ -84,14 +101,14 @@ const FormInput = ({
         <div>
           <Label
             htmlFor={name}
-            className="block text-sm font-medium text-black mb-2"
+            className="block text-sm font-medium text-black mb-2="
           >
             {label}
           </Label>
           <Input
             type="number"
             {...register(name)}
-            className="w-full px-3 py-2 border border-black rounded-md"
+            className="w-[10.625rem] px-3 h-9 border border-black rounded-md"
             placeholder={placeholder}
           />
           {errors?.[name] && (
