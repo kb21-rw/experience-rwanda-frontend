@@ -1,35 +1,48 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import PricingOption from "./PricingOption";
-import TripPackage from "./TripPackage";
 import FormInput from "@/components/FormInput";
-import ImageUploader from "./ImageUploader";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tripSchema } from "@/utils/schemas/tripSchema";
 import { useTripFormSubmit } from "@/hooks/useTripFormSubmit";
+import ImageUploader from "@/components/ImageUploader";
+import PricingOption from "@/components/PricingOption";
+// import TripPackage from "@/components/TripPackage";
 
 type FormData = z.infer<typeof tripSchema>;
 
-const NewTripForm = () => {
+const TripForm = ({
+  defaultValues,
+  tripId,
+}: {
+  defaultValues: FormData;
+  tripId?: string;
+}) => {
   const {
     register,
     handleSubmit,
     control,
+    getValues,
     reset,
-    formState: { errors },
+    setValue,
+
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(tripSchema),
+    defaultValues,
   });
   const {
     onSubmit,
     setMainImage,
     setGalleryImages,
-    tripPackages,
-    setTripPackages,
-  } = useTripFormSubmit();
-
+    // tripPackages,
+    // setTripPackages,
+    defaultGalleryImages,
+    defaultMainImage,
+    setDefaultGalleryImages,
+    setDefaultMainImage,
+  } = useTripFormSubmit(defaultValues, tripId);
   const {
     fields: pricingOptions,
     append,
@@ -39,6 +52,10 @@ const NewTripForm = () => {
     name: "pricingOptions",
   });
 
+  useEffect(() => {
+    setValue("coverImage", defaultMainImage);
+    setValue("galleryImages", defaultGalleryImages);
+  }, [setValue, defaultMainImage, defaultGalleryImages]);
   return (
     <form
       onSubmit={handleSubmit((data) => onSubmit(data, reset))}
@@ -74,26 +91,41 @@ const NewTripForm = () => {
         <ImageUploader
           setMainImage={setMainImage}
           setGalleryImages={setGalleryImages}
+          defaultMainImage={defaultMainImage}
+          defaultGalleryImages={defaultGalleryImages}
+          setDefaultMainImage={setDefaultMainImage}
+          setDefaultGalleryImages={setDefaultGalleryImages}
         />
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-3 gap-4">
-          <FormInput
-            register={register}
-            name="departureTime"
-            label="Departure Time"
-            type="date"
-            errors={errors}
-          />
+        <div className=" flex flex-col gap-4">
+          <div className="flex flex-col xl:flex-row gap-4">
+            <FormInput
+              register={register}
+              control={control}
+              name="departureTime"
+              label="Departure Time"
+              type="date"
+              errors={errors}
+              onDisabled={(date) =>
+                date < new Date(new Date().setHours(0, 0, 0, 0))
+              }
+            />
 
-          <FormInput
-            register={register}
-            name="returnTime"
-            label="Return Time"
-            type="date"
-            errors={errors}
-          />
+            <FormInput
+              register={register}
+              control={control}
+              name="returnTime"
+              label="Return Time"
+              type="date"
+              errors={errors}
+              onDisabled={(date) =>
+                !getValues("departureTime") ||
+                date < new Date(getValues("departureTime").setHours(0, 0, 0, 0))
+              }
+            />
+          </div>
 
           <FormInput
             register={register}
@@ -105,27 +137,33 @@ const NewTripForm = () => {
           />
         </div>
 
-        <TripPackage
+        {/* <TripPackage
           setTripPackages={setTripPackages}
           tripPackages={tripPackages}
-        />
+        /> */}
         <PricingOption
           pricingOptions={pricingOptions}
           register={register}
           remove={remove}
           append={append}
           errors={errors}
-          name="pricingOptions"
         />
 
         <div className="pt-20">
           <button className="w-full bg-black text-white py-3 px-6 rounded-md font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
-            Create New Trip
+            {tripId ? "Update Trip" : "Create New Trip"}
           </button>
         </div>
       </div>
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50">
+          <div className="flex items-center justify-center h-full">
+            <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
+      )}
     </form>
   );
 };
 
-export default NewTripForm;
+export default TripForm;

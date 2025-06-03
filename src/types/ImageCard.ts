@@ -9,7 +9,7 @@ export type TripDetails = {
   seats: number;
   seatsBooked?: number;
   currency?: string;
-  mainPicture: string;
+  coverImage: string;
 };
 
 export type Row = {

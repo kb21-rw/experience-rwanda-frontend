@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const ImageCard = ({
   title: trip,
-  mainPicture: url,
+  coverImage: url,
   price,
   departureTime: date,
   id: tripId,

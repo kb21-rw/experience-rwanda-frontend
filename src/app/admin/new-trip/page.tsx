@@ -1,6 +1,6 @@
-import NewTripForm from "./NewTripForm";
+import NewTripForm from "../../../components/TripForm";
 
-const CreateTrip = () => {
+const CreateTrip = async () => {
   return (
     <div className="p-10 bg-white font-inter">
       <div className="mb-8">
@@ -9,7 +9,17 @@ const CreateTrip = () => {
         </h1>
       </div>
 
-      <NewTripForm />
+      <NewTripForm
+        defaultValues={{
+          title: "",
+          description: "",
+          destination: "",
+          departureTime: new Date(),
+          returnTime: new Date(),
+          seats: "",
+          pricingOptions: [],
+        }}
+      />
     </div>
   );
 };

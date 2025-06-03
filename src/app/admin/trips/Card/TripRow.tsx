@@ -17,7 +17,7 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { IoIosAlert } from "react-icons/io";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const TripRow = ({
   id,
@@ -31,7 +31,6 @@ const TripRow = ({
   onDelete,
 }: Trip) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const router = useRouter();
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -105,12 +104,12 @@ const TripRow = ({
                 </AlertDialogContent>
               </AlertDialog>
 
-              <button
-                onClick={() => router.push(`/admin/edit-trip/${id}`)}
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+              <Link
+                href={`/admin/edit-trip/${id}`}
+                className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Update
-              </button>
+              </Link>
             </div>
           )}
         </TableCell>
