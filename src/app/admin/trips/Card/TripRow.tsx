@@ -31,6 +31,7 @@ const TripRow = ({
   onDelete,
 }: Trip) => {
   const [showDropdown, setShowDropdown] = useState(false);
+
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
