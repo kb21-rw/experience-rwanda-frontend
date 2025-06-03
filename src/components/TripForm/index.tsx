@@ -8,7 +8,7 @@ import { tripSchema } from "@/utils/schemas/tripSchema";
 import { useTripFormSubmit } from "@/hooks/useTripFormSubmit";
 import ImageUploader from "@/components/ImageUploader";
 import PricingOption from "@/components/PricingOption";
-import TripPackage from "@/components/TripPackage";
+// import TripPackage from "@/components/TripPackage";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -36,8 +36,8 @@ const TripForm = ({
     onSubmit,
     setMainImage,
     setGalleryImages,
-    tripPackages,
-    setTripPackages,
+    // tripPackages,
+    // setTripPackages,
     defaultGalleryImages,
     defaultMainImage,
     setDefaultGalleryImages,
@@ -137,10 +137,10 @@ const TripForm = ({
           />
         </div>
 
-        <TripPackage
+        {/* <TripPackage
           setTripPackages={setTripPackages}
           tripPackages={tripPackages}
-        />
+        /> */}
         <PricingOption
           pricingOptions={pricingOptions}
           register={register}
