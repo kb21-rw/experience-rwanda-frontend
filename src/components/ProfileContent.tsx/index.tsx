@@ -18,7 +18,6 @@ export default function ProfileContent() {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       const payload = jwt.decode(accessToken);
-      console.log(payload);
       setUser(payload as User);
     }
   }, []);

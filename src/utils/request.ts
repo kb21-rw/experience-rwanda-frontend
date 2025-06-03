@@ -19,6 +19,19 @@ export const postData = async (url: string, data: unknown) => {
   }
 };
 
+export const getData = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error:", error);
+    return null;
+
+  }
+}
 export const fetchWithToken = async (
   url: string,
   method: string,
