@@ -2,6 +2,9 @@ import NewTripForm from "@/components/TripForm";
 import { PricingOption } from "@/types/trip";
 import { tripSchema } from "@/utils/schemas/tripSchema";
 import { z } from "zod";
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { ArrowLeftIcon } from "lucide-react";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -38,8 +41,14 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
   };
   return (
     <div className="p-10 bg-white font-inter">
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900">
+      <div className="flex items-center gap-4 mb-8">
+        <Link href="/admin/trips">
+          <Button variant="outline">
+            <ArrowLeftIcon className="mr-2 h-4 w-4" />
+            Back
+          </Button>
+        </Link>
+        <h1 className="place-self-center text-2xl font-semibold text-gray-900">
           Trips | Edit Trip
         </h1>
       </div>
