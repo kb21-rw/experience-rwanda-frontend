@@ -77,7 +77,7 @@ const ImageUploader = ({
   return (
     <div>
       <Label className="block text-2xl font-bold text-black mb-6">
-        Gallery
+        Trip Pictures
       </Label>
       <div className="flex gap-12">
         <div className="flex flex-col items-center">
