@@ -1,22 +1,21 @@
 import DashboardCard from "@/components/DashboardCard";
 import { Book, Users } from "lucide-react";
+import dashboard  from "./../../data/dashbaord.json";
 
 const AdminPage = () => {
   return (
-    <div className="flex flex-col items-center gap-8 px-4 py-6 border border-red-500  justify-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-semibold animate-in slide-in-from-left">
-          Welcome to the Experience Rwanda Admin Panel
-        </h1>
-        <p className="text-gray-600 text-sm sm:text-base mt-2">
-          Manage trips, bookings, and users seamlessly from one central dashboard.
-          Stay organized and keep everything running smoothly.
+    <div className=" px-4 py-6">
+      <div className="flex flex-col items-center gap-8 text-center mb-6">
+        <h1 className="text-3xl md:text-4xl font-semibold animate-in slide-in-from-left">
+                {dashboard.title  }       
+                 </h1>
+        <p className="text-gray-600 text-base md:text-xl mt-2 md:w-2/3 w-full mx-auto">
+          {dashboard.description}
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-6 w-full border-yellow-500 border">
+      <div className="flex justify-center gap-6 w-full border-yellow-500 border">
         <DashboardCard
-          title="Total Trips"
           total={80}
           icon={<Book className="text-gray-600" size={26} />}
           statuses={[
@@ -26,7 +25,7 @@ const AdminPage = () => {
           ]}
         />
         <DashboardCard
-          title="Users"
+               title="Users"
           total={4}
           icon={<Users className="text-gray-600" size={26} />}
           statuses={[
