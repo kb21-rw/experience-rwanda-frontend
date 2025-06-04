@@ -1,8 +1,12 @@
 "use client";
 
+import ResetCodePopup from "@/components/ResetCode";
 import PasswordResetForm from "./Form";
+import { useState } from "react";
 
 const PasswordReset = () => {
+  const [emailForReset, setEmailForReset] = useState<string | null>(null);
+
   return (
     <main
       className="min-h-screen flex items-center justify-center px-4"
@@ -12,7 +16,13 @@ const PasswordReset = () => {
         backgroundPosition: "center",
       }}
     >
-      <PasswordResetForm />
+      <PasswordResetForm onSuccess={(email) => setEmailForReset(email)} />
+      {emailForReset && (
+        <ResetCodePopup
+          email={emailForReset}
+          onClose={() => setEmailForReset(null)}
+        />
+      )}
     </main>
   );
 };

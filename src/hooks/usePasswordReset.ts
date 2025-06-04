@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,9 +7,7 @@ import { toast } from "react-toastify";
 
 type FormData = z.infer<typeof passwordResetSchema>;
 
-export const usePasswordReset = () => {
-  const router = useRouter();
-
+export const usePasswordReset = (onSuccess: (email: string) => void) => {
   const {
     register,
     handleSubmit,
@@ -21,14 +18,14 @@ export const usePasswordReset = () => {
     resolver: zodResolver(passwordResetSchema),
   });
 
-  const onSubmit = async (data: FormData) => {
+  const submitEmail = async (email: string) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/forget-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: data.email }),
+          body: JSON.stringify({ email }),
         }
       );
 
@@ -46,7 +43,7 @@ export const usePasswordReset = () => {
       }
 
       toast.success("Reset code sent! Check your email.");
-      router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`);
+      onSuccess(email);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Something went wrong";
@@ -57,7 +54,8 @@ export const usePasswordReset = () => {
   return {
     register,
     handleSubmit,
-    onSubmit,
+    onSubmit: handleSubmit((data) => submitEmail(data.email)),
+    resend: submitEmail,
     errors,
     isSubmitting,
     reset,
