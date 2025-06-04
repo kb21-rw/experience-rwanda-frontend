@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { Input } from "../../Input";
+import { Input } from "../ui/Input";
 
 interface OTPInputProps {
   code: string[];

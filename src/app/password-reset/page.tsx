@@ -1,6 +1,6 @@
 "use client";
 
-import ResetCodePopup from "@/components/ui/Popup/ResetCode";
+import ResetCodePopup from "@/components/ResetCode";
 import PasswordResetForm from "./Form";
 import { useState } from "react";
 
