@@ -74,6 +74,8 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
     setIsResending(true);
     await resend(email);
     setCode(Array(6).fill(""));
+    setTimeLeft(120);
+    setIsResending(false);
   };
 
   return (
@@ -115,7 +117,7 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
               <button
                 type="button"
                 onClick={resendCode}
-                className="text-blue-500 hover:underline"
+                className="hover:underline"
                 disabled={timeLeft > 0 || isResending}
               >
                 {isResending ? "Sending..." : "Resend Code"}
