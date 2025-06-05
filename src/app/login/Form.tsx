@@ -9,6 +9,7 @@ import { loginSchema } from "@/utils/schemas/loginSchema";
 import { EmailInput } from "../login/components/EmailInput";
 import { PasswordInput } from "../login/components/PasswordInput";
 import { RememberMe } from "../login/components/RememberMe";
+import Link from "next/link";
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -83,7 +84,12 @@ export default function LoginForm() {
           showPassword={showPassword}
           setShowPassword={setShowPassword}
         />
-        <RememberMe register={register} />
+        <div className="flex justify-between">
+          <RememberMe register={register} />
+          <Link href="/password-reset" className="hover:underline text-gray-700">
+            Forget password
+          </Link>
+        </div>
 
         <Button
           type="submit"
