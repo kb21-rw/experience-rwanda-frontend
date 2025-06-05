@@ -86,7 +86,10 @@ export default function LoginForm() {
         />
         <div className="flex justify-between">
           <RememberMe register={register} />
-          <Link href="/password-reset" className="hover:underline text-gray-700">
+          <Link
+            href="/reset-password"
+            className="hover:underline text-gray-700"
+          >
             Forget password
           </Link>
         </div>
