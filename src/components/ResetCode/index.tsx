@@ -74,6 +74,8 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
     setIsResending(true);
     await resend(email);
     setCode(Array(6).fill(""));
+    setTimeLeft(120);
+    setIsResending(false);
   };
 
   return (
@@ -106,21 +108,20 @@ const ResetCodePopup = ({ onClose, email }: ResetCodePopupProps) => {
           )}
 
           <div className="mt-6 space-y-4 w-full">
-            <div className="flex justify-between text-sm text-black">
-              <p>
-                {timeLeft > 0
-                  ? `Code expires in ${formatTime(timeLeft)}`
-                  : "Code expired"}
+            {timeLeft > 0 ? (
+              <p className="text-black text-sm">
+                Code expires in {formatTime(timeLeft)}
               </p>
+            ) : (
               <button
                 type="button"
                 onClick={resendCode}
-                className="text-blue-500 hover:underline"
-                disabled={timeLeft > 0 || isResending}
+                className="hover:underline text-sm"
+                disabled={isResending}
               >
                 {isResending ? "Sending..." : "Resend Code"}
               </button>
-            </div>
+            )}
 
             <Button
               variant="primary"
