@@ -22,9 +22,9 @@ const UserInfoPopup = ({
     formState: { errors },
   } = useForm<ClientData>({
     defaultValues: {
-      firstName: clientData?.firstName,
-      lastName: clientData?.lastName,
+      fullName: clientData?.fullName,
       email: clientData?.email,
+      phoneNumber: clientData?.phoneNumber,
     },
   });
   const onSubmit: SubmitHandler<ClientData> = (data) => {
@@ -36,27 +36,15 @@ const UserInfoPopup = ({
       <h2 className="text-3xl font-bold text-center mb-10">User Information</h2>
       <div className="space-y-4 font-inter">
         <div className="flex flex-col gap-1">
-          <Label className="text-sm font-medium">First Name</Label>
+          <Label className="text-sm font-medium">Full Name</Label>
           <Input
             type="text"
-            placeholder="John"
+            placeholder="John Doe"
             className="w-full border p-2 rounded"
-            {...register("firstName", { required: "First name is required" })}
+            {...register("fullName", { required: "Full name is required" })}
           />
-          {errors.firstName && (
-            <p className="text-sm text-red-500">{errors.firstName.message}</p>
-          )}
-        </div>
-        <div className="flex flex-col gap-1">
-          <Label className="text-sm font-medium">Last Name</Label>
-          <Input
-            type="text"
-            placeholder="Doe"
-            className="w-full border p-2 rounded"
-            {...register("lastName", { required: "Last name is required" })}
-          />
-          {errors.lastName && (
-            <p className="text-sm text-red-500">{errors.lastName.message}</p>
+          {errors.fullName && (
+            <p className="text-sm text-red-500">{errors.fullName.message}</p>
           )}
         </div>
         <div className="flex flex-col gap-1">
@@ -69,6 +57,20 @@ const UserInfoPopup = ({
           />
           {errors.email && (
             <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-1">
+          <Label className="text-sm font-medium">Phone Number</Label>
+          <Input
+            type="tel"
+            placeholder="+250 788 888 888"
+            className="w-full border p-2 rounded"
+            {...register("phoneNumber", {
+              required: "Phone number is required",
+            })}
+          />
+          {errors.phoneNumber && (
+            <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
           )}
         </div>
       </div>

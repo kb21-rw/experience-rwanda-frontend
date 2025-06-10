@@ -43,8 +43,9 @@ const TripList = ({ trips }: { trips: TripDetails[] }) => {
 
       const matchesPrice =
         filters.price.min !== "" && filters.price.max !== ""
-          ? data.price >= Number(filters.price.min) &&
-            data.price <= Number(filters.price.max)
+          ? Number(data.pricingOptions[0].amount) >=
+              Number(filters.price.min) &&
+            Number(data.pricingOptions[0].amount) <= Number(filters.price.max)
           : true;
 
       return (matchesLocation || matchesTitle) && matchesDate && matchesPrice;

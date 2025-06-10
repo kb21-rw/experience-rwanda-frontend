@@ -12,10 +12,12 @@ const PaymentPopup = ({
   setCurrentStep,
   clientData,
   tripId,
+  pricingId,
 }: {
   setCurrentStep: Dispatch<SetStateAction<"userInfo" | "payment">>;
   clientData: ClientData | undefined;
   tripId: string;
+  pricingId: string;
 }) => {
   const {
     register,
@@ -30,7 +32,7 @@ const PaymentPopup = ({
       const { phoneNumber } = data;
       const response = await postData(
         `${process.env.NEXT_PUBLIC_API_URL}/payments/charge-momo`,
-        { ...clientData, tripId, phoneNumber }
+        { ...clientData, tripId, pricingId, phoneNumber }
       );
       if (response.status === "success") {
         router.push(response.meta.authorization.redirect);
@@ -38,7 +40,7 @@ const PaymentPopup = ({
     } else if (paymentMethod === "card") {
       const response = await postData(
         `${process.env.NEXT_PUBLIC_API_URL}/payments/charge-card`,
-        { ...clientData, tripId }
+        { ...clientData, tripId, pricingId }
       );
       if (response.data.status === "success") {
         router.push(response.data.data.link);

@@ -16,8 +16,7 @@ export type PopupProps = {
 };
 
 export interface ClientData {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phoneNumber: string;
 }

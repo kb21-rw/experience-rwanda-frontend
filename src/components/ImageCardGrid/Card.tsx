@@ -12,7 +12,7 @@ import Link from "next/link";
 const ImageCard = ({
   title: trip,
   coverImage: url,
-  price,
+  pricingOptions,
   departureTime: date,
   id: tripId,
   destination,
@@ -20,8 +20,7 @@ const ImageCard = ({
 }: TripDetails): ReactElement => {
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
 
-  const details = createTripDetails(destination, date, price, seats);
-
+  const details = createTripDetails(destination, date, pricingOptions, seats);
   return (
     <>
       <div className="bg-white shadow-lg rounded-3xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -61,7 +60,11 @@ const ImageCard = ({
         </div>
       </div>
       {selectedTrip && (
-        <BookingPopup tripId={selectedTrip} setSelectedTrip={setSelectedTrip} />
+        <BookingPopup
+          tripId={selectedTrip}
+          setSelectedTrip={setSelectedTrip}
+          pricingId={pricingOptions[0].id}
+        />
       )}
     </>
   );

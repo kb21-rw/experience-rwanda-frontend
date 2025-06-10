@@ -6,9 +6,11 @@ import { ClientData } from "@/types/Popup";
 const Popup = ({
   tripId,
   setSelectedTrip,
+  pricingId,
 }: {
   tripId: string;
   setSelectedTrip: Dispatch<SetStateAction<string | null>>;
+  pricingId: string;
 }) => {
   const [currentStep, setCurrentStep] = useState<"userInfo" | "payment">(
     "userInfo"
@@ -17,7 +19,7 @@ const Popup = ({
   if (!currentStep) {
     return null;
   }
-
+  console.log({ pricingId, clientData });
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
@@ -34,6 +36,7 @@ const Popup = ({
               setCurrentStep={setCurrentStep}
               clientData={clientData}
               tripId={tripId}
+              pricingId={pricingId}
             />
           )}
         </div>
