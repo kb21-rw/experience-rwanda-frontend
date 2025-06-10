@@ -17,8 +17,8 @@ interface DashboardCardProps {
 const DashboardCard = ({ title, total, icon, statuses }: DashboardCardProps) => {
   return (
     <Link href="/admin/dashboard">
-      <div className="bg-white rounded-xl shadow-md px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-8 w-full max-w-md- border-2 border-gray-200 cursor-pointer">
-        <div className="flex justify-between items-center">
+      <div className="bg-white h-full rounded-xl shadow-md px-4 sm:px-6 py-8 sm:py-12 gap-8 md:w-[380px]  max-w-md- border-2 border-gray-200 cursor-pointer">
+        <div className="flex justify-between items-center mb-4">
           <div>
             <h3 className="text-sm sm:text-base md:text-lg font-medium text-gray-600">
               {title}

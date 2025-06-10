@@ -4,7 +4,7 @@ import dashboard  from "./../../data/dashbaord.json";
 
 const AdminPage = () => {
   return (
-    <div className=" px-4 py-6">
+    <div className="px-4 py-6  h-screen w-full flex flex-col justify-center items-center" >
       <div className="flex flex-col items-center gap-8 text-center mb-6">
         <h1 className="text-3xl md:text-4xl font-semibold animate-in slide-in-from-left">
                 {dashboard.title  }       
@@ -14,7 +14,7 @@ const AdminPage = () => {
         </p>
       </div>
 
-      <div className="flex justify-center gap-6 w-full border-yellow-500 border">
+      <div className="flex flex-col md:flex-row justify-center gap-6 w-full items-stretch">
         <DashboardCard
           total={80}
           icon={<Book className="text-gray-600" size={26} />}
@@ -22,8 +22,7 @@ const AdminPage = () => {
             { count: 30, label: "Upcoming", bgColor: "bg-green-500", circleColor: "bg-green-600" },
             { count: 12, label: "Canceled", bgColor: "bg-red-500", circleColor: "bg-red-600" },
             { count: 38, label: "Completed", bgColor: "bg-yellow-500", circleColor: "bg-yellow-600" },
-          ]}
-        />
+          ]} title={""}        />
         <DashboardCard
                title="Users"
           total={4}
