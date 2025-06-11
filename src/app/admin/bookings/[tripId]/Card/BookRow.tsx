@@ -41,7 +41,7 @@ const BookRow = ({ id, displayId, name, phone, email, amount }: Booking) => {
               </button>
 
               <Link
-                href={`/admin/edit-trip/${id}`}
+                href={`/admin/bookings/${id}`}
                 className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Update

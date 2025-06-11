@@ -125,11 +125,13 @@ const TripsPage = () => {
           </div>
         )}
       </div>
+      <div className="flex justify-center items-center">
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={changePage}
       />
+      </div>
     </div>
   );
 };
