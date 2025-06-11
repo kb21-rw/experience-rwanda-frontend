@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Search from "./Search";
-import TripStatusCard from "./Card/Statistics";
+import TripStatusCard from "./Card/TripStatusCard";
 import TripRow from "./Card/TripRow";
+import { Trip } from "@/types/ImageCard";
 import {
   Table,
   TableBody,
@@ -14,15 +15,48 @@ import {
 import { IoIosAddCircle } from "react-icons/io";
 import Link from "next/link";
 import { useDeleteTrip } from "@/hooks/useDeleleTrip";
-import { useTrips } from "@/hooks/useTrips";
 import Pagination from "@/components/Pagination";
+import { useRouter, useSearchParams } from 'next/navigation';
+
+const FILTERS = [
+  { label: "Total trips", value: "all" },
+  { label: "Booked Trips", value: "booked" },
+  { label: "Past Trips", value: "past" },
+  { label: "Canceled Trips", value: "canceled" },
+];
 
 const TripsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const tripsPerPage = 8;
   const { deleteTrip } = useDeleteTrip();
-  const { trips, setTrips, loading, error } = useTrips();
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const filter = searchParams.get('filter') || 'all';
+
+  const setFilter = (newFilter: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('filter', newFilter);
+    router.replace(`?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips?filter=${filter}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTrips(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load trips");
+        setLoading(false);
+      });
+  }, [filter]);
 
   const filteredTrips = trips.filter((trip) => {
     const keyword = searchQuery.toLowerCase();
@@ -34,9 +68,9 @@ const TripsPage = () => {
   });
 
   const totalTrips = trips.length;
-  const pastTrips = 5;
   const bookedTrips = trips.filter((trip) => trip.seatsBooked > 0).length;
-  const canceledTrips = 0;
+  const pastTrips = trips.filter((trip) => trip.status === "PAST").length;
+  const canceledTrips = trips.filter((trip) => trip.status === "CANCELLED").length;
 
   const handleDelete = async (id: string) => {
     const success = await deleteTrip(id);
@@ -81,10 +115,23 @@ const TripsPage = () => {
         </div>
         <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
           <div className="flex items-center gap-10 flex-wrap">
-            <TripStatusCard label="Total trips" value={totalTrips} />
-            <TripStatusCard label="Booked Trips" value={bookedTrips} />
-            <TripStatusCard label="Past Trips" value={pastTrips} />
-            <TripStatusCard label="Canceled Trips" value={canceledTrips} />
+            {FILTERS.map((card) => (
+              <TripStatusCard
+                key={card.label}
+                label={card.label}
+                value={
+                  card.value === "all"
+                    ? totalTrips
+                    : card.value === "booked"
+                    ? bookedTrips
+                    : card.value === "past"
+                    ? pastTrips
+                    : canceledTrips
+                }
+                selected={filter === card.value}
+                onClick={() => setFilter(card.value)}
+              />
+            ))}
           </div>
           <Link href="/admin/new-trip" className="flex items-center gap-2">
             <IoIosAddCircle className="w-8 h-8" />
