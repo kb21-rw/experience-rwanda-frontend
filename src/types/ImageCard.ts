@@ -12,6 +12,8 @@ export type TripDetails = {
   seatsBooked?: number;
   currency?: string;
   coverImage: string;
+  priceTitle: string;
+  priceDescription: string;
 };
 
 export type Row = {

@@ -13,6 +13,8 @@ const ImageCard = ({
   title: trip,
   coverImage: url,
   pricingOptions,
+  priceTitle,
+  priceDescription,
   departureTime: date,
   id: tripId,
   destination,
@@ -63,7 +65,9 @@ const ImageCard = ({
         <BookingPopup
           tripId={selectedTrip}
           setSelectedTrip={setSelectedTrip}
-          pricingId={pricingOptions[0].id}
+          priceTitle={priceTitle}
+          priceDescription={priceDescription}
+          pricingOptions={pricingOptions}
         />
       )}
     </>
