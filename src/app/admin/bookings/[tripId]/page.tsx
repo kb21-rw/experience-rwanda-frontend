@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
-import { Booking } from "@/types/Booking";
 import BookRow from "./Card/BookRow";
 import Search from "@/components/Search";
 import { Button } from "@/components/ui/Button";
@@ -25,15 +24,15 @@ import {
 const ViewBookingsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { bookings, loading, error } = useBookings();
+  const { bookings, isLoading, error } = useBookings();
   const bookingsPerPage = 8;
 
   const filteredBookings = bookings.filter((booking) => {
     const keyword = searchQuery.toLowerCase();
     return (
       booking.id.toLowerCase().includes(keyword) ||
-      booking.name.toLowerCase().includes(keyword) ||
-      booking.email.toLowerCase().includes(keyword)
+      booking.user.fullName.toLowerCase().includes(keyword) ||
+      booking.user.email.toLowerCase().includes(keyword)
     );
   });
 
@@ -49,7 +48,7 @@ const ViewBookingsPage = () => {
     }
   };
 
-  if (loading)
+  if (isLoading)
     return (
       <div className="flex justify-center items-center text-center h-screen">
         <p className="animate-bounce text-2xl">Loading bookings...</p>
@@ -98,15 +97,16 @@ const ViewBookingsPage = () => {
                     <TableHead>Name</TableHead>
                     <TableHead>Phone</TableHead>
                     <TableHead>Email</TableHead>
+                    <TableHead>Seats</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Action</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {paginatedBookings.map((booking: Booking, index: number) => (
+                  {paginatedBookings.map((booking, index: number) => (
                     <BookRow
                       key={booking.id}
-                      {...booking}
+                      booking={booking}
                       displayId={(
                         (currentPage - 1) * bookingsPerPage +
                         index +

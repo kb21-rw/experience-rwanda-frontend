@@ -5,22 +5,29 @@ import { TableCell, TableRow } from "@/components/ui/Table";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import { Booking } from "@/types/Booking";
+import { RawBooking } from "@/types/Booking";
 
-const BookRow = ({ id, displayId, name, phone, email, amount }: Booking) => {
+const BookRow = ({
+  booking,
+  displayId,
+}: {
+  booking: RawBooking;
+  displayId: string;
+}) => {
   const [showDropdown, setShowDropdown] = useState(false);
-
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
+
   return (
     <>
       <TableRow>
         <TableCell>{displayId}</TableCell>
-        <TableCell>{name}</TableCell>
-        <TableCell>{phone}</TableCell>
-        <TableCell>{email}</TableCell>
-        <TableCell>{amount}</TableCell>
+        <TableCell>{booking.user.fullName}</TableCell>
+        <TableCell>{booking.user.phoneNumber}</TableCell>
+        <TableCell>{booking.user.email}</TableCell>
+        <TableCell>{booking.trip.seatsBooked}</TableCell>
+        <TableCell>{booking.trip.pricingOptions[0].amount}</TableCell>
 
         <TableCell>
           <Button
@@ -41,7 +48,7 @@ const BookRow = ({ id, displayId, name, phone, email, amount }: Booking) => {
               </button>
 
               <Link
-                href={`/admin/bookings/${id}`}
+                href={`/admin/bookings/${booking.id}`}
                 className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Update

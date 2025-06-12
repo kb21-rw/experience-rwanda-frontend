@@ -1,28 +1,18 @@
-import { getData } from "@/utils/request";
-import { Booking } from "@/types/Booking";
-import { useState, useEffect } from "react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
+import { RawBooking } from "@/types/Booking";
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/bookings`;
 
 export const useBookings = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchbookings = async () => {
-      try {
-        const result = await getData(apiUrl);
-        setBookings(result);
-      } catch {
-        setError("Failed to load bookings");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchbookings();
-  }, []);
-
-  return { bookings, setBookings, loading, error };
+  const {
+    data: bookings,
+    error,
+    isLoading,
+  } = useSWR<RawBooking[]>(apiUrl, fetcher);
+  return {
+    bookings: bookings || [],
+    isLoading,
+    error: error ? error.message : null,
+  };
 };

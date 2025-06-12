@@ -1,8 +1,14 @@
-export type Booking = {
+export type RawBooking = {
   id: string;
-  displayId: string;
-  name: string;
-  email: string;
-  phone: string;
-  amount: number;
+  user: {
+    fullName: string;
+    email: string;
+    phoneNumber: string;
+  };
+  trip: {
+    seatsBooked: number;
+    pricingOptions: {
+      amount: number;
+    }[];
+  };
 };
