@@ -1,16 +1,15 @@
 "use client";
 
 import { useTrips } from "@/hooks/useTrips";
-import { CircularProgressbarWithChildren } from "react-circular-progressbar";
-
+import BookingCircularProgressbar from "./CircularProgressBar";
+import { IoLocationSharp } from "react-icons/io5";
 const BookingHeader = () => {
   const { trips } = useTrips();
-  console.log("TTTTTTTTTTTTTTTTTTTTTTrips", trips);
   return (
-    <div className="p-10 bg-white font-inter">
+    <div className="p-10 bg-white font-inter flex  flex-col gap-8 md:flex-row justify-between">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-gray-900">
-          Booking | <span>{trips[0].title} </span>
+          Booking | Visit <span>{trips[2].destination} </span>
         </h1>
         <div>
           <h1>Crew Team:</h1>
@@ -18,55 +17,25 @@ const BookingHeader = () => {
             Nestor Ngabonziza <span className="font-semibold">(Driver)</span>
           </p>
           <p>
-            Ramona Ingabire{" "}
+            Ramona Ingabire
             <span className="font-semibold">(Trip coordinator)</span>
           </p>
         </div>
       </div>
       <div>
-        {/* <div>
-          <p>{trips[0].title}</p>
+        <div>
+          <IoLocationSharp />
+          <p>{trips[0].destination}</p>
+        </div>
+        <div>
+          <IoLocationSharp />
           <p>{trips[0].departureTime}</p>
-        </div> */}
-      </div>
-      <div></div>
-      <div className="flex gap-3">
-        <div className="w-20 h-20  items-center align-middle">
-          <CircularProgressbarWithChildren
-            value={66}
-            styles={{
-              path: {
-                stroke: "black",
-              },
-              trail: {
-                stroke: "#d6d6d6",
-              },
-            }}
-          >
-            <div style={{ fontSize: 12, marginTop: -5 }}>
-              <strong>66</strong> mate
-            </div>
-          </CircularProgressbarWithChildren>
-        </div>
-        <div className="w-20 h-20  items-center align-middle">
-          <CircularProgressbarWithChildren
-            value={86}
-            styles={{
-              path: {
-                stroke: "black",
-              },
-              trail: {
-                stroke: "#d6d6d6",
-              },
-            }}
-          >
-            <div style={{ fontSize: 12, marginTop: -5 }}>
-              <strong>66 %</strong> mate
-            </div>
-          </CircularProgressbarWithChildren>
         </div>
       </div>
-      ;
+      <div className="flex gap-4 ">
+        <BookingCircularProgressbar progress={80} label={"Days To Go"} />
+        <BookingCircularProgressbar progress={90} label={"Bookings Made"} />
+      </div>
     </div>
   );
 };

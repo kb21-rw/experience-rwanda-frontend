@@ -1,9 +1,11 @@
-const DashboardPage = ()=> {
+import BookingHeader from "@/components/BookingHeader";
+
+const DashboardPage = () => {
   return (
     <div>
-      Welcome to my youtube channel
+      <BookingHeader />
     </div>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;
