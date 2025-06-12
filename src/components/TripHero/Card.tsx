@@ -19,7 +19,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   const details = createTripDetails(
     tripDetails.destination,
     tripDetails.departureTime,
-    tripDetails.price,
+    tripDetails.pricingOptions,
     tripDetails.seats
   );
   return (
@@ -68,7 +68,13 @@ const TripHeroCard = ({ tripDetails }: Props) => {
       </div>
 
       {selectedTrip && (
-        <BookingPopup tripId={selectedTrip} setSelectedTrip={setSelectedTrip} />
+        <BookingPopup
+          tripId={selectedTrip}
+          setSelectedTrip={setSelectedTrip}
+          priceTitle={tripDetails.priceTitle}
+          priceDescription={tripDetails.priceDescription}
+          pricingOptions={tripDetails.pricingOptions}
+        />
       )}
     </>
   );

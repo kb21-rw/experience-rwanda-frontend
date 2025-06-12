@@ -131,7 +131,12 @@ const UserInfoPopup = ({
         </div>
 
         <div className="mt-5 flex gap-5">
-          <Button onClick={onCancel} variant="secondary" className="w-full">
+          <Button
+            type="button"
+            onClick={onCancel}
+            variant="secondary"
+            className="w-full"
+          >
             Cancel
           </Button>
 
