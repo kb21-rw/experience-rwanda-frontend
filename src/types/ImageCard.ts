@@ -1,3 +1,5 @@
+import { PricingOption } from "./trip";
+
 export type TripDetails = {
   id: string;
   title: string;
@@ -5,11 +7,13 @@ export type TripDetails = {
   trip: string;
   destination: string;
   departureTime: string;
-  price: number;
+  pricingOptions: PricingOption[];
   seats: number;
   seatsBooked?: number;
   currency?: string;
   coverImage: string;
+  priceTitle: string;
+  priceDescription: string;
 };
 
 export type Row = {

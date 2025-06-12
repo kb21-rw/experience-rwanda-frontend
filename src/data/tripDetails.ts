@@ -3,11 +3,12 @@ import { GiPriceTag } from "react-icons/gi";
 import { MdAirlineSeatReclineExtra } from "react-icons/md";
 import { FaCalendar } from "react-icons/fa";
 import { format } from "date-fns";
+import { PricingOption } from "@/types/trip";
 
 export const createTripDetails = (
-  destination:string,
+  destination: string,
   date: string,
-  price: number,
+  pricingOptions: PricingOption[],
   seats: number
 ) => [
   {
@@ -20,11 +21,10 @@ export const createTripDetails = (
   },
   {
     icon: GiPriceTag,
-    content: `${price} RWF/day`,
+    content: `${pricingOptions[0].amount} RWF/day`,
   },
   {
     icon: MdAirlineSeatReclineExtra,
     content: `${seats} Seats`,
   },
 ];
-

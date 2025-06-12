@@ -9,6 +9,7 @@ export interface Trip {
 }
 
 export interface PricingOption {
+  id: string;
   amount: string;
   name: string;
   description?: string;
