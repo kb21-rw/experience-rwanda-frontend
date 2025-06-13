@@ -129,7 +129,7 @@ const TripForm = ({
 
           <FormInput
             register={register}
-            name="seats"
+            name="totalSeats"
             label="Seats"
             placeholder="60 seats"
             type="number"

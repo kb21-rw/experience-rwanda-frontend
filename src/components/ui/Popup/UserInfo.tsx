@@ -1,87 +1,196 @@
-import { Label } from "@radix-ui/react-label";
 import React, { Dispatch, SetStateAction } from "react";
 import { Input } from "../Input";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { ClientData } from "@/types/Popup";
+import { PricingOption } from "@/types/trip";
+import { z } from "zod";
+import { UserInfoSchema } from "@/utils/schemas/bookingSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../Form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
+import { Counter } from "@/components/Counter";
 
 const UserInfoPopup = ({
   setCurrentStep,
   setClientData,
-  clientData,
+  priceTitle,
+  priceDescription,
+  pricingOptions,
   onCancel,
+  tripId,
 }: {
   setCurrentStep: Dispatch<SetStateAction<"userInfo" | "payment">>;
   setClientData: Dispatch<SetStateAction<ClientData | undefined>>;
   clientData: ClientData | undefined;
+  priceTitle: string;
+  priceDescription: string;
+  pricingOptions: PricingOption[];
   onCancel: () => void;
+  tripId: string;
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ClientData>({
+  const form = useForm<z.infer<typeof UserInfoSchema>>({
+    resolver: zodResolver(UserInfoSchema),
     defaultValues: {
-      firstName: clientData?.firstName,
-      lastName: clientData?.lastName,
-      email: clientData?.email,
+      fullName: "",
+      email: "",
+      phoneNumber: "",
+      pricingId: pricingOptions.length === 1 ? pricingOptions[0].id : "",
+      bookedSeats: 1,
     },
   });
-  const onSubmit: SubmitHandler<ClientData> = (data) => {
-    setClientData(data);
-    setCurrentStep("payment");
+  const onSubmit: SubmitHandler<ClientData> = async (data) => {
+    try {
+      const checkSeats = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}/check-availability?seats=${data.bookedSeats}`
+      );
+      console.log({ checkSeats });
+      if (!checkSeats.data.success) {
+        form.setError("bookedSeats", {
+          type: "manual",
+          message: checkSeats.data.message,
+        });
+
+        return;
+      }
+      setClientData(data);
+      setCurrentStep("payment");
+    } catch (error: unknown) {
+      form.setError("root", {
+        type: "manual",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+      });
+    }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-3xl font-bold text-center mb-10">User Information</h2>
-      <div className="space-y-4 font-inter">
-        <div className="flex flex-col gap-1">
-          <Label className="text-sm font-medium">First Name</Label>
-          <Input
-            type="text"
-            placeholder="John"
-            className="w-full border p-2 rounded"
-            {...register("firstName", { required: "First name is required" })}
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <h2 className="text-3xl font-bold text-center mb-10">
+          User Information
+        </h2>
+        <div className="space-y-4 font-inter">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="John Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.firstName && (
-            <p className="text-sm text-red-500">{errors.firstName.message}</p>
-          )}
-        </div>
-        <div className="flex flex-col gap-1">
-          <Label className="text-sm font-medium">Last Name</Label>
-          <Input
-            type="text"
-            placeholder="Doe"
-            className="w-full border p-2 rounded"
-            {...register("lastName", { required: "Last name is required" })}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="johndoe@gmail.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.lastName && (
-            <p className="text-sm text-red-500">{errors.lastName.message}</p>
-          )}
-        </div>
-        <div className="flex flex-col gap-1">
-          <Label className="text-sm font-medium">Email</Label>
-          <Input
-            type="email"
-            placeholder="johndoe@gmail.com"
-            className="w-full border p-2 rounded"
-            {...register("email", { required: "Email is required" })}
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="+250 788 888 888" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
+          {pricingOptions.length > 1 && (
+            <FormField
+              control={form.control}
+              name="pricingId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{priceTitle}</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a pricing option" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {pricingOptions.map((option) => (
+                        <SelectItem key={option.id} value={option.id}>
+                          {option.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>{priceDescription}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           )}
+          <FormField
+            control={form.control}
+            name="bookedSeats"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Number of Seats</FormLabel>
+                <FormControl>
+                  <Counter
+                    value={field.value}
+                    onChange={field.onChange}
+                    min={1}
+                    max={10}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-      </div>
-      <div className="mt-5 flex gap-5">
-        <Button onClick={onCancel} variant="secondary" className="w-full">
-          Cancel
-        </Button>
 
-        <Button type="submit" variant="default" className="w-full">
-          Continue To Checkout
-        </Button>
-      </div>
-    </form>
+        <div className="mt-5 flex gap-5">
+          <Button
+            type="submit"
+            onClick={onCancel}
+            variant="secondary"
+            className="w-full"
+          >
+            Cancel
+          </Button>
+
+          <Button type="submit" variant="default" className="w-full">
+            Continue To Checkout
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 

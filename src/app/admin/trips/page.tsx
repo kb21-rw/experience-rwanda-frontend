@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Search from "./Search";
 import TripStatusCard from "./Card/Statistics";
 import TripRow from "./Card/TripRow";
 import {
@@ -16,6 +15,7 @@ import Link from "next/link";
 import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 import { useTrips } from "@/hooks/useTrips";
 import Pagination from "@/components/Pagination";
+import Search from "@/components/Search";
 
 const TripsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,7 +35,7 @@ const TripsPage = () => {
 
   const totalTrips = trips.length;
   const pastTrips = 5;
-  const bookedTrips = trips.filter((trip) => trip.seatsBooked > 0).length;
+  const bookedTrips = trips.filter((trip) => trip.totalBookedSeats > 0).length;
   const canceledTrips = 0;
 
   const handleDelete = async (id: string) => {
@@ -77,7 +77,7 @@ const TripsPage = () => {
       <div>
         <div className="flex flex-col gap-5 md:flex-row items-center md:justify-between mb-6">
           <h1 className="text-2xl font-bold">Trips</h1>
-          <Search onSearch={setSearchQuery} />
+          <Search onSearch={setSearchQuery} placeholder="Search Trip" />
         </div>
         <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
           <div className="flex items-center gap-10 flex-wrap">
@@ -110,7 +110,7 @@ const TripsPage = () => {
               {paginatedTrips.map((trip, index) => (
                 <TripRow
                   key={trip.id}
-                  {...trip}
+                  trip={trip}
                   displayId={((currentPage - 1) * tripsPerPage + index + 1)
                     .toString()
                     .padStart(3, "0")}
@@ -125,11 +125,13 @@ const TripsPage = () => {
           </div>
         )}
       </div>
+      <div className="flex justify-center items-center">
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={changePage}
       />
+      </div>
     </div>
   );
 };

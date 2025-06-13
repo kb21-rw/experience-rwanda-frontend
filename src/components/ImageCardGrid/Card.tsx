@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ReactElement } from "react";
-import { TripDetails } from "@/types/ImageCard";
+import { Trip } from "@/types/ImageCard";
 import Image from "next/image";
 import { Button } from "../ui/Button";
 import BookingPopup from "../ui/Popup";
@@ -12,16 +12,22 @@ import Link from "next/link";
 const ImageCard = ({
   title: trip,
   coverImage: url,
-  price,
+  pricingOptions,
+  priceTitle,
+  priceDescription,
   departureTime: date,
   id: tripId,
   destination,
-  seats,
-}: TripDetails): ReactElement => {
+  totalSeats,
+}: Trip): ReactElement => {
   const [selectedTrip, setSelectedTrip] = useState<string | null>(null);
 
-  const details = createTripDetails(destination, date, price, seats);
-
+  const details = createTripDetails(
+    destination,
+    date,
+    pricingOptions,
+    totalSeats
+  );
   return (
     <>
       <div className="bg-white shadow-lg rounded-3xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -61,7 +67,13 @@ const ImageCard = ({
         </div>
       </div>
       {selectedTrip && (
-        <BookingPopup tripId={selectedTrip} setSelectedTrip={setSelectedTrip} />
+        <BookingPopup
+          tripId={selectedTrip}
+          setSelectedTrip={setSelectedTrip}
+          priceTitle={priceTitle}
+          priceDescription={priceDescription}
+          pricingOptions={pricingOptions}
+        />
       )}
     </>
   );
