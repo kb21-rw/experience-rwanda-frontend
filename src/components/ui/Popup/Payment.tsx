@@ -14,7 +14,7 @@ const PaymentPopup = ({
   tripId,
 }: {
   setCurrentStep: Dispatch<SetStateAction<"userInfo" | "payment">>;
-  clientData: ClientData | undefined;
+  clientData?: ClientData;
   tripId: string;
 }) => {
   const {
@@ -32,6 +32,7 @@ const PaymentPopup = ({
         `${process.env.NEXT_PUBLIC_API_URL}/payments/charge-momo`,
         { ...clientData, tripId, phoneNumber }
       );
+
       if (response.status === "success") {
         router.push(response.meta.authorization.redirect);
       }

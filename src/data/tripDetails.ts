@@ -9,7 +9,7 @@ export const createTripDetails = (
   destination: string,
   date: string,
   pricingOptions: PricingOption[],
-  seats: number
+  totalSeats: number
 ) => [
   {
     icon: IoLocationSharp,
@@ -25,6 +25,6 @@ export const createTripDetails = (
   },
   {
     icon: MdAirlineSeatReclineExtra,
-    content: `${seats} Seats`,
+    content: `${totalSeats} Seats`,
   },
 ];

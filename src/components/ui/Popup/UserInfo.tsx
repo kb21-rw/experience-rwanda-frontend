@@ -7,6 +7,7 @@ import { PricingOption } from "@/types/trip";
 import { z } from "zod";
 import { UserInfoSchema } from "@/utils/schemas/bookingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import {
   FormControl,
   FormDescription,
@@ -22,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Counter } from "@/components/Counter";
 
 const UserInfoPopup = ({
   setCurrentStep,
@@ -30,6 +32,7 @@ const UserInfoPopup = ({
   priceDescription,
   pricingOptions,
   onCancel,
+  tripId,
 }: {
   setCurrentStep: Dispatch<SetStateAction<"userInfo" | "payment">>;
   setClientData: Dispatch<SetStateAction<ClientData | undefined>>;
@@ -38,6 +41,7 @@ const UserInfoPopup = ({
   priceDescription: string;
   pricingOptions: PricingOption[];
   onCancel: () => void;
+  tripId: string;
 }) => {
   const form = useForm<z.infer<typeof UserInfoSchema>>({
     resolver: zodResolver(UserInfoSchema),
@@ -46,11 +50,34 @@ const UserInfoPopup = ({
       email: "",
       phoneNumber: "",
       pricingId: pricingOptions.length === 1 ? pricingOptions[0].id : "",
+      bookedSeats: 1,
     },
   });
-  const onSubmit: SubmitHandler<ClientData> = (data) => {
-    setClientData(data);
-    setCurrentStep("payment");
+  const onSubmit: SubmitHandler<ClientData> = async (data) => {
+    try {
+      const checkSeats = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}/check-availability?seats=${data.bookedSeats}`
+      );
+      console.log({ checkSeats });
+      if (!checkSeats.data.success) {
+        form.setError("bookedSeats", {
+          type: "manual",
+          message: checkSeats.data.message,
+        });
+
+        return;
+      }
+      setClientData(data);
+      setCurrentStep("payment");
+    } catch (error: unknown) {
+      form.setError("root", {
+        type: "manual",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+      });
+    }
   };
   return (
     <FormProvider {...form}>
@@ -128,11 +155,29 @@ const UserInfoPopup = ({
               )}
             />
           )}
+          <FormField
+            control={form.control}
+            name="bookedSeats"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Number of Seats</FormLabel>
+                <FormControl>
+                  <Counter
+                    value={field.value}
+                    onChange={field.onChange}
+                    min={1}
+                    max={10}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         <div className="mt-5 flex gap-5">
           <Button
-            type="button"
+            type="submit"
             onClick={onCancel}
             variant="secondary"
             className="w-full"
