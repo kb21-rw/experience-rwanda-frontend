@@ -19,6 +19,7 @@ export interface ClientData {
   fullName: string;
   email: string;
   phoneNumber: string;
+  bookedSeats: number;
 }
 
 export type PaymentMethod = "card" | "momo";

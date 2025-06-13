@@ -37,6 +37,7 @@ const Popup = ({
               priceDescription={priceDescription}
               pricingOptions={pricingOptions}
               onCancel={() => setSelectedTrip(null)}
+              tripId={tripId}
             />
           ) : (
             <PaymentPopup

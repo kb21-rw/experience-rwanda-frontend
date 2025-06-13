@@ -75,6 +75,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         type="button"
         onClick={() =>
           append({
+            id: "",
             name: "",
             amount: "0",
             description: "",

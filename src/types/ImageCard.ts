@@ -1,35 +1,26 @@
 import { PricingOption } from "./trip";
 
-export type TripDetails = {
+export type Trip = {
   id: string;
   title: string;
   description?: string;
-  trip: string;
   destination: string;
   departureTime: string;
+  returnTime: string;
   pricingOptions: PricingOption[];
-  seats: number;
-  seatsBooked?: number;
-  currency?: string;
+  totalBookedSeats: number;
+  totalSeats: number;
+  currency: string;
   coverImage: string;
   priceTitle: string;
   priceDescription: string;
+  status: TripStatus;
 };
+
+export type TripStatus = "ONGOING" | "PAST" | "AVAILABLE" | "CANCELLED";
 
 export type Row = {
   id: string;
   title: string;
   description: string;
-};
-
-export type Trip = {
-  id: string;
-  displayId: string;
-  title: string;
-  departureTime: string;
-  destination: string;
-  seatsBooked: number;
-  seats: number;
-  status: "ONGOING" | "CANCELLED" | "PAST";
-  onDelete?: (id: string) => void;
 };

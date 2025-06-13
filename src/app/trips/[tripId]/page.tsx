@@ -1,6 +1,6 @@
 import GalleryGrid from "@/components/GalleryGrid";
 import TripHero from "@/components/TripHero";
-import { TripDetails } from "@/types/ImageCard";
+import { Trip } from "@/types/ImageCard";
 
 const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   const response = await fetch(
@@ -14,7 +14,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
     throw new Error(`Failed to fetch trip details: ${response.statusText}`);
   }
 
-  const tripDetails: TripDetails = await response.json();
+  const tripDetails: Trip = await response.json();
   return (
     <main className="min-h-screen">
       <div>

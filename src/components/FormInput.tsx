@@ -7,7 +7,6 @@ import {
   Control,
   Controller,
 } from "react-hook-form";
-import { Trip } from "@/types/trip";
 import { DatePicker } from "./DatePicker";
 import { z } from "zod";
 import { tripSchema } from "@/utils/schemas/tripSchema";
@@ -27,7 +26,7 @@ const FormInput = ({
 }: {
   control?: Control<FormData>;
   register: UseFormRegister<FormData>;
-  name: keyof Trip;
+  name: keyof FormData;
   label: string;
   placeholder?: string;
   type?: "text" | "number" | "date";
