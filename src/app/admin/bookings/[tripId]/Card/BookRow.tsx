@@ -5,13 +5,13 @@ import { TableCell, TableRow } from "@/components/ui/Table";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import { RawBooking } from "@/types/Booking";
+import { Booking } from "@/types/Booking";
 
 const BookRow = ({
   booking,
   displayId,
 }: {
-  booking: RawBooking;
+  booking: Booking;
   displayId: string;
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -26,8 +26,8 @@ const BookRow = ({
         <TableCell>{booking.user.fullName}</TableCell>
         <TableCell>{booking.user.phoneNumber}</TableCell>
         <TableCell>{booking.user.email}</TableCell>
-        <TableCell>{booking.trip.totalBookedSeats}</TableCell>
-        <TableCell>{booking.trip.pricingOptions[0].amount}</TableCell>
+        <TableCell>{booking.bookedSeats}</TableCell>
+        <TableCell>{booking.totalAmount}</TableCell>
 
         <TableCell>
           <Button
