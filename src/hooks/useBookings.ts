@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { RawBooking } from "@/types/Booking";
+import { Booking } from "@/types/Booking";
 
 export const useBookings = (tripId: string) => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/bookings/trip/${tripId}`;
@@ -8,7 +8,7 @@ export const useBookings = (tripId: string) => {
     data: bookings,
     error,
     isLoading,
-  } = useSWR<RawBooking[]>(apiUrl, fetcher);
+  } = useSWR<Booking[]>(apiUrl, fetcher);
   return {
     bookings: bookings || [],
     isLoading,
