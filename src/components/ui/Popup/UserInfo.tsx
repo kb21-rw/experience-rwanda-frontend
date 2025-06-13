@@ -70,10 +70,12 @@ const UserInfoPopup = ({
       setClientData(data);
       setCurrentStep("payment");
     } catch (error: unknown) {
-      console.error(error);
       form.setError("root", {
         type: "manual",
-        message: "Something went wrong. Please try again.",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
       });
     }
   };
