@@ -7,8 +7,14 @@ export type RawBooking = {
   };
   trip: {
     totalBookedSeats: number;
+    title?: string;
+    description?: string;
+    destination?: string;
+departureTime?: string;
+totalSeats?: number;
     pricingOptions: {
       amount: number;
     }[];
+  
   };
 };

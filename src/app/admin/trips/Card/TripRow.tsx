@@ -20,13 +20,13 @@ import { IoIosAlert } from "react-icons/io";
 import Link from "next/link";
 
 interface Props {
-  onDelete?: (id: string) => Promise<boolean>;
+  onDelete?: (id: string) => void;
   displayId: string;
   trip: Trip;
 }
 
 const TripRow = ({ trip, displayId, onDelete }: Props) => {
-  const { id, title, departureTime: date, destination } = trip;
+  const { id: tripId, title, departureTime: date, destination } = trip;
   const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -61,7 +61,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
           {showDropdown && (
             <div className="absolute w-28 mt-2 bg-white border rounded shadow-lg">
               <Link
-                href={`/admin/bookings/${id}`}
+                href={`/admin/bookings/${tripId}`}
                 className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Bookings
@@ -90,7 +90,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
                   <AlertDialogFooter className="mt-8">
                     <AlertDialogAction
                       onClick={async () => {
-                        const success = await onDelete?.(id);
+                        const success = await onDelete?.(tripId);
                         if (!success) {
                           toast.error("Failed to delete trip");
                           return;
@@ -106,7 +106,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
               </AlertDialog>
 
               <Link
-                href={`/admin/edit-trip/${id}`}
+                href={`/admin/edit-trip/${tripId}`}
                 className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Update

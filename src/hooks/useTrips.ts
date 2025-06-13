@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react";
+import { fetcher } from "@/lib/fetcher";
 import { Trip } from "@/types/ImageCard";
-import { getData } from "@/utils/request";
-
-const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
+import useSWR from "swr";
 
 export const useTrips = () => {
-  const [trips, setTrips] = useState<Trip[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
+  const { data: trips, error, isLoading: loading, mutate } = useSWR<Trip[]>(apiUrl, fetcher);
 
-  useEffect(() => {
-    const fetchTrips = async () => {
-      try {
-        const result = await getData(apiUrl);
-        setTrips(result);
-      } catch {
-        setError("Failed to load trips");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleDelete = async (tripId: string) => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}`, {
+        method: "DELETE",
+      });
+      mutate();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    fetchTrips();
-  }, []);
-
-  return { trips, setTrips, loading, error };
+  return { trips, loading, error, handleDelete };
 };

@@ -1,15 +1,22 @@
 "use client";
 
-import { useTrips } from "@/hooks/useTrips";
 import BookingCircularProgressbar from "./CircularProgressBar";
 import { IoLocationSharp } from "react-icons/io5";
-const BookingHeader = () => {
-  const { trips } = useTrips();
+import { FaClock } from "react-icons/fa";
+import { useBookings } from "@/hooks/useBookings";
+const BookingHeader = ({ params }: { params: { tripId: string } }) => {
+  const { bookings } = useBookings(params.tripId);
+
+  const remainingDays =
+    new Date(bookings[0].trip.departureTime).getTime() - Date.now();
+
+  console.log("remainingDays", remainingDays);
+  console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT trip bookings", bookings);
   return (
     <div className="p-10 bg-white font-inter flex  flex-col gap-8 md:flex-row justify-between">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-gray-900">
-          Booking | Visit <span>{trips[2].destination} </span>
+          Booking | Visit <span>{bookings[0].trip.destination}</span>
         </h1>
         <div>
           <h1>Crew Team:</h1>
@@ -22,18 +29,21 @@ const BookingHeader = () => {
           </p>
         </div>
       </div>
-      <div>
-        <div>
+      <div className="flex flex-col gap-4 items-start">
+        <div className="flex gap-4 justify-center items-center">
           <IoLocationSharp />
-          <p>{trips[0].destination}</p>
+          <p>destination</p>
         </div>
-        <div>
-          <IoLocationSharp />
-          <p>{trips[0].departureTime}</p>
+        <div className="flex gap-4 justify-center items-center">
+          <FaClock />
+          <p>departure time</p>
         </div>
       </div>
-      <div className="flex gap-4 ">
-        <BookingCircularProgressbar progress={80} label={"Days To Go"} />
+      <div className="flex gap-4">
+        <BookingCircularProgressbar
+          progress={remainingDays}
+          label={"Days To Go"}
+        />
         <BookingCircularProgressbar progress={90} label={"Bookings Made"} />
       </div>
     </div>

@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/Table";
 import { IoIosAddCircle } from "react-icons/io";
 import Link from "next/link";
-import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 import { useTrips } from "@/hooks/useTrips";
 import Pagination from "@/components/Pagination";
 import Search from "@/components/Search";
@@ -21,10 +20,9 @@ const TripsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const tripsPerPage = 8;
-  const { deleteTrip } = useDeleteTrip();
-  const { trips, setTrips, loading, error } = useTrips();
+  const { trips, loading, error, handleDelete } = useTrips();
 
-  const filteredTrips = trips.filter((trip) => {
+  const filteredTrips = trips?.filter((trip) => {
     const keyword = searchQuery.toLowerCase();
     return (
       trip.id.toLowerCase().includes(keyword) ||
@@ -33,24 +31,20 @@ const TripsPage = () => {
     );
   });
 
-  const totalTrips = trips.length;
+  const totalTrips = trips?.length;
   const pastTrips = 5;
-  const bookedTrips = trips.filter((trip) => trip.totalBookedSeats > 0).length;
+  const bookedTrips = trips?.filter((trip) => trip.totalBookedSeats > 0).length;
   const canceledTrips = 0;
 
-  const handleDelete = async (id: string) => {
-    const success = await deleteTrip(id);
-    if (success) {
-      setTrips((prev) => prev.filter((trip) => trip.id !== id));
-    }
-    return success;
-  };
-
-  const totalPages = Math.ceil(filteredTrips.length / tripsPerPage);
-  const paginatedTrips = filteredTrips.slice(
-    (currentPage - 1) * tripsPerPage,
-    currentPage * tripsPerPage
-  );
+  const totalPages = filteredTrips
+    ? Math.ceil(filteredTrips.length / tripsPerPage)
+    : 0;
+  const paginatedTrips = filteredTrips
+    ? filteredTrips.slice(
+        (currentPage - 1) * tripsPerPage,
+        currentPage * tripsPerPage
+      )
+    : [];
 
   const changePage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -81,8 +75,8 @@ const TripsPage = () => {
         </div>
         <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
           <div className="flex items-center gap-10 flex-wrap">
-            <TripStatusCard label="Total trips" value={totalTrips} />
-            <TripStatusCard label="Booked Trips" value={bookedTrips} />
+            <TripStatusCard label="Total trips" value={totalTrips!} />
+            <TripStatusCard label="Booked Trips" value={bookedTrips!} />
             <TripStatusCard label="Past Trips" value={pastTrips} />
             <TripStatusCard label="Canceled Trips" value={canceledTrips} />
           </div>
@@ -126,11 +120,11 @@ const TripsPage = () => {
         )}
       </div>
       <div className="flex justify-center items-center">
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={changePage}
-      />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={changePage}
+        />
       </div>
     </div>
   );
