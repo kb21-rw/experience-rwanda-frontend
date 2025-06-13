@@ -64,7 +64,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
                 href={`/admin/bookings/${id}`}
                 className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
-                View
+                Bookings
               </Link>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
