@@ -26,7 +26,7 @@ const BookRow = ({
         <TableCell>{booking.user.fullName}</TableCell>
         <TableCell>{booking.user.phoneNumber}</TableCell>
         <TableCell>{booking.user.email}</TableCell>
-        <TableCell>{booking.trip.seatsBooked}</TableCell>
+        <TableCell>{booking.trip.totalBookedSeats}</TableCell>
         <TableCell>{booking.trip.pricingOptions[0].amount}</TableCell>
 
         <TableCell>

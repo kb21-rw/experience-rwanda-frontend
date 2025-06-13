@@ -6,7 +6,7 @@ export type RawBooking = {
     phoneNumber: string;
   };
   trip: {
-    seatsBooked: number;
+    totalBookedSeats: number;
     pricingOptions: {
       amount: number;
     }[];
