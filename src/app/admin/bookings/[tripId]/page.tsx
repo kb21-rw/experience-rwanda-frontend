@@ -19,7 +19,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
+} from "@/components/ui/selecta";
 
 const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
   const [searchQuery, setSearchQuery] = useState("");

@@ -22,7 +22,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
+} from "@/components/ui/selecta";
 import { Counter } from "@/components/Counter";
 
 const UserInfoPopup = ({
