@@ -62,7 +62,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
             <div className="absolute w-28 mt-2 bg-white border rounded shadow-lg">
               <Link
                 href={`/admin/bookings/${id}`}
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+                className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 View
               </Link>
