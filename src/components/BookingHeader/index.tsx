@@ -7,8 +7,9 @@ import { useBookings } from "@/hooks/useBookings";
 const BookingHeader = ({ params }: { params: { tripId: string } }) => {
   const { bookings } = useBookings(params.tripId);
 
-  const remainingDays =
-    new Date(bookings[0].trip.departureTime).getTime() - Date.now();
+  const remainingDays = bookings[0].trip.departureTime
+    ? new Date(bookings[0].trip.departureTime).getTime() - Date.now()
+    : null;
 
   console.log("remainingDays", remainingDays);
   console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT trip bookings", bookings);
@@ -32,16 +33,16 @@ const BookingHeader = ({ params }: { params: { tripId: string } }) => {
       <div className="flex flex-col gap-4 items-start">
         <div className="flex gap-4 justify-center items-center">
           <IoLocationSharp />
-          <p>destination</p>
+          <p>{bookings[0].trip.destination}</p>
         </div>
         <div className="flex gap-4 justify-center items-center">
           <FaClock />
-          <p>departure time</p>
+          <p>{bookings[0].trip.departureTime}</p>
         </div>
       </div>
       <div className="flex gap-4">
         <BookingCircularProgressbar
-          progress={remainingDays}
+          progress={remainingDays?.valueOf() ?? 0}
           label={"Days To Go"}
         />
         <BookingCircularProgressbar progress={90} label={"Bookings Made"} />
