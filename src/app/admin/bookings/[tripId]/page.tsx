@@ -21,10 +21,11 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 
-const ViewBookingsPage = () => {
+const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { bookings, isLoading, error } = useBookings();
+
+  const { bookings, isLoading, error } = useBookings(params.tripId);
   const bookingsPerPage = 8;
 
   const filteredBookings = bookings.filter((booking) => {
