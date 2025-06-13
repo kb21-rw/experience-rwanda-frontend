@@ -4,11 +4,13 @@ export interface Trip {
   destination: string;
   departureTime: Date;
   returnTime: Date;
-  seats: number;
+  totalSeats: number;
+  totalBookedSeats?: number;
   pricingOptions: PricingOption[];
 }
 
 export interface PricingOption {
+  id: string;
   amount: string;
   name: string;
   description?: string;

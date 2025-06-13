@@ -35,7 +35,7 @@ const TripsPage = () => {
 
   const totalTrips = trips.length;
   const pastTrips = 5;
-  const bookedTrips = trips.filter((trip) => trip.seatsBooked > 0).length;
+  const bookedTrips = trips.filter((trip) => trip.totalBookedSeats > 0).length;
   const canceledTrips = 0;
 
   const handleDelete = async (id: string) => {
@@ -110,7 +110,7 @@ const TripsPage = () => {
               {paginatedTrips.map((trip, index) => (
                 <TripRow
                   key={trip.id}
-                  {...trip}
+                  trip={trip}
                   displayId={((currentPage - 1) * tripsPerPage + index + 1)
                     .toString()
                     .padStart(3, "0")}
