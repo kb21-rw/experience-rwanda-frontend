@@ -16,14 +16,15 @@ import {
   FormLabel,
   FormMessage,
 } from "../Form";
+
+import { Counter } from "@/components/Counter";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
-import { Counter } from "@/components/Counter";
+} from "../Select";
 
 const UserInfoPopup = ({
   setCurrentStep,
