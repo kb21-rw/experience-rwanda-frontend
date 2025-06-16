@@ -9,7 +9,7 @@ const BookingCircularProgressbar = ({
   label,
 }: CircularProgressBarProps) => {
   return (
-    <div className="flex flex-col justify-center items-center gap-3 text-sm">
+    <div className="flex flex-col justify-center items-center gap-3 text-sm border-2 border-yellow-300">
       <div className="w-16 h-16">
         <CircularProgressbar
           value={Number(progress)}

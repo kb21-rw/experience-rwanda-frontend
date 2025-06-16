@@ -46,7 +46,7 @@ const BookingHeader = () => {
           <p>{bookings[0].trip.departureTime}</p>
         </div>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-col md:flex-row items-center border">
         <BookingCircularProgressbar
           progress={remainingDays ?? 0}
           label={"Days To Go"}
