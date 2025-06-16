@@ -26,6 +26,6 @@ export type Trip = {
   destination: string;
   seatsBooked: number;
   seats: number;
-  status: "ONGOING" | "CANCELLED" | "PAST";
+  status: "fully-booked" | "completed" | "canceled" | "ONGOING" | "CANCELLED" | "PAST";
   onDelete?: (id: string) => void;
 };

@@ -44,33 +44,76 @@ const TripsPage = () => {
     router.replace(`?${params.toString()}`);
   };
 
+  const getTripsUrl = (filter: string) => {
+    const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
+    if (filter === "booked") return `${baseUrl}?status=fully-booked`;
+    if (filter === "past") return `${baseUrl}?status=completed`;
+    if (filter === "canceled") return `${baseUrl}?status=canceled`;
+    return baseUrl; 
+  };
+
   useEffect(() => {
     setLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips?filter=${filter}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTrips(data);
+    const fetchTrips = async () => {
+      try {
+        const url = getTripsUrl(filter);
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          console.error('API Error Response:', {
+            status: response.status,
+            statusText: response.statusText,
+            errorData
+          });
+          throw new Error(`Failed to fetch trips: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        setTrips(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Error fetching trips:', error);
+        setError(error instanceof Error ? error.message : "Failed to load trips");
+        setTrips([]);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to load trips");
-        setLoading(false);
-      });
+      }
+    };
+    fetchTrips();
   }, [filter]);
 
-  const filteredTrips = trips.filter((trip) => {
-    const keyword = searchQuery.toLowerCase();
+  const filteredTrips = trips.filter((trip: Trip) => {
+    if (!trip) return false;
+    const keyword = searchQuery.toLowerCase().trim();
+    if (!keyword) return true;
+    
     return (
-      trip.id.toLowerCase().includes(keyword) ||
-      trip.title.toLowerCase().includes(keyword) ||
-      trip.destination.toLowerCase().includes(keyword)
+      (trip.id?.toLowerCase() || '').includes(keyword) ||
+      (trip.title?.toLowerCase() || '').includes(keyword) ||
+      (trip.destination?.toLowerCase() || '').includes(keyword)
     );
   });
 
-  const totalTrips = trips.length;
-  const bookedTrips = trips.filter((trip) => trip.seatsBooked > 0).length;
-  const pastTrips = trips.filter((trip) => trip.status === "PAST").length;
-  const canceledTrips = trips.filter((trip) => trip.status === "CANCELLED").length;
+  const getTripCounts = () => {
+    const counts = {
+      all: trips.length,
+      booked: trips.filter(trip => 
+        trip.status === "fully-booked" || trip.status === "ONGOING"
+      ).length,
+      past: trips.filter(trip => 
+        trip.status === "completed" || trip.status === "PAST"
+      ).length,
+      canceled: trips.filter(trip => 
+        trip.status === "canceled" || trip.status === "CANCELLED"
+      ).length
+    };
+    return counts;
+  };
+
+  const tripCounts = getTripCounts();
 
   const handleDelete = async (id: string) => {
     const success = await deleteTrip(id);
@@ -119,15 +162,7 @@ const TripsPage = () => {
               <TripStatusCard
                 key={card.label}
                 label={card.label}
-                value={
-                  card.value === "all"
-                    ? totalTrips
-                    : card.value === "booked"
-                    ? bookedTrips
-                    : card.value === "past"
-                    ? pastTrips
-                    : canceledTrips
-                }
+                value={tripCounts[card.value as keyof typeof tripCounts]}
                 selected={filter === card.value}
                 onClick={() => setFilter(card.value)}
               />
