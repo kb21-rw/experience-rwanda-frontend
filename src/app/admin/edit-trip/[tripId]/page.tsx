@@ -30,7 +30,7 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     description: tripData.description,
     departureTime: new Date(tripData.departureTime),
     returnTime: new Date(tripData.returnTime),
-    seats: tripData.seats.toString(),
+    totalSeats: tripData.totalSeats.toString(),
     coverImage: tripData.coverImage,
     galleryImages: tripData.galleryImages,
     pricingOptions: tripData.pricingOptions?.map((option: PricingOption) => ({

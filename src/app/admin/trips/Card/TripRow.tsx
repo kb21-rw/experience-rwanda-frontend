@@ -19,17 +19,15 @@ import { toast } from "react-toastify";
 import { IoIosAlert } from "react-icons/io";
 import Link from "next/link";
 
-const TripRow = ({
-  id,
-  displayId,
-  title,
-  departureTime: date,
-  destination,
-  seatsBooked,
-  seats,
-  status = "ONGOING",
-  onDelete,
-}: Trip) => {
+interface Props {
+  onDelete?: (id: string) => Promise<boolean>;
+  displayId: string;
+  trip: Trip;
+}
+
+const TripRow = ({ trip, displayId, onDelete }: Props) => {
+  const { id, title, departureTime: date, destination } = trip;
+  const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
@@ -49,9 +47,9 @@ const TripRow = ({
         <TableCell>{formatedDate}</TableCell>
         <TableCell>{destination}</TableCell>
         <TableCell>
-          {seatsBooked} of {seats}
+          {totalBookedSeats} of {totalSeats}
         </TableCell>
-        <TableCell>{status}</TableCell>
+        <TableCell>{trip.status}</TableCell>
         <TableCell>
           <Button
             variant="primary"
@@ -62,9 +60,12 @@ const TripRow = ({
           </Button>
           {showDropdown && (
             <div className="absolute w-28 mt-2 bg-white border rounded shadow-lg">
-              <button className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full">
-                View
-              </button>
+              <Link
+                href={`/admin/bookings/${id}`}
+                className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+              >
+                Bookings
+              </Link>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Search from "./Search";
+import Search from "@/components/Search";
 import TripStatusCard from "./Card/TripStatusCard";
 import TripRow from "./Card/TripRow";
 import { Trip } from "@/types/ImageCard";
@@ -16,7 +16,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import Link from "next/link";
 import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 import Pagination from "@/components/Pagination";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from "next/navigation";
 
 const FILTERS = [
   { label: "Total trips", value: "all" },
@@ -36,11 +36,11 @@ const TripsPage = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const filter = searchParams.get('filter') || 'all';
+  const filter = searchParams.get("filter") || "all";
 
   const setFilter = (newFilter: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('filter', newFilter);
+    params.set("filter", newFilter);
     router.replace(`?${params.toString()}`);
   };
 
@@ -49,7 +49,7 @@ const TripsPage = () => {
     if (filter === "booked") return `${baseUrl}?status=fully-booked`;
     if (filter === "past") return `${baseUrl}?status=completed`;
     if (filter === "canceled") return `${baseUrl}?status=canceled`;
-    return baseUrl; 
+    return baseUrl;
   };
 
   useEffect(() => {
@@ -58,25 +58,29 @@ const TripsPage = () => {
       try {
         const url = getTripsUrl(filter);
         const response = await fetch(url, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
         if (!response.ok) {
           const errorData = await response.json().catch(() => null);
-          console.error('API Error Response:', {
+          console.error("API Error Response:", {
             status: response.status,
             statusText: response.statusText,
-            errorData
+            errorData,
           });
-          throw new Error(`Failed to fetch trips: ${response.status} ${response.statusText}`);
+          throw new Error(
+            `Failed to fetch trips: ${response.status} ${response.statusText}`
+          );
         }
         const data = await response.json();
         setTrips(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error('Error fetching trips:', error);
-        setError(error instanceof Error ? error.message : "Failed to load trips");
+        console.error("Error fetching trips:", error);
+        setError(
+          error instanceof Error ? error.message : "Failed to load trips"
+        );
         setTrips([]);
       } finally {
         setLoading(false);
@@ -89,26 +93,20 @@ const TripsPage = () => {
     if (!trip) return false;
     const keyword = searchQuery.toLowerCase().trim();
     if (!keyword) return true;
-    
+
     return (
-      (trip.id?.toLowerCase() || '').includes(keyword) ||
-      (trip.title?.toLowerCase() || '').includes(keyword) ||
-      (trip.destination?.toLowerCase() || '').includes(keyword)
+      (trip.id?.toLowerCase() || "").includes(keyword) ||
+      (trip.title?.toLowerCase() || "").includes(keyword) ||
+      (trip.destination?.toLowerCase() || "").includes(keyword)
     );
   });
 
   const getTripCounts = () => {
     const counts = {
       all: trips.length,
-      booked: trips.filter(trip => 
-        trip.status === "fully-booked" || trip.status === "ONGOING"
-      ).length,
-      past: trips.filter(trip => 
-        trip.status === "completed" || trip.status === "PAST"
-      ).length,
-      canceled: trips.filter(trip => 
-        trip.status === "canceled" || trip.status === "CANCELLED"
-      ).length
+      booked: trips.filter((trip) => trip.status === "fully-booked").length,
+      past: trips.filter((trip) => trip.status === "completed").length,
+      canceled: trips.filter((trip) => trip.status === "canceled").length,
     };
     return counts;
   };
@@ -154,7 +152,7 @@ const TripsPage = () => {
       <div>
         <div className="flex flex-col gap-5 md:flex-row items-center md:justify-between mb-6">
           <h1 className="text-2xl font-bold">Trips</h1>
-          <Search onSearch={setSearchQuery} />
+          <Search onSearch={setSearchQuery} placeholder="Search Trip" />
         </div>
         <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
           <div className="flex items-center gap-10 flex-wrap">
@@ -192,7 +190,7 @@ const TripsPage = () => {
               {paginatedTrips.map((trip, index) => (
                 <TripRow
                   key={trip.id}
-                  {...trip}
+                  trip={trip}
                   displayId={((currentPage - 1) * tripsPerPage + index + 1)
                     .toString()
                     .padStart(3, "0")}
@@ -207,11 +205,13 @@ const TripsPage = () => {
           </div>
         )}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={changePage}
-      />
+      <div className="flex justify-center items-center">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={changePage}
+        />
+      </div>
     </div>
   );
 };
