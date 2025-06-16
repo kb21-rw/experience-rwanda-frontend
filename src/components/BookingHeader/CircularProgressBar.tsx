@@ -1,7 +1,7 @@
 import { CircularProgressbar } from "react-circular-progressbar";
 
 interface CircularProgressBarProps {
-  progress: number;
+  progress: string | number;
   label: string;
 }
 const BookingCircularProgressbar = ({
@@ -9,11 +9,11 @@ const BookingCircularProgressbar = ({
   label,
 }: CircularProgressBarProps) => {
   return (
-    <div className="flex flex-col justify-center items-center gap-3">
-      <div className="w-24 h-24">
+    <div className="flex flex-col justify-center items-center gap-3 text-sm">
+      <div className="w-16 h-16">
         <CircularProgressbar
-          value={progress}
-          text={`${progress}%`}
+          value={Number(progress)}
+          text={`${progress}`}
           styles={{
             path: {
               stroke: "black",
@@ -24,7 +24,7 @@ const BookingCircularProgressbar = ({
             text: {
               textAnchor: "middle",
               dominantBaseline: "middle",
-              fontSize: "16px",
+              fontSize: "22px",
             },
           }}
         />

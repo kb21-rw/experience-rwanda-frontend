@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import BookingHeader from "@/components/BookingHeader";
 
 const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -66,6 +67,8 @@ const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
 
   return (
     <>
+      <BookingHeader
+      />
       {filteredBookings.length === 0 ? (
         <div className="text-gray-500 text-2xl h-screen flex justify-center items-center">
           No bookings found.
