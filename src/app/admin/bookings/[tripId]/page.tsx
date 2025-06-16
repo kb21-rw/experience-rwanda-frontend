@@ -25,7 +25,9 @@ const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { bookings, isLoading, error } = useBookings(params.tripId);
+  const { bookings, isLoading, error, handleDelete } = useBookings(
+    params.tripId
+  );
   const bookingsPerPage = 8;
 
   const filteredBookings = bookings.filter((booking) => {
@@ -115,6 +117,7 @@ const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
                       )
                         .toString()
                         .padStart(3, "0")}
+                      onDelete={handleDelete}
                     />
                   ))}
                 </TableBody>

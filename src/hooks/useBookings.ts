@@ -9,9 +9,18 @@ export const useBookings = (tripId: string) => {
     error,
     isLoading,
   } = useSWR<Booking[]>(apiUrl, fetcher);
+
+  const handleDelete = async (id: string) => {
+    const response = await fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    });
+    return response.ok;
+  };
+
   return {
     bookings: bookings || [],
     isLoading,
     error: error ? error.message : null,
+    handleDelete,
   };
 };
