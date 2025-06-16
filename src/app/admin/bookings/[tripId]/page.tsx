@@ -67,14 +67,13 @@ const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
 
   return (
     <>
-      <BookingHeader
-      />
+      <BookingHeader />
       {filteredBookings.length === 0 ? (
         <div className="text-gray-500 text-2xl h-screen flex justify-center items-center">
           No bookings found.
         </div>
       ) : (
-        <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
+        <div className="p-6 xl:px-6 xl:py-8  max-h-screen flex flex-col justify-between border border-gray-300  rounded-lg mx-2 md:mx-10">
           <div>
             <div className="flex justify-between items-center mb-10">
               <Search onSearch={setSearchQuery} placeholder="Search Booking" />

@@ -18,9 +18,17 @@ const BookingHeader = () => {
           (1000 * 60 * 60 * 24)
       )
     : null;
+  const formatedTime = bookings[0].trip.departureTime
+    ? new Date(bookings[0].trip.departureTime).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      })
+    : null;
 
+  console.log(formatedTime);
   return (
-    <div className="p-10 bg-white font-inter flex  flex-col gap-8 md:flex-row justify-between">
+    <div className="px-10 py-8 bg-white font-inter flex  flex-col gap-8 md:flex-row justify-between">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold text-gray-900">
           Booking | Visit <span>{bookings[0].trip.destination}</span>
@@ -36,17 +44,17 @@ const BookingHeader = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col gap-4 items-start">
+      <div className="flex flex-col gap-4 items-start text-base">
         <div className="flex gap-4 justify-center items-center">
-          <IoLocationSharp />
+          <IoLocationSharp size={19} />
           <p>{bookings[0].trip.destination}</p>
         </div>
         <div className="flex gap-4 justify-center items-center">
           <FaClock />
-          <p>{bookings[0].trip.departureTime}</p>
+          <p>{formatedTime}</p>
         </div>
       </div>
-      <div className="flex gap-4 flex-col md:flex-row items-center border">
+      <div className="flex gap-4 flex-col md:flex-row items-start text-base">
         <BookingCircularProgressbar
           progress={remainingDays ?? 0}
           label={"Days To Go"}
