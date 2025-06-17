@@ -50,7 +50,7 @@ const FormInput = ({
             render={({ field }) => (
               <DatePicker
                 onDisabled={onDisabled || (() => false)} // example logic
-                value={field.value as Date}
+                value={new Date(field.value as string)}
                 onChange={field.onChange}
               />
             )}

@@ -15,13 +15,17 @@ const MomoPaymentForm = ({
     <div className="mt-5 flex flex-col ml-2 space-y-2">
       <Label className="text-sm font-medium">Phone Number</Label>
       <Input
-        {...register("phoneNumber", { required: "Phone number is required" })}
+        {...register("payingPhoneNumber", {
+          required: "Phone number is required",
+        })}
         type="tel"
         placeholder="+250 788 888 888"
         className="border p-2 rounded w-full"
       />
-      {errors.phoneNumber && (
-        <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
+      {errors.payingPhoneNumber && (
+        <p className="text-sm text-red-500">
+          {errors.payingPhoneNumber.message}
+        </p>
       )}
     </div>
   );

@@ -20,7 +20,9 @@ export const useDeleteTrip = () => {
       if (!res.ok) {
         throw new Error(data.message || "Failed to delete trip.");
       }
-
+      await fetch("/api/revalidate/trips", {
+        method: "POST",
+      });
       return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
