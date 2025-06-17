@@ -1,4 +1,3 @@
-import React from "react";
 import TripList from "./TripList";
 import { Trip } from "@/types/ImageCard";
 

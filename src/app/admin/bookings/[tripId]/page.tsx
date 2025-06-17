@@ -1,4 +1,3 @@
-import React from "react";
 import BookingList from "./BookingList";
 import { Booking } from "@/types/Booking";
 
@@ -24,13 +23,11 @@ const Bookings = async ({ params }: { params: { tripId: string } }) => {
     isLoading = false;
   }
   return (
-    <div>
-      <BookingList
-        bookings={bookings}
-        isLoading={isLoading}
-        error={errorMessage}
-      />
-    </div>
+    <BookingList
+      bookings={bookings}
+      isLoading={isLoading}
+      error={errorMessage}
+    />
   );
 };
 

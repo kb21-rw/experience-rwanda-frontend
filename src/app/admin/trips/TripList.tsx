@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import TripStatusCard from "./Card/Statistics";
 import TripRow from "./Card/TripRow";
 import {
@@ -17,11 +17,10 @@ import Search from "@/components/Search";
 import { Trip } from "@/types/ImageCard";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { ITEM_PER_PAGE } from "@/utils/constants";
 
 const TripList = ({
   initialTrips,
-  isLoading,
-  error,
 }: {
   initialTrips: Trip[];
   isLoading: boolean;
@@ -29,15 +28,16 @@ const TripList = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const tripsPerPage = 8;
-  const { data: trips, mutate } = useSWR<Trip[]>(
-    `${process.env.NEXT_PUBLIC_API_URL}/trips`,
-    fetcher,
-    {
-      fallbackData: initialTrips, // preloaded data
-      revalidateOnFocus: true,
-    }
-  );
+  const tripsPerPage = ITEM_PER_PAGE;
+  const {
+    data: trips,
+    error,
+    mutate,
+    isLoading,
+  } = useSWR<Trip[]>(`${process.env.NEXT_PUBLIC_API_URL}/trips`, fetcher, {
+    fallbackData: initialTrips,
+    revalidateOnFocus: true,
+  });
 
   const { deleteTrip } = useDeleteTrip();
 

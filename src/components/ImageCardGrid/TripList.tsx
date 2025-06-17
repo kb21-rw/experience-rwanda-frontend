@@ -13,7 +13,7 @@ const defaultFilters = {
   location: "",
   dateRange: {
     from: new Date(),
-    to: undefined,
+    to: new Date(),
   },
   price: {
     min: "",
