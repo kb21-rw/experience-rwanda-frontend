@@ -11,9 +11,12 @@ export const useBookings = (tripId: string) => {
   } = useSWR<Booking[]>(apiUrl, fetcher);
 
   const handleDelete = async (id: string) => {
-    const response = await fetch(`${apiUrl}/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/bookings/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     return response.ok;
   };
 
