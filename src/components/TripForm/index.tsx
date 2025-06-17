@@ -34,14 +34,14 @@ const TripForm = ({
   });
   const {
     onSubmit,
-    setMainImage,
+    setCoverImage,
     setGalleryImages,
     // tripPackages,
     // setTripPackages,
     defaultGalleryImages,
-    defaultMainImage,
+    defaultCoverImage,
     setDefaultGalleryImages,
-    setDefaultMainImage,
+    setDefaultCoverImage,
   } = useTripFormSubmit(defaultValues, tripId);
   const {
     fields: pricingOptions,
@@ -53,9 +53,9 @@ const TripForm = ({
   });
 
   useEffect(() => {
-    setValue("coverImage", defaultMainImage);
+    setValue("coverImage", defaultCoverImage);
     setValue("galleryImages", defaultGalleryImages);
-  }, [setValue, defaultMainImage, defaultGalleryImages]);
+  }, [setValue, defaultCoverImage, defaultGalleryImages]);
   return (
     <form
       onSubmit={handleSubmit((data) => onSubmit(data, reset))}
@@ -89,11 +89,11 @@ const TripForm = ({
         />
 
         <ImageUploader
-          setMainImage={setMainImage}
+          setCoverImage={setCoverImage}
           setGalleryImages={setGalleryImages}
-          defaultMainImage={defaultMainImage}
+          defaultCoverImage={defaultCoverImage}
           defaultGalleryImages={defaultGalleryImages}
-          setDefaultMainImage={setDefaultMainImage}
+          setDefaultCoverImage={setDefaultCoverImage}
           setDefaultGalleryImages={setDefaultGalleryImages}
         />
       </div>
@@ -122,7 +122,7 @@ const TripForm = ({
               errors={errors}
               onDisabled={(date) =>
                 !getValues("departureTime") ||
-                date < new Date(getValues("departureTime").setHours(0, 0, 0, 0))
+                date < new Date(getValues("departureTime"))
               }
             />
           </div>

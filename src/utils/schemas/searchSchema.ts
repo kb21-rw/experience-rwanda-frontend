@@ -5,8 +5,8 @@ export const searchSchema = z.object({
 
   dateRange: z
     .object({
-      from: z.date().optional(),
-      to: z.date().optional(),
+      from: z.date(),
+      to: z.date(),
     })
     .optional()
     .refine((data) => !data?.from || !data?.to || data.from <= data.to, {
