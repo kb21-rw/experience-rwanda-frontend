@@ -7,5 +7,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
   revalidateTag("bookings");
+  revalidateTag("trips");
   return NextResponse.json({ revalidated: true }, { status: 200 });
 }
