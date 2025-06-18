@@ -75,7 +75,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <div className="flex justify-center items-center text-center">
-                      <IoIosAlert className="w-12 h-12" />
+                      <IoIosAlert fill="red" className="w-12 h-12" />
                     </div>
 
                     <AlertDialogTitle className="text-bold text-center text-2xl mb-6">
