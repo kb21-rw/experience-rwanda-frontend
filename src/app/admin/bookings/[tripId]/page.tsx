@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 
+
 const ViewBookingsPage = ({ params }: { params: { tripId: string } }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
