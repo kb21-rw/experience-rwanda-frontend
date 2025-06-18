@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Input } from "../Input";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { ClientData } from "@/types/Popup";
-import { PricingOption } from "@/types/trip";
+import { PricingOption, TripStatus } from "@/types/trip";
 import { z } from "zod";
 import { UserInfoSchema } from "@/utils/schemas/bookingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +24,8 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import { Counter } from "@/components/Counter";
+import { Loader2 } from "lucide-react";
+import { CheckSeatsResponse } from "@/types/trip";
 
 const UserInfoPopup = ({
   setCurrentStep,
@@ -53,14 +55,25 @@ const UserInfoPopup = ({
       bookedSeats: 1,
     },
   });
+  const [checkingAvailability, setCheckingAvailability] = useState(false);
   const onSubmit: SubmitHandler<ClientData> = async (data) => {
+    setCheckingAvailability(true);
     try {
-      const checkSeats = await axios.get(
+      const checkSeats = await axios.get<CheckSeatsResponse>(
         `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}/check-availability?seats=${data.bookedSeats}`
       );
-      console.log({ checkSeats });
-      if (!checkSeats.data.success) {
+      if (
+        !checkSeats.data.success &&
+        checkSeats.data.status === TripStatus.NO_ENOUGH_SEATS
+      ) {
         form.setError("bookedSeats", {
+          type: "manual",
+          message: checkSeats.data.message,
+        });
+
+        return;
+      } else if (!checkSeats.data.success) {
+        form.setError("root", {
           type: "manual",
           message: checkSeats.data.message,
         });
@@ -77,6 +90,8 @@ const UserInfoPopup = ({
             ? error.message
             : "Something went wrong. Please try again.",
       });
+    } finally {
+      setCheckingAvailability(false);
     }
   };
   return (
@@ -85,6 +100,17 @@ const UserInfoPopup = ({
         <h2 className="text-3xl font-bold text-center mb-10">
           User Information
         </h2>
+        {form.formState.errors.root && (
+          <div className="mb-4 rounded-lg border border-red-500 bg-red-100 px-4 py-2 text-sm text-red-700 text-center w-auto">
+            {form.formState.errors.root.message}
+          </div>
+        )}
+        {checkingAvailability && (
+          <div className="mb-4 flex items-center justify-center gap-2 text-blue-600 text-sm">
+            <Loader2 className="animate-spin h-4 w-4" />
+            Checking trip availability...
+          </div>
+        )}
         <div className="space-y-4 font-inter">
           <FormField
             control={form.control}
@@ -131,7 +157,7 @@ const UserInfoPopup = ({
               name="pricingId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{priceTitle}</FormLabel>
+                  <FormLabel>{priceTitle || "Pricing category"}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}

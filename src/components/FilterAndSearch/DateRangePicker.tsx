@@ -15,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/Form";
-import { DateRange } from "react-day-picker";
 import { z } from "zod";
 import { searchSchema } from "../../utils/schemas/searchSchema";
 
@@ -64,7 +63,7 @@ const DateRangePicker = ({ form }: DateRangePickerProps) => {
               <Calendar
                 initialFocus
                 mode="range"
-                selected={field.value as DateRange}
+                selected={field.value}
                 onSelect={field.onChange}
                 numberOfMonths={2}
                 fromDate={new Date()}

@@ -1,20 +1,14 @@
-export type RawBooking = {
+import { Admin } from "./Admin";
+import { Trip } from "./ImageCard";
+
+export type Booking = {
   id: string;
-  user: {
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-  };
-  trip: {
-    totalBookedSeats: number;
-    title?: string;
-    description?: string;
-    destination?: string;
-departureTime?: string;
-totalSeats?: number;
-    pricingOptions: {
-      amount: number;
-    }[];
-  
-  };
+  tripPricingId: string;
+  bookedSeats: number;
+  totalAmount: number;
+  paymentStatus: "Paid" | "Unpaid" | "Pending";
+  createdAt: string;
+  updatedAt: string;
+  user: Admin;
+  trip: Trip;
 };

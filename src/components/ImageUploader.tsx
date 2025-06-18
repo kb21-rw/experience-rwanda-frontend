@@ -5,23 +5,23 @@ import { FaTimes } from "react-icons/fa";
 import Image from "next/image";
 
 const ImageUploader = ({
-  setMainImage,
+  setCoverImage,
   setGalleryImages,
-  defaultMainImage,
+  defaultCoverImage,
   defaultGalleryImages,
-  setDefaultMainImage,
+  setDefaultCoverImage,
   setDefaultGalleryImages,
 }: {
-  setMainImage: Dispatch<SetStateAction<File | null>>;
+  setCoverImage: Dispatch<SetStateAction<File | null>>;
   setGalleryImages: Dispatch<SetStateAction<File[]>>;
-  defaultMainImage: string;
+  defaultCoverImage: string;
   defaultGalleryImages: {
     url: string;
     deleted?: boolean;
     id?: string;
     tripId?: string;
   }[];
-  setDefaultMainImage: Dispatch<SetStateAction<string>>;
+  setDefaultCoverImage: Dispatch<SetStateAction<string>>;
   setDefaultGalleryImages: Dispatch<
     SetStateAction<
       { url: string; deleted?: boolean; id?: string; tripId?: string }[]
@@ -29,15 +29,15 @@ const ImageUploader = ({
   >;
 }) => {
   const [mainImagePreview, setMainImagePreview] = useState<string | null>(
-    defaultMainImage || null
+    defaultCoverImage || null
   );
   const [galleryPreviews, setGalleryPreviews] = useState<string[]>([]);
   const [defaultGalleryPreviews, setDefaultGalleryPreviews] = useState<
     string[]
   >(defaultGalleryImages.map((image) => image.url));
-  const handleMainImageChange = (file: File | null) => {
+  const handleCoverImageChange = (file: File | null) => {
     if (!file) return;
-    setMainImage(file);
+    setCoverImage(file);
     const preview = URL.createObjectURL(file);
     setMainImagePreview(preview);
   };
@@ -54,8 +54,8 @@ const ImageUploader = ({
     if (mainImagePreview) {
       URL.revokeObjectURL(mainImagePreview);
     }
-    setDefaultMainImage("");
-    setMainImage(null);
+    setDefaultCoverImage("");
+    setCoverImage(null);
     setMainImagePreview(null);
   };
 
@@ -86,7 +86,7 @@ const ImageUploader = ({
               type="file"
               accept="image/*"
               onChange={(e) =>
-                handleMainImageChange(e.target.files?.[0] || null)
+                handleCoverImageChange(e.target.files?.[0] || null)
               }
               className="hidden"
             />

@@ -27,10 +27,10 @@ const PaymentPopup = ({
 
   const onSubmit: SubmitHandler<MomoFormInputs> = async (data) => {
     if (paymentMethod === "momo") {
-      const { phoneNumber } = data;
+      const { payingPhoneNumber } = data;
       const response = await postData(
         `${process.env.NEXT_PUBLIC_API_URL}/payments/charge-momo`,
-        { ...clientData, tripId, phoneNumber }
+        { ...clientData, tripId, payingPhoneNumber }
       );
 
       if (response.status === "success") {
