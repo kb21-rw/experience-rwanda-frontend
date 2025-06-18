@@ -209,4 +209,4 @@ const TripsPage = () => {
   );
 };
 
-export default Bookings;
+export default TripsPage;
