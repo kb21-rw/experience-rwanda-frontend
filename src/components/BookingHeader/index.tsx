@@ -16,28 +16,22 @@ const BookingHeader = () => {
   const { bookings } = useBookings(tripId);
   const booking = bookings[0];
 
-  const { formattedDate, statusLabel, progressValue } = useMemo(() => {
+  const { formattedDate, statusLabel, daysProgress } = useMemo(() => {
     if (!booking?.trip?.departureTime) {
-      return {
-        formattedDate: "",
-        statusLabel: "Days To Go",
-        progressValue: 0,
-      };
+      return { formattedDate: "", statusLabel: "Days To Go", daysProgress: 0 };
     }
 
     const departureDate = new Date(booking.trip.departureTime);
     const today = new Date();
-
     const diffDays = Math.ceil(
       (departureDate.getTime() - today.getTime()) / MS_PER_DAY
     );
 
     let label = "Days To Go";
-    let value: number = 0;
+    let value = 0;
 
-    if (diffDays > 0) {
-      value = diffDays;
-    } else if (diffDays === 0) {
+    if (diffDays > 0) value = diffDays;
+    else if (diffDays === 0) {
       label = "Ongoing";
       value = 100;
     } else {
@@ -52,9 +46,21 @@ const BookingHeader = () => {
         day: "2-digit",
       }),
       statusLabel: label,
-      progressValue: value,
+      daysProgress: value,
     };
   }, [booking]);
+
+  const bookingsPercent = useMemo(() => {
+    if (!booking?.trip) return 0;
+
+    const capacity =
+      booking.trip.totalSeats ?? booking.trip.totalBookedSeats ?? 0;
+
+    if (capacity <= 0) return 0;
+
+    const percent = Math.round((bookings.length / capacity) * 100);
+    return Math.min(100, percent);
+  }, [bookings, booking]);
 
   if (!booking) return null;
 
@@ -62,7 +68,7 @@ const BookingHeader = () => {
     <div className="px-10 py-8 bg-white font-inter flex flex-col gap-8 md:flex-row justify-between">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold text-gray-900">
-          Booking |Visit
+          Booking|Visit
           <span>{booking.trip.destination}</span>
         </h1>
 
@@ -92,10 +98,13 @@ const BookingHeader = () => {
 
       <div className="flex gap-4 flex-col md:flex-row items-start text-base">
         <BookingCircularProgressbar
-          progress={progressValue}
+          progress={daysProgress}
           label={statusLabel}
         />
-        <BookingCircularProgressbar progress={90} label="Bookings Made" />
+        <BookingCircularProgressbar
+          progress={bookingsPercent}
+          label="Bookings Made"
+        />
       </div>
     </div>
   );
