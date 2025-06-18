@@ -64,12 +64,6 @@ const TripsPage = () => {
           },
         });
         if (!response.ok) {
-          const errorData = await response.json().catch(() => null);
-          console.error("API Error Response:", {
-            status: response.status,
-            statusText: response.statusText,
-            errorData,
-          });
           throw new Error(
             `Failed to fetch trips: ${response.status} ${response.statusText}`
           );
@@ -77,7 +71,6 @@ const TripsPage = () => {
         const data = await response.json();
         setTrips(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Error fetching trips:", error);
         setError(
           error instanceof Error ? error.message : "Failed to load trips"
         );
