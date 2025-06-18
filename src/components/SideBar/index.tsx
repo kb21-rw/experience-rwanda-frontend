@@ -31,9 +31,7 @@ export function AppSidebar() {
     localStorage.removeItem("refreshToken");
     router.push("/login");
   };
-  // how to get the current route
   const currentPath = usePathname();
-  console.log({ currentPath, items });
   return (
     <>
       {isMobile && (
@@ -47,7 +45,7 @@ export function AppSidebar() {
       )}
 
       <Sidebar collapsible={isMobile ? "offcanvas" : "icon"} className="z-20">
-        <SidebarContent className="bg-black text-white px-4=">
+        <SidebarContent className="bg-black text-white">
           <SidebarGroup className="gap-6">
             <div
               className={`mt-8 flex ${
@@ -74,17 +72,15 @@ export function AppSidebar() {
                     <SidebarMenuButton
                       className={
                         currentPath === item.url
-                          ? "text-[#B9B9BA] hover:text-[#B9B9BA] underline"
-                          : "hover:text-[#B9B9BA]"
+                          ? "text-gray-150 hover:text-gray-150 underline"
+                          : "hover:text-gray-150"
                       }
                       variant="link"
                       asChild
                     >
                       <Link className="flex items-center gap-5" href={item.url}>
                         <item.icon className="w-6 h-6" />
-                        <span
-                          className={`font-medium text-[1rem] leading-[1.5rem]`}
-                        >
+                        <span className={`font-medium text-base`}>
                           {item.title}
                         </span>
                       </Link>
@@ -99,7 +95,7 @@ export function AppSidebar() {
           {
             <Button
               onClick={handleLogout}
-              className="bg-white text-black text-base font-semibold rounded-[10px] py-3- h-12"
+              className="bg-white text-black text-base font-semibold rounded-xl h-12"
             >
               <TbLogout2 />
               {state === "expanded" ? <span>Log out</span> : null}
