@@ -1,20 +1,42 @@
 "use client";
 
 import { useMemo } from "react";
+import useSWR from "swr";
 import BookingCircularProgressbar from "./CircularProgressBar";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaClock } from "react-icons/fa";
-import { useBookings } from "@/hooks/useBookings";
 import { useParams } from "next/navigation";
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+const fetcher = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Failed to fetch bookings");
+  }
+  return response.json();
+};
 
 const BookingHeader = () => {
   const params = useParams();
   const tripId = params?.tripId as string;
 
-  const { bookings } = useBookings(tripId);
-  const booking = bookings[0];
+  const {
+    data: bookings,
+    error,
+    isLoading,
+  } = useSWR(
+    tripId
+      ? `${process.env.NEXT_PUBLIC_API_URL}/bookings/trip/${tripId}`
+      : null,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+    }
+  );
+
+  const booking = bookings?.[0];
 
   const { formattedDate, statusLabel, daysProgress } = useMemo(() => {
     if (!booking?.trip?.departureTime) {
@@ -51,7 +73,7 @@ const BookingHeader = () => {
   }, [booking]);
 
   const bookingsPercent = useMemo(() => {
-    if (!booking?.trip) return 0;
+    if (!booking?.trip || !bookings) return 0;
 
     const capacity =
       booking.trip.totalSeats ?? booking.trip.totalBookedSeats ?? 0;
@@ -61,6 +83,22 @@ const BookingHeader = () => {
     const percent = Math.round((bookings.length / capacity) * 100);
     return Math.min(100, percent);
   }, [bookings, booking]);
+
+  if (isLoading) {
+    return (
+      <div className="px-10 py-8 bg-white font-inter flex items-center justify-center">
+        <div className="text-gray-500">Loading booking details...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="px-10 py-8 bg-white font-inter flex items-center justify-center">
+        <div className="text-red-500">Failed to load booking details</div>
+      </div>
+    );
+  }
 
   if (!booking) return null;
 
