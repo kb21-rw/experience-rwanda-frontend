@@ -1,8 +1,12 @@
+"use client";
 import DashboardCard from "@/components/DashboardCard";
 import { Book, Users } from "lucide-react";
 import dashboard from "./../../data/dashbaord.json";
+import { useAdmins } from "@/hooks/useUsers";
 
 const AdminPage = () => {
+  const { admins } = useAdmins();
+  console.log("admins", admins);
   return (
     <div className="px-4 py-6 h-screen w-full flex flex-col justify-center items-center mt-16 lg:mt-0">
       <div className="flex flex-col items-center gap-4 text-center mb-6">
