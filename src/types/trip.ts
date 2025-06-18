@@ -22,3 +22,18 @@ export interface TripPackageType {
   customOptions: string[];
   newOption: string;
 }
+
+export enum TripStatus {
+  AVAILABLE = "available",
+  FULLY_BOOKED = "fully-booked", // or 'sold_out'
+  CANCELED = "canceled",
+  COMPLETED = "completed",
+  ONGOING = "ongoing",
+  NO_ENOUGH_SEATS = "no-enough-seats",
+}
+
+export interface CheckSeatsResponse {
+  status: TripStatus;
+  success: boolean;
+  message: string;
+}

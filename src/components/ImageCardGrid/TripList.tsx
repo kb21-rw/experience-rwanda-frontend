@@ -11,10 +11,7 @@ import { z } from "zod";
 
 const defaultFilters = {
   location: "",
-  dateRange: {
-    from: new Date(),
-    to: undefined,
-  },
+  dateRange: undefined,
   price: {
     min: "",
     max: "",

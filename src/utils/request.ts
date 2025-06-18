@@ -29,9 +29,8 @@ export const getData = async (url: string) => {
   } catch (error) {
     console.error("Error:", error);
     return null;
-
   }
-}
+};
 export const fetchWithToken = async (
   url: string,
   method: string,

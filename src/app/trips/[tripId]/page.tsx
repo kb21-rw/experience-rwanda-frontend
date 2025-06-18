@@ -6,7 +6,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/trips/${params.tripId}`,
     {
-      next: { revalidate: 600 },
+      next: { tags: ["trips"] },
     }
   );
 
