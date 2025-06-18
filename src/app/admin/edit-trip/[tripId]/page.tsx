@@ -13,12 +13,13 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/trips/${params.tripId}`,
-      { cache: "no-cache" }
+      {
+        next: { tags: ["trips"] },
+      }
     );
     if (!res.ok) {
       throw new Error(`Failed to fetch trip: ${res.status}`);
     }
-
     tripData = await res.json();
   } catch (error) {
     console.error("Error fetching trip:", error);
@@ -30,7 +31,7 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     description: tripData.description,
     departureTime: new Date(tripData.departureTime),
     returnTime: new Date(tripData.returnTime),
-    seats: tripData.seats.toString(),
+    totalSeats: tripData.totalSeats.toString(),
     coverImage: tripData.coverImage,
     galleryImages: tripData.galleryImages,
     pricingOptions: tripData.pricingOptions?.map((option: PricingOption) => ({

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TripDetails } from "@/types/ImageCard";
+import { Trip } from "@/types/ImageCard";
 import Image from "next/image";
 import IconContent from "../ui/IconContent";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import BookingPopup from "../ui/Popup";
 import { createTripDetails } from "@/data/tripDetails";
 
 interface Props {
-  tripDetails: TripDetails;
+  tripDetails: Trip;
 }
 
 const TripHeroCard = ({ tripDetails }: Props) => {
@@ -19,8 +19,8 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   const details = createTripDetails(
     tripDetails.destination,
     tripDetails.departureTime,
-    tripDetails.price,
-    tripDetails.seats
+    tripDetails.pricingOptions,
+    tripDetails.totalSeats
   );
   return (
     <>
@@ -68,7 +68,13 @@ const TripHeroCard = ({ tripDetails }: Props) => {
       </div>
 
       {selectedTrip && (
-        <BookingPopup tripId={selectedTrip} setSelectedTrip={setSelectedTrip} />
+        <BookingPopup
+          tripId={selectedTrip}
+          setSelectedTrip={setSelectedTrip}
+          priceTitle={tripDetails.priceTitle}
+          priceDescription={tripDetails.priceDescription}
+          pricingOptions={tripDetails.pricingOptions}
+        />
       )}
     </>
   );

@@ -16,14 +16,14 @@ export type PopupProps = {
 };
 
 export interface ClientData {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phoneNumber: string;
+  bookedSeats: number;
 }
 
 export type PaymentMethod = "card" | "momo";
 
 export interface MomoFormInputs {
-  phoneNumber: string;
+  payingPhoneNumber: string;
 }

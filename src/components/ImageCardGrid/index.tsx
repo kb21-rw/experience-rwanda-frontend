@@ -6,8 +6,8 @@ const ImageCardGrid = async ({
   title,
   description,
 }: Omit<Row, "cards">) => {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips` || "", {
-    next: { revalidate: 600 },
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips`, {
+    next: { tags: ["trips"] },
   });
   const trips = await data.json();
 

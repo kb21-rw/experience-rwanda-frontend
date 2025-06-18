@@ -11,9 +11,9 @@ export const tripSchema = z
     title: z.string().min(1, "Title is required"),
     destination: z.string().min(1, "Destination is required"),
     description: z.string().min(1, "Description is required"),
-    departureTime: z.date(),
-    returnTime: z.date(),
-    seats: z.string().min(1, "Seats is required"),
+    departureTime: z.date().or(z.string()),
+    returnTime: z.date().or(z.string()),
+    totalSeats: z.string().min(1, "Seats is required"),
     coverImage: z.string().optional(),
     galleryImages: z
       .array(
