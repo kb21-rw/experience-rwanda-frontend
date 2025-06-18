@@ -22,7 +22,7 @@ export default function ProfileContent() {
     }
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center pt-4 pb-8 gap-4">
+    <div className="flex flex-col items-center justify-center pt-4 pb-12 gap-4 ">
       <ProfileCard
         name={user?.name || ""}
         imageSrc={""}
@@ -30,7 +30,9 @@ export default function ProfileContent() {
         alt={""}
       />
       {state === "expanded" && (
-        <div className="text-center">{user?.name || ""}</div>
+        <div className="text-base font-medium tracking-[0%] text-center">
+          {user?.name || ""}
+        </div>
       )}
     </div>
   );
