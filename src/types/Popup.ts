@@ -25,5 +25,5 @@ export interface ClientData {
 export type PaymentMethod = "card" | "momo";
 
 export interface MomoFormInputs {
-  phoneNumber: string;
+  payingPhoneNumber: string;
 }

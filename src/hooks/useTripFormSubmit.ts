@@ -8,7 +8,7 @@ import { UseFormReset } from "react-hook-form";
 type FormData = z.infer<typeof tripSchema>;
 
 export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
-  const [mainImage, setMainImage] = useState<File | null>(null);
+  const [coverImage, setCoverImage] = useState<File | null>(null);
   const [galleryImages, setGalleryImages] = useState<File[]>([]);
   const [defaultGalleryImages, setDefaultGalleryImages] = useState<
     {
@@ -18,7 +18,7 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
       tripId?: string;
     }[]
   >(defaultValues.galleryImages || []);
-  const [defaultMainImage, setDefaultMainImage] = useState<string>(
+  const [defaultCoverImage, setDefaultCoverImage] = useState<string>(
     defaultValues.coverImage || ""
   );
   const [tripPackages, setTripPackages] = useState<TripPackageType[]>([
@@ -29,8 +29,8 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
     const formData = new FormData();
     formData.append("tripData", JSON.stringify(data));
 
-    if (mainImage) {
-      formData.append("coverImage", mainImage);
+    if (coverImage) {
+      formData.append("coverImage", coverImage);
     }
 
     galleryImages?.forEach((file) => {
@@ -50,11 +50,11 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
         throw new Error("Failed to create trip");
       }
       const formResult = await response.json();
-      if (tripId) {
-        reset(formResult);
-      } else {
-        reset();
-      }
+      await fetch("/api/revalidate/trips", {
+        method: "POST",
+      });
+
+      reset(tripId ? formResult : undefined);
       toast.success("Trip was created successfully");
     } catch (error) {
       console.error("Error uploading:", error);
@@ -64,15 +64,15 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
 
   return {
     onSubmit,
-    mainImage,
-    setMainImage,
+    coverImage,
+    setCoverImage,
     galleryImages,
     setGalleryImages,
     tripPackages,
     setTripPackages,
     defaultGalleryImages,
-    defaultMainImage,
+    defaultCoverImage,
     setDefaultGalleryImages,
-    setDefaultMainImage,
+    setDefaultCoverImage,
   };
 }
