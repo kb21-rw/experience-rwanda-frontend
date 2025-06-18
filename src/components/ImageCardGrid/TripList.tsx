@@ -22,11 +22,12 @@ const defaultFilters = {
 };
 
 const TripList = ({ trips }: { trips: Trip[] }) => {
+  const safeTrips = Array.isArray(trips) ? trips : [];
   const [filters, setFilters] =
     useState<z.infer<typeof searchSchema>>(defaultFilters);
 
   const filteredTrips = useMemo(() => {
-    return trips.filter((data) => {
+    return safeTrips.filter((data) => {
       const matchesLocation = data.destination
         .toLowerCase()
         .includes(filters.location.toLowerCase());
@@ -56,7 +57,7 @@ const TripList = ({ trips }: { trips: Trip[] }) => {
     filters.location,
     filters.price.max,
     filters.price.min,
-    trips,
+    safeTrips,
   ]);
   const form = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),

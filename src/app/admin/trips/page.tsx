@@ -17,13 +17,9 @@ import Link from "next/link";
 import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 import Pagination from "@/components/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
+import { FILTERS } from "@/utils/filters"; 
+import useSWR from "swr";
 
-const FILTERS = [
-  { label: "Total trips", value: "all" },
-  { label: "Booked Trips", value: "booked" },
-  { label: "Past Trips", value: "past" },
-  { label: "Canceled Trips", value: "canceled" },
-];
 
 const TripsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,8 +27,6 @@ const TripsPage = () => {
   const tripsPerPage = 8;
   const { deleteTrip } = useDeleteTrip();
   const [trips, setTrips] = useState<Trip[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -52,35 +46,18 @@ const TripsPage = () => {
     return baseUrl;
   };
 
+  const fetcher = (url: string) =>
+    fetch(url, { headers: { "Content-Type": "application/json" } }).then(res => {
+      if (!res.ok) throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+      return res.json();
+    });
+
+  const url = getTripsUrl(filter);
+  const { data, error: swrError, isLoading } = useSWR(url, fetcher);
+
   useEffect(() => {
-    setLoading(true);
-    const fetchTrips = async () => {
-      try {
-        const url = getTripsUrl(filter);
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error(
-            `Failed to fetch trips: ${response.status} ${response.statusText}`
-          );
-        }
-        const data = await response.json();
-        setTrips(Array.isArray(data) ? data : []);
-      } catch (error) {
-        setError(
-          error instanceof Error ? error.message : "Failed to load trips"
-        );
-        setTrips([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTrips();
-  }, [filter]);
+    if (data) setTrips(Array.isArray(data) ? data : []);
+  }, [data]);
 
   const filteredTrips = trips.filter((trip: Trip) => {
     if (!trip) return false;
@@ -126,20 +103,21 @@ const TripsPage = () => {
     }
   };
 
-  if (loading)
+  if (isLoading)
     return (
       <div className="flex justify-center items-center text-center h-screen">
         <p className="animate-bounce text-2xl">Loading trips...</p>
       </div>
     );
 
-  if (error) {
+  if (swrError) {
     return (
       <div className="flex justify-center items-center text-center h-screen text-red-600">
-        <p className="text-xl">{error}</p>
+        <p className="text-xl">{swrError.message}</p>
       </div>
     );
   }
+
   return (
     <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
       <div>
