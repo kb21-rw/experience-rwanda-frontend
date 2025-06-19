@@ -6,16 +6,9 @@ import BookingCircularProgressbar from "./CircularProgressBar";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaClock } from "react-icons/fa";
 import { useParams } from "next/navigation";
+import { fetcher } from "@/lib/fetcher";
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-const fetcher = async (url: string) => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Failed to fetch bookings");
-  }
-  return response.json();
-};
 
 const BookingHeader = () => {
   const params = useParams();
