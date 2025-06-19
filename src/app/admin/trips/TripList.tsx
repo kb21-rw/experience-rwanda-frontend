@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import TripStatusCard from "./Card/Statistics";
 import TripRow from "./Card/TripRow";
 import {
   Table,
@@ -18,6 +17,7 @@ import { Trip } from "@/types/ImageCard";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { ITEM_PER_PAGE } from "@/utils/constants";
+import TripStatusCard from "./Card/TripStatusCard";
 
 const TripList = ({
   initialTrips,

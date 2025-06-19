@@ -6,12 +6,13 @@ import {
   FieldErrors,
   Control,
   Controller,
+  Path,
 } from "react-hook-form";
 import { DatePicker } from "./DatePicker";
 
 // Generic FormInput component
 // T is the form data type
-const FormInput = <T extends Record<string, any>>({
+const FormInput = <T extends Record<string, unknown>>({
   control,
   register,
   name,
@@ -24,7 +25,7 @@ const FormInput = <T extends Record<string, any>>({
 }: {
   control?: Control<T>;
   register: UseFormRegister<T>;
-  name: keyof T;
+  name: Path<T>;
   label: string;
   placeholder?: string;
   type?: "text" | "number" | "date";
@@ -32,6 +33,7 @@ const FormInput = <T extends Record<string, any>>({
   errors?: FieldErrors<T>;
   onDisabled?: (date: Date) => boolean;
 }) => {
+  console.log({ name, errors });
   switch (type) {
     case "date":
       return (
@@ -43,7 +45,7 @@ const FormInput = <T extends Record<string, any>>({
             {label}
           </Label>
           <Controller
-            name={name as any}
+            name={name}
             control={control}
             render={({ field }) => (
               <DatePicker

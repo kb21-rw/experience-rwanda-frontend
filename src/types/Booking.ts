@@ -1,5 +1,5 @@
-import { Admin } from "./Admin";
 import { Trip } from "./ImageCard";
+import { User } from "./User";
 
 export type Booking = {
   id: string;
@@ -9,6 +9,6 @@ export type Booking = {
   paymentStatus: "Paid" | "Unpaid" | "Pending";
   createdAt: string;
   updatedAt: string;
-  user: Admin;
+  user: User;
   trip: Trip;
 };
