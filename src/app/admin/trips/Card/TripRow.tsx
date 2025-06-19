@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { IoIosAlert } from "react-icons/io";
 import Link from "next/link";
@@ -29,10 +29,36 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
   const { id, title, departureTime: date, destination } = trip;
   const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      const isClickOutsideDropdown =
+        dropdownRef.current && !dropdownRef.current.contains(target);
+
+      const isInsideAlertDialog = (target as HTMLElement).closest(
+        "[role='alertdialog']"
+      );
+
+      if (isClickOutsideDropdown && !isInsideAlertDialog) {
+        setShowDropdown(false);
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDropdown]);
 
   const formatedDate = new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -59,7 +85,10 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
             Modify <ChevronDown size={14} />
           </Button>
           {showDropdown && (
-            <div className="absolute w-28 mt-2 bg-white border rounded shadow-lg">
+            <div
+              ref={dropdownRef}
+              className="absolute w-28 mt-2 bg-white border rounded shadow-lg"
+            >
               <Link
                 href={`/admin/bookings/${id}`}
                 className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
