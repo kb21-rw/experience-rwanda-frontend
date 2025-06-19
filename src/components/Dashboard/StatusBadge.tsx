@@ -1,4 +1,4 @@
-interface TripStatusBadgeProps {
+interface StatusBadgeProps {
   count: number;
   label: string;
   bgColor: string;
@@ -6,19 +6,19 @@ interface TripStatusBadgeProps {
   className?: string;
 }
 
-const DashboardStatusBadge = ({
+const StatusBadge = ({
   count,
   label,
   bgColor,
   circleColor,
   className,
-}: TripStatusBadgeProps) => {
+}: StatusBadgeProps) => {
   return (
     <div
       className={`${bgColor} ${className} text-white rounded-md px-3 py-4 flex flex-col items-center text-nowrap gap-4`}
     >
       <p
-        className={`${circleColor} text-balck text-lg font-semibold p-3 aspect-square rounded-full flex items-center justify-center`}
+        className={`${circleColor} text-black text-lg font-semibold p-3 aspect-square rounded-full flex items-center justify-center`}
       >
         {count}
       </p>
@@ -27,4 +27,4 @@ const DashboardStatusBadge = ({
   );
 };
 
-export default DashboardStatusBadge;
+export default StatusBadge;

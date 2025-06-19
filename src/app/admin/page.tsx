@@ -1,71 +1,73 @@
 "use client";
-import DashboardCard from "@/components/DashboardCard";
-import { Book, Users } from "lucide-react";
-import dashboard from "./../../data/dashbaord.json";
-import { useAdmins } from "@/hooks/useUsers";
 
-const AdminPage = () => {
-  const { admins } = useAdmins();
-  console.log("admins", admins);
+import { useState, useEffect } from "react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
+import { Admin, DashboardData } from "@/types/Admin";
+import DashboardContent from "@/components/Dashboard/DasboardContent";
+
+interface Trip {
+  id: string;
+  status: string;
+}
+
+const Dashboard = () => {
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(
+    null
+  );
+
+  const {
+    data: trips,
+    error: tripsError,
+    isLoading: tripsLoading,
+  } = useSWR<Trip[]>(`${process.env.NEXT_PUBLIC_API_URL}/trips`, fetcher);
+  console.log("Trips data )))))))))))))))))))))))__________", trips);
+  const {
+    data: admins,
+    error: adminsError,
+    isLoading: adminsLoading,
+  } = useSWR<Admin[]>(`${process.env.NEXT_PUBLIC_API_URL}/admins`, fetcher);
+  console.log("Admin data )))))))))))))))))))))))__________", admins);
+
+  useEffect(() => {
+    if (trips && admins) {
+      const tripsStats = {
+        total: trips.length,
+        upcoming: trips.filter(
+          (trip) => trip.status?.toLowerCase() === "upcoming"
+        ).length,
+        canceled: trips.filter(
+          (trip) =>
+            trip.status?.toLowerCase() === "canceled" ||
+            trip.status?.toLowerCase() === "cancelled"
+        ).length,
+        completed: trips.filter(
+          (trip) => trip.status?.toLowerCase() === "completed"
+        ).length,
+      };
+
+      const finalDashboardData: DashboardData = {
+        trips: tripsStats,
+        admins: admins,
+      };
+
+      setDashboardData(finalDashboardData);
+    }
+  }, [trips, admins]);
+
+  const isLoading = tripsLoading || adminsLoading;
+  const error = tripsError || adminsError;
+  const errorMessage = error ? "Failed to fetch dashboard data" : "";
+
   return (
-    <div className="px-4 py-6 h-screen w-full flex flex-col justify-center items-center mt-16 lg:mt-0">
-      <div className="flex flex-col items-center gap-4 text-center mb-6">
-        <h1 className="text-3xl md:text-4xl font-semibold animate-in slide-in-from-left">
-          {dashboard.title}
-        </h1>
-        <p className="text-gray-600 text-base md:text-xl mt-2 md:w-2/3 w-full mx-auto">
-          {dashboard.description}
-        </p>
-      </div>
-
-      <div className="flex flex-col md:flex-row justify-center gap-6 w-full items-stretch">
-        <DashboardCard
-          total={80}
-          icon={<Book className="text-gray-600" size={26} />}
-          statuses={[
-            {
-              count: 30,
-              label: "Upcoming",
-              bgColor: "bg-green-500",
-              circleColor: "bg-green-600",
-            },
-            {
-              count: 12,
-              label: "Canceled",
-              bgColor: "bg-red-500",
-              circleColor: "bg-red-600",
-            },
-            {
-              count: 38,
-              label: "Completed",
-              bgColor: "bg-yellow-500",
-              circleColor: "bg-yellow-600",
-            },
-          ]}
-          title={"Total Trips"}
-        />
-        <DashboardCard
-          title="Users"
-          total={4}
-          icon={<Users className="text-gray-600" size={26} />}
-          statuses={[
-            {
-              count: 2,
-              label: "Super Admin",
-              bgColor: "bg-gray-500",
-              circleColor: "bg-gray-600",
-            },
-            {
-              count: 3,
-              label: "Admin",
-              bgColor: "bg-gray-500",
-              circleColor: "bg-gray-600",
-            },
-          ]}
-        />
-      </div>
+    <div className="container mx-auto px-4 py-8">
+      <DashboardContent
+        data={dashboardData}
+        isLoading={isLoading}
+        error={errorMessage}
+      />
     </div>
   );
 };
 
-export default AdminPage;
+export default Dashboard;

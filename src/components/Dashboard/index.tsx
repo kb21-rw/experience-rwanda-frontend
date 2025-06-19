@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Link from "next/link";
-import DasbaordStatusBadge from "./card/TripStatusCard";
+import DasbaordStatusBadge from "./StatusBadge";
 
 interface DashboardCardProps {
   title: string;
