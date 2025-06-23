@@ -1,4 +1,3 @@
-import BookingHeader from "@/components/BookingHeader";
 import BookingList from "./BookingList";
 import { Booking } from "@/types/Booking";
 
@@ -25,7 +24,6 @@ const Bookings = async ({ params }: { params: { tripId: string } }) => {
   }
   return (
     <div>
-      <BookingHeader />
       <BookingList
         bookings={bookings}
         isLoading={isLoading}
