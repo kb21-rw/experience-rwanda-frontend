@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Search from "@/components/Search";
 import TripStatusCard from "./Card/TripStatusCard";
 import TripRow from "./Card/TripRow";

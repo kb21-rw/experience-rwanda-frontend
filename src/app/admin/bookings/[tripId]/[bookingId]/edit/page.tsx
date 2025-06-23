@@ -24,22 +24,15 @@ export default async function EditBookingPage({
     console.error("Failed to fetch booking");
   }
 
-  // if (loading) return <div className="p-10">Loading...</div>;
-  // if (error) return <div className="p-10 text-red-600">{error}</div>;
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header with back arrow and title */}
       <div className="flex items-center gap-3 mt-12 mb-8 ml-10">
         <BackButton />
         <h1 className="text-2xl font-bold">Update Booking Information</h1>
       </div>
-      {/* Main content: two columns, with border */}
       <div className="w-full max-w-7xl mx-auto mt-8 px-12">
         <div className="border border-gray-300 rounded-xl mt-12 py-12 px-12 flex flex-row gap-24 items-start">
-          {/* Left: Form */}
           <EditBookingForm booking={booking} />
-          {/* Right: Client & Trip Info */}
           <div className="flex-1 min-w-[220px] flex flex-col gap-8 justify-start">
             <div>
               <h2 className="font-bold text-lg mb-2">Client Information</h2>

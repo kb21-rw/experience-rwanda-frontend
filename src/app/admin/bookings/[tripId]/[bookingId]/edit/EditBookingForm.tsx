@@ -3,7 +3,6 @@ import {
   EditBookingSchema,
   EditBookingSchemaType,
 } from "@/utils/schemas/editBookingSchema";
-import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Booking } from "@/types/Booking";
 import { Button } from "@/components/ui/Button";
@@ -97,7 +96,6 @@ const EditBookingForm = ({ booking }: { booking: Booking | null }) => {
           >
             Update Booking
           </Button>
-          {/* {error && <div className="text-red-600 mt-2">{error}</div>} */}
         </form>
       </div>
     </FormProvider>

@@ -1,4 +1,3 @@
-// app/(booking)/[bookingId]/loading.tsx
 
 export default function BookingFormLoading() {
   return (
@@ -24,7 +23,7 @@ export default function BookingFormLoading() {
           <div className="h-10 bg-gray-400 rounded mt-4 w-36" />
         </div>
 
-        {/* Right: Client and Trip Info */}
+
         <div className="space-y-4">
           <div>
             <div className="h-4 bg-gray-400 rounded w-32 mb-2" />
