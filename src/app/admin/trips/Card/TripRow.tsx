@@ -1,23 +1,12 @@
 "use client";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/AlertDialog";
+
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { toast } from "react-toastify";
-import { IoIosAlert } from "react-icons/io";
 import Link from "next/link";
+import DeleteAlertDialog from "@/components/AlertDialog";
 
 interface Props {
   onDelete?: (id: string) => Promise<boolean>;
@@ -96,44 +85,14 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
                 Bookings
               </Link>
 
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">
-                    Delete
-                  </button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <div className="flex justify-center items-center text-center">
-                      <IoIosAlert fill="red" className="w-12 h-12" />
-                    </div>
-
-                    <AlertDialogTitle className="text-bold text-center text-2xl mb-6">
-                      Do you want to delete this Trip?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className="text-lg text-black mb-6">
-                      By deleting this trip, all books made on this trip will be
-                      disactivated means some refund will be made on the
-                      clients.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter className="mt-8">
-                    <AlertDialogAction
-                      onClick={async () => {
-                        const success = await onDelete?.(id);
-                        if (!success) {
-                          toast.error("Failed to delete trip");
-                          return;
-                        }
-                        toast.success("Trip deleted successfully");
-                      }}
-                    >
-                      Delete
-                    </AlertDialogAction>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <DeleteAlertDialog
+                onDelete={async () => {
+                  const success = await onDelete?.(id);
+                  return success || false;
+                }}
+                title="Delete Trip?"
+                description="Are you sure you want to this trip ? This action can not  undone."
+              />
 
               <Link
                 href={`/admin/edit-trip/${id}`}
