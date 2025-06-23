@@ -13,8 +13,6 @@ const DashboardContent = ({
   isLoading,
   error,
 }: DashboardContentProps) => {
-  console.log("Dashboard data from backend:", data);
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">

@@ -24,7 +24,6 @@ export const useAdmins= () => {
     fetchTrips();
   }, []);
 
-  console.log("AAAAAAAAAAAAAdmins",admins)
 
   return { admins, setAdmins, loading, error };
 };
