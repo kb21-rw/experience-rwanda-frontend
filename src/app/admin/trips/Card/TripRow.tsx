@@ -6,7 +6,7 @@ import { Trip } from "@/types/ImageCard";
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import DeleteAlertDialog from "@/components/AlertDialog";
+import DeleteAlert from "@/components/DeleteAlert";
 
 interface Props {
   onDelete?: (id: string) => Promise<boolean>;
@@ -85,13 +85,15 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
                 Bookings
               </Link>
 
-              <DeleteAlertDialog
+              <DeleteAlert
                 onDelete={async () => {
                   const success = await onDelete?.(id);
                   return success || false;
                 }}
                 title="Delete Trip?"
                 description="Are you sure you want to this trip ? This action can not  undone."
+                errorMessage="Failed to delete trip."
+                successMessage="Trip deleted successfully."
               />
 
               <Link

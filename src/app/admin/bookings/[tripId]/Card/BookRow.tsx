@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-
-import DeleteAlertDialog from "@/components/AlertDialog";
+import DeleteAlert from "@/components/DeleteAlert";
 import { Booking } from "@/types/Booking";
 
 interface Props {
@@ -72,13 +71,15 @@ const BookRow = ({ onDelete, booking, displayId }: Props) => {
               View
             </button>
 
-            <DeleteAlertDialog
+            <DeleteAlert
               onDelete={async () => {
                 const success = await onDelete?.(booking.id);
                 return success || false;
               }}
               title="Delete Booking?"
               description={`Are you sure you want to this booking made by ${booking.user.fullName}? This action can not  undone.`}
+              errorMessage="Failed to delete booking."
+              successMessage="Booking deleted successfully."
             />
 
             <Link

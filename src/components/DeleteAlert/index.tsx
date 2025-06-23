@@ -12,16 +12,20 @@ import {
 import { IoIosAlert } from "react-icons/io";
 import { toast } from "react-toastify";
 
-interface DeleteAlertDialogProps {
+interface DeleteAlertProps {
   onDelete: () => Promise<boolean> | void;
   title: string;
   description: string;
+  successMessage: string;
+  errorMessage: string;
 }
 
-const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
+const DeleteAlert: React.FC<DeleteAlertProps> = ({
   onDelete,
   title,
   description,
+  successMessage,
+  errorMessage,
 }) => {
   return (
     <AlertDialog>
@@ -47,10 +51,10 @@ const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
             onClick={async () => {
               const success = await onDelete();
               if (!success) {
-                toast.error("Failed to delete booking");
+                toast.error(errorMessage);
                 return;
               }
-              toast.success("Booking deleted successfully");
+              toast.success(successMessage);
             }}
           >
             Delete
@@ -62,4 +66,4 @@ const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
   );
 };
 
-export default DeleteAlertDialog;
+export default DeleteAlert;
