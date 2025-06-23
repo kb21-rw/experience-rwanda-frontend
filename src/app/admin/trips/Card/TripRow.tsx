@@ -95,6 +95,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
               >
                 Bookings
               </Link>
+
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">

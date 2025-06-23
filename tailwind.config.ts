@@ -19,9 +19,10 @@ const config: Config = {
         "12.5": "3.125rem",
         "13.5": "3.375rem",
         "14.25": "3.5625rem",
+        "37.5": "9.375rem",
+        "52.5": "13.125rem",
         "112.5": "28.125rem",
         "150": "37.5rem",
-        "52.5": "13.125rem",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

@@ -99,7 +99,7 @@ const BookingList = ({
           <div className="flex justify-between items-center mb-10">
             <Search onSearch={setSearchQuery} placeholder="Search Booking" />
             <Select>
-              <SelectTrigger className="w-[150px]">
+              <SelectTrigger className="w-37.5">
                 <SelectValue placeholder="All Prices" />
               </SelectTrigger>
               <SelectContent>
