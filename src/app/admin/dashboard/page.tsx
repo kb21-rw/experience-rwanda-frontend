@@ -1,11 +1,5 @@
-import BookingHeader from "@/components/BookingHeader";
-
 const DashboardPage = () => {
-  return (
-    <div>
-      <BookingHeader />
-    </div>
-  );
+  return <div>Landing page</div>;
 };
 
 export default DashboardPage;

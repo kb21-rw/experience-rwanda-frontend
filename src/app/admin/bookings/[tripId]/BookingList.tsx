@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import { Booking } from "@/types/Booking";
+import BookingHeader from "@/components/BookingHeader";
 
 const BookingList = ({
   bookings,
@@ -78,6 +79,7 @@ const BookingList = ({
         </div>
       ) : (
         <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
+          <BookingHeader />
           <div>
             <div className="flex justify-between items-center mb-10">
               <Search onSearch={setSearchQuery} placeholder="Search Booking" />

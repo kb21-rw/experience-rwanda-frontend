@@ -99,7 +99,7 @@ const BookingHeader = () => {
     <div className="px-10 py-8 bg-white font-inter flex flex-col gap-8 md:flex-row justify-between">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold text-gray-900">
-          Booking|Visit
+          Booking | Visit
           <span>{booking.trip.destination}</span>
         </h1>
 
