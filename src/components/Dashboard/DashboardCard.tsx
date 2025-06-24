@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import StatusBadge from "./StatusBadge";
-import { StatusBadgeType } from "@/types/Admin";
+import { StatusType } from "@/types/Admin";
 
 interface DashboardCardProps {
   title: string;
   total: number;
   icon: ReactNode;
-  statuses: StatusBadgeType[];
+  statuses: StatusType[];
   href?: string;
 }
 

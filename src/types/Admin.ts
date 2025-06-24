@@ -9,7 +9,7 @@ export type Admin = {
   updatedAt: string;
 };
 
-export interface StatusBadge {
+export interface StatusType {
   count: number;
   label: string;
   bgColor: string;
@@ -20,7 +20,7 @@ export interface DashboardCardData {
   title: string;
   total: number;
   icon: React.ReactNode;
-  statuses: StatusBadge[];
+  statuses: StatusType[];
 }
 
 export interface DashboardData {
