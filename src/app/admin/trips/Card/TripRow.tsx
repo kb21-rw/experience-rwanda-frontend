@@ -1,23 +1,12 @@
 "use client";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/AlertDialog";
+
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { IoIosAlert } from "react-icons/io";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import DeleteAlert from "@/components/DeleteAlert";
 
 interface Props {
   onDelete?: (id: string) => Promise<boolean>;
@@ -29,10 +18,36 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
   const { id, title, departureTime: date, destination } = trip;
   const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      const isClickOutsideDropdown =
+        dropdownRef.current && !dropdownRef.current.contains(target);
+
+      const isInsideAlertDialog = (target as HTMLElement).closest(
+        "[role='alertdialog']"
+      );
+
+      if (isClickOutsideDropdown && !isInsideAlertDialog) {
+        setShowDropdown(false);
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDropdown]);
 
   const formatedDate = new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -59,51 +74,27 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
             Modify <ChevronDown size={14} />
           </Button>
           {showDropdown && (
-            <div className="absolute w-28 mt-2 bg-white border rounded shadow-lg">
+            <div
+              ref={dropdownRef}
+              className="absolute w-28 mt-2 bg-white border rounded shadow-lg"
+            >
               <Link
                 href={`/admin/bookings/${id}`}
                 className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Bookings
               </Link>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">
-                    Delete
-                  </button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <div className="flex justify-center items-center text-center">
-                      <IoIosAlert className="w-12 h-12" />
-                    </div>
 
-                    <AlertDialogTitle className="text-bold text-center text-2xl mb-6">
-                      Do you want to delete this Trip?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className="text-lg text-black mb-6">
-                      By deleting this trip, all books made on this trip will be
-                      disactivated means some refund will be made on the
-                      clients.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter className="mt-8">
-                    <AlertDialogAction
-                      onClick={async () => {
-                        const success = await onDelete?.(id);
-                        if (!success) {
-                          toast.error("Failed to delete trip");
-                          return;
-                        }
-                        toast.success("Trip deleted successfully");
-                      }}
-                    >
-                      Delete
-                    </AlertDialogAction>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <DeleteAlert
+                onDelete={async () => {
+                  const success = await onDelete?.(id);
+                  return success || false;
+                }}
+                title="Delete Trip?"
+                description="Are you sure you want to this trip ? This action can not  undone."
+                errorMessage="Failed to delete trip."
+                successMessage="Trip deleted successfully."
+              />
 
               <Link
                 href={`/admin/edit-trip/${id}`}

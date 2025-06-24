@@ -6,6 +6,13 @@ import Footer from "../components/Footer";
 import Toastify from "@/components/Toastify";
 import { Suspense } from "react";
 import { usePathname } from "next/navigation";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 // export const metadata: Metadata = {
 //   title: "Experience Rwanda - Your Gateway to Unforgettable Adventures",
@@ -22,7 +29,7 @@ export default function RootLayout({
   const isAdminRoute = pathname.startsWith("/admin");
 
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <body className={`antialiased flex flex-col min-h-screen`}>
         <Suspense fallback={null}>
           <Toastify />
