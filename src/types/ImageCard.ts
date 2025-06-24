@@ -14,7 +14,8 @@ export type Trip = {
   coverImage: string;
   priceTitle: string;
   priceDescription: string;
-  status: TripStatus;
+  status: "fully-booked" | "completed" | "canceled" | "ongoing" | "canceled";
+  onDelete?: (id: string) => void;
 };
 
 export type TripStatus = "ONGOING" | "PAST" | "AVAILABLE" | "CANCELLED";
