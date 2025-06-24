@@ -18,7 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
+} from "@/components/ui/Selecta";
 import { Booking } from "@/types/Booking";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";

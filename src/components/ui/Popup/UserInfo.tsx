@@ -22,7 +22,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
+} from "@/components/ui/Selecta";
 import { Counter } from "@/components/Counter";
 import { Loader2 } from "lucide-react";
 import { CheckSeatsResponse } from "@/types/trip";
