@@ -12,18 +12,19 @@ import BookRow from "./Card/BookRow";
 import Search from "@/components/Search";
 import { Button } from "@/components/ui/Button";
 import { IoShareSocial } from "react-icons/io5";
+
+import { Booking } from "@/types/Booking";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
+import { useDeleteBooking } from "@/hooks/useDeleteBooking";
+import BookingHeader from "@/components/BookingHeader";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Selecta";
-import { Booking } from "@/types/Booking";
-import { fetcher } from "@/lib/fetcher";
-import useSWR from "swr";
-import { useDeleteBooking } from "@/hooks/useDeleteBooking";
-import BookingHeader from "@/components/BookingHeader";
+} from "@/components/ui/Select";
 
 const BookingList = ({
   initialBookings,
@@ -62,7 +63,7 @@ const BookingList = ({
       const keyword = searchQuery.toLowerCase();
       return (
         booking.id.toLowerCase().includes(keyword) ||
-        booking.user.name.toLowerCase().includes(keyword) ||
+        booking.user.fullName.toLowerCase().includes(keyword) ||
         booking.user.email.toLowerCase().includes(keyword)
       );
     }) || [];
