@@ -23,6 +23,7 @@ import { Booking } from "@/types/Booking";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { useDeleteBooking } from "@/hooks/useDeleteBooking";
+import BookingHeader from "@/components/BookingHeader";
 
 const BookingList = ({
   initialBookings,
@@ -34,7 +35,7 @@ const BookingList = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 8;
-  const {deleteBooking} = useDeleteBooking();
+  const { deleteBooking } = useDeleteBooking();
 
   const {
     data: bookings,
@@ -56,14 +57,15 @@ const BookingList = ({
     return success;
   };
 
-  const filteredBookings = bookings?.filter((booking) => {
-    const keyword = searchQuery.toLowerCase();
-    return (
-      booking.id.toLowerCase().includes(keyword) ||
-      booking.user.fullName.toLowerCase().includes(keyword) ||
-      booking.user.email.toLowerCase().includes(keyword)
-    );
-  }) || []
+  const filteredBookings =
+    bookings?.filter((booking) => {
+      const keyword = searchQuery.toLowerCase();
+      return (
+        booking.id.toLowerCase().includes(keyword) ||
+        booking.user.name.toLowerCase().includes(keyword) ||
+        booking.user.email.toLowerCase().includes(keyword)
+      );
+    }) || [];
 
   const totalPages = Math.ceil(filteredBookings.length / bookingsPerPage);
   const paginatedBookings = filteredBookings.slice(
@@ -95,6 +97,7 @@ const BookingList = ({
   return (
     <>
       <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
+        <BookingHeader />
         <div>
           <div className="flex justify-between items-center mb-10">
             <Search onSearch={setSearchQuery} placeholder="Search Booking" />

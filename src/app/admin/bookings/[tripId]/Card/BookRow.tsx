@@ -83,10 +83,10 @@ const BookRow = ({ onDelete, booking, displayId }: Props) => {
             />
 
             <Link
-              href={`/admin/bookings/${booking.id}`}
+              href={`/admin/bookings/${booking.trip.id}/${booking.id}/edit`}
               className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
             >
-              Update
+              Edit
             </Link>
           </div>
         )}
