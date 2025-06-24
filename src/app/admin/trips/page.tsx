@@ -17,13 +17,7 @@ import Link from "next/link";
 import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 import Pagination from "@/components/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
-
-const FILTERS = [
-  { label: "Total trips", value: "all" },
-  { label: "Booked Trips", value: "booked" },
-  { label: "Past Trips", value: "past" },
-  { label: "Canceled Trips", value: "canceled" },
-];
+import { FILTERS } from "@/utils/tripFilters";
 
 const TripsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");

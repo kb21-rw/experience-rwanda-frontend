@@ -10,8 +10,6 @@ import {
 } from "react-hook-form";
 import { DatePicker } from "./DatePicker";
 
-// Generic FormInput component
-// T is the form data type
 const FormInput = <T extends Record<string, unknown>>({
   control,
   register,
@@ -49,7 +47,7 @@ const FormInput = <T extends Record<string, unknown>>({
             control={control}
             render={({ field }) => (
               <DatePicker
-                onDisabled={onDisabled || (() => false)} // example logic
+                onDisabled={onDisabled || (() => false)}
                 value={
                   typeof field.value === "string" || field.value instanceof Date
                     ? new Date(field.value)
@@ -104,7 +102,7 @@ const FormInput = <T extends Record<string, unknown>>({
         <div className="w-52.5">
           <Label
             htmlFor={name as string}
-            className="block text-sm font-medium text-black mb-2="
+            className="block text-sm font-medium text-black"
           >
             {label}
           </Label>
