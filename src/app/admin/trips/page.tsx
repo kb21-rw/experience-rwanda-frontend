@@ -2,7 +2,7 @@ import TripList from "./TripList";
 
 const TripsPage = async () => {
   let errorMessage: string = "";
-
+  let initialTrips = [];
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips`, {
       next: {
@@ -17,7 +17,7 @@ const TripsPage = async () => {
       throw new Error(`Failed to fetch trips: ${response.statusText}`);
     }
 
-    await response.json();
+    initialTrips = await response.json();
   } catch (error) {
     console.error("Error fetching trips:", error);
     errorMessage = "Failed to fetch trips";
@@ -25,7 +25,7 @@ const TripsPage = async () => {
 
   return (
     <div className="p-6 xl:p-10 min-h-screen">
-      <TripList error={errorMessage} />
+      <TripList error={errorMessage} initialTrips={initialTrips} />
     </div>
   );
 };

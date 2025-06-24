@@ -24,9 +24,10 @@ const ITEM_PER_PAGE = 8;
 
 interface TripListProps {
   error: string;
+  initialTrips: Trip[];
 }
 
-const TripList = ({ error: initialError }: TripListProps) => {
+const TripList = ({ error: initialError, initialTrips }: TripListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { deleteTrip } = useDeleteTrip();
@@ -35,7 +36,7 @@ const TripList = ({ error: initialError }: TripListProps) => {
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter") || "all";
 
-  const { data: trips = [], isLoading, error } = useTrips(filter);
+  const { data: trips = initialTrips, isLoading, error } = useTrips(filter);
 
   const { data: allTrips = [] } = useTrips("all");
   const { data: bookedTrips = [] } = useTrips("booked");
