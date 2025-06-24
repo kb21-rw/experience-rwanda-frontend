@@ -1,6 +1,7 @@
 import BookingList from "./BookingList";
 import { Booking } from "@/types/Booking";
 
+
 const Bookings = async ({ params }: { params: { tripId: string } }) => {
   let bookings: Booking[] = [];
   let errorMessage: string = "";

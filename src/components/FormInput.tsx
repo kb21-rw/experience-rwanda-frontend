@@ -6,14 +6,11 @@ import {
   FieldErrors,
   Control,
   Controller,
+  Path,
 } from "react-hook-form";
 import { DatePicker } from "./DatePicker";
-import { z } from "zod";
-import { tripSchema } from "@/utils/schemas/tripSchema";
-type FormData = z.infer<typeof tripSchema>;
 
-// type or  react hook form register
-const FormInput = ({
+const FormInput = <T extends Record<string, unknown>>({
   control,
   register,
   name,
@@ -24,22 +21,23 @@ const FormInput = ({
   errors,
   onDisabled,
 }: {
-  control?: Control<FormData>;
-  register: UseFormRegister<FormData>;
-  name: keyof FormData;
+  control?: Control<T>;
+  register: UseFormRegister<T>;
+  name: Path<T>;
   label: string;
   placeholder?: string;
   type?: "text" | "number" | "date";
   size?: "small" | "large";
-  errors?: FieldErrors<FormData>;
+  errors?: FieldErrors<T>;
   onDisabled?: (date: Date) => boolean;
 }) => {
+  console.log({ name, errors });
   switch (type) {
     case "date":
       return (
         <div className="w-52.5">
           <Label
-            htmlFor={name}
+            htmlFor={name as string}
             className="block text-sm font-medium text-black mb-2"
           >
             {label}
@@ -49,7 +47,7 @@ const FormInput = ({
             control={control}
             render={({ field }) => (
               <DatePicker
-                onDisabled={onDisabled || (() => false)} // example logic
+                onDisabled={onDisabled || (() => false)}
                 value={
                   typeof field.value === "string" || field.value instanceof Date
                     ? new Date(field.value)
@@ -70,14 +68,14 @@ const FormInput = ({
       return (
         <div>
           <Label
-            htmlFor={name}
+            htmlFor={name as string}
             className="block text-sm font-medium text-black mb-2"
           >
             {label}
           </Label>
           {size === "large" ? (
             <textarea
-              id={name}
+              id={name as string}
               {...register(name)}
               placeholder={placeholder}
               rows={4}
@@ -85,7 +83,7 @@ const FormInput = ({
             />
           ) : (
             <Input
-              id={name}
+              id={name as string}
               type="text"
               {...register(name)}
               placeholder={placeholder}
@@ -103,8 +101,8 @@ const FormInput = ({
       return (
         <div className="w-52.5">
           <Label
-            htmlFor={name}
-            className="block text-sm font-medium text-black mb-2="
+            htmlFor={name as string}
+            className="block text-sm font-medium text-black"
           >
             {label}
           </Label>
