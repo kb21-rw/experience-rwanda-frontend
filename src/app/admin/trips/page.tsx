@@ -1,33 +1,33 @@
 import TripList from "./TripList";
-import { Trip } from "@/types/ImageCard";
 
-const Bookings = async () => {
-  let trips: Trip[] = [];
+const TripsPage = async () => {
   let errorMessage: string = "";
-  let isLoading = true;
+
   try {
-    const tripsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips`, {
       next: {
         tags: ["trips"],
       },
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    trips = await tripsRes.json();
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch trips: ${response.statusText}`);
+    }
+
+    await response.json();
   } catch (error) {
-    console.error("Error fetching bookings:", error);
-    trips = [];
-    errorMessage = "Failed to fetch bookings";
-  } finally {
-    isLoading = false;
+    console.error("Error fetching trips:", error);
+    errorMessage = "Failed to fetch trips";
   }
+
   return (
-    <div>
-      <TripList
-        initialTrips={trips}
-        isLoading={isLoading}
-        error={errorMessage}
-      />
+    <div className="p-6 xl:p-10 min-h-screen">
+      <TripList error={errorMessage} />
     </div>
   );
 };
 
-export default Bookings;
+export default TripsPage;

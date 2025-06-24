@@ -23,13 +23,11 @@ const Bookings = async ({ params }: { params: { tripId: string } }) => {
     isLoading = false;
   }
   return (
-    <div>
-      <BookingList
-        bookings={bookings}
-        isLoading={isLoading}
-        error={errorMessage}
-      />
-    </div>
+    <BookingList
+      initialBookings={bookings}
+      isLoading={isLoading}
+      error={errorMessage}
+    />
   );
 };
 

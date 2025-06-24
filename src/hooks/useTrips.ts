@@ -1,21 +1,8 @@
-import { fetcher } from "@/lib/fetcher";
-import { Trip } from "@/types/ImageCard";
-import useSWR from "swr";
+import useSWR from 'swr';
+import { getTripsApiUrl } from '@/utils/tripFilters';
 
-export const useTrips = () => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/trips`;
-  const { data: trips, error, isLoading: loading, mutate } = useSWR<Trip[]>(apiUrl, fetcher);
+const fetcher = (url: string) => fetch(url, { headers: { 'Content-Type': 'application/json' } }).then(res => res.json());
 
-  const handleDelete = async (tripId: string) => {
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}`, {
-        method: "DELETE",
-      });
-      mutate();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return { trips, loading, error, handleDelete };
-};
+export function useTrips(filter: string) {
+  return useSWR(getTripsApiUrl(filter), fetcher);
+}

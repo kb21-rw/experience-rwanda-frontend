@@ -20,29 +20,51 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import { Booking } from "@/types/Booking";
-import BookingHeader from "@/components/BookingHeader";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
+import { useDeleteBooking } from "@/hooks/useDeleteBooking";
 
 const BookingList = ({
-  bookings,
-  isLoading,
-  error,
+  initialBookings,
 }: {
-  bookings: Booking[];
+  initialBookings: Booking[];
   isLoading: boolean;
   error: string;
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 8;
+  const { deleteBooking } = useDeleteBooking();
 
-  const filteredBookings = bookings.filter((booking) => {
-    const keyword = searchQuery.toLowerCase();
-    return (
-      booking.id.toLowerCase().includes(keyword) ||
-      booking.user.fullName.toLowerCase().includes(keyword) ||
-      booking.user.email.toLowerCase().includes(keyword)
-    );
-  });
+  const {
+    data: bookings,
+    error,
+    mutate,
+    isLoading,
+  } = useSWR<Booking[]>(
+    `${process.env.NEXT_PUBLIC_API_URL}/bookings`,
+    fetcher,
+    {
+      fallbackData: initialBookings,
+      revalidateOnFocus: true,
+    }
+  );
+
+  const handleDelete = async (id: string) => {
+    const success = await deleteBooking(id);
+    mutate();
+    return success;
+  };
+
+  const filteredBookings =
+    bookings?.filter((booking) => {
+      const keyword = searchQuery.toLowerCase();
+      return (
+        booking.id.toLowerCase().includes(keyword) ||
+        booking.user.name.toLowerCase().includes(keyword) ||
+        booking.user.email.toLowerCase().includes(keyword)
+      );
+    }) || [];
 
   const totalPages = Math.ceil(filteredBookings.length / bookingsPerPage);
   const paginatedBookings = filteredBookings.slice(
@@ -73,71 +95,65 @@ const BookingList = ({
 
   return (
     <>
-      {filteredBookings.length === 0 ? (
-        <div className="text-gray-500 text-2xl h-screen flex justify-center items-center">
-          No bookings found.
-        </div>
-      ) : (
-        <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
-          <BookingHeader />
-          <div>
-            <div className="flex justify-between items-center mb-10">
-              <Search onSearch={setSearchQuery} placeholder="Search Booking" />
-              <Select>
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="All Prices" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="sixty">$60</SelectItem>
-                  <SelectItem value="hundred">$100</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button variant="primary" className="px-4 py-2">
-                <IoShareSocial />
-                Export
-              </Button>
-            </div>
+      <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
+        <div>
+          <div className="flex justify-between items-center mb-10">
+            <Search onSearch={setSearchQuery} placeholder="Search Booking" />
+            <Select>
+              <SelectTrigger className="w-37.5">
+                <SelectValue placeholder="All Prices" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sixty">$60</SelectItem>
+                <SelectItem value="hundred">$100</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="primary" className="px-4 py-2">
+              <IoShareSocial />
+              Export
+            </Button>
+          </div>
 
-            {paginatedBookings.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>No</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Seats</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {paginatedBookings.map((booking, index: number) => (
-                    <BookRow
-                      key={booking.id}
-                      booking={booking}
-                      displayId={(
-                        (currentPage - 1) * bookingsPerPage +
-                        index +
-                        1
-                      )
-                        .toString()
-                        .padStart(3, "0")}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
-            ) : null}
-          </div>
-          <div className="flex justify-center items-center">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={changePage}
-            />
-          </div>
+          {paginatedBookings.length > 0 ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>No</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Seats</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginatedBookings.map((booking, index) => (
+                  <BookRow
+                    key={booking.id}
+                    booking={booking}
+                    displayId={((currentPage - 1) * bookingsPerPage + index + 1)
+                      .toString()
+                      .padStart(3, "0")}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="text-gray-500 text-xl flex justify-center items-center">
+              No bookings found.
+            </div>
+          )}
         </div>
-      )}
+        <div className="flex justify-center items-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={changePage}
+          />
+        </div>
+      </div>
     </>
   );
 };
