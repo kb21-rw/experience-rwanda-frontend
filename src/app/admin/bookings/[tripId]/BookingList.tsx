@@ -23,6 +23,7 @@ import { Booking } from "@/types/Booking";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { useDeleteBooking } from "@/hooks/useDeleteBooking";
+import BookingHeader from "@/components/BookingHeader";
 
 const BookingList = ({
   initialBookings,
@@ -96,6 +97,7 @@ const BookingList = ({
   return (
     <>
       <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
+        <BookingHeader />
         <div>
           <div className="flex justify-between items-center mb-10">
             <Search onSearch={setSearchQuery} placeholder="Search Booking" />

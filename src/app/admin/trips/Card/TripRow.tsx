@@ -87,7 +87,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
 
               <DeleteAlert
                 onDelete={async () => {
-                  const success = await onDelete?.(id);
+                  const success = await onDelete?.(tripId);
                   return success || false;
                 }}
                 title="Delete Trip?"
