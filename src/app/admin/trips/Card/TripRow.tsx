@@ -9,13 +9,13 @@ import Link from "next/link";
 import DeleteAlert from "@/components/DeleteAlert";
 
 interface Props {
-  onDelete?: (id: string) => Promise<boolean>;
+  onDelete?: (id: string) => void;
   displayId: string;
   trip: Trip;
 }
 
 const TripRow = ({ trip, displayId, onDelete }: Props) => {
-  const { id, title, departureTime: date, destination } = trip;
+  const { id: tripId, title, departureTime: date, destination } = trip;
   const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -79,7 +79,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
               className="absolute w-28 mt-2 bg-white border rounded shadow-lg"
             >
               <Link
-                href={`/admin/bookings/${id}`}
+                href={`/admin/bookings/${tripId}`}
                 className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Bookings
@@ -87,7 +87,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
 
               <DeleteAlert
                 onDelete={async () => {
-                  const success = await onDelete?.(id);
+                  const success = await onDelete?.(tripId);
                   return success || false;
                 }}
                 title="Delete Trip?"
@@ -97,7 +97,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
               />
 
               <Link
-                href={`/admin/edit-trip/${id}`}
+                href={`/admin/edit-trip/${tripId}`}
                 className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
               >
                 Update

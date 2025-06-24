@@ -3,7 +3,7 @@ import { FaHome, FaInbox, FaUsers, FaUserPlus } from "react-icons/fa";
 export const items = [
   {
     title: "Dashboard",
-    url: "/admin/dashboard",
+    url: "/admin",
     icon: FaHome,
   },
   {
