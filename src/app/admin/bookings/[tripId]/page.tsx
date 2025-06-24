@@ -24,7 +24,7 @@ const Bookings = async ({ params }: { params: { tripId: string } }) => {
   }
   return (
     <BookingList
-      bookings={bookings}
+      initialBookings={bookings}
       isLoading={isLoading}
       error={errorMessage}
     />
