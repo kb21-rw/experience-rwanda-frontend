@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Admin } from "@/types/Admin";
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const AdminRow = ({ admin, displayId }: Props) => {
-  console.log(admin);
   return (
     <TableRow>
       <TableCell>{displayId}</TableCell>

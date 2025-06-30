@@ -23,11 +23,11 @@ const Admins = () => {
   );
 
   if (token === null) {
-    redirect("/login?redirect=admin/users/admins");
+    redirect("/login?redirect=admin/admins");
   } else if (adminsError?.status === 401) {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    redirect("/login?redirect=admin/users/admins");
+    redirect("/login?redirect=admin/admins");
   }
 
   return (
