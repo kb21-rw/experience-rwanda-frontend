@@ -21,29 +21,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-import { useDeleteAdmin } from "@/hooks/useDeleteAdmin";
 
 const AdminList = ({
   admins,
   isLoading,
   error,
-  mutate,
 }: {
   admins?: Admin[];
   isLoading: boolean;
   error: string;
-  mutate: () => void;
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const adminsPerPage = 8;
-  const { deleteAdmin } = useDeleteAdmin();
-
-  const handleDelete = async (id: string) => {
-    const success = await deleteAdmin(id);
-    mutate();
-    return success;
-  };
 
   const filteredAdmins =
     admins?.filter((admin) => {
@@ -109,9 +99,8 @@ const AdminList = ({
                 <TableRow>
                   <TableHead>No</TableHead>
                   <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
+                  <TableHead>Email Address</TableHead>
                   <TableHead>Role</TableHead>
-                  <TableHead>Status</TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -123,7 +112,6 @@ const AdminList = ({
                     displayId={((currentPage - 1) * adminsPerPage + index + 1)
                       .toString()
                       .padStart(3, "0")}
-                    onDelete={handleDelete}
                   />
                 ))}
               </TableBody>
