@@ -18,9 +18,9 @@ export const useDeleteAdmin = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Failed to delete booking.");
+        throw new Error(data.message || "Failed to delete admin.");
       }
-      await fetch("/api/revalidate/bookings", {
+      await fetch("/api/revalidate/admins", {
         method: "POST",
       });
       return true;
