@@ -8,20 +8,20 @@ import {
 } from "react";
 
 interface AuthContextType {
-  token: string | null;
-  setToken: Dispatch<SetStateAction<string | null>>;
+  token?: string | null;
+  setToken: Dispatch<SetStateAction<string | null | undefined>>;
   login: (token: string) => void;
   logout: () => void;
 }
 const AuthContext = createContext<AuthContextType>({
-  token: null,
+  token: undefined,
   setToken: () => {},
   login: () => {},
   logout: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null | undefined>();
 
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");

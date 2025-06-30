@@ -4,9 +4,11 @@ import AdminList from "./AdminList";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { useAuth } from "@/context/authContext";
+import { redirect } from "next/navigation";
 
 const Admins = () => {
   const { token } = useAuth();
+
   const {
     data: admins,
     error: adminsError,
@@ -20,7 +22,14 @@ const Admins = () => {
       revalidateOnReconnect: false,
     }
   );
-  console.log({ admins }, "++++++++");
+
+  if (token === null) {
+    redirect("/login?redirect=admin/users/admins");
+  } else if (adminsError?.status === 401) {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    redirect("/login?redirect=admin/users/admins");
+  }
 
   return (
     <AdminList
