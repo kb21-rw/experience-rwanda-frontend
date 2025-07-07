@@ -12,8 +12,8 @@ export const items = [
     icon: FaInbox,
   },
   {
-    title: "Users",
-    url: "/admin/users",
+    title: "Admins",
+    url: "/admin/admins",
     icon: FaUsers,
   },
   {

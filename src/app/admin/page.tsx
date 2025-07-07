@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Admin, DashboardData } from "@/types/Admin";
 import DashboardContent from "@/components/Dashboard/DasboardContent";
+import { useAuth } from "@/context/authContext";
 
 interface Trip {
   id: string;
@@ -15,27 +16,21 @@ const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(
     null
   );
-
+  const { token } = useAuth();
   const {
     data: trips,
     error: tripsError,
     isLoading: tripsLoading,
   } = useSWR<Trip[]>(`${process.env.NEXT_PUBLIC_API_URL}/trips`, fetcher);
-  const [token, setToken] = useState<string | null>(null);
 
   const {
     data: admins,
     error: adminsError,
     isLoading: adminsLoading,
   } = useSWR<Admin[]>(
-    [`${process.env.NEXT_PUBLIC_API_URL}/admins`, token],
+    token ? [`${process.env.NEXT_PUBLIC_API_URL}/admins`, token] : null,
     ([url, token]: [string, string]) => fetcher(url, token)
   );
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
-    setToken(storedToken);
-  }, []);
 
   useEffect(() => {
     if (trips && admins) {
