@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
 
 const AdminList = ({
   admins,
@@ -55,14 +56,6 @@ const AdminList = ({
       setCurrentPage(page);
     }
   };
-
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center text-center h-screen">
-        <p className="animate-bounce text-2xl">Loading bookings...</p>
-      </div>
-    );
-
   if (error) {
     return (
       <div className="flex justify-center items-center text-center h-screen text-red-600">
@@ -70,6 +63,8 @@ const AdminList = ({
       </div>
     );
   }
+
+  if (isLoading) return <TableSkeleton />;
 
   return (
     <>

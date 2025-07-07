@@ -34,7 +34,7 @@ const Admins = () => {
     <AdminList
       admins={admins}
       isLoading={adminsLoading}
-      error={adminsError?.message || "Failed to fetch admins"}
+      error={adminsError?.message}
     />
   );
 };
