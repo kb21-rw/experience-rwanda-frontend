@@ -14,23 +14,31 @@ const InviteAdminPage = () => {
     e.preventDefault();
 
     const validation = adminInviteSchema.safeParse({ email });
-
     if (!validation.success) {
       toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.error("Authentication token not found. Please login again.");
       return;
     }
 
     setLoading(true);
 
     try {
-      const response = await fetch("/api/admins/invite", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/admins/invite`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       if (response.ok) {
         toast.success("Invitation sent successfully!");
