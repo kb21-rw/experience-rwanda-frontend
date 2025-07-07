@@ -33,15 +33,16 @@ const AdminList = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [role, setRole] = useState("ALL");
   const adminsPerPage = 8;
-
   const filteredAdmins =
     admins?.filter((admin) => {
       const keyword = searchQuery.toLowerCase();
       return (
-        admin.id.toLowerCase().includes(keyword) ||
-        admin.name.toLowerCase().includes(keyword) ||
-        admin.email.toLowerCase().includes(keyword)
+        (admin.role === role || role === "ALL") &&
+        (admin.id.toLowerCase().includes(keyword) ||
+          admin.name.toLowerCase().includes(keyword) ||
+          admin.email.toLowerCase().includes(keyword))
       );
     }) || [];
 
@@ -71,14 +72,16 @@ const AdminList = ({
       <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-center mb-10">
-            <Search onSearch={setSearchQuery} placeholder="Search Booking" />
-            <Select>
+            <Search onSearch={setSearchQuery} placeholder="Search Admin" />
+            <Select onValueChange={(value) => setRole(value)}>
               <SelectTrigger className="w-37.5">
-                <SelectValue placeholder="All Prices" />
+                <SelectValue placeholder="All Roles" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="sixty">$60</SelectItem>
-                <SelectItem value="hundred">$100</SelectItem>
+                <SelectItem value="ALL">All</SelectItem>
+                <SelectItem value="EDITOR">Editor</SelectItem>
+                <SelectItem value="ADMIN">Admin</SelectItem>
+                <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="primary" className="px-4 py-2">
@@ -112,7 +115,7 @@ const AdminList = ({
             </Table>
           ) : (
             <div className="text-gray-500 text-xl flex justify-center items-center">
-              No bookings found.
+              No Admin found.
             </div>
           )}
         </div>
