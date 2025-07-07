@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/Button";
@@ -15,6 +15,7 @@ type FormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const router = useRouter();
+  const redirect = useSearchParams().get("redirect") || "/admin";
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -54,7 +55,7 @@ export default function LoginForm() {
         }
         localStorage.setItem("accessToken", result.accessToken);
         localStorage.setItem("refreshToken", result.refreshToken);
-        router.push("/admin");
+        router.push(redirect);
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Something went wrong";
@@ -62,7 +63,7 @@ export default function LoginForm() {
         console.error("Login error:", message);
       }
     },
-    [router]
+    [router, redirect]
   );
   return (
     <div>

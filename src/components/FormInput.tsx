@@ -31,7 +31,6 @@ const FormInput = <T extends Record<string, unknown>>({
   errors?: FieldErrors<T>;
   onDisabled?: (date: Date) => boolean;
 }) => {
-  console.log({ name, errors });
   switch (type) {
     case "date":
       return (
