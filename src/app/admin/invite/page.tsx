@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { adminInviteSchema } from "@/utils/schemas/adminInviteSchema";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 
 const InviteAdminPage = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ const InviteAdminPage = () => {
 
     const token = localStorage.getItem("accessToken");
     if (!token) {
-      toast.error("Authentication token not found. Please login again.");
+      toast.error("Token not found. Please login again.");
       return;
     }
 
