@@ -40,15 +40,16 @@ const InviteAdminPage = () => {
         }
       );
 
-      if (response.ok) {
-        toast.success("Invitation sent successfully!");
-        setEmail("");
-      } else {
+      if (!response.ok) {
         const data = await response.json().catch(() => null);
         const errorMessage =
           data?.message || "Failed to send invite. Please try again.";
         toast.error(errorMessage);
+        return;
       }
+
+      toast.success("Invitation sent successfully!");
+      setEmail("");
     } catch (error) {
       toast.error(
         (error as Error)?.message || "An error occurred. Please try again."
