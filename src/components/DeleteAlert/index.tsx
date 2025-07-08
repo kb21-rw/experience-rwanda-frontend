@@ -18,6 +18,7 @@ interface DeleteAlertProps {
   description: string;
   successMessage: string;
   errorMessage: string;
+  children?: React.ReactNode;
 }
 
 const DeleteAlert: React.FC<DeleteAlertProps> = ({
@@ -26,13 +27,16 @@ const DeleteAlert: React.FC<DeleteAlertProps> = ({
   description,
   successMessage,
   errorMessage,
+  children,
 }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">
-          Delete
-        </button>
+        {children ? children : (
+          <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">
+            Delete
+          </button>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

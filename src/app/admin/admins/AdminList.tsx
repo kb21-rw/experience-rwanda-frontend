@@ -26,10 +26,12 @@ const AdminList = ({
   admins,
   isLoading,
   error,
+  mutate,
 }: {
   admins?: Admin[];
   isLoading: boolean;
   error: string;
+  mutate: () => void;
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -106,6 +108,7 @@ const AdminList = ({
                     displayId={((currentPage - 1) * adminsPerPage + index + 1)
                       .toString()
                       .padStart(3, "0")}
+                    mutate={mutate}
                   />
                 ))}
               </TableBody>
