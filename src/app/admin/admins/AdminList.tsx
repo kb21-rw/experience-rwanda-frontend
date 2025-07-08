@@ -33,13 +33,14 @@ const AdminList = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [role, setRole] = useState("ALL");
+  const [role, setRole] = useState("all");
   const adminsPerPage = 8;
   const filteredAdmins =
     admins?.filter((admin) => {
       const keyword = searchQuery.toLowerCase();
       return (
-        (admin.role === role || role === "ALL") &&
+        (admin.role.toLowerCase() === role.toLowerCase() ||
+          role.toLowerCase() === "all") &&
         (admin.id.toLowerCase().includes(keyword) ||
           admin.name.toLowerCase().includes(keyword) ||
           admin.email.toLowerCase().includes(keyword))
@@ -78,10 +79,10 @@ const AdminList = ({
                 <SelectValue placeholder="All Roles" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ALL">All</SelectItem>
-                <SelectItem value="EDITOR">Editor</SelectItem>
-                <SelectItem value="ADMIN">Admin</SelectItem>
-                <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="editor">Editor</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="super_admin">Super Admin</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="primary" className="px-4 py-2">
