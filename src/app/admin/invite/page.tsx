@@ -8,9 +8,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 
-const InviteAdminPage = () => {
-  type FormData = z.infer<typeof adminInviteSchema>;
+type FormData = z.infer<typeof adminInviteSchema>;
 
+const InviteAdminPage = () => {
   const {
     register,
     handleSubmit,
