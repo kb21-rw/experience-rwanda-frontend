@@ -7,10 +7,15 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/authContext";
 
 type FormData = z.infer<typeof adminInviteSchema>;
 
 const InviteAdminPage = () => {
+  const { token } = useAuth();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -21,12 +26,10 @@ const InviteAdminPage = () => {
   });
 
   const onSubmit = async (data: FormData) => {
-    const token = localStorage.getItem("accessToken");
     if (!token) {
-      toast.error("Token not found. Please login again.");
+      router.push("/login");
       return;
     }
-
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/admins/invite`,
@@ -40,8 +43,14 @@ const InviteAdminPage = () => {
         }
       );
 
+      const respData = await response.json();
+
+      if (response.status === 401) {
+        router.push("/login");
+        return;
+      }
+
       if (!response.ok) {
-        const respData = await response.json().catch(() => null);
         const errorMessage =
           respData?.message || "Failed to send invite. Please try again.";
         toast.error(errorMessage);
