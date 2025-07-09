@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { IoShareSocial } from "react-icons/io5";
+import { FaCloudUploadAlt } from "react-icons/fa";
 
 const Users = () => {
   return (
@@ -15,11 +16,16 @@ const Users = () => {
           Invite
         </Button>
       </div>
-      <div className="border border-gray-200 h-screen p-[45px] rounded-lg">
+      <div className="border border-gray-200 h-screen- p-[45px] rounded-lg">
         <div className="mb-[30px]">
           <h4 className="text-xl font-semibold"> Personal Information</h4>
           <p className="text-sm">Update your personal details</p>
         </div>
+        <div className="flex flex-col items-center justify-center py-10">
+          <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
+          <p className="text-center">Profile picture</p>
+        </div>
+
         <form>
           <div className="grid grid-cols-2 gap-x-20 gap-y-6">
             <div>
@@ -39,7 +45,7 @@ const Users = () => {
               <Input placeholder="********" />
             </div>
           </div>
-          <div className="pt-28 text-center flex justify-center items-center">
+          <div className="pt-28 pb-8 text-center flex justify-center items-center">
             <Button variant="primary" className="w-1/4">
               Update
             </Button>
