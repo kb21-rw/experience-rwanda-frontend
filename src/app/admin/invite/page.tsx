@@ -3,29 +3,29 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { adminInviteSchema } from "@/utils/schemas/adminInviteSchema";
-import { useState } from "react";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { z } from "zod";
 
 const InviteAdminPage = () => {
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  type FormData = z.infer<typeof adminInviteSchema>;
 
-  const handleSendInvite = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormData>({
+    resolver: zodResolver(adminInviteSchema),
+  });
 
-    const validation = adminInviteSchema.safeParse({ email });
-    if (!validation.success) {
-      toast.error("Please enter a valid email address.");
-      return;
-    }
-
+  const onSubmit = async (data: FormData) => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
       toast.error("Token not found. Please login again.");
       return;
     }
-
-    setLoading(true);
 
     try {
       const response = await fetch(
@@ -36,26 +36,24 @@ const InviteAdminPage = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email: data.email }),
         }
       );
 
       if (!response.ok) {
-        const data = await response.json().catch(() => null);
+        const respData = await response.json().catch(() => null);
         const errorMessage =
-          data?.message || "Failed to send invite. Please try again.";
+          respData?.message || "Failed to send invite. Please try again.";
         toast.error(errorMessage);
         return;
       }
 
       toast.success("Invitation sent successfully!");
-      setEmail("");
+      reset();
     } catch (error) {
       toast.error(
         (error as Error)?.message || "An error occurred. Please try again."
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -66,20 +64,20 @@ const InviteAdminPage = () => {
         <p className="mb-20 text-lg">
           Invite a new user, will have an admin role after accepting invitation
         </p>
-        <form onSubmit={handleSendInvite}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             placeholder="Enter email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={loading}
+            {...register("email")}
+            disabled={isSubmitting}
+            error={errors.email?.message}
           />
           <Button
             variant="primary"
             className="mt-5 w-full"
             type="submit"
-            disabled={loading}
+            disabled={isSubmitting}
           >
-            {loading ? "Sending..." : "Send Invite"}
+            {isSubmitting ? "Sending..." : "Send Invite"}
           </Button>
         </form>
       </div>
