@@ -13,6 +13,7 @@ const Admins = () => {
     data: admins,
     error: adminsError,
     isLoading: adminsLoading,
+    mutate,
   } = useSWR<Admin[]>(
     token ? [`${process.env.NEXT_PUBLIC_API_URL}/admins`, token] : null,
     ([url, token]: [string, string]) => fetcher(url, token),
@@ -35,6 +36,7 @@ const Admins = () => {
       admins={admins}
       isLoading={adminsLoading}
       error={adminsError?.message}
+      mutate={mutate}
     />
   );
 };

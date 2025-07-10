@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useAuth } from "@/context/authContext";
 
 export const useDeleteAdmin = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { token } = useAuth();
 
   const deleteAdmin = async (adminId: string) => {
     setIsDeleting(true);
@@ -12,6 +14,10 @@ export const useDeleteAdmin = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/admins/${adminId}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
 

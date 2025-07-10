@@ -4,12 +4,18 @@ import { Admin } from "@/types/Admin";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getNameInitials } from "@/utils/helper";
 import { Trash2 } from "lucide-react";
+import DeleteAlert from "@/components/DeleteAlert";
+import { useDeleteAdmin } from "@/hooks/useDeleteAdmin";
+
 interface Props {
   admin: Admin;
   displayId: string;
+  mutate?: () => void; // Make mutate optional
 }
 
-const AdminRow = ({ admin, displayId }: Props) => {
+const AdminRow = ({ admin, displayId, mutate }: Props) => {
+  const { deleteAdmin, isDeleting } = useDeleteAdmin();
+
   return (
     <TableRow>
       <TableCell>{displayId}</TableCell>
@@ -22,16 +28,26 @@ const AdminRow = ({ admin, displayId }: Props) => {
       <TableCell>{admin.email}</TableCell>
       <TableCell>{admin.role}</TableCell>
       <TableCell className="relative">
-        {
+        <DeleteAlert
+          onDelete={async () => {
+            const success = await deleteAdmin(admin.id);
+            if (success && mutate) mutate();
+            return success;
+          }}
+          title="Delete Admin?"
+          description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
+          successMessage="Admin deleted successfully."
+          errorMessage="Failed to delete admin."
+        >
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => console.log("Delete admin")}
             className="text-red-500 hover:text-red-700"
+            disabled={isDeleting}
           >
             <Trash2 className="w-4 h-4" />
           </Button>
-        }
+        </DeleteAlert>
       </TableCell>
     </TableRow>
   );
