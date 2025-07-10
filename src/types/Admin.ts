@@ -32,3 +32,17 @@ export interface DashboardData {
   };
   admins: Admin[];
 }
+
+export interface Profile {
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+}
+export interface TokenPayload {
+  exp: number;
+  iat: number;
+  email: string;
+  name: string;
+  role: string;
+}
