@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { Profile } from "@/types/Admin";
 import { formatISO9075 } from "date-fns";
 import ProfileSkeleton from "./ProfileSkeleton";
+import { Label } from "@/components/ui/Label";
 
 const PersonalInformation = () => {
   const { token } = useAuth();
@@ -40,7 +41,6 @@ const PersonalInformation = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {/* Account Information */}
         <div>
           <h3 className="text-lg font-medium text-card-foreground">
             Account Information
@@ -48,16 +48,16 @@ const PersonalInformation = () => {
           <div className="py-8">
             <hr />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-2">
             <div className="space-y-4">
               <div>
-                <label className="text-base font-semibold ">Name</label>
+                <Label className="text-base font-semibold ">Name</Label>
                 <p className="text-sm text-card-foreground mt-1">
                   {profile.name}
                 </p>
               </div>
               <div>
-                <label className="text-base font-semibold">Email</label>
+                <Label className="text-base font-semibold">Email</Label>
                 <p className="text-sm text-card-foreground mt-1">
                   {profile.email}
                 </p>
@@ -65,13 +65,13 @@ const PersonalInformation = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="text-base font-semibold">Role</label>
+                <Label className="text-base font-semibold">Role</Label>
                 <p className="text-sm text-card-foreground mt-1">
                   {profile.role.replace("_", " ").toUpperCase()}
                 </p>
               </div>
               <div>
-                <label className="text-base font-semibold">Created date</label>
+                <Label className="text-base font-semibold">Created date</Label>
                 <p className="text-sm text-card-foreground mt-1">
                   {formatISO9075(profile.createdAt, { representation: "date" })}
                 </p>
@@ -82,18 +82,18 @@ const PersonalInformation = () => {
         <div className="py-8">
           <hr />
         </div>
-        {/* Update Profile Section */}
         <div className="flex flex-col">
           <h3 className="text-lg font-medium text-card-foreground mb-4">
             Update Profile
           </h3>
           <p className="text-muted-foreground mb-6">
-            Want to update your profile? Click the button below to change update
-            your profile information and change password.
+            Want to update your profile? Click the button below to update your
+            profile information.
           </p>
           <Button
             size="lg"
-            className="bg-primary text-base font-medium text-primary-foreground hover:bg-primary/90 px-16 py-4 self-center"
+            variant="primary"
+            className="text-base font-medium hover:bg-primary/90 px-16 py-4 self-center"
           >
             Update Profile
           </Button>

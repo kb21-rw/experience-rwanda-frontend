@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/Button";
-import { Share } from "lucide-react";
-
+import { Share2 } from "lucide-react";
 const rofileHeader = () => {
   return (
     <div className="flex justify-between items-center mb-8">
@@ -8,7 +7,7 @@ const rofileHeader = () => {
         Users Information
       </h1>
       <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-        <Share className="h-4 w-4 mr-2" />
+        <Share2 />
         Invite
       </Button>
     </div>
