@@ -6,14 +6,19 @@ export const updateUserSchema = z
     fullName: z.string().min(1, "Full name is required").optional(),
     password: z
       .string()
-      .min(6, "Password must be at least 6 characters")
-      .optional(),
+      .optional()
+      .refine((val) => !val || val.length >= 6, {
+        message: "Password must be at least 6 characters",
+      }),
     confirmPassword: z.string().optional(),
   })
   .refine(
-    (data) =>
-      (!data.password && !data.confirmPassword) ||
-      data.password === data.confirmPassword,
+    (data) => {
+      if (data.password || data.confirmPassword) {
+        return data.password === data.confirmPassword;
+      }
+      return true;
+    },
     {
       message: "Passwords do not match",
       path: ["confirmPassword"],

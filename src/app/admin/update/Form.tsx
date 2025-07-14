@@ -7,24 +7,30 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { updateUserSchema } from "@/utils/schemas/updateUserSchema";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
+import { useAuth } from "@/context/authContext";
 
 type UpdateUserFormData = z.infer<typeof updateUserSchema>;
 
 const UserInfoForm = () => {
+  const { token } = useAuth();
   const router = useRouter();
-  const [image, setImage] = useState<File | null>(null);
 
   const {
     data: user,
     error,
     isLoading,
-  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`, fetcher);
+  } = useSWR(
+    token
+      ? [`${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`, token]
+      : null,
+    ([url, token]: [string, string]) => fetcher(url, token)
+  );
 
   const {
     register,
@@ -54,12 +60,14 @@ const UserInfoForm = () => {
       formData.append("email", data.email ?? "");
       formData.append("fullName", data.fullName ?? "");
       if (data.password) formData.append("password", data.password);
-      if (image) formData.append("profilePicture", image);
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`,
         {
           method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           body: formData,
         }
       );
@@ -85,18 +93,9 @@ const UserInfoForm = () => {
       <div className="flex flex-col items-center justify-center py-4 xl:py-10">
         <Label className="cursor-pointer">
           <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
-          <Input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) setImage(file);
-            }}
-          />
+          <Input type="file" accept="image/*" className="hidden" />
         </Label>
         <p className="text-center">Profile picture</p>
-        {image && <p className="text-sm mt-1 text-green-600">{image.name}</p>}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-6">
