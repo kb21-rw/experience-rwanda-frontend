@@ -21,21 +21,29 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
+import useSWR from "swr";
+import { useAuth } from "@/context/authContext";
+import { fetcher } from "@/lib/fetcher";
 
-const AdminList = ({
-  admins,
-  isLoading,
-  error,
-  mutate,
-}: {
-  admins?: Admin[];
-  isLoading: boolean;
-  error: string;
-  mutate: () => void;
-}) => {
+const AdminList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [role, setRole] = useState("all");
+  const { token } = useAuth();
+
+  const {
+    data: admins,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR<Admin[]>(
+    token ? [`${process.env.NEXT_PUBLIC_API_URL}/admins`, token] : null,
+    ([url, token]: [string, string]) => fetcher(url, token),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
   const adminsPerPage = 8;
   const filteredAdmins =
     admins?.filter((admin) => {
@@ -68,7 +76,7 @@ const AdminList = ({
     );
   }
 
-  if (isLoading) return <TableSkeleton />;
+  if (isLoading || !token) return <TableSkeleton />;
 
   return (
     <>
