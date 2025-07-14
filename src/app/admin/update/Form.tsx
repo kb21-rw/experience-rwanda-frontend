@@ -9,14 +9,22 @@ import { Label } from "@/components/ui/Label";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { updateUserSchema } from "@/utils/schemas/updateUserSchema";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 
 type UpdateUserFormData = z.infer<typeof updateUserSchema>;
 
-export default function UpdateUserForm() {
-  const { id: userId } = useParams();
+const UserInfoForm = () => {
+  const router = useRouter();
   const [image, setImage] = useState<File | null>(null);
+
+  const {
+    data: user,
+    error,
+    isLoading,
+  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`, fetcher);
 
   const {
     register,
@@ -28,58 +36,41 @@ export default function UpdateUserForm() {
   });
 
   useEffect(() => {
-    const fetchUser = async () => {
-      if (!userId || typeof userId !== "string") return;
+    if (user) {
+      reset({
+        email: user.email || "",
+        fullName: user.fullName || "",
+      });
+    }
+  }, [user, reset]);
 
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`
-        );
-
-        if (!res.ok) throw new Error("User not found");
-
-        const user = await res.json();
-
-        reset({
-          email: user.email,
-          fullName: user.fullName,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchUser();
-  }, [userId, reset]);
+  useEffect(() => {
+    if (error) toast.error(error.message || "Failed to load profile");
+  }, [error]);
 
   const onSubmit = async (data: UpdateUserFormData) => {
-    if (!userId || typeof userId !== "string") {
-      toast.error("Invalid user ID.");
-      return;
-    }
-
     try {
       const formData = new FormData();
-      formData.append("email", data.email);
-      formData.append("fullName", data.fullName);
+      formData.append("email", data.email ?? "");
+      formData.append("fullName", data.fullName ?? "");
       if (data.password) formData.append("password", data.password);
       if (image) formData.append("profilePicture", image);
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`,
         {
           method: "PUT",
           body: formData,
         }
       );
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to update user");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => null);
+        throw new Error(errData?.message || "Failed to update profile");
       }
 
-      toast.success("User information updated successfully!");
+      toast.success("Profile updated successfully!");
+      router.push("/admin");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Something went wrong"
@@ -87,12 +78,14 @@ export default function UpdateUserForm() {
     }
   };
 
+  if (isLoading) return <p>Loading profile...</p>;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-center justify-center py-4 xl:py-10">
         <Label className="cursor-pointer">
           <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
-          <input
+          <Input
             type="file"
             accept="image/*"
             className="hidden"
@@ -172,4 +165,6 @@ export default function UpdateUserForm() {
       </div>
     </form>
   );
-}
+};
+
+export default UserInfoForm;

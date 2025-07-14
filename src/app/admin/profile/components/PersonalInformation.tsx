@@ -7,9 +7,12 @@ import { Profile } from "@/types/Admin";
 import { formatISO9075 } from "date-fns";
 import ProfileSkeleton from "./ProfileSkeleton";
 import { Label } from "@/components/ui/Label";
+import { useRouter } from "next/navigation";
 
 const PersonalInformation = () => {
   const { token } = useAuth();
+  const router = useRouter();
+
   const {
     data: profile,
     error,
@@ -25,6 +28,9 @@ const PersonalInformation = () => {
     }
   );
 
+  const handleUpdateProfile = () => {
+    router.push("/admin/update");
+  };
   if (isLoading) return <ProfileSkeleton />;
   if (error)
     return (
@@ -93,6 +99,7 @@ const PersonalInformation = () => {
           <Button
             size="lg"
             variant="primary"
+            onClick={handleUpdateProfile}
             className="text-base font-medium hover:bg-primary/90 px-16 py-4 self-center"
           >
             Update Profile

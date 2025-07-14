@@ -1,15 +1,22 @@
+"use client";
+
 import { Button } from "@/components/ui/Button";
 import { IoShareSocial } from "react-icons/io5";
 import UserInfoForm from "./Form";
+import { useRouter } from "next/navigation";
 
 const Users = () => {
+  const router = useRouter();
+  const handleInvite = () => {
+    router.push("/admin/invite");
+  };
   return (
     <section className="p-6 xl:p-10 font-inter">
       <div className="flex justify-between mb-8">
         <h1 className="text-3xl font-inter font-semibold">
           Update User Information
         </h1>
-        <Button variant="primary">
+        <Button variant="primary" onClick={handleInvite}>
           <IoShareSocial />
           Invite
         </Button>

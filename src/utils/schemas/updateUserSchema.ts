@@ -2,17 +2,20 @@ import { z } from "zod";
 
 export const updateUserSchema = z
   .object({
-    email: z.string().email({ message: "Invalid email address" }),
-    fullName: z.string().min(1, { message: "Full name is required" }),
+    email: z.string().email("Invalid email address").optional(),
+    fullName: z.string().min(1, "Full name is required").optional(),
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters" })
+      .min(6, "Password must be at least 6 characters")
       .optional(),
-    confirmPassword: z
-      .string()
-      .min(8, { message: "Confirm password must be at least 8 characters" })
-      .optional(),
+    confirmPassword: z.string().optional(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-  });
+  .refine(
+    (data) =>
+      (!data.password && !data.confirmPassword) ||
+      data.password === data.confirmPassword,
+    {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    }
+  );
