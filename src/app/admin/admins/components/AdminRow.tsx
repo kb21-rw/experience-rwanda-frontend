@@ -57,7 +57,8 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
       const response = await fetchWithToken(
         `${process.env.NEXT_PUBLIC_API_URL}/admins/${admin.id}`,
         "PUT",
-        { role: pendingRole }
+        { role: pendingRole },
+        token
       );
       
       if (!response || response.error) {
@@ -67,6 +68,7 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
         return;
       }
       setSelectedRole(pendingRole);
+      toast.success("Role updated successfully.");
       setShowConfirm(false);
       setPendingRole(null);
       if (mutate) mutate(); 
@@ -108,7 +110,7 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
                 ${selectedRole === "SUPER_ADMIN"
                   ? "bg-black text-white"
                   : selectedRole === "ADMIN"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-black text-white"
                     : selectedRole === "EDITOR"
                       ? "bg-gray-200 text-black"
                       : "bg-gray-200 text-black"
@@ -133,7 +135,7 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
               ${admin.role === "SUPER_ADMIN"
                 ? "bg-black text-white"
                 : admin.role === "ADMIN"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-black text-white"
                   : admin.role === "EDITOR"
                     ? "bg-gray-200 text-black"
                     : "bg-gray-200 text-black"
