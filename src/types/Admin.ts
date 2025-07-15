@@ -44,5 +44,5 @@ export interface TokenPayload {
   iat: number;
   email: string;
   name: string;
-  role: string;
+  role: "ADMIN" | "SUPER_ADMIN" | "EDITOR";
 }
