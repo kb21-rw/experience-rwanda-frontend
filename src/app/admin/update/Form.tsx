@@ -105,8 +105,8 @@ const UserInfoForm = () => {
         <div className="flex flex-col gap-2.5">
           <Label htmlFor="name">Full Name</Label>
           <Input id="name" {...register("name")} placeholder="John Doe" />
-          {errors.fullName && (
-            <p className="text-red-500 text-sm">{errors.fullName.message}</p>
+          {errors.name && (
+            <p className="text-red-500 text-sm">{errors.name.message}</p>
           )}
         </div>
 
