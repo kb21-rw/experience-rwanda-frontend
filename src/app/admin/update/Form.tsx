@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { updateUserSchema } from "@/utils/schemas/updateUserSchema";
@@ -22,17 +21,6 @@ const UserInfoForm = () => {
   const router = useRouter();
 
   const {
-    data: user,
-    error,
-    isLoading,
-  } = useSWR(
-    token
-      ? [`${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`, token]
-      : null,
-    ([url, token]: [string, string]) => fetcher(url, token)
-  );
-
-  const {
     register,
     handleSubmit,
     reset,
@@ -41,18 +29,23 @@ const UserInfoForm = () => {
     resolver: zodResolver(updateUserSchema),
   });
 
-  useEffect(() => {
-    if (user) {
-      reset({
-        email: user.email || "",
-        fullName: user.fullName || "",
-      });
+  const { isLoading } = useSWR(
+    token
+      ? [`${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`, token]
+      : null,
+    ([url, token]: [string, string]) => fetcher(url, token),
+    {
+      onSuccess: (userData) => {
+        reset({
+          email: userData.email ?? "",
+          fullName: userData.fullName ?? "",
+        });
+      },
+      onError: (err) => {
+        toast.error(err?.message || "Failed to load profile");
+      },
     }
-  }, [user, reset]);
-
-  useEffect(() => {
-    if (error) toast.error(error.message || "Failed to load profile");
-  }, [error]);
+  );
 
   const onSubmit = async (data: UpdateUserFormData) => {
     try {
@@ -91,10 +84,7 @@ const UserInfoForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-center justify-center py-4 xl:py-10">
-        <Label className="cursor-pointer">
-          <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
-          <Input type="file" accept="image/*" className="hidden" />
-        </Label>
+        <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
         <p className="text-center">Profile picture</p>
       </div>
 
