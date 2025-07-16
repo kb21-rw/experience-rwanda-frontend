@@ -10,8 +10,9 @@ import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
 import { fetchWithToken } from "@/utils/request";
 import { useAuth } from "@/context/authContext";
-import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
+import RoleChangeConfirmModal from "./RoleChangeConfirmModal";
+import clsx from "clsx";
 
 interface Props {
   admin: Admin;
@@ -33,16 +34,6 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const { token } = useAuth();
 
-  let isSuperAdmin = false;
-  if (token) {
-    try {
-      const payload = jwtDecode<{ role?: string }>(token);
-      isSuperAdmin = payload?.role === "SUPER_ADMIN";
-    } catch {
-      isSuperAdmin = false;
-    }
-  }
-
   const handleRoleSelect = (newRole: string) => {
     if (newRole !== admin.role) {
       setPendingRole(newRole);
@@ -60,28 +51,22 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
         { role: pendingRole },
         token
       );
-      
       if (!response || response.error) {
         toast.error(response?.error || "Failed to update role. Please try again.");
-        setShowConfirm(false);
-        setPendingRole(null);
         return;
       }
       setSelectedRole(pendingRole);
       toast.success("Role updated successfully.");
-      setShowConfirm(false);
-      setPendingRole(null);
       if (mutate) mutate(); 
     } catch {
       toast.error("Failed to update role. Please try again.");
+    } finally {
       setShowConfirm(false);
       setPendingRole(null);
-    } finally {
       setIsUpdating(false);
     }
   };
-
-
+  
   const handleCancel = () => {
     setShowConfirm(false);
     setPendingRole(null);
@@ -99,65 +84,42 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
       <TableCell>{admin.email}</TableCell>
 
       <TableCell>
-        {isSuperAdmin ? (
-          <Select
-            value={selectedRole}
-            onValueChange={handleRoleSelect}
-            disabled={isUpdating}
-          >
-            <SelectTrigger
-              className={`px-4 py-1 rounded text-sm font-medium border-0
-                ${selectedRole === "SUPER_ADMIN"
-                  ? "bg-black text-white"
-                  : selectedRole === "ADMIN"
-                    ? "bg-black text-white"
-                    : selectedRole === "EDITOR"
-                      ? "bg-gray-200 text-black"
-                      : "bg-gray-200 text-black"
-                }
-              `}
-            >
-              <SelectValue>
-                {ROLE_OPTIONS.find(r => r.value === selectedRole)?.label || selectedRole}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {ROLE_OPTIONS.map((role) => (
-                <SelectItem key={role.value} value={role.value}>
-                  {role.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        ) : (
-          <span
-            className={`px-4 py-1 rounded text-sm font-medium border-0
-              ${admin.role === "SUPER_ADMIN"
-                ? "bg-black text-white"
-                : admin.role === "ADMIN"
-                  ? "bg-black text-white"
-                  : admin.role === "EDITOR"
-                    ? "bg-gray-200 text-black"
-                    : "bg-gray-200 text-black"
+        <Select
+          value={selectedRole}
+          onValueChange={handleRoleSelect}
+          disabled={isUpdating}
+        >
+          <SelectTrigger
+            className={clsx(
+              "px-4 py-1 rounded text-sm font-medium border-0",
+              {
+                "bg-black text-white": selectedRole === "SUPER_ADMIN" || selectedRole === "ADMIN",
+                "bg-gray-200 text-black": selectedRole === "EDITOR" || (selectedRole !== "SUPER_ADMIN" && selectedRole !== "ADMIN"),
               }
-            `}
+            )}
           >
-            {ROLE_OPTIONS.find(r => r.value === admin.role)?.label || admin.role}
-          </span>
-        )}
+            <SelectValue>
+              {ROLE_OPTIONS.find(r => r.value === selectedRole)?.label || selectedRole}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {ROLE_OPTIONS.map((role) => (
+              <SelectItem key={role.value} value={role.value}>
+                {role.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         {showConfirm && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-            <div className="bg-white rounded-lg shadow-lg p-6 min-w-[300px]">
-              <h3 className="text-lg font-semibold mb-2">Confirm Role Change</h3>
-              <p className="mb-4">
-                Are you sure you want to change <b>{admin.name}</b>&apos;s role to <b>{ROLE_OPTIONS.find(r => r.value === pendingRole)?.label}</b>?
-              </p>
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={handleCancel} disabled={isUpdating}>Cancel</Button>
-                <Button variant="primary" onClick={handleConfirm} disabled={isUpdating}>Save</Button>
-              </div>
-            </div>
-          </div>
+          <RoleChangeConfirmModal
+            open={showConfirm}
+            admin={admin}
+            pendingRole={pendingRole}
+            roleOptions={ROLE_OPTIONS}
+            isUpdating={isUpdating}
+            onCancel={handleCancel}
+            onConfirm={handleConfirm}
+          />
         )}
       </TableCell>
       <TableCell className="relative">
