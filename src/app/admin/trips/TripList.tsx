@@ -16,48 +16,15 @@ import { useTrips } from "@/hooks/useTrips";
 import { Trip } from "@/types/ImageCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
-import { Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
-
-const ITEM_PER_PAGE = 8;
-
-const statusConfig = {
-  available: {
-    label: "Available",
-    variant: "default" as const,
-    color: "bg-green-100 text-green-800",
-  },
-  "fully-booked": {
-    label: "Fully booked",
-    variant: "warning" as const,
-    color: "bg-yellow-100 text-yellow-800",
-  },
-  ongoing: {
-    label: "Ongoing",
-    variant: "warning" as const,
-    color: "bg-blue-100 text-blue-800",
-  },
-  completed: {
-    label: "Completed",
-    variant: "success" as const,
-    color: "bg-emerald-100 text-emerald-800",
-  },
-  canceled: {
-    label: "Canceled",
-    variant: "destructive" as const,
-    color: "bg-red-100 text-red-800",
-  },
-};
+import { STATUS_CONFIG, ITEM_PER_PAGE } from "@/utils/constants";
 
 const TripList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const { deleteTrip } = useDeleteTrip();
-  const router = useRouter();
 
   const { data: trips, isLoading, error } = useTrips();
-  console.log({ trips });
   const filteredTrips = trips?.filter((trip: Trip) => {
     const matchesSearch =
       trip.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -124,18 +91,6 @@ const TripList = () => {
   return (
     <div className=" min-h-screen flex flex-col justify-between">
       <div>
-        <div className="flex flex-col gap-5 md:flex-row items-center md:justify-between mb-6">
-          <h1 className="text-2xl font-bold">Trips</h1>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => router.push("/trips/new")}
-            className="shadow-elegant"
-          >
-            <Plus className="w-5 h-5" />
-            Create New Trip
-          </Button>
-        </div>
         <div className="border border-border  overflow-hidden p-5 rounded-lg">
           <Search
             placeholder="Search by title or location"
@@ -158,7 +113,7 @@ const TripList = () => {
                     {statusCounts.all}
                   </Badge>
                 </Button>
-                {Object.entries(statusConfig).map(([status, config]) => (
+                {Object.entries(STATUS_CONFIG).map(([status, config]) => (
                   <Button
                     key={status}
                     variant={selectedStatus === status ? "default" : "outline"}
@@ -209,12 +164,12 @@ const TripList = () => {
               No trips found.
             </div>
           )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={changePage}
+          />
         </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={changePage}
-        />
       </div>
     </div>
   );

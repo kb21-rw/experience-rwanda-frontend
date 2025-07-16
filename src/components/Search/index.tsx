@@ -13,12 +13,12 @@ const Search = ({ onSearch, className, placeholder }: SearchProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   return (
     <div>
-      <div className="relative flex flex-1 text-gray-500">
-        <SearchIcon className="absolute top-4 left-3 w-5 h-5" />
+      <div className="relative w-1/3">
+        <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
         <Input
           type="text"
           placeholder={placeholder}
-          className={`xl:w-150 md:w-80 w-40 pl-16 ${className}`}
+          className={`pl-10 h-12 ${className}`}
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
