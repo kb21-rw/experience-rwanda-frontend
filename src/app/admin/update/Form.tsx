@@ -13,7 +13,7 @@ import { updateUserSchema } from "@/utils/schemas/updateUserSchema";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { useAuth } from "@/context/authContext";
-
+import axios from "axios";
 type UpdateUserFormData = z.infer<typeof updateUserSchema>;
 
 const UserInfoForm = () => {
@@ -54,22 +54,15 @@ const UserInfoForm = () => {
         name: data.name,
         ...(data.password && { password: data.password }),
       };
-
-      const res = await fetch(
+      await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`,
+        payload,
         {
-          method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(payload),
         }
       );
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        throw new Error(errData?.message || "Failed to update profile");
-      }
 
       toast.success("Profile updated successfully!");
       router.push("/admin");
