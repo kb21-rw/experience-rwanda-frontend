@@ -38,7 +38,7 @@ const UserInfoForm = () => {
       onSuccess: (userData) => {
         reset({
           email: userData.email ?? "",
-          fullName: userData.fullName ?? "",
+          name: userData.name ?? "",
         });
       },
       onError: (err) => {
@@ -51,7 +51,7 @@ const UserInfoForm = () => {
     try {
       const payload = {
         email: data.email,
-        name: data.fullName,
+        name: data.name,
         ...(data.password && { password: data.password }),
       };
 
@@ -103,12 +103,8 @@ const UserInfoForm = () => {
         </div>
 
         <div className="flex flex-col gap-2.5">
-          <Label htmlFor="fullName">Full Name</Label>
-          <Input
-            id="fullName"
-            {...register("fullName")}
-            placeholder="John Doe"
-          />
+          <Label htmlFor="name">Full Name</Label>
+          <Input id="name" {...register("name")} placeholder="John Doe" />
           {errors.fullName && (
             <p className="text-red-500 text-sm">{errors.fullName.message}</p>
           )}

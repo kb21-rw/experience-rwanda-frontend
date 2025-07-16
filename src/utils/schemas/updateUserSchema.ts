@@ -3,7 +3,7 @@ import { z } from "zod";
 export const updateUserSchema = z
   .object({
     email: z.string().email("Invalid email address").optional(),
-    fullName: z.string().min(1, "Full name is required").optional(),
+    name: z.string().min(1, "Name is required").optional(),
     password: z
       .string()
       .optional()
