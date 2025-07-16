@@ -3,10 +3,16 @@
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
-import { ChevronDown } from "lucide-react";
+import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import DeleteAlert from "@/components/DeleteAlert";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 interface Props {
   onDelete?: (id: string) => void;
@@ -19,10 +25,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
   const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-  const toggleDropdown = () => {
-    setShowDropdown((prev) => !prev);
-  };
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -66,6 +69,48 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
         </TableCell>
         <TableCell>{trip.status}</TableCell>
         <TableCell>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <MoreHorizontal className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="bg-background border border-border shadow-lg"
+            >
+              <DropdownMenuItem
+                onClick={() => router.push(`/admin/bookings/${tripId}`)}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Eye className="w-4 h-4" />
+                Bookings
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push(`/admin/edit-trip/${tripId}`)}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Edit className="w-4 h-4" />
+                Edit Trip
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-destructive">
+                <Trash2 className="w-4 h-4" />
+                <DeleteAlert
+                  onDelete={async () => {
+                    const success = await onDelete?.(tripId);
+                    return success || false;
+                  }}
+                  title="Delete Trip?"
+                  description="Are you sure you want to this trip ? This action can not  undone."
+                  errorMessage="Failed to delete trip."
+                  successMessage="Trip deleted successfully."
+                />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+
+        {/* <TableCell>
           <Button
             variant="primary"
             onClick={toggleDropdown}
@@ -104,7 +149,7 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
               </Link>
             </div>
           )}
-        </TableCell>
+        </TableCell> */}
       </TableRow>
     </>
   );
