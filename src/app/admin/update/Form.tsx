@@ -49,10 +49,11 @@ const UserInfoForm = () => {
 
   const onSubmit = async (data: UpdateUserFormData) => {
     try {
-      const formData = new FormData();
-      formData.append("email", data.email ?? "");
-      formData.append("fullName", data.fullName ?? "");
-      if (data.password) formData.append("password", data.password);
+      const payload = {
+        email: data.email,
+        name: data.fullName,
+        ...(data.password && { password: data.password }),
+      };
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/admins/profile/me`,
@@ -61,7 +62,7 @@ const UserInfoForm = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: formData,
+          body: JSON.stringify(payload),
         }
       );
 
