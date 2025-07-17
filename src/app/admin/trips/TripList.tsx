@@ -17,6 +17,7 @@ import { Trip } from "@/types/ImageCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
 import { STATUS_CONFIG, ITEM_PER_PAGE } from "@/utils/constants";
+import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
 
 const TripList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,11 +57,7 @@ const TripList = () => {
   }, [trips]);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center text-center h-screen">
-        <p className="animate-bounce text-2xl">Loading trips...</p>
-      </div>
-    );
+    return <TableSkeleton />;
   }
 
   if (error) {
@@ -92,10 +89,12 @@ const TripList = () => {
     <div className=" min-h-screen flex flex-col justify-between">
       <div>
         <div className="border border-border  overflow-hidden p-5 rounded-lg">
-          <Search
-            placeholder="Search by title or location"
-            onSearch={setSearchTerm}
-          />
+          <div className="w-1/3">
+            <Search
+              placeholder="Search by title or location"
+              onSearch={setSearchTerm}
+            />
+          </div>
           <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
             <div className="space-y-4">
               <h3 className="text-sm font-medium text-foreground">
