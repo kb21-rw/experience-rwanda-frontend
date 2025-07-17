@@ -24,12 +24,13 @@ import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
 import useSWR from "swr";
 import { useAuth } from "@/context/authContext";
 import { fetcher } from "@/lib/fetcher";
+import { hasPermission } from "@/auth/rbac";
 
 const AdminList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [role, setRole] = useState("all");
-  const { token } = useAuth();
+  const { token, user } = useAuth();
 
   const {
     data: admins,
@@ -44,6 +45,9 @@ const AdminList = () => {
       revalidateOnReconnect: false,
     }
   );
+  const canPerformAction =
+    hasPermission(user, "update:admins") &&
+    hasPermission(user, "delete:admins");
   const adminsPerPage = 8;
   const filteredAdmins =
     admins?.filter((admin) => {
@@ -109,7 +113,8 @@ const AdminList = () => {
                   <TableHead>Name</TableHead>
                   <TableHead>Email Address</TableHead>
                   <TableHead>Role</TableHead>
-                  <TableHead>Action</TableHead>
+
+                  {canPerformAction && <TableHead>Action</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -121,6 +126,7 @@ const AdminList = () => {
                       .toString()
                       .padStart(3, "0")}
                     mutate={mutate}
+                    canPerformAction={canPerformAction}
                   />
                 ))}
               </TableBody>

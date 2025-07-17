@@ -20,11 +20,15 @@ import { TbLogout2 } from "react-icons/tb";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/useMobile";
+import { useMemo } from "react";
+import { hasPermission } from "@/auth/rbac";
+import { useAuth } from "@/context/authContext";
 
 export function AppSidebar() {
   const { toggleSidebar, state } = useSidebar();
   const isMobile = useIsMobile();
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleLogout = async () => {
     localStorage.removeItem("accessToken");
@@ -32,6 +36,13 @@ export function AppSidebar() {
     router.push("/login");
   };
   const currentPath = usePathname();
+  const filteredItems = useMemo(() => {
+    if (!user) return [];
+
+    return items.filter((item) => {
+      return hasPermission(user, item.permission);
+    });
+  }, [user]);
   return (
     <>
       {isMobile && (
@@ -67,7 +78,7 @@ export function AppSidebar() {
               <ProfileContent />
               <Separator className="mb-2.5" />
               <SidebarMenu className="gap-3 pt-4">
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       className={

@@ -9,11 +9,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/authContext";
+import { hasPermission } from "@/auth/rbac";
+import AccessDenied from "@/components/ui/AccessDenied";
 
 type FormData = z.infer<typeof adminInviteSchema>;
 
 const InviteAdminPage = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const router = useRouter();
 
   const {
@@ -65,6 +67,11 @@ const InviteAdminPage = () => {
       );
     }
   };
+
+  const canInvite = hasPermission(user, "invite:admins");
+  if (!canInvite) {
+    return <AccessDenied />;
+  }
 
   return (
     <div className="h-screen flex flex-col items-center justify-center font-inter">
