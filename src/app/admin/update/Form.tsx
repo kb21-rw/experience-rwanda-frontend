@@ -88,6 +88,7 @@ const UserInfoForm = () => {
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
+            type="email"
             {...register("email")}
             placeholder="you@example.com"
           />

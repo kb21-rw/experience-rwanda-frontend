@@ -1,7 +1,8 @@
 import { PiUserCircle } from "react-icons/pi";
 import Image from "next/image";
 import { getNameInitials } from "@/utils/helper";
-import { Link } from "lucide-react";
+import Link from "next/link"
+
 interface ProfileProps {
   imageSrc: string;
   name: string;
