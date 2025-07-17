@@ -27,6 +27,11 @@ const ROLE_OPTIONS = [
 ];
 
 const AdminRow = ({ admin, displayId, mutate }: Props) => {
+  mutate?: () => void; // Make mutate optional
+  canPerformAction: boolean;
+}
+
+const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
   const { deleteAdmin, isDeleting } = useDeleteAdmin();
   const [selectedRole, setSelectedRole] = useState(admin.role);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -139,13 +144,34 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
             size="icon"
             className="text-red-500 hover:text-red-700"
             disabled={isDeleting}
+
+      <TableCell>{admin.role}</TableCell>
+      {canPerformAction && (
+        <TableCell className="relative">
+          <DeleteAlert
+            onDelete={async () => {
+              const success = await deleteAdmin(admin.id);
+              if (success && mutate) mutate();
+              return success;
+            }}
+            title="Delete Admin?"
+            description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
+            successMessage="Admin deleted successfully."
+            errorMessage="Failed to delete admin."
           >
-            <Trash2 className="w-4 h-4" />
-          </Button>
-        </DeleteAlert>
-      </TableCell>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-red-500 hover:text-red-700"
+              disabled={isDeleting}
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </DeleteAlert>
+        </TableCell>
+      )}
     </TableRow>
   );
 };
 
-export default AdminRow;
+export default AdminRow

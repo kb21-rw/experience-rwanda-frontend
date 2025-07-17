@@ -1,6 +1,7 @@
 import { PiUserCircle } from "react-icons/pi";
 
 import Image from "next/image";
+import { getNameInitials } from "@/utils/helper";
 interface ProfileProps {
   imageSrc: string;
   name: string;
@@ -19,6 +20,7 @@ export default function ProfileCard({
     return <PiUserCircle size={isExpanded ? 60 : 40} />;
   }
   if (!imageSrc && name) {
+
     const firstName = name.split(" ")[0];
     const lastName = name.split(" ")[1];
     const nameInitials =
@@ -30,7 +32,7 @@ export default function ProfileCard({
           isExpanded ? "w-16 h-16" : "w-10 h-10"
         }`}
       >
-        {nameInitials}
+        {getNameInitials(name)}
       </div>
     );
   }
