@@ -1,7 +1,8 @@
 import { PiUserCircle } from "react-icons/pi";
-
 import Image from "next/image";
 import { getNameInitials } from "@/utils/helper";
+import Link from "next/link"
+
 interface ProfileProps {
   imageSrc: string;
   name: string;
@@ -27,13 +28,15 @@ export default function ProfileCard({
       firstName.charAt(0).toUpperCase() + lastName?.charAt(0).toUpperCase() ||
       name.charAt(1).toUpperCase();
     return (
-      <div
-        className={`aspect-square rounded-full flex items-center justify-center text-lg font-semibold bg-gray-200 text-gray-600 ${
-          isExpanded ? "w-16 h-16" : "w-10 h-10"
-        }`}
-      >
-        {getNameInitials(name)}
-      </div>
+      <Link href="/admin/profile">
+        <div
+          className={`aspect-square rounded-full flex items-center justify-center text-lg font-semibold bg-gray-200 text-gray-600 ${
+            isExpanded ? "w-16 h-16" : "w-10 h-10"
+          }`}
+        >
+          {getNameInitials(name)}
+        </div>
+      </Link>
     );
   }
 
