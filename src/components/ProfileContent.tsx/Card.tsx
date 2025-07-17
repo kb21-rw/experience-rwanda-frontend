@@ -1,7 +1,7 @@
 import { PiUserCircle } from "react-icons/pi";
 import Image from "next/image";
-import Link from "next/link";
-
+import { getNameInitials } from "@/utils/helper";
+import { Link } from "lucide-react";
 interface ProfileProps {
   imageSrc: string;
   name: string;
@@ -20,11 +20,6 @@ export default function ProfileCard({
     return <PiUserCircle size={isExpanded ? 60 : 40} />;
   }
   if (!imageSrc && name) {
-    const firstName = name.split(" ")[0];
-    const lastName = name.split(" ")[1];
-    const nameInitials =
-      firstName.charAt(0).toUpperCase() + lastName?.charAt(0).toUpperCase() ||
-      name.charAt(1).toUpperCase();
     return (
       <Link href="/admin/profile">
         <div
@@ -32,7 +27,7 @@ export default function ProfileCard({
             isExpanded ? "w-16 h-16" : "w-10 h-10"
           }`}
         >
-          {nameInitials}
+          {getNameInitials(name)}
         </div>
       </Link>
     );

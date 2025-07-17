@@ -11,9 +11,10 @@ interface Props {
   admin: Admin;
   displayId: string;
   mutate?: () => void; // Make mutate optional
+  canPerformAction: boolean;
 }
 
-const AdminRow = ({ admin, displayId, mutate }: Props) => {
+const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
   const { deleteAdmin, isDeleting } = useDeleteAdmin();
 
   return (
@@ -27,28 +28,30 @@ const AdminRow = ({ admin, displayId, mutate }: Props) => {
       </TableCell>
       <TableCell>{admin.email}</TableCell>
       <TableCell>{admin.role}</TableCell>
-      <TableCell className="relative">
-        <DeleteAlert
-          onDelete={async () => {
-            const success = await deleteAdmin(admin.id);
-            if (success && mutate) mutate();
-            return success;
-          }}
-          title="Delete Admin?"
-          description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
-          successMessage="Admin deleted successfully."
-          errorMessage="Failed to delete admin."
-        >
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-red-500 hover:text-red-700"
-            disabled={isDeleting}
+      {canPerformAction && (
+        <TableCell className="relative">
+          <DeleteAlert
+            onDelete={async () => {
+              const success = await deleteAdmin(admin.id);
+              if (success && mutate) mutate();
+              return success;
+            }}
+            title="Delete Admin?"
+            description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
+            successMessage="Admin deleted successfully."
+            errorMessage="Failed to delete admin."
           >
-            <Trash2 className="w-4 h-4" />
-          </Button>
-        </DeleteAlert>
-      </TableCell>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-red-500 hover:text-red-700"
+              disabled={isDeleting}
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </DeleteAlert>
+        </TableCell>
+      )}
     </TableRow>
   );
 };
