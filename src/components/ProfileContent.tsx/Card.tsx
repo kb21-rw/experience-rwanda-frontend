@@ -20,6 +20,12 @@ export default function ProfileCard({
     return <PiUserCircle size={isExpanded ? 60 : 40} />;
   }
   if (!imageSrc && name) {
+
+    const firstName = name.split(" ")[0];
+    const lastName = name.split(" ")[1];
+    const nameInitials =
+      firstName.charAt(0).toUpperCase() + lastName?.charAt(0).toUpperCase() ||
+      name.charAt(1).toUpperCase();
     return (
       <div
         className={`aspect-square rounded-full flex items-center justify-center text-lg font-semibold bg-gray-200 text-gray-600 ${
