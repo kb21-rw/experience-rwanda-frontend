@@ -18,6 +18,7 @@ interface Props {
   admin: Admin;
   displayId: string;
   mutate?: () => void;
+  canPerformAction: boolean;
 }
 
 const ROLE_OPTIONS = [
@@ -25,11 +26,6 @@ const ROLE_OPTIONS = [
   { value: "ADMIN", label: "Admin" },
   { value: "EDITOR", label: "Editor" },
 ];
-
-const AdminRow = ({ admin, displayId, mutate }: Props) => {
-  mutate?: () => void; // Make mutate optional
-  canPerformAction: boolean;
-}
 
 const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
   const { deleteAdmin, isDeleting } = useDeleteAdmin();
@@ -127,7 +123,7 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
           />
         )}
       </TableCell>
-      <TableCell className="relative">
+   {   canPerformAction && <TableCell className="relative">
         <DeleteAlert
           onDelete={async () => {
             const success = await deleteAdmin(admin.id);
@@ -144,34 +140,13 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
             size="icon"
             className="text-red-500 hover:text-red-700"
             disabled={isDeleting}
-
-      <TableCell>{admin.role}</TableCell>
-      {canPerformAction && (
-        <TableCell className="relative">
-          <DeleteAlert
-            onDelete={async () => {
-              const success = await deleteAdmin(admin.id);
-              if (success && mutate) mutate();
-              return success;
-            }}
-            title="Delete Admin?"
-            description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
-            successMessage="Admin deleted successfully."
-            errorMessage="Failed to delete admin."
           >
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-red-500 hover:text-red-700"
-              disabled={isDeleting}
-            >
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          </DeleteAlert>
-        </TableCell>
-      )}
-    </TableRow>
-  );
-};
-
-export default AdminRow
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </DeleteAlert>
+      </TableCell>}
+        </TableRow>
+      );
+    };
+    
+    export default AdminRow;
