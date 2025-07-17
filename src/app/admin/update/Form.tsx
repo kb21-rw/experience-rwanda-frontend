@@ -14,6 +14,7 @@ import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { useAuth } from "@/context/authContext";
 import axios from "axios";
+import ProfileSkeleton from "../profile/components/ProfileSkeleton";
 type UpdateUserFormData = z.infer<typeof updateUserSchema>;
 
 const UserInfoForm = () => {
@@ -73,7 +74,7 @@ const UserInfoForm = () => {
     }
   };
 
-  if (isLoading) return <p>Loading profile...</p>;
+  if (isLoading) return <ProfileSkeleton />;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
