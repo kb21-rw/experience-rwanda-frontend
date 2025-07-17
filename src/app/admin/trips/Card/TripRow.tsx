@@ -3,7 +3,14 @@
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
-import { Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
+import {
+  Calendar,
+  Edit,
+  Eye,
+  MapPin,
+  MoreHorizontal,
+  Trash2,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import DeleteAlert from "@/components/DeleteAlert";
 import {
@@ -64,8 +71,23 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
       <TableRow>
         <TableCell>{displayId}</TableCell>
         <TableCell>{title}</TableCell>
-        <TableCell>{formatedDate}</TableCell>
-        <TableCell>{destination}</TableCell>
+        <TableCell>
+          {" "}
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-muted-foreground" />
+            {new Date(formatedDate).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
+        </TableCell>
+        <TableCell>
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-muted-foreground" />
+            {destination}
+          </div>
+        </TableCell>
         <TableCell>
           <Badge variant="outline" className="bg-background">
             {totalBookedSeats} / {totalSeats}

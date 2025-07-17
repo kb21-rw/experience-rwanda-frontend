@@ -8,6 +8,7 @@ import Pagination from "@/components/Pagination";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -18,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
 import { STATUS_CONFIG, ITEM_PER_PAGE } from "@/utils/constants";
 import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
+import { SearchIcon } from "lucide-react";
 
 const TripList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -132,21 +134,21 @@ const TripList = () => {
               </div>
             </div>
           </div>
-          {paginatedTrips.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted/50">
-                  <TableHead>No</TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Seats</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="font-semibold w-20">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedTrips.map((trip: Trip, index: number) => (
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/50">
+                <TableHead>No</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>Seats</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="font-semibold w-20">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {paginatedTrips.length > 0 ? (
+                paginatedTrips.map((trip: Trip, index: number) => (
                   <TripRow
                     key={trip.id}
                     trip={trip}
@@ -155,14 +157,28 @@ const TripList = () => {
                       .padStart(3, "0")}
                     onDelete={handleDelete}
                   />
-                ))}
-              </TableBody>
-            </Table>
-          ) : (
-            <div className="text-center text-gray-500 text-xl py-10">
-              No trips found.
-            </div>
-          )}
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-12">
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+                        <SearchIcon className="w-8 h-8 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <p className="text-lg font-medium text-foreground">
+                          No trips found
+                        </p>
+                        <p className="text-muted-foreground">
+                          Try adjusting your search or filters
+                        </p>
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
