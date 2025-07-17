@@ -1,3 +1,4 @@
+import { Trip } from "@/types/ImageCard";
 import useSWR from "swr";
 
 const fetcher = (url: string) =>
@@ -6,7 +7,7 @@ const fetcher = (url: string) =>
   );
 
 export function useTrips() {
-  return useSWR(
+  return useSWR<Trip[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/trips/all-with-deleted`,
     fetcher
   );

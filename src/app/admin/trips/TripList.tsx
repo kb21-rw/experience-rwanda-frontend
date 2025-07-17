@@ -1,14 +1,11 @@
 "use client";
-
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Search from "@/components/Search";
 import TripRow from "./Card/TripRow";
-import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 import Pagination from "@/components/Pagination";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -19,44 +16,43 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
 import { STATUS_CONFIG, ITEM_PER_PAGE } from "@/utils/constants";
 import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
-import { SearchIcon } from "lucide-react";
+import TripNotFound from "./Card/TripNotFound";
+import { filterTrips, getStatusCounts } from "@/utils/tripFilters";
 
 const TripList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
-  const { deleteTrip } = useDeleteTrip();
+  const { data: trips = [], isLoading, error } = useTrips();
 
-  const { data: trips, isLoading, error } = useTrips();
-  const filteredTrips = trips?.filter((trip: Trip) => {
-    const matchesSearch =
-      trip.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      trip.destination.toLowerCase().includes(searchTerm.toLowerCase());
-    if (selectedStatus === "canceled") {
-      return trip.status === "canceled" && matchesSearch;
-    }
-    const matchesStatus =
-      selectedStatus === "all" || trip.status === selectedStatus;
-    const isNotCanceled = trip.status !== "canceled";
+  const filteredTrips = useMemo(
+    () => filterTrips(trips, searchTerm, selectedStatus),
+    [trips, searchTerm, selectedStatus]
+  );
 
-    return matchesSearch && matchesStatus && isNotCanceled;
-  });
+  const filteredTripPages = useMemo(
+    () => Math.ceil(filteredTrips.length / ITEM_PER_PAGE),
+    [filteredTrips]
+  );
+  const paginatedTrips = useMemo(
+    () =>
+      filteredTrips.slice(
+        (currentPage - 1) * ITEM_PER_PAGE,
+        currentPage * ITEM_PER_PAGE
+      ),
+    [filteredTrips, currentPage]
+  );
 
-  const statusCounts = useMemo(() => {
-    return {
-      all: trips?.filter((trip: Trip) => trip.status !== "canceled").length,
-      available: trips?.filter((trip: Trip) => trip.status === "available")
-        .length,
-      "fully-booked": trips?.filter(
-        (trip: Trip) => trip.status === "fully-booked"
-      ).length,
-      ongoing: trips?.filter((trip: Trip) => trip.status === "ongoing").length,
-      completed: trips?.filter((trip: Trip) => trip.status === "completed")
-        .length,
-      canceled: trips?.filter((trip: Trip) => trip.status === "canceled")
-        .length,
-    };
-  }, [trips]);
+  const statusCounts = useMemo(() => getStatusCounts(trips), [trips]);
+
+  const changePage = useCallback(
+    (page: number) => {
+      if (page >= 1 && page <= filteredTripPages) {
+        setCurrentPage(page);
+      }
+    },
+    [filteredTripPages]
+  );
 
   if (isLoading) {
     return <TableSkeleton />;
@@ -70,121 +66,85 @@ const TripList = () => {
     );
   }
 
-  const handleDelete = async (id: string) => {
-    const success = await deleteTrip(id);
-    return success;
-  };
-
-  const totalPages = Math.ceil(filteredTrips.length / ITEM_PER_PAGE);
-  const paginatedTrips = filteredTrips.slice(
-    (currentPage - 1) * ITEM_PER_PAGE,
-    currentPage * ITEM_PER_PAGE
-  );
-
-  const changePage = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
   return (
-    <div className=" min-h-screen flex flex-col justify-between">
-      <div>
-        <div className="border border-border  overflow-hidden p-5 rounded-lg">
-          <div className="w-1/3">
-            <Search
-              placeholder="Search by title or location"
-              onSearch={setSearchTerm}
-            />
-          </div>
-          <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
-            <div className="space-y-4">
-              <h3 className="text-sm font-medium text-foreground">
-                Filter by Status
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  variant={selectedStatus === "all" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedStatus("all")}
-                  className="relative"
-                >
-                  All Trips
-                  <Badge variant="secondary" className="ml-2 bg-muted">
-                    {statusCounts.all}
-                  </Badge>
-                </Button>
-                {Object.entries(STATUS_CONFIG).map(([status, config]) => (
-                  <Button
-                    key={status}
-                    variant={selectedStatus === status ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedStatus(status)}
-                    className="relative"
-                  >
-                    <div
-                      className={`w-2 h-2 rounded-full ${config.color} mr-2`}
-                    />
-                    {config.label}
-                    <Badge variant="secondary" className="ml-2 bg-muted">
-                      {statusCounts[status as keyof typeof statusCounts]}
-                    </Badge>
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted/50">
-                <TableHead>No</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Seats</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="font-semibold w-20">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedTrips.length > 0 ? (
-                paginatedTrips.map((trip: Trip, index: number) => (
-                  <TripRow
-                    key={trip.id}
-                    trip={trip}
-                    displayId={((currentPage - 1) * ITEM_PER_PAGE + index + 1)
-                      .toString()
-                      .padStart(3, "0")}
-                    onDelete={handleDelete}
-                  />
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={7} className="text-center py-12">
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
-                        <SearchIcon className="w-8 h-8 text-muted-foreground" />
-                      </div>
-                      <div>
-                        <p className="text-lg font-medium text-foreground">
-                          No trips found
-                        </p>
-                        <p className="text-muted-foreground">
-                          Try adjusting your search or filters
-                        </p>
-                      </div>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={changePage}
+    <div className="min-h-screen flex flex-col justify-between">
+      <div className="border border-border overflow-hidden p-5 rounded-lg">
+        <div className="w-1/3">
+          <Search
+            placeholder="Search by title or location"
+            onSearch={setSearchTerm}
           />
         </div>
+        <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between justify-center py-10">
+          <div className="space-y-4">
+            <h3 className="text-sm font-medium text-foreground">
+              Filter by Status
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant={selectedStatus === "all" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedStatus("all")}
+                className="relative"
+              >
+                All Trips
+                <Badge variant="secondary" className="ml-2 bg-muted">
+                  {statusCounts.all}
+                </Badge>
+              </Button>
+              {Object.entries(STATUS_CONFIG).map(([status, config]) => (
+                <Button
+                  key={status}
+                  variant={selectedStatus === status ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedStatus(status)}
+                  className="relative"
+                >
+                  <div
+                    className={`w-2 h-2 rounded-full ${config.color} mr-2`}
+                  />
+                  {config.label}
+                  <Badge variant="secondary" className="ml-2 bg-muted">
+                    {statusCounts[status as keyof typeof statusCounts]}
+                  </Badge>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted/50">
+              <TableHead>No</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Location</TableHead>
+              <TableHead>Seats</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="font-semibold w-20">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {paginatedTrips.length > 0 ? (
+              paginatedTrips.map((trip: Trip, index: number) => (
+                <TripRow
+                  key={trip.id}
+                  trip={trip}
+                  displayId={((currentPage - 1) * ITEM_PER_PAGE + index + 1)
+                    .toString()
+                    .padStart(3, "0")}
+                />
+              ))
+            ) : (
+              <TripNotFound />
+            )}
+          </TableBody>
+        </Table>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={filteredTripPages}
+          onPageChange={changePage}
+        />
       </div>
     </div>
   );

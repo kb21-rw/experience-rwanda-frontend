@@ -22,6 +22,7 @@ import {
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { STATUS_CONFIG } from "@/utils/constants";
+import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 
 interface Props {
   onDelete?: (id: string) => void;
@@ -29,12 +30,13 @@ interface Props {
   trip: Trip;
 }
 
-const TripRow = ({ trip, displayId, onDelete }: Props) => {
+const TripRow = ({ trip, displayId }: Props) => {
   const { id: tripId, title, departureTime: date, destination } = trip;
   const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
+  const { deleteTrip } = useDeleteTrip();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,6 +62,11 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showDropdown]);
+
+  const handleDelete = async () => {
+    const success = await deleteTrip(trip.id);
+    return success;
+  };
 
   const formatedDate = new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -135,11 +142,11 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
                 <Trash2 className="w-4 h-4" />
                 <DeleteAlert
                   onDelete={async () => {
-                    const success = onDelete?.(tripId);
+                    const success = handleDelete();
                     return success || false;
                   }}
                   title="Delete Trip?"
-                  description="Are you sure you want to this trip ? This action can not  undone."
+                  description="Are you sure you want to delete this trip?"
                   errorMessage="Failed to delete trip."
                   successMessage="Trip deleted successfully."
                 />
