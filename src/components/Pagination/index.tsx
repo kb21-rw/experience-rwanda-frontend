@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { memo } from "react";
 
 interface PaginationProps {
   currentPage: number;
@@ -44,4 +45,4 @@ const Pagination: React.FC<PaginationProps> = ({
   );
 };
 
-export default Pagination;
+export default memo(Pagination);
