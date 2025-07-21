@@ -32,9 +32,11 @@ const DeleteAlert: React.FC<DeleteAlertProps> = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        {children ? children : (
-          <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">
-            Delete
+        {children ? (
+          children
+        ) : (
+          <button className="block px-8- py-2- text-sm w-full text-left hover:bg-gray-100">
+            Delete trip
           </button>
         )}
       </AlertDialogTrigger>

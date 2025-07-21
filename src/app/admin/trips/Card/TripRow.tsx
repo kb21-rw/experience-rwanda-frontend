@@ -3,10 +3,26 @@
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
-import { ChevronDown } from "lucide-react";
+import {
+  Calendar,
+  Edit,
+  Eye,
+  MapPin,
+  MoreHorizontal,
+  Trash2,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import DeleteAlert from "@/components/DeleteAlert";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import { STATUS_CONFIG } from "@/utils/constants";
+import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 
 interface Props {
   onDelete?: (id: string) => void;
@@ -14,15 +30,13 @@ interface Props {
   trip: Trip;
 }
 
-const TripRow = ({ trip, displayId, onDelete }: Props) => {
+const TripRow = ({ trip, displayId }: Props) => {
   const { id: tripId, title, departureTime: date, destination } = trip;
   const { totalBookedSeats, totalSeats } = trip;
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-  const toggleDropdown = () => {
-    setShowDropdown((prev) => !prev);
-  };
+  const router = useRouter();
+  const { deleteTrip } = useDeleteTrip();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,6 +63,11 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
     };
   }, [showDropdown]);
 
+  const handleDelete = async () => {
+    const success = await deleteTrip(trip.id);
+    return success;
+  };
+
   const formatedDate = new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -59,51 +78,81 @@ const TripRow = ({ trip, displayId, onDelete }: Props) => {
       <TableRow>
         <TableCell>{displayId}</TableCell>
         <TableCell>{title}</TableCell>
-        <TableCell>{formatedDate}</TableCell>
-        <TableCell>{destination}</TableCell>
         <TableCell>
-          {totalBookedSeats} of {totalSeats}
+          {" "}
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-muted-foreground" />
+            {new Date(formatedDate).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
         </TableCell>
-        <TableCell>{trip.status}</TableCell>
         <TableCell>
-          <Button
-            variant="primary"
-            onClick={toggleDropdown}
-            className="flex items-center gap-2"
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-muted-foreground" />
+            {destination}
+          </div>
+        </TableCell>
+        <TableCell>
+          <Badge variant="outline" className="bg-background">
+            {totalBookedSeats} / {totalSeats}
+          </Badge>
+        </TableCell>
+        <TableCell>
+          <Badge
+            variant={
+              STATUS_CONFIG[trip.status as keyof typeof STATUS_CONFIG].variant
+            }
+            className={`capitalize ${
+              STATUS_CONFIG[trip.status as keyof typeof STATUS_CONFIG].color
+            }`}
           >
-            Modify <ChevronDown size={14} />
-          </Button>
-          {showDropdown && (
-            <div
-              ref={dropdownRef}
-              className="absolute w-28 mt-2 bg-white border rounded shadow-lg"
+            {STATUS_CONFIG[trip.status as keyof typeof STATUS_CONFIG].label}
+          </Badge>
+        </TableCell>
+
+        <TableCell>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <MoreHorizontal className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="bg-background border border-border shadow-lg"
             >
-              <Link
-                href={`/admin/bookings/${tripId}`}
-                className="block px-8 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+              <DropdownMenuItem
+                onClick={() => router.push(`/admin/bookings/${tripId}`)}
+                className="flex items-center gap-2 cursor-pointer"
               >
+                <Eye className="w-4 h-4" />
                 Bookings
-              </Link>
-
-              <DeleteAlert
-                onDelete={async () => {
-                  const success = await onDelete?.(tripId);
-                  return success || false;
-                }}
-                title="Delete Trip?"
-                description="Are you sure you want to this trip ? This action can not  undone."
-                errorMessage="Failed to delete trip."
-                successMessage="Trip deleted successfully."
-              />
-
-              <Link
-                href={`/admin/edit-trip/${tripId}`}
-                className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push(`/admin/edit-trip/${tripId}`)}
+                className="flex items-center gap-2 cursor-pointer"
               >
-                Update
-              </Link>
-            </div>
-          )}
+                <Edit className="w-4 h-4" />
+                Edit Trip
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-destructive">
+                <Trash2 className="w-4 h-4" />
+                <DeleteAlert
+                  onDelete={async () => {
+                    const success = handleDelete();
+                    return success || false;
+                  }}
+                  title="Delete Trip?"
+                  description="Are you sure you want to delete this trip?"
+                  errorMessage="Failed to delete trip."
+                  successMessage="Trip deleted successfully."
+                />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </TableCell>
       </TableRow>
     </>
