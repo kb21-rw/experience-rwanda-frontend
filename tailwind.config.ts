@@ -6,20 +6,23 @@ const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/utils/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       spacing: {
-        "21": "5.25rem",
-        "25": "6.25rem",
-        "30": "7.5rem",
         "1.5": "0.375rem",
+        "2.5": "0.625rem",
         "7.5": "1.875rem",
+        "11.25": "2.8125rem",
         "12.5": "3.125rem",
         "13.5": "3.375rem",
         "14.25": "3.5625rem",
+        "21": "5.25rem",
         "21.25": "5.3125rem",
+        "25": "6.25rem",
+        "30": "7.5rem",
         "37.5": "9.375rem",
         "52.5": "13.125rem",
         "112.5": "28.125rem",

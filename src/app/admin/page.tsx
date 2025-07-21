@@ -21,7 +21,7 @@ const Dashboard = () => {
     data: trips,
     error: tripsError,
     isLoading: tripsLoading,
-  } = useSWR<Trip[]>(`${process.env.NEXT_PUBLIC_API_URL}/trips`, fetcher);
+  } = useSWR<Trip[]>(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`, fetcher);
 
   const {
     data: admins,
