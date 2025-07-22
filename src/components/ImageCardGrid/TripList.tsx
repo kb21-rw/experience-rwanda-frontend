@@ -19,7 +19,7 @@ const defaultFilters = {
 };
 
 const TripList = ({ trips }: { trips: Trip[] }) => {
-  const safeTrips = Array.isArray(trips) ? trips : [];
+  const safeTrips = useMemo(() => (Array.isArray(trips) ? trips : []), [trips]);
   const [filters, setFilters] =
     useState<z.infer<typeof searchSchema>>(defaultFilters);
 

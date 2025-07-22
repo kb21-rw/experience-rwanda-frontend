@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/Button";
-import TripList from "./TripList";
+import TripTable from "./TripTable";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -25,7 +25,7 @@ const TripsPage = () => {
           Create New Trip
         </Button>
       </div>
-      <TripList />
+      <TripTable />
     </div>
   );
 };

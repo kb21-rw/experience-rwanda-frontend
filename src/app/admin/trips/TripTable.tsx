@@ -19,7 +19,7 @@ import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
 import TripNotFound from "./Card/TripNotFound";
 import { filterTrips, getStatusCounts } from "@/utils/tripFilters";
 
-const TripList = () => {
+const TripTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
@@ -150,4 +150,4 @@ const TripList = () => {
   );
 };
 
-export default TripList;
+export default TripTable;
