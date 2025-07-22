@@ -7,7 +7,13 @@ import { Trash2 } from "lucide-react";
 import DeleteAlert from "@/components/DeleteAlert";
 import { useDeleteAdmin } from "@/hooks/useDeleteAdmin";
 import { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
 import { fetchWithToken } from "@/utils/request";
 import { useAuth } from "@/context/authContext";
 import { toast } from "react-toastify";
@@ -47,18 +53,20 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
     setIsUpdating(true);
     try {
       const response = await fetchWithToken(
-        `${process.env.NEXT_PUBLIC_API_URL}/admins/${admin.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/admins/role/${admin.id}`,
         "PUT",
         { role: pendingRole },
         token
       );
       if (!response || response.error) {
-        toast.error(response?.error || "Failed to update role. Please try again.");
+        toast.error(
+          response?.error || "Failed to update role. Please try again."
+        );
         return;
       }
       setSelectedRole(pendingRole);
       toast.success("Role updated successfully.");
-      if (mutate) mutate(); 
+      if (mutate) mutate();
     } catch {
       toast.error("Failed to update role. Please try again.");
     } finally {
@@ -67,7 +75,7 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
       setIsUpdating(false);
     }
   };
-  
+
   const handleCancel = () => {
     setShowConfirm(false);
     setPendingRole(null);
@@ -91,16 +99,17 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
           disabled={isUpdating}
         >
           <SelectTrigger
-            className={clsx(
-              "px-4 py-1 rounded text-sm font-medium border-0",
-              {
-                "bg-black text-white": selectedRole === "SUPER_ADMIN" || selectedRole === "ADMIN",
-                "bg-gray-200 text-black": selectedRole === "EDITOR" || (selectedRole !== "SUPER_ADMIN" && selectedRole !== "ADMIN"),
-              }
-            )}
+            className={clsx("px-4 py-1 rounded text-sm font-medium border-0", {
+              "bg-black text-white":
+                selectedRole === "SUPER_ADMIN" || selectedRole === "ADMIN",
+              "bg-gray-200 text-black":
+                selectedRole === "EDITOR" ||
+                (selectedRole !== "SUPER_ADMIN" && selectedRole !== "ADMIN"),
+            })}
           >
             <SelectValue>
-              {ROLE_OPTIONS.find(r => r.value === selectedRole)?.label || selectedRole}
+              {ROLE_OPTIONS.find((r) => r.value === selectedRole)?.label ||
+                selectedRole}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
@@ -123,30 +132,32 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
           />
         )}
       </TableCell>
-   {   canPerformAction && <TableCell className="relative">
-        <DeleteAlert
-          onDelete={async () => {
-            const success = await deleteAdmin(admin.id);
-            if (success && mutate) mutate();
-            return success;
-          }}
-          title="Delete Admin?"
-          description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
-          successMessage="Admin deleted successfully."
-          errorMessage="Failed to delete admin."
-        >
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-red-500 hover:text-red-700"
-            disabled={isDeleting}
+      {canPerformAction && (
+        <TableCell className="relative">
+          <DeleteAlert
+            onDelete={async () => {
+              const success = await deleteAdmin(admin.id);
+              if (success && mutate) mutate();
+              return success;
+            }}
+            title="Delete Admin?"
+            description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
+            successMessage="Admin deleted successfully."
+            errorMessage="Failed to delete admin."
           >
-            <Trash2 className="w-4 h-4" />
-          </Button>
-        </DeleteAlert>
-      </TableCell>}
-        </TableRow>
-      );
-    };
-    
-    export default AdminRow;
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-red-500 hover:text-red-700"
+              disabled={isDeleting}
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </DeleteAlert>
+        </TableCell>
+      )}
+    </TableRow>
+  );
+};
+
+export default AdminRow;
