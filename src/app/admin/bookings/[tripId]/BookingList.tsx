@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import { exportBookingsToPdf } from "@/lib/pdf/exportBookings";
 
 const BookingList = ({
   initialBookings,
@@ -111,7 +112,11 @@ const BookingList = ({
                 <SelectItem value="hundred">$100</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="primary" className="px-4 py-2">
+            <Button
+              onClick={() => exportBookingsToPdf(paginatedBookings)}
+              variant="primary"
+              className="px-4 py-2"
+            >
               <IoShareSocial />
               Export
             </Button>
