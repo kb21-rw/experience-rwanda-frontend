@@ -25,6 +25,7 @@ import useSWR from "swr";
 import { useAuth } from "@/context/authContext";
 import { fetcher } from "@/lib/fetcher";
 import { hasPermission } from "@/auth/rbac";
+import { exportAdminsToPdf } from "@/lib/pdf/exportAdmins";
 
 const AdminList = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -99,10 +100,16 @@ const AdminList = () => {
                 <SelectItem value="super_admin">Super Admin</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="primary" className="px-4 py-2">
-              <IoShareSocial />
-              Export
-            </Button>
+            {user && user.role !== "EDITOR" && (
+              <Button
+                onClick={() => exportAdminsToPdf(paginatedAdmins)}
+                variant="primary"
+                className="px-4 py-2"
+              >
+                <IoShareSocial />
+                Export
+              </Button>
+            )}
           </div>
 
           {paginatedAdmins.length > 0 ? (
