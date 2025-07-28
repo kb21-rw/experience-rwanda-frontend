@@ -26,8 +26,15 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
   ]);
 
   const onSubmit = async (data: FormData, reset: UseFormReset<FormData>) => {
+    const { departureDate, departureTime, returnDate, returnTime, ...rest } = data;
+    const combinedData = {
+      ...rest,
+      departureTime: combineDateAndTime(departureDate, departureTime),
+      returnTime: combineDateAndTime(returnDate, returnTime),
+    };
+
     const formData = new FormData();
-    formData.append("tripData", JSON.stringify(data));
+    formData.append("tripData", JSON.stringify(combinedData));
 
     if (coverImage) {
       formData.append("coverImage", coverImage);
@@ -60,6 +67,18 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
       console.error("Error uploading:", error);
       toast.error("Error creating trip");
     }
+  };
+
+  // Helper function to combine date and time
+  const combineDateAndTime = (date: Date | string, time: string | undefined): Date => {
+    const dateObj = new Date(date);
+    if (!time) {
+      return dateObj;
+    }
+
+    const [hours, minutes] = time.split(":").map(Number);
+    dateObj.setHours(hours, minutes, 0, 0);
+    return dateObj;
   };
 
   return {

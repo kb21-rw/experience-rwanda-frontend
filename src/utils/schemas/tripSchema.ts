@@ -11,8 +11,10 @@ export const tripSchema = z
     title: z.string().min(1, "Title is required"),
     destination: z.string().min(1, "Destination is required"),
     description: z.string().min(1, "Description is required"),
-    departureTime: z.date().or(z.string()),
-    returnTime: z.date().or(z.string()),
+    departureDate: z.date().or(z.string()),
+    departureTime: z.string().optional(),
+    returnDate: z.date().or(z.string()),
+    returnTime: z.string().optional(),
     totalSeats: z.string().min(1, "Seats is required"),
     coverImage: z.string().optional(),
     galleryImages: z
@@ -29,7 +31,22 @@ export const tripSchema = z
       .array(pricingOptionSchema)
       .min(1, "At least one pricing option is required"),
   })
-  .refine((data) => data.returnTime > data.departureTime, {
-    message: "Return time must be after departure time",
-    path: ["returnTime"],
+  .refine((data) => {
+    const departureDate = new Date(data.departureDate);
+    const returnDate = new Date(data.returnDate);
+    
+    if (returnDate > departureDate) return true;
+    if (returnDate.getTime() === departureDate.getTime()) {
+      if (!data.departureTime || !data.returnTime) return true;
+      
+      const departureTime = data.departureTime;
+      const returnTime = data.returnTime;
+      
+      return returnTime > departureTime;
+    }
+    
+    return false;
+  }, {
+    message: "Return date/time must be after departure date/time",
+    path: ["returnDate"],
   });

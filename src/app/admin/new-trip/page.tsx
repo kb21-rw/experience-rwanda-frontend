@@ -14,8 +14,10 @@ const CreateTrip = async () => {
           title: "",
           description: "",
           destination: "",
-          departureTime: new Date(),
-          returnTime: new Date(),
+          departureDate: new Date(),
+          departureTime: "",
+          returnDate: new Date(),
+          returnTime: "",
           totalSeats: "",
           pricingOptions: [],
         }}

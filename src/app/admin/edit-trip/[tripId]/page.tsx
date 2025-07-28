@@ -25,12 +25,21 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     console.error("Error fetching trip:", error);
     throw new Error("Trip not found or failed to load.");
   }
+
+  const departureDate = new Date(tripData.departureTime);
+  const returnDate = new Date(tripData.returnTime);
+  
+  const departureTime = departureDate.toTimeString().slice(0, 5); 
+  const returnTime = returnDate.toTimeString().slice(0, 5); 
+
   const defaultValues: FormData = {
     title: tripData.title,
     destination: tripData.destination,
     description: tripData.description,
-    departureTime: new Date(tripData.departureTime),
-    returnTime: new Date(tripData.returnTime),
+    departureDate: departureDate,
+    departureTime: departureTime,
+    returnDate: returnDate,
+    returnTime: returnTime,
     totalSeats: tripData.totalSeats.toString(),
     coverImage: tripData.coverImage,
     galleryImages: tripData.galleryImages,

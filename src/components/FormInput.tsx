@@ -9,6 +9,7 @@ import {
   Path,
 } from "react-hook-form";
 import { DatePicker } from "./DatePicker";
+import { TimePicker } from "./TimePicker";
 
 const FormInput = <T extends Record<string, unknown>>({
   control,
@@ -26,7 +27,7 @@ const FormInput = <T extends Record<string, unknown>>({
   name: Path<T>;
   label: string;
   placeholder?: string;
-  type?: "text" | "number" | "date";
+  type?: "text" | "number" | "date" | "time";
   size?: "small" | "large";
   errors?: FieldErrors<T>;
   onDisabled?: (date: Date) => boolean;
@@ -53,6 +54,33 @@ const FormInput = <T extends Record<string, unknown>>({
                     : new Date()
                 }
                 onChange={field.onChange}
+              />
+            )}
+          />
+          {errors?.[name] && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors[name]?.message?.toString()}
+            </p>
+          )}
+        </div>
+      );
+    case "time":
+      return (
+        <div className="w-52.5">
+          <Label
+            htmlFor={name as string}
+            className="block text-sm font-medium text-black mb-2"
+          >
+            {label}
+          </Label>
+          <Controller
+            name={name}
+            control={control}
+            render={({ field }) => (
+              <TimePicker
+                value={field.value as string}
+                onChange={field.onChange}
+                placeholder={placeholder}
               />
             )}
           />

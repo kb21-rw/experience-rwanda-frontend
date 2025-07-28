@@ -8,7 +8,6 @@ import { tripSchema } from "@/utils/schemas/tripSchema";
 import { useTripFormSubmit } from "@/hooks/useTripFormSubmit";
 import ImageUploader from "@/components/ImageUploader";
 import PricingOption from "@/components/PricingOption";
-// import TripPackage from "@/components/TripPackage";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -99,32 +98,60 @@ const TripForm = ({
       </div>
 
       <div className="space-y-4">
-        <div className=" flex flex-col gap-4">
-          <div className="flex flex-col xl:flex-row gap-4">
-            <FormInput
-              register={register}
-              control={control}
-              name="departureTime"
-              label="Departure Time"
-              type="date"
-              errors={errors}
-              onDisabled={(date) =>
-                date < new Date(new Date().setHours(0, 0, 0, 0))
-              }
-            />
+        <div className="flex flex-col gap-4">
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Departure</h3>
+            <div className="flex flex-col xl:flex-row gap-4">
+              <FormInput
+                register={register}
+                control={control}
+                name="departureDate"
+                label="Departure Date"
+                type="date"
+                errors={errors}
+                onDisabled={(date) =>
+                  date < new Date(new Date().setHours(0, 0, 0, 0))
+                }
+              />
 
-            <FormInput
-              register={register}
-              control={control}
-              name="returnTime"
-              label="Return Time"
-              type="date"
-              errors={errors}
-              onDisabled={(date) =>
-                !getValues("departureTime") ||
-                date < new Date(getValues("departureTime"))
-              }
-            />
+              <FormInput
+                register={register}
+                control={control}
+                name="departureTime"
+                label="Departure Time"
+                type="time"
+                placeholder="Select departure time"
+                errors={errors}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Return</h3>
+            <div className="flex flex-col xl:flex-row gap-4">
+              <FormInput
+                register={register}
+                control={control}
+                name="returnDate"
+                label="Return Date"
+                type="date"
+                errors={errors}
+                onDisabled={(date) =>
+                  !getValues("departureDate") ||
+                  date < new Date(getValues("departureDate"))
+                }
+              />
+
+              <FormInput
+                register={register}
+                control={control}
+                name="returnTime"
+                label="Return Time"
+                type="time"
+                placeholder="Select return time"
+                errors={errors}
+              />
+            </div>
           </div>
 
           <FormInput
