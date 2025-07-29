@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Label } from "@/components/ui/Label";
-import { FaCloudUploadAlt } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
 import Image from "next/image";
+import { Upload } from "lucide-react";
 
 const ImageUploader = ({
   setCoverImage,
@@ -79,42 +79,38 @@ const ImageUploader = ({
       <Label className="block text-2xl font-bold text-black mb-6">
         Trip Pictures
       </Label>
-      <div className="flex gap-12">
-        <div className="flex flex-col items-center">
-          <label className="w-48 h-52 border border-white bg-white shadow-md rounded-lg flex flex-col justify-center items-center cursor-pointer hover:shadow-lg transition">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                handleCoverImageChange(e.target.files?.[0] || null)
-              }
-              className="hidden"
-            />
-            <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
-            <p className="text-center text-base text-black font-medium px-2">
-              Upload Cover photo
-              <br />
-              {/* or drag it here */}
-            </p>
-          </label>
-        </div>
-        <div className="flex flex-col items-center">
-          <label className="w-48 h-52 border border-white bg-white shadow-md rounded-lg flex flex-col justify-center items-center cursor-pointer hover:shadow-lg transition">
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={(e) => handleGalleryImagesChange(e.target.files)}
-              className="hidden"
-            />
-            <FaCloudUploadAlt className="w-14 h-14 text-black mb-2" />
-            <p className="text-center text-base text-black font-medium px-2">
-              Upload gallery photo
-              <br />
-              {/* or drag it here */}
-            </p>
-          </label>
-        </div>
+      <div className="flex gap-12 w-full">
+        <label className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-travel-blue/50 transition-all duration-200 cursor-pointer group w-full">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              handleCoverImageChange(e.target.files?.[0] || null)
+            }
+            className="hidden"
+          />
+          <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground group-hover:text-travel-blue transition-colors" />
+          <p className="text-center text-base text-black font-medium px-2">
+            Upload Cover photo
+            <br />
+            {/* or drag it here */}
+          </p>
+        </label>
+        <label className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-travel-blue/50 transition-all duration-200 cursor-pointer group w-full">
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => handleGalleryImagesChange(e.target.files)}
+            className="hidden"
+          />
+          <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground group-hover:text-travel-blue transition-colors" />
+          <p className="text-center text-base text-black font-medium px-2">
+            Upload gallery photo
+            <br />
+            {/* or drag it here */}
+          </p>
+        </label>
       </div>
 
       <div className="mt-8">
