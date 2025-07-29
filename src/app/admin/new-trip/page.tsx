@@ -16,8 +16,8 @@ const CreateTrip = () => {
             title: "",
             description: "",
             destination: "",
-            departureTime: new Date(),
-            returnTime: new Date(),
+            departureTime: "",
+            returnTime: "",
             totalSeats: "",
             pricingOptions: [],
           }}

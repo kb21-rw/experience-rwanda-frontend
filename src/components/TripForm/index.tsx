@@ -51,6 +51,9 @@ const TripForm = ({
     form.setValue("coverImage", defaultCoverImage);
     form.setValue("galleryImages", defaultGalleryImages);
   }, [form.setValue, defaultCoverImage, defaultGalleryImages, form]);
+
+  const now = format(new Date(), "yyyy-MM-dd'T'HH:mm");
+
   return (
     <Card className="shadow-lg border-0 bg-gradient-to-br from-background to-secondary/20">
       <CardContent className="p-8">
@@ -59,15 +62,13 @@ const TripForm = ({
             onSubmit={form.handleSubmit((data) => onSubmit(data, form.reset))}
           >
             <div className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <FormInput
-                  form={form}
-                  name="title"
-                  label="Title"
-                  placeholder="Hike with vibes at Muhabura volcano"
-                  type="text"
-                />
-              </div>
+              <FormInput
+                form={form}
+                name="title"
+                label="Title"
+                placeholder="Hike with vibes at Muhabura volcano"
+                type="text"
+              />
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <FormInput
@@ -76,7 +77,7 @@ const TripForm = ({
                   label="Departure Time"
                   type="datetime-local"
                   icon={<Calendar className="w-4 h-4 text-travel-blue" />}
-                  minDate={format(new Date(), "yyyy-MM-dd'T'HH:mm")}
+                  minDate={now}
                 />
 
                 <FormInput
@@ -86,7 +87,7 @@ const TripForm = ({
                   type="datetime-local"
                   icon={<Calendar className="w-4 h-4 text-travel-blue" />}
                   minDate={format(
-                    form.getValues("departureTime"),
+                    form.getValues("departureTime") || now,
                     "yyyy-MM-dd'T'HH:mm"
                   )}
                 />
@@ -138,8 +139,8 @@ const TripForm = ({
           setTripPackages={setTripPackages}
           tripPackages={tripPackages}
         /> */}
-            <div className="pt-20">
-              <Button type="submit" variant="primary">
+            <div className="pt-20 flex justify-center">
+              <Button className="w-1/2 py-5" type="submit" variant="primary">
                 {tripId ? "Update Trip" : "Create New Trip"}
               </Button>
             </div>

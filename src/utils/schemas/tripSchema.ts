@@ -18,26 +18,46 @@ export const tripSchema = z
       .max(160, {
         message: "Description must not be longer than 160 characters.",
       }),
-    departureTime: z.string().refine(
-      (val) => {
-        const now = new Date();
-        const inputDate = new Date(val);
-        return inputDate >= now;
-      },
-      {
-        message: "Departure date must be in the future",
-      }
-    ),
-    returnTime: z.string().refine(
-      (val) => {
-        const now = new Date();
-        const inputDate = new Date(val);
-        return inputDate >= now;
-      },
-      {
-        message: "Return date must be in the future",
-      }
-    ),
+    departureTime: z
+      .string()
+      .refine(
+        (val) => {
+          return Boolean(val);
+        },
+        {
+          message: "Departure date is required",
+        }
+      )
+      .refine(
+        (val) => {
+          const now = new Date();
+          const inputDate = new Date(val);
+          return inputDate >= now;
+        },
+        {
+          message: "Departure date can't be in the past",
+        }
+      ),
+    returnTime: z
+      .string()
+      .refine(
+        (val) => {
+          return Boolean(val);
+        },
+        {
+          message: "Return date is required",
+        }
+      )
+      .refine(
+        (val) => {
+          const now = new Date();
+          const inputDate = new Date(val);
+          return inputDate >= now;
+        },
+        {
+          message: "Return date can't be in the past",
+        }
+      ),
     totalSeats: z.string().min(1, "Seats is required"),
     coverImage: z.string().optional(),
     galleryImages: z
