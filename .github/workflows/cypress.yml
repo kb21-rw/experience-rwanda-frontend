@@ -1,0 +1,57 @@
+name: Cypress E2E Workflow
+
+on:
+  push:
+    branches:
+      - develop
+      - stage
+      - prod
+  pull_request:
+    branches:
+      - develop
+      - stage
+      - prod
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+
+    steps:
+      - name: Checkout Frontend Repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js v20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Frontend Dependencies
+        run: npm install
+
+      - name: Clone Backend Repository
+        run: git clone https://github.com/kb21-rw/experience-rwanda-backend.git ../backend
+
+      - name: Install Backend Dependencies
+        working-directory: ../backend
+        run: yarn
+
+      - name: Start Backend
+        working-directory: ../backend
+        run: yarn dev &
+        
+      - name: Start Frontend
+        run: npm run dev &
+
+      - name: Wait for Frontend to be Ready
+        uses: jakejarvis/wait-action@v0.1.1
+        with:
+          url: 'http://localhost:5173'
+          timeout: 60
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          wait-on: 'http://localhost:5173'
+          wait-on-timeout: 60
