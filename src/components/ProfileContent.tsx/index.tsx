@@ -4,6 +4,7 @@ import { useSidebar } from "../ui/SideBar/sidebar";
 import { useEffect } from "react";
 import jwt from "jsonwebtoken";
 import { useState } from "react";
+import Link from "next/link";
 
 interface User {
   name: string;
@@ -22,7 +23,10 @@ export default function ProfileContent() {
     }
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center pt-4 pb-12 gap-4 ">
+    <Link
+      href="/admin/profile"
+      className="flex flex-col items-center justify-center pt-4 pb-12 gap-4 hover:opacity-90"
+    >
       <ProfileCard
         name={user?.name || ""}
         imageSrc={""}
@@ -30,10 +34,10 @@ export default function ProfileContent() {
         alt={""}
       />
       {state === "expanded" && (
-        <div className="text-base font-medium tracking-[0%] text-center">
+        <p className="text-base font-medium tracking-[0%] text-center">
           {user?.name || ""}
-        </div>
+        </p>
       )}
-    </div>
+    </Link>
   );
 }
