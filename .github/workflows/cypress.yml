@@ -32,8 +32,8 @@ jobs:
 
       - name: Clone Backend Repository
         run: |
-          git clone https://github.com/kb21-rw/experience-rwanda-backend.git backend
-          chmod -R 777 backend
+          git clone https://x-access-token:${{ secrets.BACKEND_PAT }}@github.com/kb21-rw/experience-rwanda-backend.git backend
+      
 
       - name: Install Backend Dependencies
         working-directory: backend
