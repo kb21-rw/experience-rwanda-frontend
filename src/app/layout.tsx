@@ -30,6 +30,13 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        <title>Experience Rwanda</title>
+        <meta
+          name="description"
+          content="Experience Rwanda offers affordable guided tours to top tourist destinations across Rwanda, including gorilla trekking, Lake Kivu, Nyungwe Forest, and Kigali city tours. Explore Rwanda with trusted local experts."
+        />
+      </head>
       <body className={`antialiased flex flex-col min-h-screen`}>
         <Suspense fallback={null}>
           <Toastify />
