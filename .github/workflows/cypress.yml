@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
+      HOST_PORT: 4000
+      CONTAINER_PORT: 4000
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL}}
       IMAGE_HOSTNAME: ${{ secrets.IMAGE_HOSTNAME }}
       IMAGE_HOSTNAME2: ${{ secrets.IMAGE_HOSTNAME2 }}
@@ -24,8 +26,6 @@ jobs:
       NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
       NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }}
       REVALIDATION_SECRET: ${{ secrets.REVALIDATION_SECRET }}
-      HOST_PORT: ${{ secrets.HOST_PORT }}
-      CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
       NODEMAIL_PASSWORD: ${{ secrets.NODEMAIL_PASSWORD }}
       NODEMAIL_EMAIL: ${{ secrets.NODEMAIL_EMAIL }}
       FLW_PUBLIC_KEY: ${{ secrets.FLW_PUBLIC_KEY }}
