@@ -42,7 +42,7 @@ jobs:
           url: 'http://localhost:4000'
           timeout: 100
 
-      - name: Start Frontend Server on port 3000
+      - name: Start Frontend Server
         run: npm run dev &
 
       - name: Wait for Frontend Server to be ready
