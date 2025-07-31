@@ -2,15 +2,9 @@ name: Cypress E2E Tests
 
 on:
   push:
-    branches:
-      - dev
-      - stage
-      - prod
+    branches: [dev, stage, prod]
   pull_request:
-    branches:
-      - dev
-      - stage
-      - prod
+    branches: [dev, stage, prod]
 
 jobs:
   e2e-tests:
@@ -34,36 +28,35 @@ jobs:
         run: |
           git clone https://x-access-token:${{ secrets.BACKEND_PAT }}@github.com/kb21-rw/experience-rwanda-backend.git backend
       
-
       - name: Install Backend Dependencies
         working-directory: backend
         run: yarn
 
-      - name: Start Backend Server
+      - name: Start Backend Server on port 4000
         working-directory: backend
-        run: yarn dev &
-
-      - name: Start Frontend Server
-        run: npm run dev &
+        run: PORT=4000 yarn dev &
 
       - name: Wait for Backend Server to be ready
         uses: jakejarvis/wait-action@v0.1.1
         with:
-          url: 'http://localhost:3000'  
-          timeout: 60
+          url: 'http://localhost:4000'
+          timeout: 100
+
+      - name: Start Frontend Server on port 3000
+        run: npm run dev &
 
       - name: Wait for Frontend Server to be ready
         uses: jakejarvis/wait-action@v0.1.1
         with:
-          url: 'http://localhost:3000'  
-          timeout: 60
+          url: 'http://localhost:3000'
+          timeout: 100
 
       - name: Run Cypress Tests
         run: npx cypress run
-  
+
       - name: Upload Cypress Screenshots
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-            name: cypress-screenshots
-            path: cypress/screenshots
+          name: cypress-screenshots
+          path: cypress/screenshots
