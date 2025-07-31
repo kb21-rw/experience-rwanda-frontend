@@ -26,3 +26,9 @@ export const STATUS_CONFIG = {
     color: "bg-red-100 text-red-800",
   },
 };
+
+export const ADMIN_HEADERS = [
+  { label: "Name", key: "name" },
+  { label: "Email Address", key: "email" },
+  { label: "Role", key: "role" },
+];
