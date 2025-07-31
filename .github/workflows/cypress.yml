@@ -1,57 +1,60 @@
 name: Cypress E2E Workflow
-
 on:
   push:
     branches:
-      - develop
+      - dev
       - stage
       - prod
   pull_request:
     branches:
-      - develop
+      - dev
       - stage
       - prod
-
 jobs:
-  test:
+  backend-tests:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: test
-
     steps:
-      - name: Checkout Frontend Repository
+      - name: Checkout Backend
         uses: actions/checkout@v2
+        with:
+          repository: kb21-rw/experience-rwanda-backend
 
-      - name: Use Node.js v20
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Install Frontend Dependencies
+      - name: Install and Start Backend
+        run: |
+          yarn install
+          yarn dev &
+          npx wait-on http://localhost:3000
+
+      - name: Backend Tests
+        run: yarn test # or whatever command
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+    needs: backend-tests
+    steps:
+      - name: Checkout Frontend
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Frontend
         run: npm install
 
-      - name: Clone Backend Repository
-        run: git clone https://github.com/kb21-rw/experience-rwanda-backend.git ../backend
-
-      - name: Install Backend Dependencies
-        working-directory: ../backend
-        run: yarn
-
-      - name: Start Backend
-        working-directory: ../backend
-        run: yarn dev &
-        
       - name: Start Frontend
-        run: npm run dev &
+        run: |
+          npm run dev &
+          npx wait-on http://localhost:3000
 
-      - name: Wait for Frontend to be Ready
-        uses: jakejarvis/wait-action@v0.1.1
-        with:
-          url: 'http://localhost:5173'
-          timeout: 60
-
-      - name: Run Cypress Tests
+      - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
-          wait-on: 'http://localhost:5173'
-          wait-on-timeout: 60
+          wait-on: http://localhost:3000
+          wait-on-timeout: 120
