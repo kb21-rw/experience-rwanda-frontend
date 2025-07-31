@@ -31,7 +31,7 @@ jobs:
           npx wait-on http://localhost:3000
 
       - name: Backend Tests
-        run: yarn test # or whatever command
+        run: yarn test 
 
   frontend-tests:
     runs-on: ubuntu-latest
