@@ -17,15 +17,38 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
-      NEXT_PUBLIC_API_URL: http://localhost:4000/api
-      IMAGE_HOSTNAME: i0.wp.com
-      IMAGE_HOSTNAME2: nzizasafaris.com
-      NEXT_PUBLIC_EMAILJS_SERVICE_ID: service_z4jncuo
-      NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: template_3r64g0i
-      NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: R4c9ZEUuE1_fHfPFK
-      JWT_SECRET: nestor
-      REVALIDATION_SECRET: my-strong-secret-key
-
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL}}
+      IMAGE_HOSTNAME: ${{ secrets.IMAGE_HOSTNAME }}
+      IMAGE_HOSTNAME2: ${{ secrets.IMAGE_HOSTNAME2 }}
+      NEXT_PUBLIC_EMAILJS_SERVICE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
+      NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
+      NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }}
+      REVALIDATION_SECRET: ${{ secrets.REVALIDATION_SECRET }}
+      HOST_PORT: ${{ secrets.HOST_PORT }}
+      CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+      NODEMAIL_PASSWORD: ${{ secrets.NODEMAIL_PASSWORD }}
+      NODEMAIL_EMAIL: ${{ secrets.NODEMAIL_EMAIL }}
+      FLW_PUBLIC_KEY: ${{ secrets.FLW_PUBLIC_KEY }}
+      FLW_SECRET_KEY: ${{ secrets.FLW_SECRET_KEY }}
+      FLW_ENCRYPTION_KEY: ${{ secrets.FLW_ENCRYPTION_KEY }}
+      FLUTTERWAVE_API_URL: ${{ secrets.FLUTTERWAVE_API_URL }}
+      PAYMENT_REDIRECT_URL: ${{ secrets.PAYMENT_REDIRECT_URL }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      VERCEL_WEBHOOK_URL: ${{ secrets.VERCEL_WEBHOOK_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      LOCAL_FRONTEND_URL: ${{ secrets.LOCAL_FRONTEND_URL }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+  
     steps:
       - name: Checkout Frontend Repository
         uses: actions/checkout@v3
