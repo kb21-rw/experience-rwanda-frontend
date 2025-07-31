@@ -31,7 +31,9 @@ jobs:
         run: npm install
 
       - name: Clone Backend Repository
-        run: git clone https://github.com/kb21-rw/experience-rwanda-backend.git backend
+        run: |
+          git clone https://github.com/kb21-rw/experience-rwanda-backend.git backend
+          chmod -R 777 backend
 
       - name: Install Backend Dependencies
         working-directory: backend
