@@ -25,9 +25,9 @@ const PricingOption: React.FC<PricingOptionProps> = ({
   errors,
 }) => {
   return (
-    <div className="mt-8">
+    <div className="">
+      <h3 className="text-lg font-semibold text-black mb-4">Pricing Options</h3>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-black">Pricing Options</h3>
         <Button
           type="button"
           onClick={() =>

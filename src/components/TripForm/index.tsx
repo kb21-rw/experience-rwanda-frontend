@@ -12,7 +12,6 @@ import { Button } from "../ui/Button";
 import { tripSchema } from "@/utils/schemas/tripSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-// import TripPackage from "@/components/TripPackage";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -31,8 +30,6 @@ const TripForm = ({
     onSubmit,
     setCoverImage,
     setGalleryImages,
-    // tripPackages,
-    // setTripPackages,
     defaultGalleryImages,
     defaultCoverImage,
     setDefaultGalleryImages,
@@ -61,7 +58,7 @@ const TripForm = ({
           <form
             onSubmit={form.handleSubmit((data) => onSubmit(data, form.reset))}
           >
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <FormInput
                 form={form}
                 name="title"
@@ -92,7 +89,14 @@ const TripForm = ({
                   )}
                 />
               </div>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+              <FormInput
+                form={form}
+                name="description"
+                label="Description"
+                placeholder="Enter trip description..."
+                type="textarea"
+              />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <FormInput
                   form={form}
                   name="destination"
@@ -110,21 +114,7 @@ const TripForm = ({
                   type="number"
                 />
               </div>
-              <FormInput
-                form={form}
-                name="description"
-                label="Description"
-                placeholder="Enter trip description..."
-                type="textarea"
-              />
 
-              <PricingOption
-                pricingOptions={pricingOptions}
-                register={form.register}
-                remove={remove}
-                append={append}
-                errors={form.formState.errors}
-              />
               <ImageUploader
                 setCoverImage={setCoverImage}
                 setGalleryImages={setGalleryImages}
@@ -133,12 +123,15 @@ const TripForm = ({
                 setDefaultCoverImage={setDefaultCoverImage}
                 setDefaultGalleryImages={setDefaultGalleryImages}
               />
+              <PricingOption
+                pricingOptions={pricingOptions}
+                register={form.register}
+                remove={remove}
+                append={append}
+                errors={form.formState.errors}
+              />
             </div>
 
-            {/* <TripPackage
-          setTripPackages={setTripPackages}
-          tripPackages={tripPackages}
-        /> */}
             <div className="pt-20 flex justify-center">
               <Button className="w-1/2 py-5" type="submit" variant="primary">
                 {tripId ? "Update Trip" : "Create New Trip"}

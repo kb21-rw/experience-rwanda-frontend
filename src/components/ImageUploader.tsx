@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { Label } from "@/components/ui/Label";
 import { FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import { Upload } from "lucide-react";
@@ -76,9 +75,7 @@ const ImageUploader = ({
 
   return (
     <div>
-      <Label className="block text-2xl font-bold text-black mb-6">
-        Trip Pictures
-      </Label>
+      <h3 className="text-lg font-semibold text-black mb-6">Trip Pictures</h3>
       <div className="flex gap-12 w-full">
         <label className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-travel-blue/50 transition-all duration-200 cursor-pointer group w-full">
           <input
