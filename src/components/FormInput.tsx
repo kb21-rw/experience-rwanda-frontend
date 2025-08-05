@@ -1,124 +1,104 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Input } from "./ui/Input";
-import { Label } from "./ui/Label";
+import { Path, ControllerRenderProps, UseFormReturn } from "react-hook-form";
+import { Textarea } from "./ui/textarea";
 import {
-  UseFormRegister,
-  FieldErrors,
-  Control,
-  Controller,
-  Path,
-} from "react-hook-form";
-import { DatePicker } from "./DatePicker";
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/Form";
+import { tripSchema } from "@/utils/schemas/tripSchema";
+import { z } from "zod";
+// how to exclude some element in the field  formdata
+type FormData = Omit<
+  z.infer<typeof tripSchema>,
+  "coverImage" | "galleryImages" | "pricingOptions"
+>;
 
-const FormInput = <T extends Record<string, unknown>>({
-  control,
-  register,
+const FormInput = ({
+  placeholder,
   name,
   label,
-  placeholder,
   type,
-  size,
-  errors,
-  onDisabled,
+  minDate,
+  form,
+  icon,
 }: {
-  control?: Control<T>;
-  register: UseFormRegister<T>;
-  name: Path<T>;
+  form: UseFormReturn<any>;
+  name: Path<FormData>;
   label: string;
   placeholder?: string;
-  type?: "text" | "number" | "date";
-  size?: "small" | "large";
-  errors?: FieldErrors<T>;
-  onDisabled?: (date: Date) => boolean;
+  type: "text" | "textarea" | "number" | "datetime-local";
+  icon?: React.ReactNode;
+  minDate?: string;
 }) => {
-  switch (type) {
-    case "date":
-      return (
-        <div className="w-52.5">
-          <Label
-            htmlFor={name as string}
-            className="block text-sm font-medium text-black mb-2"
-          >
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel className="text-sm font-medium text-black mb-2 flex items-center gap-2">
+            {icon && icon}
             {label}
-          </Label>
-          <Controller
-            name={name}
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                onDisabled={onDisabled || (() => false)}
-                value={
-                  typeof field.value === "string" || field.value instanceof Date
-                    ? new Date(field.value)
-                    : new Date()
-                }
-                onChange={field.onChange}
-              />
-            )}
-          />
-          {errors?.[name] && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors[name]?.message?.toString()}
-            </p>
-          )}
-        </div>
-      );
-    case "text":
-      return (
-        <div>
-          <Label
-            htmlFor={name as string}
-            className="block text-sm font-medium text-black mb-2"
-          >
-            {label}
-          </Label>
-          {size === "large" ? (
-            <textarea
-              id={name as string}
-              {...register(name)}
+          </FormLabel>
+          <FormControl>
+            <InputComponent
+              type={type}
+              minDate={minDate}
               placeholder={placeholder}
-              rows={4}
-              className="w-full px-3 py-2 border border-black rounded-md"
+              field={field}
             />
-          ) : (
-            <Input
-              id={name as string}
-              type="text"
-              {...register(name)}
-              placeholder={placeholder}
-              className="w-full px-3 py-2 border border-black rounded-md"
-            />
-          )}
-          {errors?.[name] && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors[name]?.message?.toString()}
-            </p>
-          )}
-        </div>
-      );
-    case "number":
-      return (
-        <div className="w-52.5">
-          <Label
-            htmlFor={name as string}
-            className="block text-sm font-medium text-black"
-          >
-            {label}
-          </Label>
-          <Input
-            type="number"
-            {...register(name)}
-            className="w-full px-3 h-9 border border-black rounded-md"
-            placeholder={placeholder}
-          />
-          {errors?.[name] && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors[name]?.message?.toString()}
-            </p>
-          )}
-        </div>
-      );
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
+
+const InputComponent = ({
+  type,
+  field,
+  placeholder,
+  minDate,
+}: {
+  type: "text" | "textarea" | "number" | "time" | "datetime-local";
+  field: ControllerRenderProps<any, Path<any>>;
+  placeholder?: string;
+  minDate?: string;
+}) => {
+  if (type === "textarea")
+    return (
+      <Textarea
+        placeholder={placeholder}
+        rows={4}
+        className="w-full px-3 py-2 border border-black rounded-md"
+        {...field}
+      />
+    );
+  if (type === "datetime-local") {
+    return (
+      <Input
+        id={field.name}
+        type="datetime-local"
+        value={field.value}
+        onChange={(e) => field.onChange(e.target.value)}
+        min={minDate}
+      />
+    );
   }
+  return (
+    <Input
+      type={type}
+      placeholder={placeholder}
+      className="w-full px-3 border border-black rounded-md"
+      {...field}
+    />
+  );
 };
 
 export default FormInput;

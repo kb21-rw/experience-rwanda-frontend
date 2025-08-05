@@ -10,9 +10,54 @@ export const tripSchema = z
   .object({
     title: z.string().min(1, "Title is required"),
     destination: z.string().min(1, "Destination is required"),
-    description: z.string().min(1, "Description is required"),
-    departureTime: z.date().or(z.string()),
-    returnTime: z.date().or(z.string()),
+    description: z
+      .string()
+      .min(10, {
+        message: "Description must be at least 10 characters.",
+      })
+      .max(160, {
+        message: "Description must not be longer than 160 characters.",
+      }),
+    departureTime: z
+      .string()
+      .refine(
+        (val) => {
+          return Boolean(val);
+        },
+        {
+          message: "Departure date is required",
+        }
+      )
+      .refine(
+        (val) => {
+          const now = new Date();
+          const inputDate = new Date(val);
+          return inputDate >= now;
+        },
+        {
+          message: "Departure date can't be in the past",
+        }
+      ),
+    returnTime: z
+      .string()
+      .refine(
+        (val) => {
+          return Boolean(val);
+        },
+        {
+          message: "Return date is required",
+        }
+      )
+      .refine(
+        (val) => {
+          const now = new Date();
+          const inputDate = new Date(val);
+          return inputDate >= now;
+        },
+        {
+          message: "Return date can't be in the past",
+        }
+      ),
     totalSeats: z.string().min(1, "Seats is required"),
     coverImage: z.string().optional(),
     galleryImages: z
@@ -29,7 +74,12 @@ export const tripSchema = z
       .array(pricingOptionSchema)
       .min(1, "At least one pricing option is required"),
   })
-  .refine((data) => data.returnTime > data.departureTime, {
-    message: "Return time must be after departure time",
-    path: ["returnTime"],
-  });
+  .refine(
+    (data) => {
+      return new Date(data.returnTime) > new Date(data.departureTime);
+    },
+    {
+      message: "Return time must be after departure time",
+      path: ["returnTime"],
+    }
+  );
