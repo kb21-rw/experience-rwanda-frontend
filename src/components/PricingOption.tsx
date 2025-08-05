@@ -8,6 +8,13 @@ import { Trip } from "@/types/trip";
 import { Card, CardContent } from "./ui/Card";
 import { Button } from "./ui/Button";
 import { Plus, X } from "lucide-react";
+import {
+  MdDriveFileRenameOutline,
+  MdMoney,
+  MdOutlineDescription,
+} from "react-icons/md";
+import { GiPriceTag } from "react-icons/gi";
+import { Textarea } from "./ui/textarea";
 
 interface PricingOptionProps {
   pricingOptions: PricingOption[];
@@ -49,7 +56,10 @@ const PricingOption: React.FC<PricingOptionProps> = ({
           <Card key={index} className="border border-muted/30">
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-4">
-                <h4 className="font-medium">Package Details</h4>
+                <h4 className="text-sm font-medium text-black mb-2 flex items-center gap-2">
+                  <GiPriceTag className="w-4 h-4" />
+                  Price Details
+                </h4>
                 <Button
                   type="button"
                   variant="ghost"
@@ -63,9 +73,12 @@ const PricingOption: React.FC<PricingOptionProps> = ({
               <div className="border border-gray-300 p-4 rounded-md mb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="mb-2">
-                    <Label className="block text-sm text-black mb-1">
-                      Name
-                    </Label>
+                    <div className="flex items-center gap-2">
+                      <MdDriveFileRenameOutline />
+                      <Label className="block text-sm text-black mb-1">
+                        Name
+                      </Label>
+                    </div>
                     <Input
                       type="text"
                       {...register(`pricingOptions.${index}.name`)}
@@ -82,9 +95,12 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                   </div>
 
                   <div className="mb-2">
-                    <Label className="block text-sm text-black mb-1">
-                      Amount
-                    </Label>
+                    <div className="flex items-center gap-2">
+                      <MdMoney className="w-4 h-4" />
+                      <Label className="block text-sm text-black mb-1">
+                        Amount
+                      </Label>
+                    </div>
                     <Input
                       type="number"
                       {...register(`pricingOptions.${index}.amount`)}
@@ -95,10 +111,13 @@ const PricingOption: React.FC<PricingOptionProps> = ({
                 </div>
 
                 <div className="mb-2">
-                  <Label className="block text-sm text-black mb-1">
-                    Description
-                  </Label>
-                  <textarea
+                  <div className="flex items-center gap-2 mb-1">
+                    <MdOutlineDescription className="w-4 h-4" />
+                    <Label className="block text-sm text-black mb-1">
+                      Description
+                    </Label>
+                  </div>
+                  <Textarea
                     {...register(`pricingOptions.${index}.description`)}
                     className="w-full p-2 border border-black rounded-md"
                     placeholder="Short description"

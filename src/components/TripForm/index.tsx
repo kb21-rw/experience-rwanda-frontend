@@ -12,6 +12,7 @@ import { Button } from "../ui/Button";
 import { tripSchema } from "@/utils/schemas/tripSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
+import { MdOutlineDescription, MdOutlineTitle } from "react-icons/md";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -65,6 +66,7 @@ const TripForm = ({
                 label="Title"
                 placeholder="Hike with vibes at Muhabura volcano"
                 type="text"
+                icon={<MdOutlineTitle className="w-4 h-4" />}
               />
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -95,6 +97,7 @@ const TripForm = ({
                 label="Description"
                 placeholder="Enter trip description..."
                 type="textarea"
+                icon={<MdOutlineDescription className="w-4 h-4" />}
               />
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <FormInput
