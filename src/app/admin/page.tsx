@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Admin, DashboardData } from "@/types/Admin";
-import DashboardContent from "@/components/Dashboard/DasboardContent";
+import DashboardContent from "@/components/Dashboard/DashboardContent";
 import { useAuth } from "@/context/authContext";
 
 interface Trip {
