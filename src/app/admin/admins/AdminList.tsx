@@ -25,7 +25,6 @@ import useSWR from "swr";
 import { useAuth } from "@/context/authContext";
 import { fetcher } from "@/lib/fetcher";
 import { hasPermission } from "@/auth/rbac";
-import { exportAdminsToPdf } from "@/lib/pdf/exportAdmins";
 import { CSVLink } from "react-csv";
 import { ADMIN_HEADERS } from "@/utils/constants";
 
@@ -101,19 +100,19 @@ const AdminList = () => {
                 <SelectItem value="admin">Admin</SelectItem>
                 <SelectItem value="super_admin">Super Admin</SelectItem>
               </SelectContent>
-            </Select>            
-            {user && user.role !== 'EDITOR' && (
-            <CSVLink
-              data={paginatedAdmins}
-              headers={ADMIN_HEADERS}
-              filename={`admins-page-${currentPage}.csv`}
-            >
-              <Button variant="primary" className="px-4 py-2">
-                <IoShareSocial />
-                Export
-              </Button>
-            </CSVLink>
-              )}
+            </Select>
+            {user && user.role !== "EDITOR" && (
+              <CSVLink
+                data={paginatedAdmins}
+                headers={ADMIN_HEADERS}
+                filename={`admins-page-${currentPage}.csv`}
+              >
+                <Button variant="primary" className="px-4 py-2">
+                  <IoShareSocial />
+                  Export
+                </Button>
+              </CSVLink>
+            )}
           </div>
 
           {paginatedAdmins.length > 0 ? (
