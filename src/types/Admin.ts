@@ -7,6 +7,7 @@ export type Admin = {
   status: "ACTIVE" | "INACTIVE" | string;
   createdAt: string;
   updatedAt: string;
+  href?: string;
 };
 
 export interface StatusType {

@@ -37,11 +37,12 @@ const DashboardContent = ({
     );
   }
 
-  const dashboardCards: DashboardCardData[] = [
+  const dashboardCards: (DashboardCardData & { href: string })[] = [
     {
       title: "Total Trips",
       total: data.trips.total,
       icon: <Book className="text-gray-600" size={26} />,
+      href: "/admin/trips", 
       statuses: [
         {
           count: data.trips.upcoming,
@@ -67,6 +68,7 @@ const DashboardContent = ({
       title: "Total Users",
       total: data.admins.length,
       icon: <Users className="text-gray-600" size={26} />,
+      href: "/admin/admins", 
       statuses: [
         {
           count: data.admins.filter((admin) => admin.role === "SUPER_ADMIN")
@@ -106,6 +108,7 @@ const DashboardContent = ({
             total={card.total}
             icon={card.icon}
             statuses={card.statuses}
+            href={card.href} 
           />
         ))}
       </div>
