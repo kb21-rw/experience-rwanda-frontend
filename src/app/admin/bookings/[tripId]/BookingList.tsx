@@ -10,57 +10,37 @@ import {
 } from "@/components/ui/Table";
 import BookRow from "./Card/BookRow";
 import Search from "@/components/Search";
-import { Button } from "@/components/ui/Button";
-import { IoShareSocial } from "react-icons/io5";
-
-import { Booking } from "@/types/Booking";
-import { fetcher } from "@/lib/fetcher";
-import useSWR from "swr";
 import { useDeleteBooking } from "@/hooks/useDeleteBooking";
 import BookingHeader from "@/components/BookingHeader";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/Select";
-import { exportBookingsToPdf } from "@/lib/pdf/exportBookings";
+import { ExportPopover } from "@/components/ui/ExportPopover";
+import { BOOKING_HEADERS } from "@/utils/constants";
+import TripNotFound from "../../trips/Card/NotFound";
+import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
+import { useTrips } from "@/hooks/useTrips";
+import { useParams } from "next/navigation";
 
-const BookingList = ({
-  initialBookings,
-}: {
-  initialBookings: Booking[];
-  isLoading: boolean;
-  error: string;
-}) => {
+const BookingList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const bookingsPerPage = 8;
   const { deleteBooking } = useDeleteBooking();
-
-  const {
-    data: bookings,
-    error,
-    mutate,
-    isLoading,
-  } = useSWR<Booking[]>(
-    `${process.env.NEXT_PUBLIC_API_URL}/bookings`,
-    fetcher,
-    {
-      fallbackData: initialBookings,
-      revalidateOnFocus: true,
-    }
-  );
+  const { tripId } = useParams();
 
   const handleDelete = async (id: string) => {
     const success = await deleteBooking(id);
-    mutate();
     return success;
   };
 
+  const { data: trips = [], isLoading, error } = useTrips();
+  const trip = trips.find((trip) => trip.id === tripId);
+  if (!trip)
+    return (
+      <div className="flex justify-center items-center text-center h-screen w-full">
+        <p className="font-bold text-2xl">Trip not found</p>
+      </div>
+    );
   const filteredBookings =
-    bookings?.filter((booking) => {
+    trip?.bookings?.filter((booking) => {
       const keyword = searchQuery.toLowerCase();
       return (
         booking.id.toLowerCase().includes(keyword) ||
@@ -80,89 +60,84 @@ const BookingList = ({
       setCurrentPage(page);
     }
   };
-
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center text-center h-screen">
-        <p className="animate-bounce text-2xl">Loading bookings...</p>
-      </div>
-    );
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center text-center h-screen text-red-600">
-        <p className="text-xl">{error}</p>
-      </div>
-    );
-  }
-
+  if (isLoading) return <TableSkeleton />;
+  if (error) return <p className="text-red-600">{error}</p>;
+  const title = trip.title;
+  const destination = trip.destination;
+  const departureTime = trip.departureTime;
+  const totalBookedSeats = trip.bookings.reduce(
+    (total, booking) => total + booking.bookedSeats,
+    0
+  );
+  const totalSeats = trip.totalSeats;
   return (
-    <>
-      <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
-        <BookingHeader />
-        <div>
-          <div className="flex justify-between items-center mb-10">
-            <Search onSearch={setSearchQuery} placeholder="Search Booking" />
-            <Select>
-              <SelectTrigger className="w-37.5">
-                <SelectValue placeholder="All Prices" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="sixty">$60</SelectItem>
-                <SelectItem value="hundred">$100</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button
-              onClick={() => exportBookingsToPdf(paginatedBookings)}
-              variant="primary"
-              className="px-4 py-2"
-            >
-              <IoShareSocial />
-              Export
-            </Button>
-          </div>
-
-          {paginatedBookings.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>No</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Seats</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedBookings.map((booking, index) => (
-                  <BookRow
-                    key={booking.id}
-                    booking={booking}
-                    displayId={((currentPage - 1) * bookingsPerPage + index + 1)
-                      .toString()
-                      .padStart(3, "0")}
-                    onDelete={handleDelete}
-                  />
-                ))}
-              </TableBody>
-            </Table>
-          ) : (
-            <div className="text-gray-500 text-xl flex justify-center items-center">
-              No bookings found.
-            </div>
-          )}
-        </div>
-        <div className="flex justify-center items-center">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={changePage}
-          />
-        </div>
+    <div className="border border-border overflow-hidden p-5 rounded-lg w-full flex flex-col gap-4">
+      <BookingHeader
+        departureTime={departureTime}
+        totalBookedSeats={totalBookedSeats}
+        totalSeats={totalSeats}
+        destination={destination}
+      />
+      <div className="flex justify-between items-center">
+        <Search
+          onSearch={setSearchQuery}
+          placeholder="Search Booking"
+          className="w-1/3"
+        />
+        <ExportPopover
+          data={paginatedBookings.map((booking, index) => ({
+            No: ((currentPage - 1) * bookingsPerPage + index + 1)
+              .toString()
+              .padStart(3, "0"),
+            Name: booking.user.fullName,
+            Phone: booking.user.phoneNumber,
+            Email: booking.user.email,
+            Seats: booking.bookedSeats.toString(),
+            Amount: booking.totalAmount.toString(),
+          }))}
+          headers={BOOKING_HEADERS}
+          filename={`bookings-${title}-${currentPage}`}
+          title={`Bookings of ${title}`}
+        />
       </div>
-    </>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {BOOKING_HEADERS.map((header) => (
+              <TableHead key={header}>{header}</TableHead>
+            ))}
+            <TableHead>Action</TableHead>
+          </TableRow>
+        </TableHeader>
+        {trip.bookings.length > 0 ? (
+          <TableBody>
+            {paginatedBookings.map((booking, index) => (
+              <BookRow
+                key={booking.id}
+                booking={booking}
+                displayId={((currentPage - 1) * bookingsPerPage + index + 1)
+                  .toString()
+                  .padStart(3, "0")}
+                onDelete={handleDelete}
+              />
+            ))}
+          </TableBody>
+        ) : (
+          <TripNotFound
+            title="No Bookings"
+            description="No bookings found for this trip"
+          />
+        )}
+      </Table>
+
+      <div className="flex justify-center items-center">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={changePage}
+        />
+      </div>
+    </div>
   );
 };
 

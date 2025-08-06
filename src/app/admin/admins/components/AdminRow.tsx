@@ -19,6 +19,7 @@ import { useAuth } from "@/context/authContext";
 import { toast } from "react-toastify";
 import RoleChangeConfirmModal from "./RoleChangeConfirmModal";
 import clsx from "clsx";
+import Spinner from "@/components/ui/Spinner";
 
 interface Props {
   admin: Admin;
@@ -34,11 +35,12 @@ const ROLE_OPTIONS = [
 ];
 
 const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
-  const { deleteAdmin, isDeleting } = useDeleteAdmin();
+  const { deleteAdmin } = useDeleteAdmin();
   const [selectedRole, setSelectedRole] = useState(admin.role);
   const [showConfirm, setShowConfirm] = useState(false);
   const [pendingRole, setPendingRole] = useState<string | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useAuth();
 
   const handleRoleSelect = (newRole: string) => {
@@ -82,81 +84,92 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
   };
 
   return (
-    <TableRow>
-      <TableCell>{displayId}</TableCell>
-      <TableCell className="flex items-center gap-2">
-        <Avatar>
-          <AvatarFallback>{getNameInitials(admin.name)}</AvatarFallback>
-        </Avatar>
-        <p>{admin.name}</p>
-      </TableCell>
-      <TableCell>{admin.email}</TableCell>
-
-      <TableCell>
-        <Select
-          value={selectedRole}
-          onValueChange={handleRoleSelect}
-          disabled={isUpdating}
-        >
-          <SelectTrigger
-            className={clsx("px-4 py-1 rounded text-sm font-medium border-0", {
-              "bg-black text-white":
-                selectedRole === "SUPER_ADMIN" || selectedRole === "ADMIN",
-              "bg-gray-200 text-black":
-                selectedRole === "EDITOR" ||
-                (selectedRole !== "SUPER_ADMIN" && selectedRole !== "ADMIN"),
-            })}
-          >
-            <SelectValue>
-              {ROLE_OPTIONS.find((r) => r.value === selectedRole)?.label ||
-                selectedRole}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {ROLE_OPTIONS.map((role) => (
-              <SelectItem key={role.value} value={role.value}>
-                {role.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {showConfirm && (
-          <RoleChangeConfirmModal
-            open={showConfirm}
-            admin={admin}
-            pendingRole={pendingRole}
-            roleOptions={ROLE_OPTIONS}
-            isUpdating={isUpdating}
-            onCancel={handleCancel}
-            onConfirm={handleConfirm}
-          />
-        )}
-      </TableCell>
-      {canPerformAction && (
-        <TableCell className="relative">
-          <DeleteAlert
-            onDelete={async () => {
-              const success = await deleteAdmin(admin.id);
-              if (success && mutate) mutate();
-              return success;
-            }}
-            title="Delete Admin?"
-            description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
-            successMessage="Admin deleted successfully."
-            errorMessage="Failed to delete admin."
-          >
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-red-500 hover:text-red-700"
-              disabled={isDeleting}
-            >
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          </DeleteAlert>
+    <>
+      <TableRow>
+        <TableCell>{displayId}</TableCell>
+        <TableCell className="flex items-center gap-2">
+          <Avatar>
+            <AvatarFallback>
+              {getNameInitials(admin?.name || "Not Available")}
+            </AvatarFallback>
+          </Avatar>
+          <p>{admin?.name || "Not Available"}</p>
         </TableCell>
-      )}
-    </TableRow>
+        <TableCell>{admin?.email || "Not Available"}</TableCell>
+        <TableCell>{admin?.status || "Not Available"}</TableCell>
+
+        <TableCell>
+          <Select
+            value={selectedRole}
+            onValueChange={handleRoleSelect}
+            disabled={isUpdating}
+          >
+            <SelectTrigger
+              className={clsx(
+                "px-4 py-1 rounded text-sm font-medium border-0",
+                {
+                  "bg-black text-white":
+                    selectedRole === "SUPER_ADMIN" || selectedRole === "ADMIN",
+                  "bg-gray-200 text-black":
+                    selectedRole === "EDITOR" ||
+                    (selectedRole !== "SUPER_ADMIN" &&
+                      selectedRole !== "ADMIN"),
+                }
+              )}
+            >
+              <SelectValue>
+                {ROLE_OPTIONS.find((r) => r.value === selectedRole)?.label ||
+                  selectedRole}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {ROLE_OPTIONS.map((role) => (
+                <SelectItem key={role.value} value={role.value}>
+                  {role.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {showConfirm && (
+            <RoleChangeConfirmModal
+              open={showConfirm}
+              admin={admin}
+              pendingRole={pendingRole}
+              roleOptions={ROLE_OPTIONS}
+              isUpdating={isUpdating}
+              onCancel={handleCancel}
+              onConfirm={handleConfirm}
+            />
+          )}
+        </TableCell>
+        {canPerformAction && (
+          <TableCell className="relative">
+            <DeleteAlert
+              onDelete={async () => {
+                const success = await deleteAdmin(admin.id);
+                if (success && mutate) mutate();
+                return success;
+              }}
+              title="Delete Admin?"
+              description={`Are you sure you want to delete admin ${admin.name}? This action cannot be undone.`}
+              successMessage="Admin deleted successfully."
+              errorMessage="Failed to delete admin."
+              setIsLoading={setIsLoading}
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-red-500 hover:text-red-700"
+                disabled={isLoading}
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </DeleteAlert>
+          </TableCell>
+        )}
+      </TableRow>
+      {isLoading || (isUpdating && <Spinner />)}
+    </>
   );
 };
 

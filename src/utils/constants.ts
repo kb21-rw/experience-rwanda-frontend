@@ -27,8 +27,13 @@ export const STATUS_CONFIG = {
   },
 };
 
-export const ADMIN_HEADERS = [
-  { label: "Name", key: "name" },
-  { label: "Email Address", key: "email" },
-  { label: "Role", key: "role" },
+export const ADMIN_HEADERS = ["No", "Name", "Email Address", "Role", "Status"];
+
+export const BOOKING_HEADERS = [
+  "No",
+  "Name",
+  "Phone",
+  "Email",
+  "Seats",
+  "Amount",
 ];

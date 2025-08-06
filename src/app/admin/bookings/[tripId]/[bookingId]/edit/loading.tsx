@@ -1,10 +1,7 @@
-
 export default function BookingFormLoading() {
   return (
     <div className="p-6">
-      <div className="text-xl font-semibold mb-6 animate-pulse">
-        Update Booking Information
-      </div>
+      <div className="text-xl font-semibold mb-6 animate-pulse w-28 h-6"></div>
 
       <div className="bg-white p-6 rounded-xl shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8 animate-pulse">
         <div className="space-y-4">
@@ -22,7 +19,6 @@ export default function BookingFormLoading() {
           </div>
           <div className="h-10 bg-gray-400 rounded mt-4 w-36" />
         </div>
-
 
         <div className="space-y-4">
           <div>

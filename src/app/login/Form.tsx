@@ -55,7 +55,7 @@ export default function LoginForm() {
         }
         localStorage.setItem("accessToken", result.accessToken);
         localStorage.setItem("refreshToken", result.refreshToken);
-        router.push(redirect);
+        router.replace(redirect);
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Something went wrong";
