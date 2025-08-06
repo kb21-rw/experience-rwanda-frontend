@@ -47,9 +47,9 @@ const AdminList = () => {
       revalidateOnReconnect: false,
     }
   );
-  const canPerformAction =
-    hasPermission(user, "update:admins") &&
-    hasPermission(user, "delete:admins");
+  const canDeleteAdmin = hasPermission(user, "delete:admins");
+  const canChangeRole = hasPermission(user, "update:admins");
+  const canExportAdmins = hasPermission(user, "export:admins");
   const adminsPerPage = 8;
   const filteredAdmins =
     admins?.filter((admin) => {
@@ -125,10 +125,6 @@ const AdminList = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All ({admins?.length})</SelectItem>
-              <SelectItem value="editor">
-                Editor (
-                {admins?.filter((admin) => admin.role === "EDITOR").length})
-              </SelectItem>
               <SelectItem value="admin">
                 Admin (
                 {admins?.filter((admin) => admin.role === "ADMIN").length})
@@ -140,7 +136,7 @@ const AdminList = () => {
               </SelectItem>
             </SelectContent>
           </Select>
-          {user && user.role !== "EDITOR" && (
+          {canExportAdmins && (
             <ExportPopover
               data={paginatedAdmins.map((admin, index) => ({
                 No: ((currentPage - 1) * adminsPerPage + index + 1)
@@ -165,7 +161,7 @@ const AdminList = () => {
                 <TableHead key={header}>{header}</TableHead>
               ))}
 
-              {canPerformAction && <TableHead>Action</TableHead>}
+              {canDeleteAdmin && <TableHead>Action</TableHead>}
             </TableRow>
           </TableHeader>
           {paginatedAdmins.length > 0 ? (
@@ -178,7 +174,8 @@ const AdminList = () => {
                     .toString()
                     .padStart(3, "0")}
                   mutate={mutate}
-                  canPerformAction={canPerformAction}
+                  canDeleteAdmin={canDeleteAdmin}
+                  canChangeRole={canChangeRole}
                 />
               ))}
             </TableBody>

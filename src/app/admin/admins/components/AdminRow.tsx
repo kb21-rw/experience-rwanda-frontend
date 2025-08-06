@@ -25,16 +25,22 @@ interface Props {
   admin: Admin;
   displayId: string;
   mutate?: () => void;
-  canPerformAction: boolean;
+  canDeleteAdmin: boolean;
+  canChangeRole: boolean;
 }
 
 const ROLE_OPTIONS = [
   { value: "SUPER_ADMIN", label: "Super Admin" },
   { value: "ADMIN", label: "Admin" },
-  { value: "EDITOR", label: "Editor" },
 ];
 
-const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
+const AdminRow = ({
+  admin,
+  displayId,
+  mutate,
+  canDeleteAdmin,
+  canChangeRole,
+}: Props) => {
   const { deleteAdmin } = useDeleteAdmin();
   const [selectedRole, setSelectedRole] = useState(admin.role);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -99,50 +105,66 @@ const AdminRow = ({ admin, displayId, mutate, canPerformAction }: Props) => {
         <TableCell>{admin?.status || "Not Available"}</TableCell>
 
         <TableCell>
-          <Select
-            value={selectedRole}
-            onValueChange={handleRoleSelect}
-            disabled={isUpdating}
-          >
-            <SelectTrigger
+          {canChangeRole ? (
+            <>
+              <Select
+                value={selectedRole}
+                onValueChange={handleRoleSelect}
+                disabled={isUpdating}
+              >
+                <SelectTrigger
+                  className={clsx(
+                    "px-4 py-1 rounded text-sm font-medium border-0",
+                    {
+                      "bg-black text-white":
+                        selectedRole === "SUPER_ADMIN" ||
+                        selectedRole === "ADMIN",
+                      "bg-gray-200 text-black":
+                        selectedRole !== "SUPER_ADMIN" &&
+                        selectedRole !== "ADMIN",
+                    }
+                  )}
+                >
+                  <SelectValue>
+                    {ROLE_OPTIONS.find((r) => r.value === selectedRole)
+                      ?.label || selectedRole}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {ROLE_OPTIONS.map((role) => (
+                    <SelectItem key={role.value} value={role.value}>
+                      {role.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {showConfirm && (
+                <RoleChangeConfirmModal
+                  open={showConfirm}
+                  admin={admin}
+                  pendingRole={pendingRole}
+                  roleOptions={ROLE_OPTIONS}
+                  isUpdating={isUpdating}
+                  onCancel={handleCancel}
+                  onConfirm={handleConfirm}
+                />
+              )}
+            </>
+          ) : (
+            <p
               className={clsx(
                 "px-4 py-1 rounded text-sm font-medium border-0",
                 {
-                  "bg-black text-white":
-                    selectedRole === "SUPER_ADMIN" || selectedRole === "ADMIN",
-                  "bg-gray-200 text-black":
-                    selectedRole === "EDITOR" ||
-                    (selectedRole !== "SUPER_ADMIN" &&
-                      selectedRole !== "ADMIN"),
+                  "bg-black text-white": admin.role === "SUPER_ADMIN",
+                  "bg-gray-200 text-black": admin.role === "ADMIN",
                 }
               )}
             >
-              <SelectValue>
-                {ROLE_OPTIONS.find((r) => r.value === selectedRole)?.label ||
-                  selectedRole}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {ROLE_OPTIONS.map((role) => (
-                <SelectItem key={role.value} value={role.value}>
-                  {role.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {showConfirm && (
-            <RoleChangeConfirmModal
-              open={showConfirm}
-              admin={admin}
-              pendingRole={pendingRole}
-              roleOptions={ROLE_OPTIONS}
-              isUpdating={isUpdating}
-              onCancel={handleCancel}
-              onConfirm={handleConfirm}
-            />
+              {admin.role}
+            </p>
           )}
         </TableCell>
-        {canPerformAction && (
+        {canDeleteAdmin && (
           <TableCell className="relative">
             <DeleteAlert
               onDelete={async () => {
