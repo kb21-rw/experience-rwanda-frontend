@@ -1,3 +1,4 @@
+import { Booking } from "./Booking";
 import { PricingOption } from "./trip";
 
 export type Trip = {
@@ -14,6 +15,7 @@ export type Trip = {
   coverImage: string;
   priceTitle: string;
   priceDescription: string;
+  bookings: Booking[];
   status:
     | "fully-booked"
     | "completed"

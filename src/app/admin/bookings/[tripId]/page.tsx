@@ -1,34 +1,11 @@
+"use client";
 import BookingList from "./BookingList";
-import { Booking } from "@/types/Booking";
 
-
-const Bookings = async ({ params }: { params: { tripId: string } }) => {
-  let bookings: Booking[] = [];
-  let errorMessage: string = "";
-  let isLoading = true;
-  try {
-    const bookingsRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/bookings/trip/${params.tripId}`,
-      {
-        next: {
-          tags: ["bookings"],
-        },
-      }
-    );
-    bookings = await bookingsRes.json();
-  } catch (error) {
-    console.error("Error fetching bookings:", error);
-    bookings = [];
-    errorMessage = "Failed to fetch bookings";
-  } finally {
-    isLoading = false;
-  }
+const Bookings = () => {
   return (
-    <BookingList
-      initialBookings={bookings}
-      isLoading={isLoading}
-      error={errorMessage}
-    />
+    <div className="min-h-screen px-16 xl:px-20 py-6 xl:py-10 gap-2 flex items-start w-full">
+      <BookingList />
+    </div>
   );
 };
 

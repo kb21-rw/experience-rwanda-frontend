@@ -9,6 +9,10 @@ const fetcher = (url: string) =>
 export function useTrips() {
   return useSWR<Trip[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/trips/all-with-deleted`,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 }
