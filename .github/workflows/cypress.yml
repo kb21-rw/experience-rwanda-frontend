@@ -1,0 +1,121 @@
+name: Cypress E2E Tests
+
+on:
+  push:
+    branches:
+      - dev
+      - stage
+      - prod
+  pull_request:
+    branches:
+      - dev
+      - stage
+      - prod
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      HOST_PORT: 4000
+      CONTAINER_PORT: 4000
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL}}
+      IMAGE_HOSTNAME: ${{ secrets.IMAGE_HOSTNAME }}
+      IMAGE_HOSTNAME2: ${{ secrets.IMAGE_HOSTNAME2 }}
+      NEXT_PUBLIC_EMAILJS_SERVICE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
+      NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
+      NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }}
+      REVALIDATION_SECRET: ${{ secrets.REVALIDATION_SECRET }}
+      NODEMAIL_PASSWORD: ${{ secrets.NODEMAIL_PASSWORD }}
+      NODEMAIL_EMAIL: ${{ secrets.NODEMAIL_EMAIL }}
+      FLW_PUBLIC_KEY: ${{ secrets.FLW_PUBLIC_KEY }}
+      FLW_SECRET_KEY: ${{ secrets.FLW_SECRET_KEY }}
+      FLW_ENCRYPTION_KEY: ${{ secrets.FLW_ENCRYPTION_KEY }}
+      FLUTTERWAVE_API_URL: ${{ secrets.FLUTTERWAVE_API_URL }}
+      PAYMENT_REDIRECT_URL: ${{ secrets.PAYMENT_REDIRECT_URL }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      VERCEL_WEBHOOK_URL: ${{ secrets.VERCEL_WEBHOOK_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      LOCAL_FRONTEND_URL: ${{ secrets.LOCAL_FRONTEND_URL }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+  
+    steps:
+      - name: Checkout Frontend Repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Frontend Dependencies
+        run: npm install
+
+      - name: Clone Backend Repository
+        run: |
+          git clone https://x-access-token:${{ secrets.BACKEND_PAT }}@github.com/kb21-rw/experience-rwanda-backend.git backend
+
+      - name: Install Backend Dependencies
+        working-directory: backend
+        run: yarn
+
+      - name: Start Backend and Wait for Readiness
+        working-directory: backend
+        run: |
+          echo "Starting backend in background..."
+          PORT=4000 yarn dev &
+
+          echo "Waiting for backend to be ready (max 120 seconds)..."
+          timeout=120
+          elapsed=0
+          until curl -s http://localhost:4000/api/health >/dev/null; do
+            sleep 10
+            elapsed=$((elapsed+10))
+            echo "Backend is not ready yet... ($elapsed seconds)"
+            if [ "$elapsed" -ge "$timeout" ]; then
+              echo "Backend failed to start within $timeout seconds."
+              exit 1
+            fi
+          done
+          echo "Backend is ready!"
+
+      - name: Start Frontend and Wait for Readiness
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:4000/api
+        run: |
+          echo "Starting frontend in background..."
+          npm run dev &
+
+          echo "Waiting for frontend to be ready (max 120 seconds)..."
+          timeout=120
+          elapsed=0
+          until curl -s http://localhost:3000 >/dev/null; do
+            sleep 10
+            elapsed=$((elapsed+10))
+            echo "Frontend is not ready yet... ($elapsed seconds)"
+            if [ "$elapsed" -ge "$timeout" ]; then
+              echo "Frontend failed to start within $timeout seconds."
+              exit 1
+            fi
+          done
+          echo "Frontend is ready!"
+
+      - name: Run Cypress Tests
+        run: npx cypress run
+
+      - name: Upload Cypress Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots

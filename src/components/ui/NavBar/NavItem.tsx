@@ -7,6 +7,7 @@ export type NavItemProp = {
   children: React.ReactNode;
   onClick?: () => void;
   isActive?: boolean;
+  data_test_id?:string;
 };
 const NavItem: React.FC<NavItemProp> = ({
   href,
@@ -14,6 +15,7 @@ const NavItem: React.FC<NavItemProp> = ({
   children,
   onClick,
   isActive,
+  data_test_id,
 }) => {
   const scrollToSection = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const NavItem: React.FC<NavItemProp> = ({
           scrollToSection(e);
         }
       }}
+      data-testId={data_test_id}
       className={`hover:underline ${isActive ? "underline text-blue-300" : ""}`}
     >
       {children}

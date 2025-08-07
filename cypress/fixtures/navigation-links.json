@@ -1,0 +1,18 @@
+[
+    {
+      "action": "click",
+      "selector": "[data-testId='home']"
+    },
+    {
+        "action": "click",
+        "selector": "[data-testId='about']"
+    },
+    {
+        "action": "click",
+        "selector": "[data-testId='trips']"
+    },
+    {
+        "action": "click",
+        "selector": "[data-testId='contact']"
+    }
+]
