@@ -11,6 +11,7 @@ export type NavLink = {
   sectionId: string;
   label: string;
   href: string;
+  data_test_id:string
 };
 
 export type NavData = {
@@ -74,6 +75,7 @@ const NavBar = () => {
             href={item.href}
             onClick={toggleMenu}
             isActive={activeSection === item.sectionId}
+            data_test_id={item.data_test_id}
           >
             {item.label}
           </NavItem>
