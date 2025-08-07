@@ -3,11 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
-import { ChevronDown } from "lucide-react";
-import Link from "next/link";
+import { Edit, Eye, MoreHorizontal } from "lucide-react";
 import DeleteAlert from "@/components/DeleteAlert";
 import { Booking } from "@/types/Booking";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+import Spinner from "@/components/ui/Spinner";
 interface Props {
   onDelete?: (id: string) => Promise<boolean>;
   booking: Booking;
@@ -17,8 +23,8 @@ interface Props {
 const BookRow = ({ onDelete, booking, displayId }: Props) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-  const toggleDropdown = () => setShowDropdown((prev) => !prev);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -46,52 +52,67 @@ const BookRow = ({ onDelete, booking, displayId }: Props) => {
   }, [showDropdown]);
 
   return (
-    <TableRow>
-      <TableCell>{displayId}</TableCell>
-      <TableCell>{booking.user?.fullName}</TableCell>
-      <TableCell>{booking.user?.phoneNumber}</TableCell>
-      <TableCell>{booking.user?.email}</TableCell>
-      <TableCell>{booking.bookedSeats}</TableCell>
-      <TableCell>{booking.totalAmount}</TableCell>
-      <TableCell className="relative">
-        <Button
-          variant="primary"
-          onClick={toggleDropdown}
-          className="flex items-center gap-2"
-        >
-          Modify <ChevronDown size={14} />
-        </Button>
-
-        {showDropdown && (
-          <div
-            ref={dropdownRef}
-            className="absolute z-50 w-28 mt-2 bg-white border rounded shadow-lg"
-          >
-            <button className="block px-8 py-2 text-sm w-full text-left hover:bg-gray-100">
-              View
-            </button>
-
-            <DeleteAlert
-              onDelete={async () => {
-                const success = await onDelete?.(booking.id);
-                return success || false;
-              }}
-              title="Delete Booking?"
-              description={`Are you sure you want to this booking made by ${booking.user.fullName}? This action can not  undone.`}
-              errorMessage="Failed to delete booking."
-              successMessage="Booking deleted successfully."
-            />
-
-            <Link
-              href={`/admin/bookings/${booking.trip.id}/${booking.id}/edit`}
-              className="block text-center px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+    <>
+      <TableRow>
+        <TableCell>{displayId}</TableCell>
+        <TableCell>{booking.user?.fullName}</TableCell>
+        <TableCell>{booking.user?.phoneNumber}</TableCell>
+        <TableCell>{booking.user?.email}</TableCell>
+        <TableCell>{booking.bookedSeats}</TableCell>
+        <TableCell>{booking.totalAmount}</TableCell>
+        <TableCell className="relative">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <MoreHorizontal className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="bg-background border border-border shadow-lg"
             >
-              Edit
-            </Link>
-          </div>
-        )}
-      </TableCell>
-    </TableRow>
+              <DropdownMenuItem
+                onClick={() =>
+                  router.push(
+                    `/admin/bookings/${booking.trip.id}/${booking.id}/edit`
+                  )
+                }
+                className="flex items-center gap-2 px-2 justify-start py-2 text-sm w-full text-left hover:bg-gray-100"
+              >
+                <Eye className="w-4 h-4" />
+                View
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                onClick={() =>
+                  router.push(
+                    `/admin/bookings/${booking.trip.id}/${booking.id}/edit`
+                  )
+                }
+                className="flex items-center px-2 justify-start py-2 gap-2 text-sm text-gray-800 hover:bg-gray-100 w-full"
+              >
+                <Edit className="w-4 h-4" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <DeleteAlert
+                  onDelete={async () => {
+                    const success = await onDelete?.(booking.id);
+                    return success || false;
+                  }}
+                  title="Delete Booking?"
+                  description={`Are you sure you want to this booking made by ${booking.user.fullName}? This action can not  undone.`}
+                  errorMessage="Failed to delete booking."
+                  successMessage="Booking deleted successfully."
+                  setIsLoading={setIsLoading}
+                />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TableCell>
+      </TableRow>
+      {isLoading && <Spinner />}
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { z } from "zod";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ArrowLeftIcon } from "lucide-react";
+import { format } from "date-fns";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -29,8 +30,8 @@ const EditTrip = async ({ params }: { params: { tripId: string } }) => {
     title: tripData.title,
     destination: tripData.destination,
     description: tripData.description,
-    departureTime: new Date(tripData.departureTime),
-    returnTime: new Date(tripData.returnTime),
+    departureTime: format(tripData.departureTime, "yyyy-MM-dd'T'HH:mm"),
+    returnTime: format(tripData.returnTime, "yyyy-MM-dd'T'HH:mm"),
     totalSeats: tripData.totalSeats.toString(),
     coverImage: tripData.coverImage,
     galleryImages: tripData.galleryImages,

@@ -1,25 +1,28 @@
+"use client";
 import NewTripForm from "../../../components/TripForm";
 
-const CreateTrip = async () => {
+const CreateTrip = () => {
   return (
-    <div className="p-10 bg-white font-inter">
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900">
-          Trips | New Trip
-        </h1>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-travel-blue/5 to-travel-green/5 p-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
+            Trips | New Trip
+          </h1>
+        </div>
 
-      <NewTripForm
-        defaultValues={{
-          title: "",
-          description: "",
-          destination: "",
-          departureTime: new Date(),
-          returnTime: new Date(),
-          totalSeats: "",
-          pricingOptions: [],
-        }}
-      />
+        <NewTripForm
+          defaultValues={{
+            title: "",
+            description: "",
+            destination: "",
+            departureTime: "",
+            returnTime: "",
+            totalSeats: "",
+            pricingOptions: [],
+          }}
+        />
+      </div>
     </div>
   );
 };

@@ -2,12 +2,10 @@ import { useState } from "react";
 import { useAuth } from "@/context/authContext";
 
 export const useDeleteAdmin = () => {
-  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
 
   const deleteAdmin = async (adminId: string) => {
-    setIsDeleting(true);
     setError(null);
     try {
       const res = await fetch(
@@ -33,10 +31,8 @@ export const useDeleteAdmin = () => {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
       return false;
-    } finally {
-      setIsDeleting(false);
     }
   };
 
-  return { deleteAdmin, isDeleting, error };
+  return { deleteAdmin, error };
 };

@@ -4,6 +4,7 @@ import { TripPackageType } from "@/types/trip";
 import { z } from "zod";
 import { tripSchema } from "@/utils/schemas/tripSchema";
 import { UseFormReset } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 type FormData = z.infer<typeof tripSchema>;
 
@@ -24,6 +25,8 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
   const [tripPackages, setTripPackages] = useState<TripPackageType[]>([
     { id: 0, selectedOptions: [], customOptions: [], newOption: "" },
   ]);
+
+  const router = useRouter();
 
   const onSubmit = async (data: FormData, reset: UseFormReset<FormData>) => {
     const formData = new FormData();
@@ -56,6 +59,7 @@ export function useTripFormSubmit(defaultValues: FormData, tripId?: string) {
 
       reset(tripId ? formResult : undefined);
       toast.success("Trip was created successfully");
+      router.push("/admin/trips");
     } catch (error) {
       console.error("Error uploading:", error);
       toast.error("Error creating trip");

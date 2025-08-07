@@ -12,12 +12,12 @@ type SearchProps = {
 const Search = ({ onSearch, className, placeholder }: SearchProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
       <Input
         type="text"
         placeholder={placeholder}
-        className={`pl-10 h-12 ${className}`}
+        className={`pl-10 h-12`}
         value={searchQuery}
         onChange={(e) => {
           setSearchQuery(e.target.value);

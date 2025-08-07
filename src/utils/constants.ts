@@ -26,3 +26,14 @@ export const STATUS_CONFIG = {
     color: "bg-red-100 text-red-800",
   },
 };
+
+export const ADMIN_HEADERS = ["No", "Name", "Email Address", "Role", "Status"];
+
+export const BOOKING_HEADERS = [
+  "No",
+  "Name",
+  "Phone",
+  "Email",
+  "Seats",
+  "Amount",
+];

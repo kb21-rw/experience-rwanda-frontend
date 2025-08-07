@@ -3,14 +3,7 @@
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
 import { Trip } from "@/types/ImageCard";
-import {
-  Calendar,
-  Edit,
-  Eye,
-  MapPin,
-  MoreHorizontal,
-  Trash2,
-} from "lucide-react";
+import { Calendar, Edit, Eye, MapPin, MoreHorizontal } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import DeleteAlert from "@/components/DeleteAlert";
 import {
@@ -23,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { STATUS_CONFIG } from "@/utils/constants";
 import { useDeleteTrip } from "@/hooks/useDeleleTrip";
+import Spinner from "@/components/ui/Spinner";
 
 interface Props {
   onDelete?: (id: string) => void;
@@ -37,6 +31,7 @@ const TripRow = ({ trip, displayId }: Props) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const { deleteTrip } = useDeleteTrip();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -138,8 +133,7 @@ const TripRow = ({ trip, displayId }: Props) => {
                 <Edit className="w-4 h-4" />
                 Edit Trip
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-destructive">
-                <Trash2 className="w-4 h-4" />
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
                 <DeleteAlert
                   onDelete={async () => {
                     const success = handleDelete();
@@ -149,12 +143,14 @@ const TripRow = ({ trip, displayId }: Props) => {
                   description="Are you sure you want to delete this trip?"
                   errorMessage="Failed to delete trip."
                   successMessage="Trip deleted successfully."
+                  setIsLoading={setIsLoading}
                 />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
       </TableRow>
+      {isLoading && <Spinner />}
     </>
   );
 };

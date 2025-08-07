@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import {
   Table,
@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/Table";
 import AdminRow from "./components/AdminRow";
 import Search from "@/components/Search";
-import { Button } from "@/components/ui/Button";
-import { IoShareSocial } from "react-icons/io5";
 
 import { Admin } from "@/types/Admin";
 import {
@@ -25,12 +23,16 @@ import useSWR from "swr";
 import { useAuth } from "@/context/authContext";
 import { fetcher } from "@/lib/fetcher";
 import { hasPermission } from "@/auth/rbac";
+import { ExportPopover } from "@/components/ui/ExportPopover";
+import { ADMIN_HEADERS } from "@/utils/constants";
+import NotFound from "../trips/Card/NotFound";
 
 const AdminList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [role, setRole] = useState("all");
   const { token, user } = useAuth();
+  const [status, setStatus] = useState("all");
 
   const {
     data: admins,
@@ -45,9 +47,9 @@ const AdminList = () => {
       revalidateOnReconnect: false,
     }
   );
-  const canPerformAction =
-    hasPermission(user, "update:admins") &&
-    hasPermission(user, "delete:admins");
+  const canDeleteAdmin = hasPermission(user, "delete:admins");
+  const canChangeRole = hasPermission(user, "update:admins");
+  const canExportAdmins = hasPermission(user, "export:admins");
   const adminsPerPage = 8;
   const filteredAdmins =
     admins?.filter((admin) => {
@@ -55,8 +57,9 @@ const AdminList = () => {
       return (
         (admin.role.toLowerCase() === role.toLowerCase() ||
           role.toLowerCase() === "all") &&
-        (admin.id.toLowerCase().includes(keyword) ||
-          admin.name.toLowerCase().includes(keyword) ||
+        (admin.status.toLowerCase() === status.toLowerCase() ||
+          status.toLowerCase() === "all") &&
+        ((admin.name || "Not Available").toLowerCase().includes(keyword) ||
           admin.email.toLowerCase().includes(keyword))
       );
     }) || [];
@@ -72,6 +75,15 @@ const AdminList = () => {
       setCurrentPage(page);
     }
   };
+
+  useEffect(() => {
+    const isFiltering =
+      searchQuery.trim() !== "" || role !== "all" || status !== "all";
+    if (isFiltering) {
+      setCurrentPage(1);
+    }
+  }, [searchQuery, role, status]);
+
   if (error) {
     return (
       <div className="flex justify-center items-center text-center h-screen text-red-600">
@@ -83,60 +95,96 @@ const AdminList = () => {
   if (isLoading || !token) return <TableSkeleton />;
 
   return (
-    <>
-      <div className="p-6 xl:p-10 min-h-screen flex flex-col justify-between">
-        <div>
-          <div className="flex justify-between items-center mb-10">
-            <Search onSearch={setSearchQuery} placeholder="Search Admin" />
-            <Select onValueChange={(value) => setRole(value)}>
-              <SelectTrigger className="w-37.5">
-                <SelectValue placeholder="All Roles" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="editor">Editor</SelectItem>
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="super_admin">Super Admin</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="primary" className="px-4 py-2">
-              <IoShareSocial />
-              Export
-            </Button>
-          </div>
-
-          {paginatedAdmins.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>No</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email Address</TableHead>
-                  <TableHead>Role</TableHead>
-
-                  {canPerformAction && <TableHead>Action</TableHead>}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginatedAdmins.map((admin, index) => (
-                  <AdminRow
-                    key={admin.id}
-                    admin={admin}
-                    displayId={((currentPage - 1) * adminsPerPage + index + 1)
-                      .toString()
-                      .padStart(3, "0")}
-                    mutate={mutate}
-                    canPerformAction={canPerformAction}
-                  />
-                ))}
-              </TableBody>
-            </Table>
-          ) : (
-            <div className="text-gray-500 text-xl flex justify-center items-center">
-              No Admin found.
-            </div>
+    <div className="p-6 xl:p-10 w-full flex flex-col justify-between border border-border overflow-hidden rounded-lg">
+      <div className="">
+        <div className="flex justify-between items-center mb-10">
+          <Search
+            onSearch={setSearchQuery}
+            placeholder="Search Admin"
+            className="w-1/3"
+          />
+          <Select onValueChange={(value) => setStatus(value)}>
+            <SelectTrigger className="w-37.5">
+              <SelectValue placeholder="All Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All ({admins?.length})</SelectItem>
+              <SelectItem value="active">
+                Active (
+                {admins?.filter((admin) => admin.status === "ACTIVE").length})
+              </SelectItem>
+              <SelectItem value="inactive">
+                Inactive (
+                {admins?.filter((admin) => admin.status === "INACTIVE").length})
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <Select onValueChange={(value) => setRole(value)}>
+            <SelectTrigger className="w-37.5">
+              <SelectValue placeholder="All Roles" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All ({admins?.length})</SelectItem>
+              <SelectItem value="admin">
+                Admin (
+                {admins?.filter((admin) => admin.role === "ADMIN").length})
+              </SelectItem>
+              <SelectItem value="super_admin">
+                Super Admin (
+                {admins?.filter((admin) => admin.role === "SUPER_ADMIN").length}
+                )
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          {canExportAdmins && (
+            <ExportPopover
+              data={paginatedAdmins.map((admin, index) => ({
+                No: ((currentPage - 1) * adminsPerPage + index + 1)
+                  .toString()
+                  .padStart(3, "0"),
+                Name: admin.name,
+                "Email Address": admin.email,
+                Role: admin.role,
+                Status: admin.status,
+              }))}
+              headers={ADMIN_HEADERS}
+              filename={`admins-page-${currentPage}`}
+              title="Admins"
+            />
           )}
         </div>
+
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {ADMIN_HEADERS.map((header) => (
+                <TableHead key={header}>{header}</TableHead>
+              ))}
+
+              {canDeleteAdmin && <TableHead>Action</TableHead>}
+            </TableRow>
+          </TableHeader>
+          {paginatedAdmins.length > 0 ? (
+            <TableBody>
+              {paginatedAdmins.map((admin, index) => (
+                <AdminRow
+                  key={admin.id}
+                  admin={admin}
+                  displayId={((currentPage - 1) * adminsPerPage + index + 1)
+                    .toString()
+                    .padStart(3, "0")}
+                  mutate={mutate}
+                  canDeleteAdmin={canDeleteAdmin}
+                  canChangeRole={canChangeRole}
+                />
+              ))}
+            </TableBody>
+          ) : (
+            <NotFound title="No Admins Found" description="No admins found" />
+          )}
+        </Table>
+      </div>
+      {paginatedAdmins.length > 0 && (
         <div className="flex justify-center items-center">
           <Pagination
             currentPage={currentPage}
@@ -144,8 +192,8 @@ const AdminList = () => {
             onPageChange={changePage}
           />
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

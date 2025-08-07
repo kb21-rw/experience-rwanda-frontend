@@ -7,6 +7,7 @@ export type Admin = {
   status: "ACTIVE" | "INACTIVE" | string;
   createdAt: string;
   updatedAt: string;
+  href?: string;
 };
 
 export interface StatusType {
@@ -45,5 +46,5 @@ export interface TokenPayload {
   iat: number;
   email: string;
   name: string;
-  role: "ADMIN" | "SUPER_ADMIN" | "EDITOR";
+  role: "ADMIN" | "SUPER_ADMIN";
 }
