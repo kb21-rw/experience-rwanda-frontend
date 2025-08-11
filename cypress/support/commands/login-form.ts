@@ -2,7 +2,7 @@ import { Step } from "../types";
 
 Cypress.Commands.add("loginForm", function () {
   cy.fixture("login-form.json").then((data: Step[]) => {
-    cy.visit("/admin");
+    cy.visit("/login?redirect=/admin");
     data.forEach((step) => {
         switch (step.action) {
           case "type":

@@ -2,13 +2,13 @@
     {
         "action": "type",
         "selector": "[data-testId='login-email']",
-        "value":"test@gmail.com"
+        "value":"ngabonest@gmail.com"
 
     },
     {
         "action": "type",
         "selector": "[data-testId='login-password']",
-        "value":"123Test"
+        "value":"admin123"
     },
     {
         "action": "click",
