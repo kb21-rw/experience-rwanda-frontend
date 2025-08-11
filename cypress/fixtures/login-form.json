@@ -1,0 +1,25 @@
+[
+    {
+        "action": "type",
+        "selector": "[data-testId='login-email']",
+        "value":"test@gmail.com"
+
+    },
+    {
+        "action": "type",
+        "selector": "[data-testId='login-password']",
+        "value":"123Test"
+    },
+    {
+        "action": "click",
+        "selector": "[data-testId='login-show-password']"
+    },
+    {
+        "action": "click",
+        "selector": "[data-testId='login-remember-me']"
+    },
+    {
+        "action": "click",
+        "selector": "[data-testId='login-button']"
+    }
+]

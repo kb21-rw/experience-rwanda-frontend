@@ -18,7 +18,7 @@ export const RememberMe = ({ register }: RememberMeProps) => (
         {...register("rememberMe")}
         className="w-4 h-4 rounded border-gray-300 text-black focus:ring-black"
       />
-      <Label htmlFor="rememberMe" className="ml-2 text-gray-700">
+      <Label htmlFor="rememberMe" data-testId="login-remember-me" className="ml-2 text-gray-700">
         Remember Me
       </Label>
     </div>
