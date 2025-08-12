@@ -9,13 +9,13 @@ const Footer = () => {
   return (
     <footer className=" bg-site ">
       <div className="py-6 text-sm content-wrapper text-site-secondary mb-0 mt-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-40 py-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-40 py-4">
           <div className="flex flex-col gap-8">
             <Image height={60} width={60} src="/Logo.svg" alt="" />
             <SubscribeForm />
           </div>
 
-          <div className=" grid grid-cols-1 md:grid-cols-3">
+          <div className=" grid grid-cols-2 md:grid-cols-3 gap-8">
             {footerLinks.map((link, index) => (
               <FooterLinks
                 key={link.title + index}
@@ -25,12 +25,12 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="flex justify-between items-center h-24 border-t border-site-secondary w-full">
+        <div className="flex justify-between flex-wrap items-center gap-4 py-12 border-t border-site-secondary w-full">
           <p className="text-center">
             &copy; {new Date().getFullYear()} Experience Rwanda. All rights
             reserved.
           </p>
-          <div className="flex gap-4 justify-end">
+          <div className="flex gap-4 justify-start md:justify-end flex-wrap-reverse">
             {["Privacy Policy", "Terms of service", "Cookie Settings"].map(
               (link, index) => (
                 <Link

@@ -31,7 +31,11 @@ const SubscribeForm = () => {
         </button>
       </form>
       <p className="text-xs mt-4">
-        By subscribing, you consent to our Privacy Policy and receive updates.
+        By subscribing, you consent to our{" "}
+        <a href="#" className="underline hover:underline-offset-2">
+          Privacy Policy
+        </a>{" "}
+        and receive updates.
       </p>
     </div>
   );
