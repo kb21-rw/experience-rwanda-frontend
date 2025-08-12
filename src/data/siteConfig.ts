@@ -56,9 +56,9 @@ export const footerData: FooterData = {
           url: "./#facebook",
         },
         {
-          sectionId: "instragram",
-          label: "Instragram",
-          url: "./#instragram",
+          sectionId: "instagram",
+          label: "Instagram",
+          url: "./#instagram",
         },
         {
           sectionId: "x",
@@ -88,6 +88,20 @@ export const footerData: FooterData = {
       url: "/youtube",
       width: 24,
       height: 24,
+    },
+  ],
+  legalLinks: [
+    {
+      title: "Privacy Policy",
+      url: "/privacy-policy",
+    },
+    {
+      title: "Terms of Service",
+      url: "/terms-of-service",
+    },
+    {
+      title: "Cookie Policy",
+      url: "/cookie-policy",
     },
   ],
 };

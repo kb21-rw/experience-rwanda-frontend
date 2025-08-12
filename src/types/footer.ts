@@ -30,8 +30,14 @@ export type Links = {
   url: string;
 };
 
+export type LegalLink = {
+  title: string;
+  url: string;
+};
+
 export type FooterData = {
   logo: string;
   footerLinks: FooterLink[];
   socialIcons: FooterIcon[];
+  legalLinks: LegalLink[];
 };

@@ -5,7 +5,7 @@ import Image from "next/image";
 import SubscribeForm from "./SubscribeForm";
 
 const Footer = () => {
-  const { footerLinks } = footerData;
+  const { footerLinks, legalLinks } = footerData;
   return (
     <footer className=" bg-site ">
       <div className="py-6 text-sm content-wrapper text-site-secondary mb-0 mt-auto">
@@ -31,17 +31,15 @@ const Footer = () => {
             reserved.
           </p>
           <div className="flex gap-4 justify-start md:justify-end flex-wrap-reverse">
-            {["Privacy Policy", "Terms of service", "Cookie Settings"].map(
-              (link, index) => (
-                <Link
-                  key={link + index}
-                  href="#"
-                  className="text-center underline hover:underline-offset-2 hover:text-site-secondary hover:transition-colors duration-300 ease-in-out"
-                >
-                  {link}
-                </Link>
-              )
-            )}
+            {legalLinks.map((link, index) => (
+              <Link
+                key={link.title + index}
+                href={link.url}
+                className="text-center underline hover:underline-offset-2 hover:text-site-secondary hover:transition-colors duration-300 ease-in-out"
+              >
+                {link.title}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
