@@ -9,18 +9,18 @@ export const footerData: FooterData = {
         {
           sectionId: "explore Trips",
           label: "Explore Trips",
-          url: "./#explore Trips",
+          url: "#explore Trips",
         },
         {
           sectionId: "travel Trips",
           label: "Travel Trips",
-          url: "./#travel Trips",
+          url: "#travel Trips",
         },
         { sectionId: "contact", label: "Contact Us", url: "/contact" },
         {
           sectionId: "about",
           label: "About us",
-          url: "./#about",
+          url: "/about",
         },
         { sectionId: "fAQs", label: "FAQs", url: "/fAQs" },
       ],
@@ -31,17 +31,17 @@ export const footerData: FooterData = {
         {
           sectionId: "newsletter",
           label: "Newsletter",
-          url: "./#newsletter",
+          url: "/newsletter",
         },
         {
           sectionId: "blog Posts",
           label: "Blog Posts",
-          url: "./#blog Posts",
+          url: "/blog Posts",
         },
         {
           sectionId: "travel Guides",
           label: "Travel Guides",
-          url: "./#travel Guides",
+          url: "/travel Guides",
         },
         { sectionId: "community", label: "Community", url: "/community" },
         { sectionId: "support", label: "Support", url: "/support" },
@@ -53,17 +53,17 @@ export const footerData: FooterData = {
         {
           sectionId: "facebook",
           label: "Facebook",
-          url: "./#facebook",
+          url: "#",
         },
         {
           sectionId: "instagram",
           label: "Instagram",
-          url: "./#instagram",
+          url: "#",
         },
         {
           sectionId: "x",
           label: "X",
-          url: "./#x",
+          url: "#",
         },
         { sectionId: "linkedIn", label: "LinkedIn", url: "/linkedIn" },
         { sectionId: "youTube", label: "YouTube", url: "/youTube" },
@@ -73,19 +73,19 @@ export const footerData: FooterData = {
   socialIcons: [
     {
       title: "linkedin",
-      url: "/linkedin",
+      url: "#",
       width: 24,
       height: 24,
     },
     {
       title: "twitter",
-      url: "/twitter",
+      url: "#",
       width: 24,
       height: 24,
     },
     {
       title: "youtube",
-      url: "/youtube",
+      url: "#",
       width: 24,
       height: 24,
     },
