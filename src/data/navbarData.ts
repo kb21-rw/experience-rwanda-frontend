@@ -1,7 +1,7 @@
 export const navbarData = {
   logo: {
-    title: "ExperienceRw",
-    url: "./",
+    alt: "Experience Rwanda Logo",
+    src: "/logo.png",
   },
   navLinks: [
     {
