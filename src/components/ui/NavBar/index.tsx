@@ -77,16 +77,20 @@ const NavBar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-green-700 hover:bg-green-700/20"
+            className="p-3 md:hidden text-green-700 hover:bg-green-700/20"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X /> : <Menu />}
+            {isOpen ? (
+              <X className="w-10 h-10" />
+            ) : (
+              <Menu className="w-10 h-10" />
+            )}{" "}
           </Button>
         </div>
 
         {isOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-blue-700 border-t border-green-700/20 animate-slide-down">
-            <div className="p-4 space-y-2">
+          <div className="md:hidden absolute top-full left-0 w-full bg-blue-700 border-t border-green-700/20 animate-fade-in">
+            <div className="p-4 space-y-4">
               {navLinks.map((item) => (
                 <NavItem
                   key={item.sectionId}
