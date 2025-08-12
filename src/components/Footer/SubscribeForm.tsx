@@ -1,15 +1,25 @@
-import React from "react";
+import { useState } from "react";
 
 const SubscribeForm = () => {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.info(email);
+    setEmail("");
+  };
+
   return (
     <div>
       <p>
         Subscribe to our newsletter for the latest updates on features and
         releases.
       </p>
-      <form className="flex items-center mt-4 gap-6">
+      <form className="flex items-center mt-4 gap-6" onSubmit={handleSubmit}>
         <input
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter Your Email Address"
           className="p-3 border focus:outline-none w-4/5 text-site"
         />
