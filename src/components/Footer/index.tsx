@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="py-6 text-sm content-wrapper text-site-secondary mb-0 mt-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-40 py-4">
           <div className="flex flex-col gap-8">
-            <Image height={60} width={60} src="/Logo.svg" alt="" />
+            <Image height={60} width={60} src="/Logo.svg" alt="logo image" />
             <SubscribeForm />
           </div>
 
