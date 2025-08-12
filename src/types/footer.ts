@@ -21,6 +21,10 @@ export type FooterIcon = {
 };
 
 export type FooterLink = {
+  title: string;
+  links: Links[];
+};
+export type Links = {
   sectionId: string;
   label: string;
   url: string;

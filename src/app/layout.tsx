@@ -30,6 +30,16 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        <title>
+          Experience Rwanda - Your Gateway to Unforgettable Adventures
+        </title>
+        <meta
+          name="description"
+          content="Discover and book unforgettable Rwandan adventures, from gorilla trekking to cultural tours, with Experience Rwanda—your gateway to seamless travel."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={`antialiased flex flex-col min-h-screen`}>
         <Suspense fallback={null}>
           <Toastify />

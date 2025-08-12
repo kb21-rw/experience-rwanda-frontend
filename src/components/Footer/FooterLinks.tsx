@@ -1,32 +1,30 @@
 "use client";
 import Link from "next/link";
-import { footerData } from "../../data/siteConfig";
 import React from "react";
+import { Links } from "@/types/footer";
 
-const FooterLinks = () => {
-  const { footerLinks } = footerData;
-  const handleScroll = (event: React.MouseEvent, targetId: string) => {
-    event.preventDefault();
-    const section = document.getElementById(targetId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+interface FooterProps {
+  title: string;
+  links: Links[];
+}
+const FooterLinks = ({ title, links }: FooterProps) => {
   return (
-    <div className="navigation flex gap-6 md:gap-12">
-      {footerLinks.map((link) => (
-        <Link
-          href={link.url}
-          key={link.sectionId}
-          onClick={(e) => {
-            if (link.url === "/") {
-              handleScroll(e, link.sectionId);
-            }
-          }}
-        >
-          {link.label}
-        </Link>
-      ))}
+    <div>
+      <h3 className="text-lg font-semibold mb-4">{title}</h3>
+      <div className="navigation flex flex-col gap-2">
+        {links.map((link, index) => (
+          <div key={link.sectionId + index}>
+            <Link
+              rel="noopener noreferrer"
+              href={link.url}
+              target="_blank"
+              className="hover:text-site-secondary hover:underline hover:transition-colors duration-300 ease-in-out hover:underline-offset-4"
+            >
+              {link.label}
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
