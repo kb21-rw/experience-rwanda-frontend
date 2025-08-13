@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header = ({ title, description, variant }: HeaderProps) => {
   return (
-    <section className="font-Inter w-full h-fit py-16">
+    <section className="font-manrope w-full h-fit py-16">
       <Content title={title} description={description} variant={variant} />
     </section>
   );

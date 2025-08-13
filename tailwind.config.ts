@@ -21,6 +21,7 @@ const config: Config = {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         Figtree: ["Figtree", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
