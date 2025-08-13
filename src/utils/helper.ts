@@ -1,15 +1,7 @@
-import { footerData } from "../data/siteConfig";
-
-export const getStaticProps = async () => {
-  const logo = footerData.logo;
-  const footerLinks = footerData.footerLinks;
-  const footerIcons = footerData.socialIcons;
-
-  return {
-    props: {
-      logo,
-      footerLinks,
-      footerIcons,
-    },
-  };
+export const getNameInitials = (name: string) => {
+  const firstName = name.split(" ")[0];
+  const lastName = name.split(" ")[1] || firstName;
+  const nameInitials =
+    firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
+  return nameInitials;
 };

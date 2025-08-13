@@ -4,13 +4,13 @@ import { FaCalendar } from "react-icons/fa";
 import { format } from "date-fns";
 
 export const createTripDetails = (
-  location: string,
+  destination: string,
   date: string,
   seats: number
 ) => [
   {
     icon: IoLocationSharp,
-    content: location,
+    content: destination,
   },
   {
     icon: FaCalendar,

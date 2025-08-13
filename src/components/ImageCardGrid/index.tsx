@@ -1,13 +1,9 @@
-import ImageCard from "./Card";
-import { Card, Row } from "@/types/ImageCard";
-import { Button } from "@/components/ui/Button";
+import { Row } from "@/types/ImageCard";
+import TripList from "./TripList";
 
-const ImageCardGrid = async ({
-  title,
-  description,
-}: Omit<Row, "id" | "cards">) => {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips` || "", {
-    next: { revalidate: 600 },
+const ImageCardGrid = async ({ title, description }: Omit<Row, "cards">) => {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`, {
+    next: { tags: ["trips"] },
   });
   const trips = await data.json();
 
@@ -19,23 +15,8 @@ const ImageCardGrid = async ({
             <h1 className="font-bold text-2xl md:text-5xl">{title}</h1>
             <p className="md:text-xl text-base font-normal">{description}</p>
           </div>
-          <div className="flex md:gap-5 gap-3 py-10 pb-5">
-            <Button className="border-t-2" variant={"outline"}>
-              All trips
-            </Button>
-            <Button className="border-t-2" variant={"outline"}>
-              Nyungwe
-            </Button>
-            <Button className="border-t-2" variant={"outline"}>
-              Akagera
-            </Button>
-          </div>
         </div>
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
-          {trips.map((data: Card) => (
-            <ImageCard key={data.id} {...data} />
-          ))}
-        </div>
+        <TripList trips={trips} />
       </div>
     </section>
   );

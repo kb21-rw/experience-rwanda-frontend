@@ -1,23 +1,24 @@
 import { FooterData } from "@/types/footer";
 
-export const footerData :FooterData = {
+export const footerData: FooterData = {
   logo: "ExperienceRw",
   footerLinks: [
     {
       sectionId: "home",
       label: "Home",
+      url: "./#home",
     },
     {
-      sectionId: "bookings",
-      label: "Bookings",
+      sectionId: "trips",
+      label: "Trips",
+      url: "./#trips",
     },
     {
       sectionId: "about",
       label: "About us",
+      url: "./#about",
     },
-    { sectionId: "contact", 
-      label: "Contact" 
-    },
+    { sectionId: "contact", label: "Contact", url: "/contact" },
   ],
   socialIcons: [
     {

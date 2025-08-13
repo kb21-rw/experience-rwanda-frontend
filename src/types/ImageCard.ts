@@ -9,7 +9,7 @@ export type Card = {
   id: string;
   title: string;
   description?: string;
-  trip: string;
+  destination: string;
   departureTime: string;
   price: number;
   seats: number;
@@ -18,11 +18,12 @@ export type Card = {
   mainPicture: string;
   createdAt?: string;
   updatedAt?: string;
-  pricingOptions?: PricingOption[];
 };
 
+export type TripStatus = "ONGOING" | "PAST" | "AVAILABLE" | "CANCELLED";
+
 export type Row = {
-  id: number;
+  id: string;
   title: string;
   description: string;
 };

@@ -1,33 +1,33 @@
 export type IconName = "linkedin" | "twitter" | "youtube";
 
 export type IconAttributes = {
-    name: string;
-    alternativeText: string | null;
-    url: string;
-    width: number;
-    height: number;
-  };
-  
-  export type IconData = {
-    id: number;
-    attributes: IconAttributes;
-  };
-  
-  export type FooterIcon = {
-    title: IconName
-    url: string;
-    width: number;
-    height: number;
-  };
-  
-  export type FooterLink = {
+  name: string;
+  alternativeText: string | null;
+  url: string;
+  width: number;
+  height: number;
+};
+
+export type IconData = {
+  id: number;
+  attributes: IconAttributes;
+};
+
+export type FooterIcon = {
+  title: IconName;
+  url: string;
+  width: number;
+  height: number;
+};
+
+export type FooterLink = {
   sectionId: string;
   label: string;
-  };
-  
-  export type FooterData = {
-    logo: string;
-    footerLinks: FooterLink[];
-    socialIcons: FooterIcon[];
-  };
-  
+  url: string;
+};
+
+export type FooterData = {
+  logo: string;
+  footerLinks: FooterLink[];
+  socialIcons: FooterIcon[];
+};
