@@ -8,15 +8,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        secondary:
-          "bg-site-primary text-white border border-site-primary hover:bg-transparent hover:text-site-primary",
         primary:
           "bg-site-secondary text-site-primary border border-site-secondary hover:bg-transparent hover:text-site-secondary",
+        secondary:
+          "bg-site-primary text-white border border-site-primary hover:bg-transparent hover:text-site-primary",
         secondaryOutline:
           "bg-transparent text-site-primary border border-site-primary hover:bg-site-primary hover:text-white",
         primaryOutline:
           "bg-transparent text-site-secondary border border-site-secondary hover:bg-site-secondary hover:text-site-primary",
-
+        default:
+          "bg-site-secondary text-site-primary border border-site-secondary",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         risk: "border border-red-700 bg-red-500 text-white  hover:bg-transparent hover:text-red-500",
         outlineRisk:
@@ -30,7 +31,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "primary",
+      variant: "default",
       size: "default",
     },
   }
