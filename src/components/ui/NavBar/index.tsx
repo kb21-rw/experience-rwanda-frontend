@@ -69,11 +69,12 @@ const NavBar = () => {
                 onClick={() => setIsOpen(false)}
               />
             ))}
-            <Button className="bg-green-700 hover:bg-green-700/90 text-blue-700">
-              Book Trip
-            </Button>
           </div>
-
+          <div>
+            <Link href="/" className="bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2">
+              Book Trip
+            </Link>
+          </div>
           <Button
             variant="ghost"
             size="icon"
