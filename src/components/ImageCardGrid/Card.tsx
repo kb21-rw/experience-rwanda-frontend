@@ -1,6 +1,5 @@
-"use client";
 import { ReactElement } from "react";
-import { Card } from "@/types/ImageCard";
+import { Trip } from "@/types/ImageCard";
 import Image from "next/image";
 import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
@@ -11,15 +10,18 @@ import Link from "next/link";
 
 const ImageCard = ({
   title: trip,
-  mainPicture: url,
-  price,
+  coverImage: url,
+  pricingOptions,
   departureTime: date,
   id: tripId,
-  seats,
-  seatsBooked,
-}: Card): ReactElement => {
-  const details = createTripDetails("Akagera", date, seats);
-
+  totalSeats,
+  totalBookedSeats,
+  currency,
+}: Trip): ReactElement => {
+  const details = createTripDetails("Akagera", date, totalSeats);
+  const price = pricingOptions.reduce((prev, curr) => {
+    return prev.amount < curr.amount ? prev : curr;
+  });
   return (
     <div className="bg-white shadow-lg rounded-3xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <div className="relative w-full h-64">
@@ -30,7 +32,7 @@ const ImageCard = ({
         />
         <Tag
           variant="default"
-          text={`${seats - seatsBooked} left`}
+          text={`${totalSeats - totalBookedSeats} left`}
           icon={<UsersIcon size={16} />}
           className="absolute bottom-4 right-4"
         />
@@ -51,9 +53,9 @@ const ImageCard = ({
       </div>
       <hr className="h-0.5" />
       <div className="flex gap-3 justify-between items-center p-6">
-        <PriceTag price={price} />
+        <PriceTag price={price.amount} currency={currency} />
         <Link
-          href={`/trip/${tripId}`}
+          href={`/trips/${tripId}`}
           className="bg-[#43D9AD] px-6 py-2 rounded-full text-black leading-[100%] font-semibold"
         >
           View more
