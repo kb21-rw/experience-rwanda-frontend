@@ -97,6 +97,11 @@ const config: Config = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        site: {
+          DEFAULT: "#011627",
+          primary: "#011627",
+          secondary: "#27B088",
+        },
       },
     },
   },
