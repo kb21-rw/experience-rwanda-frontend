@@ -5,19 +5,20 @@ export type PricingOption = {
   description: string;
 };
 
-export type Card = {
+export type Trip = {
   id: string;
   title: string;
   description?: string;
   destination: string;
   departureTime: string;
   price: number;
-  seats: number;
-  seatsBooked: number;
-  currency?: string;
-  mainPicture: string;
+  totalBookedSeats: number;
+  totalSeats: number;
+  currency: string;
+  coverImage: string;
   createdAt?: string;
   updatedAt?: string;
+  pricingOptions: PricingOption[];
 };
 
 export type TripStatus = "ONGOING" | "PAST" | "AVAILABLE" | "CANCELLED";
