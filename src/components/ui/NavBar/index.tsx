@@ -125,12 +125,14 @@ const NavBar: React.FC = () => {
                 />
               ))}
               
+            {pathname === "/" && (
             <Link
               href="/"
               className="hidden md:inline-block bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
             >
               Book Trip
             </Link>
+          )}
           
             </div>
           </div>
