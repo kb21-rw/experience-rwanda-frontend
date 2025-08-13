@@ -56,7 +56,7 @@ const ImageCard = ({
         <PriceTag price={price.amount} currency={currency} />
         <Link
           href={`/trips/${tripId}`}
-          className="bg-[#43D9AD] px-6 py-2 rounded-full text-black leading-[100%] font-semibold"
+          className="bg-green-700 px-6 py-2 rounded-full text-black leading-[100%] font-semibold"
         >
           View more
         </Link>
