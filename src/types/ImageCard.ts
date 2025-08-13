@@ -1,3 +1,5 @@
+import { Booking } from "./Booking";
+
 export type PricingOption = {
   id: string;
   name: string;
@@ -11,14 +13,23 @@ export type Trip = {
   description?: string;
   destination: string;
   departureTime: string;
-  price: number;
+  returnTime: string;
+  pricingOptions: PricingOption[];
   totalBookedSeats: number;
   totalSeats: number;
   currency: string;
   coverImage: string;
-  createdAt?: string;
-  updatedAt?: string;
-  pricingOptions: PricingOption[];
+  priceTitle: string;
+  priceDescription: string;
+  bookings: Booking[];
+  status:
+    | "fully-booked"
+    | "completed"
+    | "canceled"
+    | "ongoing"
+    | "canceled"
+    | "available";
+  onDelete?: (id: string) => void;
 };
 
 export type TripStatus = "ONGOING" | "PAST" | "AVAILABLE" | "CANCELLED";
