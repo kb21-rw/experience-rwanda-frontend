@@ -1,44 +1,59 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import NavItem from "./NavItem";
-import { Menu, X } from "lucide-react";
-import { navbarData } from "@/data/navbarData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "../Button";
+import { Menu, X } from "lucide-react";
 
-const NavBar = () => {
+import NavItem from "./NavItem";
+import { Button } from "../Button";
+import { navbarData } from "@/data/navbarData";
+
+const SCROLL_THRESHOLD = 20;
+const SCROLL_OFFSET = 100;
+
+const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+
   const { logo, navLinks } = navbarData;
   const pathname = usePathname();
 
+  const closeMenu = useCallback(() => setIsOpen(false), []);
+
+  const handleScroll = useCallback(() => {
+    const currentScrollY = window.scrollY;
+
+    setScrolled(currentScrollY > SCROLL_THRESHOLD);
+
+    const sections = navLinks
+      .map((link) => document.getElementById(link.sectionId))
+      .filter(Boolean);
+
+    const scrollPos = currentScrollY + SCROLL_OFFSET;
+
+    for (const section of sections) {
+      if (
+        section &&
+        scrollPos >= section.offsetTop &&
+        scrollPos < section.offsetTop + section.offsetHeight
+      ) {
+        setActiveSection(section.id);
+        break;
+      }
+    }
+  }, [navLinks]);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      const sections = navLinks.map((link) =>
-        document.getElementById(link.sectionId)
-      );
-      const scrollPos = window.scrollY + 100;
-
-      sections.forEach((section) => {
-        if (
-          section &&
-          scrollPos >= section.offsetTop &&
-          scrollPos < section.offsetTop + section.offsetHeight
-        ) {
-          setActiveSection(section.id);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     setActiveSection(pathname === "/" ? "home" : pathname);
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [navLinks, pathname]);
+  }, [handleScroll, pathname]);
+
+  const toggleMenu = useCallback(() => setIsOpen((prev) => !prev), []);
 
   return (
     <>
@@ -47,8 +62,12 @@ const NavBar = () => {
           scrolled ? "bg-blue-700/95 backdrop-blur-md py-3" : "bg-blue-700 py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2 group">
+        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center py-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2 group"
+            aria-label="Home"
+          >
             <div className="relative w-8 h-8 transition-transform group-hover:scale-110">
               <Image
                 src={logo.src}
@@ -66,44 +85,53 @@ const NavBar = () => {
                 key={item.sectionId}
                 {...item}
                 isActive={activeSection === item.sectionId}
-                onClick={() => setIsOpen(false)}
+                onClick={closeMenu}
+                href={item.href}
               />
             ))}
           </div>
-          <div>
-            <Link href="/" className="bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2">
+
+          {pathname === "/" && (
+            <Link
+              href="/"
+              className="hidden md:inline-block bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
+            >
               Book Trip
             </Link>
-          </div>
+          )}
+
           <Button
             variant="ghost"
             size="icon"
-            className="p-3 md:hidden text-green-700 hover:bg-green-700/20"
-            onClick={() => setIsOpen(!isOpen)}
+            className="p-3 md:hidden text-green-700 hover:bg-green-700/20 rounded-none"
+            onClick={toggleMenu}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            {isOpen ? (
-              <X className="w-10 h-10" />
-            ) : (
-              <Menu className="w-10 h-10" />
-            )}
+            {isOpen ? <X className="w-10 h-10" /> : <Menu className="w-10 h-10" />}
           </Button>
         </div>
 
         {isOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-blue-700 border-t border-green-700/20 animate-fade-in">
-            <div className="p-4 space-y-4">
+          <div className="md:hidden absolute top-full left-0 w-full bg-blue-700 border-t border-green-700/20 shadow-lg">
+            <div className="p-4 space-y-2">
               {navLinks.map((item) => (
                 <NavItem
                   key={item.sectionId}
                   {...item}
                   isActive={activeSection === item.sectionId}
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeMenu}
                   isMobile
+                  href={item.href}
                 />
               ))}
-              <Button className="w-full mt-4 bg-green-700 hover:bg-green-700/90 text-blue-700">
-                Book Trip
-              </Button>
+              
+            <Link
+              href="/"
+              className="hidden md:inline-block bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
+            >
+              Book Trip
+            </Link>
+          
             </div>
           </div>
         )}
