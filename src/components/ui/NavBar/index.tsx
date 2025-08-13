@@ -107,7 +107,11 @@ const NavBar: React.FC = () => {
             onClick={toggleMenu}
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            {isOpen ? <X className="w-10 h-10" /> : <Menu className="w-10 h-10" />}
+            {isOpen ? (
+              <X className="w-10 h-10" />
+            ) : (
+              <Menu className="w-10 h-10" />
+            )}
           </Button>
         </div>
 
@@ -124,16 +128,15 @@ const NavBar: React.FC = () => {
                   href={item.href}
                 />
               ))}
-              
-            {pathname === "/" && (
-            <Link
-              href="/"
-              className="hidden md:inline-block bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
-            >
-              Book Trip
-            </Link>
-          )}
-          
+
+              {pathname === "/" && (
+                <Link
+                  href="/"
+                  className="block w-full text-center bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
+                >
+                  Book Trip
+                </Link>
+              )}
             </div>
           </div>
         )}
