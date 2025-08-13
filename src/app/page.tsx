@@ -4,6 +4,7 @@ import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
 import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
+import CustomizedTrip from "@/components/CustomizedTrip";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
       />
+      <CustomizedTrip/>
       <Header
         id="about"
         title={aboutUsData.title}
