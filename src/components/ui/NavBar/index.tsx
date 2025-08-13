@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,51 +9,16 @@ import { Menu, X } from "lucide-react";
 import NavItem from "./NavItem";
 import { Button } from "../Button";
 import { navbarData } from "@/data/navbarData";
+import { useScrollSections } from "@/hooks/useScrollSection";
+import { useToggle } from "@/hooks/useToogle";
 
-const SCROLL_THRESHOLD = 20;
-const SCROLL_OFFSET = 100;
 
 const NavBar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-  const [scrolled, setScrolled] = useState(false);
-
   const { logo, navLinks } = navbarData;
   const pathname = usePathname();
 
-  const closeMenu = useCallback(() => setIsOpen(false), []);
-
-  const handleScroll = useCallback(() => {
-    const currentScrollY = window.scrollY;
-
-    setScrolled(currentScrollY > SCROLL_THRESHOLD);
-
-    const sections = navLinks
-      .map((link) => document.getElementById(link.sectionId))
-      .filter(Boolean);
-
-    const scrollPos = currentScrollY + SCROLL_OFFSET;
-
-    for (const section of sections) {
-      if (
-        section &&
-        scrollPos >= section.offsetTop &&
-        scrollPos < section.offsetTop + section.offsetHeight
-      ) {
-        setActiveSection(section.id);
-        break;
-      }
-    }
-  }, [navLinks]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    setActiveSection(pathname === "/" ? "home" : pathname);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll, pathname]);
-
-  const toggleMenu = useCallback(() => setIsOpen((prev) => !prev), []);
+  const { activeSection, scrolled } = useScrollSections(navLinks);
+  const { isOpen, toggle, close } = useToggle(false);
 
   return (
     <>
@@ -62,7 +27,7 @@ const NavBar: React.FC = () => {
           scrolled ? "bg-blue-700/95 backdrop-blur-md py-3" : "bg-blue-700 py-4"
         }`}
       >
-        <div className=" content-wrapper flex justify-between items-center py-2">
+        <div className="content-wrapper flex justify-between items-center py-2">
           <Link
             href="/"
             className="flex items-center gap-2 group"
@@ -85,7 +50,7 @@ const NavBar: React.FC = () => {
                 key={item.sectionId}
                 {...item}
                 isActive={activeSection === item.sectionId}
-                onClick={closeMenu}
+                onClick={close}
                 href={item.href}
               />
             ))}
@@ -104,7 +69,7 @@ const NavBar: React.FC = () => {
             variant="ghost"
             size="icon"
             className="p-3 md:hidden text-green-700 hover:bg-green-700/20 rounded-none"
-            onClick={toggleMenu}
+            onClick={toggle}
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             {isOpen ? <X className="w-10 h-10" /> : <Menu className="w-10 h-10" />}
@@ -119,21 +84,20 @@ const NavBar: React.FC = () => {
                   key={item.sectionId}
                   {...item}
                   isActive={activeSection === item.sectionId}
-                  onClick={closeMenu}
+                  onClick={close}
                   isMobile
                   href={item.href}
                 />
               ))}
-              
-            {pathname === "/" && (
-            <Link
-              href="/"
-              className="hidden md:inline-block bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
-            >
-              Book Trip
-            </Link>
-          )}
-          
+
+              {pathname === "/" && (
+                <Link
+                  href="/"
+                  className="block w-full text-center bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
+                >
+                  Book Trip
+                </Link>
+              )}
             </div>
           </div>
         )}
