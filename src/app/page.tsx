@@ -4,6 +4,8 @@ import tripData from "./../data/tripData.json";
 import ImageCardGrid from "../components/ImageCardGrid";
 import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
+import LogoContent from "@/components/LogoContent";
+import LogoContentData from "./../data/logoContent.json";
 
 export default function Home() {
   return (
@@ -25,6 +27,7 @@ export default function Home() {
         title={tripData.title}
         description={tripData.description}
       />
+      <LogoContent {...LogoContentData} />
     </>
   );
 }
