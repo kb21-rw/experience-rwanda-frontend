@@ -72,7 +72,11 @@ const NavBar: React.FC = () => {
             onClick={toggle}
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            {isOpen ? <X className="w-10 h-10" /> : <Menu className="w-10 h-10" />}
+            {isOpen ? (
+              <X className="w-10 h-10" />
+            ) : (
+              <Menu className="w-10 h-10" />
+            )}
           </Button>
         </div>
 

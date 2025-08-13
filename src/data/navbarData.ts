@@ -21,19 +21,19 @@ export const navbarData: NavbarData = {
   navLinks: [
     {
       data_test_id: "home",
-      href: "/#home",
+      href: "./#home",
       sectionId: "home",
       label: "Home",
     },
     {
       data_test_id: "about",
-      href: "/#about",
+      href: "./#about",
       sectionId: "about",
       label: "About us",
     },
     {
       data_test_id: "trips",
-      href: "/#trips",
+      href: "./#trips",
       sectionId: "trips",
       label: "Trips",
     },
