@@ -62,7 +62,7 @@ const NavBar: React.FC = () => {
           scrolled ? "bg-blue-700/95 backdrop-blur-md py-3" : "bg-blue-700 py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center py-2">
+        <div className=" content-wrapper flex justify-between items-center py-2">
           <Link
             href="/"
             className="flex items-center gap-2 group"
