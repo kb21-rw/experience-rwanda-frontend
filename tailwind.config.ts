@@ -11,6 +11,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        box: "4px 4px 20px #43D9AD99", // custom shadow
+      },
       spacing: {
         "1.5": "0.375rem",
         "2.5": "0.625rem",
@@ -34,6 +37,7 @@ const config: Config = {
       },
       fontSize: {
         "10": "2.5rem",
+        "5.8xl": "3.5rem", //xl
       },
       borderRadius: {
         "5": "1.25rem",
