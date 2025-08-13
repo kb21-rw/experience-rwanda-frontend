@@ -33,3 +33,10 @@ export type Row = {
   title: string;
   description: string;
 };
+
+export type InfoCard = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+};
