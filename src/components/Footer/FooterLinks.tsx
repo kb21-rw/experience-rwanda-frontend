@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { Links } from "@/types/footer";
+import Image from "next/image";
 
 interface FooterProps {
   title: string;
@@ -11,18 +12,26 @@ const FooterLinks = ({ title, links }: FooterProps) => {
   return (
     <div>
       <h3 className="text-lg font-semibold mb-4">{title}</h3>
-      <div className="navigation flex flex-col gap-2">
+      <div className="navigation flex flex-col gap-3">
         {links.map((link, index) => (
-          <div key={link.sectionId + index}>
-            <Link
-              rel="noopener noreferrer"
-              href={link.url}
-              target="_blank"
-              className="hover:text-site-secondary hover:underline hover:transition-colors duration-300 ease-in-out hover:underline-offset-4"
-            >
-              {link.label}
-            </Link>
-          </div>
+          <Link
+            key={link.sectionId + index}
+            rel="noopener noreferrer"
+            href={link.url}
+            target="_blank"
+            className="hover:text-site-secondary hover:underline hover:transition-colors duration-300 ease-in-out hover:underline-offset-4 flex items-center gap-2"
+          >
+            {link.logo && (
+              <Image
+                src={link.logo}
+                alt={link.label}
+                width={20}
+                height={20}
+                className="text-site-secondary"
+              />
+            )}
+            {link.label}
+          </Link>
         ))}
       </div>
     </div>

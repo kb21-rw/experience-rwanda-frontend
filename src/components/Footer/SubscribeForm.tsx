@@ -11,7 +11,7 @@ const SubscribeForm = () => {
 
   return (
     <div>
-      <p>
+      <p className="text-sm">
         Subscribe to our newsletter for the latest updates on features and
         releases.
       </p>

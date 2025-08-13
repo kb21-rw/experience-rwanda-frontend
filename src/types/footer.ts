@@ -13,19 +13,13 @@ export type IconData = {
   attributes: IconAttributes;
 };
 
-export type FooterIcon = {
-  title: IconName;
-  url: string;
-  width: number;
-  height: number;
-};
-
 export type FooterLink = {
   title: string;
   links: Links[];
 };
 export type Links = {
   sectionId: string;
+  logo: string | null;
   label: string;
   url: string;
 };
@@ -38,6 +32,5 @@ export type LegalLink = {
 export type FooterData = {
   logo: string;
   footerLinks: FooterLink[];
-  socialIcons: FooterIcon[];
   legalLinks: LegalLink[];
 };

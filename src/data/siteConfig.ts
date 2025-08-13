@@ -8,21 +8,29 @@ export const footerData: FooterData = {
       links: [
         {
           sectionId: "explore Trips",
+          logo: null,
           label: "Explore Trips",
-          url: "#explore Trips",
+          url: "#explore-trips",
         },
         {
           sectionId: "travel Trips",
+          logo: null,
           label: "Travel Trips",
-          url: "#travel Trips",
+          url: "#travel-trips",
         },
-        { sectionId: "contact", label: "Contact Us", url: "/contact" },
+        {
+          sectionId: "contact",
+          logo: null,
+          label: "Contact Us",
+          url: "/contact",
+        },
         {
           sectionId: "about",
+          logo: null,
           label: "About us",
           url: "/about",
         },
-        { sectionId: "fAQs", label: "FAQs", url: "/fAQs" },
+        { sectionId: "fAQs", logo: null, label: "FAQs", url: "/faqs" },
       ],
     },
     {
@@ -30,21 +38,34 @@ export const footerData: FooterData = {
       links: [
         {
           sectionId: "newsletter",
+          logo: null,
           label: "Newsletter",
           url: "/newsletter",
         },
         {
           sectionId: "blog Posts",
+          logo: null,
           label: "Blog Posts",
-          url: "/blog Posts",
+          url: "/blog-posts",
         },
         {
           sectionId: "travel Guides",
+          logo: null,
           label: "Travel Guides",
-          url: "/travel Guides",
+          url: "/travel-guides",
         },
-        { sectionId: "community", label: "Community", url: "/community" },
-        { sectionId: "support", label: "Support", url: "/support" },
+        {
+          sectionId: "community",
+          logo: null,
+          label: "Community",
+          url: "/community",
+        },
+        {
+          sectionId: "support",
+          logo: null,
+          label: "Support",
+          url: "/support",
+        },
       ],
     },
     {
@@ -52,44 +73,38 @@ export const footerData: FooterData = {
       links: [
         {
           sectionId: "facebook",
+          logo: "/uploads/facebook.svg",
           label: "Facebook",
           url: "#",
         },
         {
           sectionId: "instagram",
+          logo: "/uploads/instagram.svg",
           label: "Instagram",
           url: "#",
         },
         {
           sectionId: "x",
+          logo: "/uploads/twitter.svg",
           label: "X",
           url: "#",
         },
-        { sectionId: "linkedIn", label: "LinkedIn", url: "/linkedIn" },
-        { sectionId: "youTube", label: "YouTube", url: "/youTube" },
+        {
+          sectionId: "linkedIn",
+          logo: "/uploads/linkedin.svg",
+          label: "LinkedIn",
+          url: "#",
+        },
+        {
+          sectionId: "youTube",
+          logo: "/uploads/youtube.svg",
+          label: "YouTube",
+          url: "#",
+        },
       ],
     },
   ],
-  socialIcons: [
-    {
-      title: "linkedin",
-      url: "#",
-      width: 24,
-      height: 24,
-    },
-    {
-      title: "twitter",
-      url: "#",
-      width: 24,
-      height: 24,
-    },
-    {
-      title: "youtube",
-      url: "#",
-      width: 24,
-      height: 24,
-    },
-  ],
+
   legalLinks: [
     {
       title: "Privacy Policy",
