@@ -14,7 +14,7 @@ const buttonVariants = cva(
           "bg-site-primary text-white border border-site-primary hover:bg-transparent hover:text-site-primary",
         secondaryOutline:
           "bg-transparent text-site-primary border border-site-primary hover:bg-site-primary hover:text-white",
-        primaryOutline:
+        outline:
           "bg-transparent text-site-secondary border border-site-secondary hover:bg-site-secondary hover:text-site-primary",
         default:
           "bg-site-secondary text-site-primary border border-site-secondary",
