@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import UserInfo from "./UserInfo";
 import PaymentPopup from "./Payment";
 import { ClientData } from "@/types/Popup";
-import { PricingOption } from "@/types/trip";
+import { PricingOption } from "@/types/ImageCard";
 
 const Popup = ({
   tripId,
