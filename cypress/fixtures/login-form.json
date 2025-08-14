@@ -1,25 +1,25 @@
 [
     {
         "action": "type",
-        "selector": "[data-testId='login-email']",
+        "selector": "[data-test-id='login-email']",
         "value":"ngabonest@gmail.com"
 
     },
     {
         "action": "type",
-        "selector": "[data-testId='login-password']",
+        "selector": "[data-test-id='login-password']",
         "value":"admin123"
     },
     {
         "action": "click",
-        "selector": "[data-testId='login-show-password']"
+        "selector": "[data-test-id='login-show-password']"
     },
     {
         "action": "click",
-        "selector": "[data-testId='login-remember-me']"
+        "selector": "[data-test-id='login-remember-me']"
     },
     {
         "action": "click",
-        "selector": "[data-testId='login-button']"
+        "selector": "[data-test-id='login-button']"
     }
 ]

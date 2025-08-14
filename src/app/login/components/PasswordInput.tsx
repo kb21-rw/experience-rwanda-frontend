@@ -30,14 +30,14 @@ export const PasswordInput = ({
         id="password"
         type={showPassword ? "text" : "password"}
         placeholder="••••••••••••"
-        data-testId="login-password"
+        data-test-id="login-password"
         {...register("password")}
         className="w-full rounded-md pr-10"
         autoComplete="current-password"
       />
       <button
         type="button"
-        data-testId="login-show-password"
+        data-test-id="login-show-password"
         onClick={() => setShowPassword(!showPassword)}
         className="absolute right-3 top-1/2 -translate-y-1/2"
       >

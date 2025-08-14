@@ -47,14 +47,14 @@ const ContactForm = () => {
       className="flex flex-col gap-10 w-1/2 mx-auto mt-14.25"
     >
       <div>
-        <Input type="text" placeholder="Full names" data-testId="contact-full-names" {...register("name")} />
+        <Input type="text" placeholder="Full names" data-test-id="contact-full-names" {...register("name")} />
         {errors.name && (
           <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>
         )}
       </div>
 
       <div>
-        <Input type="email" placeholder="Your email" data-testId="contact-email" {...register("email")} />
+        <Input type="email" placeholder="Your email" data-test-id="contact-email" {...register("email")} />
         {errors.email && (
           <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
         )}
@@ -63,7 +63,7 @@ const ContactForm = () => {
       <div>
         <textarea
           placeholder="Your Message"
-          className="border border-gray-700 rounded-md p-2 h-40 w-full" data-testId="contact-message"
+          className="border border-gray-700 rounded-md p-2 h-40 w-full" data-test-id="contact-message"
           {...register("message")}
         />
         {errors.message && (
@@ -71,7 +71,7 @@ const ContactForm = () => {
         )}
       </div>
 
-      <Button type="submit" variant="primary" data-testId="contact-submit" disabled={isSubmitting}>
+      <Button type="submit" variant="primary" data-test-id="contact-submit" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Submit"}
       </Button>
     </form>

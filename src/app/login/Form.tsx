@@ -98,7 +98,7 @@ export default function LoginForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          data-testId="login-button"
+          data-test-id="login-button"
           className="w-full bg-black text-white hover:bg-gray-800 rounded-md"
         >
           {isLoading ? "Logging in..." : "Login"}

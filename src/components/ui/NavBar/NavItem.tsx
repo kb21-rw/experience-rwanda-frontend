@@ -34,7 +34,7 @@ const NavItem: React.FC<NavItemProp> = ({
           scrollToSection(e);
         }
       }}
-      data-testId={data_test_id}
+      data-test-id={data_test_id}
       className={`hover:underline ${isActive ? "underline text-blue-300" : ""}`}
     >
       {children}
