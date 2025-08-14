@@ -1,35 +1,53 @@
+"use client";
 import Image from "next/image";
 
-interface RequestTripProps {
-  title: string;
-  description: string;
-  buttonText: string;
-  images: string[];
-}
-
-const CustomizedTripContent = ({ title, description, buttonText }: RequestTripProps) => {
+export default function CustomizedTripSection() {
   return (
-    <div className="flex flex-col md:flex-row items-center gap-8 bg-emerald-400 p-20 rounded-lg">
-        <div className="grid grid-cols-2 gap-4 max-w-4xl mx-auto">
-  <Image src="/uploads/giraffe.jpg" width={360} height={480} alt="Large" className="w-full h-full object-cover rounded-lg"/>
+    <section className="bg-green-700 bg-opacity-60 py-10 px-6">
+      <div className="content-wrapper flex flex-col md:flex-row items-center gap-8">
+        
+        <div className="grid grid-cols-2 md:grid-cols-[2fr_1fr] gap-4 items-center">
+          <div className="row-span-2">
+            <Image
+              src="/uploads/elephant.webp" 
+              alt="Antelopes in Rwanda"
+              width={400}
+              height={400}
+              className="rounded-xl object-cover w-full h-full"
+            />
+          </div>
 
-  <div className="grid grid-rows-2 gap-4">
-    <Image src="/uploads/girafffe.jpg"  alt="Small 1" className="w-full h-full object-cover rounded-lg"/>
-    <Image src="/uploads/akagera.png" alt="Small 2" className="w-full h-full object-cover rounded-lg"/>
-  </div>
-</div>
+          <Image
+            src="/uploads/akagera.png" 
+            alt="City View"
+            width={200}
+            height={200}
+            className="rounded-xl object-cover w-full h-full"
+          />
 
+          <Image
+            src="/uploads/akagera.png" 
+            alt="Mountain View"
+            width={100}
+            height={100}
+            className="rounded-xl object-cover w-full h-full"
+          />
+        </div>
 
-      <div className="max-w-lg text-left md:text-left">
-        <h2 className="text-3xl font-bold mb-4">{title}</h2>
-        <p className="text-lg mb-6">{description}</p>
-        <button className="border border-black px-4 py-2 hover:bg-black hover:text-white transition">
-          {buttonText}
-        </button>
+        <div className="max-w-lg">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            Request for customized trip
+          </h2>
+          <p className="text-gray-800 mb-6">
+            Experience Rwanda like never before, contact us and tell us how your
+            dream trip is. We will organize it for your preferences and browsing
+            history to suggest the perfect adventures tailored to your interests.
+          </p>
+          <button className="border border-black px-6 py-2  hover:bg-black hover:text-white transition">
+            Contact us
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
-
-
-export default CustomizedTripContent;
