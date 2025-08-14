@@ -1,43 +1,69 @@
 "use client";
+import React from "react";
 import Link from "next/link";
 
-export type NavItemProp = {
+export interface NavItemProps {
   href: string;
   sectionId: string;
-  children: React.ReactNode;
+  label: string;
+  data_test_id?: string;
   onClick?: () => void;
   isActive?: boolean;
-  data_test_id?:string;
-};
-const NavItem: React.FC<NavItemProp> = ({
+  isMobile?: boolean;
+}
+
+const NavItem: React.FC<NavItemProps> = ({
   href,
   sectionId,
-  children,
-  onClick,
-  isActive,
+  label,
   data_test_id,
+  onClick,
+  isActive = false,
+  isMobile = false,
 }) => {
-  const scrollToSection = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      if (onClick) onClick();
+  const isPageName = href.includes("#") || href === "/"
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isPageName) {
+      e.preventDefault();
+      const targetElement = document.getElementById(sectionId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
+    onClick?.();
   };
+
+  if (isMobile) {
+    return (
+      <Link
+        href={href}
+        onClick={handleClick}
+        data-testid={data_test_id}
+        className={`block py-3 px-4 font-medium transition-all duration-200 ${
+          isActive
+            ? "text-green-700 bg-green-700/10 underline underline-offset-4"
+            : "text-green-700 hover:scale-105 hover:shadow-md hover:bg-green-700/5"
+        }`}
+        aria-current={isActive ? "page" : undefined}
+      >
+        {label}
+      </Link>
+    );
+  }
 
   return (
     <Link
       href={href}
-      onClick={(e) => {
-        if (href === "/") {
-          scrollToSection(e);
-        }
-      }}
-      data-testId={data_test_id}
-      className={`hover:underline ${isActive ? "underline text-blue-300" : ""}`}
+      onClick={handleClick}
+      data-testid={data_test_id}
+      className={`px-1 py-2 font-medium transition-all duration-200 ${
+        isActive 
+          ? "text-green-700 underline underline-offset-4" 
+          : "text-green-700 hover:scale-110 hover:font-semibold"
+      }`}
+      aria-current={isActive ? "page" : undefined}
     >
-      {children}
+      {label}
     </Link>
   );
 };
