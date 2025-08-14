@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       boxShadow: {
-        box: "4px 4px 20px #43D9AD99", // custom shadow
+        box: "4px 4px 20px #43D9AD99",
       },
       spacing: {
         "1.5": "0.375rem",
@@ -37,7 +37,7 @@ const config: Config = {
       },
       fontSize: {
         "10": "2.5rem",
-        "5.8xl": "3.5rem", //xl
+        "5.8xl": "3.5rem",
       },
       borderRadius: {
         "5": "1.25rem",
