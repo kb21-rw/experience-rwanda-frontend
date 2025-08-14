@@ -3,32 +3,32 @@ import { InfoCard } from "@/types/ImageCard";
 export const rwandaHighlights: InfoCard[] = [
   {
     id: "1",
-    title: "Gorilla Trekking",
-    description: "Experience the rare opportunity to encounter mountain gorillas in their natural habitat in Volcanoes National Park.",
-    image: "/uploads/akagera.png",
-  },
-  {
-    id: "2", 
-    title: "Scenic Landscapes",
-    description: "Discover Rwanda's stunning landscapes from rolling hills to majestic volcanoes and pristine lakes.",
+    title: "Country of a thousand hills",
+    description: "Navigate through Rwanda's breathtaking landscapes and rich cultural sites effortlessly.",
     image: "/uploads/hand.png",
   },
   {
+    id: "2", 
+    title: "Landlock country",
+    description: "Filter trips by duration, location, and activities to suit your preferences.",
+    image: "/uploads/akagera.png",
+  },
+  {
     id: "3",
-    title: "Wildlife Safaris",
-    description: "Explore Akagera National Park to see the Big Five and diverse wildlife in their natural environment.",
+    title: "Most visited country in Africa",
+    description: "From national parks to historical sites, explore all that Rwanda offers.",
     image: "/uploads/elephant.webp",
   },
   {
     id: "4",
-    title: "Cultural Experiences",
-    description: "Immerse yourself in Rwanda's rich culture through traditional dance, local markets, and community visits.",
+    title: "Gorilla Trekking",
+    description: "Experience the rare opportunity to encounter mountain gorillas in their natural habitat.",
     image: "/uploads/giraffe.jpg",
   },
   {
     id: "5",
     title: "Safe & Secure",
-    description: "Travel with confidence in one of Africa's safest countries with excellent infrastructure and hospitality.",
+    description: "Travel with confidence in one of Africa's safest countries with excellent infrastructure.",
     image: "/uploads/safaricar.png",
   },
   {
