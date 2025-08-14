@@ -12,12 +12,12 @@ export default function CustomizedTripSection() {
               src="/uploads/elephant.webp" 
               alt="Antelopes in Rwanda"
               width={400}
-              height={400}
+              height={470}
               className="rounded-xl object-cover w-full h-full"
             />
           </div>
 
-          <Image
+          <div className="hiden flex flex-col justify-center gap-4"> <Image
             src="/uploads/akagera.png" 
             alt="City View"
             width={200}
@@ -32,6 +32,7 @@ export default function CustomizedTripSection() {
             height={100}
             className="rounded-xl object-cover w-full h-full"
           />
+          </div>
         </div>
 
         <div className="max-w-lg">
