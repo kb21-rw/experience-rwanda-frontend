@@ -7,7 +7,7 @@ const HeroContent = ({ id, content }: HeroContent) => {
   return (
     <section
       id={id}
-      className="relative w-full h-[calc(100vh-5rem)] bg-site flex items-center justify-center"
+      className="relative w-full h-screen bg-site flex items-center justify-center"
     >
       <div
         className="absolute inset-0 md:top-0 md:left-1/2 md:-translate-x-1/2 md:inset-auto md:mt-48 lg:mt-20 md:h-40 md:w-40 
@@ -17,7 +17,7 @@ const HeroContent = ({ id, content }: HeroContent) => {
           src="/uploads/hero.jpg"
           alt={content.title}
           fill
-          className="object-cover"
+          className="object-cover opacity-50 md:opacity-100"
         />
         <div className="absolute inset-0 bg-black/40 md:hidden" />
       </div>

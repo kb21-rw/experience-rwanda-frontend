@@ -3,7 +3,7 @@ import { Input } from "../Input";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { ClientData } from "@/types/Popup";
-import { PricingOption, TripStatus } from "@/types/trip";
+import { PricingOption } from "@/types/ImageCard";
 import { z } from "zod";
 import { UserInfoSchema } from "@/utils/schemas/bookingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/Select";
 import { Counter } from "@/components/Counter";
 import { Loader2 } from "lucide-react";
-import { CheckSeatsResponse } from "@/types/trip";
+import { CheckSeatsResponse, TripStatus } from "@/types/trip";
 
 const UserInfoPopup = ({
   setCurrentStep,
