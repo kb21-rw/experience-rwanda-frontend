@@ -31,6 +31,7 @@ const config: Config = {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         Figtree: ["Figtree", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
       },
       fontSize: {
         "10": "2.5rem",
@@ -85,6 +86,9 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        green: {
+          "700": "#43D9AD",
+        },
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",

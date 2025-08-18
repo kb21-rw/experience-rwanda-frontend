@@ -19,7 +19,6 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   const details = createTripDetails(
     tripDetails.destination,
     tripDetails.departureTime,
-    tripDetails.pricingOptions,
     tripDetails.totalSeats
   );
   return (
