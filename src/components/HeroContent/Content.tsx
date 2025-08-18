@@ -1,5 +1,6 @@
 import type { Content } from "@/types/Hero";
 import Image from "next/image";
+import { Button } from "../ui/Button";
 
 const Content = ({ title, description }: Content) => {
   return (
@@ -9,10 +10,7 @@ const Content = ({ title, description }: Content) => {
           {title}
         </h1>
         <p className="text-base font-normal font-inter">{description}</p>
-
-        <button className="bg-site-secondary font-semibold text-site-primary py-2 px-6 ">
-          Explore
-        </button>
+        <Button>Explore</Button>
       </div>
       <div className="items-center justify-center hidden md:flex rounded-full overflow-hidden md:shadow-box">
         <Image

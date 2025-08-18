@@ -9,24 +9,24 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-site-secondary text-site-primary border border-site-secondary hover:bg-transparent hover:text-site-secondary",
+          " bg-site-secondary text-site-primary border border-site-secondary hover:bg-transparent hover:text-site-secondary",
         secondary:
-          "bg-site-primary text-white border border-site-primary hover:bg-transparent hover:text-site-primary",
+          " bg-site-primary text-white border border-site-primary hover:bg-transparent hover:text-site-primary",
         secondaryOutline:
-          "bg-transparent text-site-primary border border-site-primary hover:bg-site-primary hover:text-white",
+          " bg-transparent text-site-primary border border-site-primary hover:bg-site-primary hover:text-white",
         outline:
-          "bg-transparent text-site-secondary border border-site-secondary hover:bg-site-secondary hover:text-site-primary",
+          " bg-transparent text-site-secondary border border-site-secondary hover:bg-site-secondary hover:text-site-primary",
         default:
-          "bg-site-secondary text-site-primary border border-site-secondary",
+          " bg-site-secondary text-site-primary border border-site-secondary",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         risk: "border border-red-700 bg-red-500 text-white  hover:bg-transparent hover:text-red-500",
         outlineRisk:
-          "bg-transparent text-red-500 border border-red-500 hover:bg-red-500 hover:text-white",
+          " bg-transparent text-red-500 border border-red-500 hover:bg-red-500 hover:text-white",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 px-3 text-xs",
-        lg: "h-10 px-8",
+        default: "h-10 px-6 text-md font-semibold",
+        sm: "h-8 px-6 text-md font-semibold",
+        lg: "h-12 px-8 text-md font-semibold",
         icon: "h-9 w-9",
       },
     },
