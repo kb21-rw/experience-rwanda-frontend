@@ -12,14 +12,14 @@ const FooterLinks = ({ title, links }: FooterProps) => {
   return (
     <div>
       <h3 className="text-lg font-semibold mb-4">{title}</h3>
-      <div className="navigation flex flex-col gap-3">
+      <div className="navigation flex flex-col gap-3 items-start">
         {links.map((link, index) => (
           <Link
             key={link.sectionId + index}
             rel="noopener noreferrer"
             href={link.url}
-            target="_blank"
-            className="hover:text-site-secondary hover:underline hover:transition-colors duration-300 ease-in-out hover:underline-offset-4 flex items-center gap-2"
+            target={link.isExternal ? "_blank" : ""}
+            className="w-auto hover:text-site-secondary hover:underline hover:transition-colors duration-300 ease-in-out hover:underline-offset-4 flex items-center gap-2"
           >
             {link.logo && (
               <Image

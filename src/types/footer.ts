@@ -19,6 +19,7 @@ export type FooterLink = {
 };
 export type Links = {
   sectionId: string;
+  isExternal: boolean;
   logo: string | null;
   label: string;
   url: string;
