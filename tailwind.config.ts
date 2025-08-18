@@ -97,6 +97,7 @@ const config: Config = {
           "5": "hsl(var(--chart-5))",
         },
         gray: {
+          "125": "#cccccc",
           "150": "#B9B9BA",
           "750": "#383838",
           "850": "#0F0F0F",

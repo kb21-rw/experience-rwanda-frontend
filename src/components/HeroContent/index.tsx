@@ -22,7 +22,7 @@ const HeroContent = ({ id, content }: HeroContent) => {
         <div className="absolute inset-0 bg-black/40 md:hidden" />
       </div>
 
-      <div className="content-wrapper relative z-10 text-[#cccccc]">
+      <div className="content-wrapper relative z-10 text-gray-125">
         <Content title={content.title} description={content.description} />
       </div>
     </section>
