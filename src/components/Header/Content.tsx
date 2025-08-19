@@ -24,7 +24,14 @@ const Content = ({
 }: HeaderProps) => {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className={clsx("text-3xl", headingStyles[variant])}>{title}</h2>
+      <h2
+        className={clsx(
+          "text-3xl md:text-5xl lg:text-5.8xl leading-none font-Figtree",
+          headingStyles[variant]
+        )}
+      >
+        {title}
+      </h2>
       <p
         className={clsx(
           "text-base font-normal font-inter",
