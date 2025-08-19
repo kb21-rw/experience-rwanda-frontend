@@ -11,6 +11,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        box: "4px 4px 20px #43D9AD99",
+      },
       spacing: {
         "1.5": "0.375rem",
         "2.5": "0.625rem",
@@ -35,6 +38,7 @@ const config: Config = {
       },
       fontSize: {
         "10": "2.5rem",
+        "5.8xl": "3.5rem",
       },
       borderRadius: {
         "5": "1.25rem",
@@ -86,9 +90,7 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        green: {
-          "700": "#43D9AD",
-        },
+
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",
@@ -97,6 +99,7 @@ const config: Config = {
           "5": "hsl(var(--chart-5))",
         },
         gray: {
+          "125": "#cccccc",
           "150": "#B9B9BA",
           "750": "#383838",
           "850": "#0F0F0F",
