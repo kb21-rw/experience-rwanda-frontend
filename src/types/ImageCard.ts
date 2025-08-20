@@ -1,5 +1,11 @@
 import { Booking } from "./Booking";
-import { PricingOption } from "./trip";
+
+export type PricingOption = {
+  id: string;
+  name: string;
+  amount: number;
+  description: string;
+};
 
 export type Trip = {
   id: string;

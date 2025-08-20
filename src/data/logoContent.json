@@ -1,0 +1,24 @@
+{
+  "title": "Facts about Rwanda a country of a thousand hills",
+  "description": "Rwanda is a land of breathtaking landscapes and rich culture. From the lush hills of Nyungwe to the vibrant streets of Kigali, every corner offers unique adventures. Start your journey today and uncover the beauty of this remarkable destination.",
+  "cards": [
+    {
+      "id": 1,
+      "image": "/uploads/volcano.svg",
+      "title": "Volcanoes",
+      "description": "Easily find experiences tailored to your preferred region."
+    },
+    {
+      "id": 2,
+      "image": "/uploads/rain.svg",
+      "title": "Rain forest",
+      "description": "Visit iconic sites like Volcano National Park."
+    },
+    {
+      "id": 3,
+      "image": "/uploads/safeandclean.svg",
+      "title": "Safe and clean",
+      "description": "Rwanda is one of Africa’s safest and cleanest countries, known for its low crime rate"
+    }
+  ]
+}
