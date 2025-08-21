@@ -44,7 +44,7 @@ const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-full text-site-primary"
+      className="flex flex-col gap-4 w-full "
     >
       <Input
         type="text"
@@ -89,7 +89,7 @@ const ContactForm = () => {
       <div>
         <textarea
           placeholder="Your Message"
-          className="border border-gray-700 rounded-md p-2 h-30 w-full"
+          className="border border-gray-125 bg-transparent rounded-md p-2 h-30 w-full"
           data-testId="contact-message"
           {...register("message")}
         />
