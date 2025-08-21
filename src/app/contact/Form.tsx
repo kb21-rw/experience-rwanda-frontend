@@ -61,7 +61,7 @@ const ContactForm = () => {
           type="email"
           placeholder="Your email"
           data-testId="contact-full-names"
-          {...register("name")}
+          {...register("email")}
         />
         {errors.name && (
           <p className="text-red-600 text-sm">{errors.name.message}</p>
@@ -70,8 +70,8 @@ const ContactForm = () => {
         <Input
           type="number"
           placeholder="Your phone number"
-          data-testId="contact-email"
-          {...register("email")}
+          data-testId="contact-phone-number"
+          {...register("phone")}
         />
         {errors.email && (
           <p className="text-red-600 text-sm">{errors.email.message}</p>
@@ -81,7 +81,7 @@ const ContactForm = () => {
         type="text"
         placeholder="Your subject"
         data-testId="contact-email"
-        {...register("email")}
+        {...register("subject")}
       />
       {errors.email && (
         <p className="text-red-600 text-sm">{errors.email.message}</p>
