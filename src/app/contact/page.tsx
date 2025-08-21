@@ -7,7 +7,7 @@ const ContactPage = () => {
   return (
     <section className="py-25 lg:bg-site  relative">
       <div className="content-wrapper grid grid-cols-1 lg:grid-cols-2 items-center gap-20">
-        <div className="text-white z-10">
+        <div className="text-gray-125 z-10">
           <Header
             title="Contact Us"
             description="The harder you work for something, the greater you’ll feel when you achieve it."
@@ -16,7 +16,7 @@ const ContactPage = () => {
           <ContactForm />
         </div>
 
-        <div className="hidden h-3/4 lg:block z-20">
+        <div className="hidden h-[50vh] lg:block z-20">
           <Image
             src="/uploads/contacttwo.png"
             alt="contact"
@@ -35,6 +35,7 @@ const ContactPage = () => {
           className="object-cover w-full h-full"
           priority
         />
+        <div className="absolute inset-0 bg-black/80 lg:hidden" />
       </div>
     </section>
   );
