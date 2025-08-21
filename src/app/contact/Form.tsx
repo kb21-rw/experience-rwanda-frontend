@@ -48,7 +48,7 @@ const ContactForm = () => {
     >
       <Input
         type="text"
-        placeholder="Full names"
+        placeholder="Your FullNames"
         data-testId="contact-full-names"
         {...register("name")}
       />
