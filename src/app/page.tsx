@@ -1,7 +1,7 @@
 import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
 import tripData from "./../data/tripData.json";
-import ImageCardGrid from "../components/ImageCardGrid";
+import FeaturedTrips from "@/components/FeaturedTrips";
 import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
 import LogoContent from "@/components/LogoContent";
@@ -22,11 +22,7 @@ export default function Home() {
         variant={aboutUsData.variant}
       />
 
-      <ImageCardGrid
-        id="trips"
-        title={tripData.title}
-        description={tripData.description}
-      />
+      <FeaturedTrips title={tripData.title} description={tripData.description} />
       <LogoContent {...LogoContentData} />
     </>
   );
