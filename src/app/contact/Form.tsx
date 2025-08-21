@@ -63,8 +63,8 @@ const ContactForm = () => {
           data-testId="contact-full-names"
           {...register("email")}
         />
-        {errors.name && (
-          <p className="text-red-600 text-sm">{errors.name.message}</p>
+        {errors.email && (
+          <p className="text-red-600 text-sm">{errors.email.message}</p>
         )}
 
         <Input
@@ -73,8 +73,8 @@ const ContactForm = () => {
           data-testId="contact-phone-number"
           {...register("phone")}
         />
-        {errors.email && (
-          <p className="text-red-600 text-sm">{errors.email.message}</p>
+        {errors.phone && (
+          <p className="text-red-600 text-sm">{errors.phone.message}</p>
         )}
       </div>
       <Input
@@ -83,8 +83,8 @@ const ContactForm = () => {
         data-testId="contact-email"
         {...register("subject")}
       />
-      {errors.email && (
-        <p className="text-red-600 text-sm">{errors.email.message}</p>
+      {errors.subject && (
+        <p className="text-red-600 text-sm">{errors.subject.message}</p>
       )}
       <div>
         <textarea
