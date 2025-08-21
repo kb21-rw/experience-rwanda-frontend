@@ -104,12 +104,12 @@ const InfoCardGrid = ({
 					</button>
 				</div>
 
-				<div className="md:hidden" style={{ backgroundColor: '#011627', margin: '0 -1rem', padding: '1rem' }}>
+				<div className="md:hidden" style={{ backgroundColor: '#ffffff', margin: '0 -1rem', padding: '1rem' }}>
 					<div className="text-center mb-8">
-						<h2 className="text-2xl font-bold text-white mb-2">
+						<h2 className="text-2xl font-bold text-gray-900 mb-2">
 							{title}
 						</h2>
-						<p className="text-base text-gray-300 max-w-2xl mx-auto">
+						<p className="text-base text-gray-600 max-w-2xl mx-auto">
 							{description}
 						</p>
 					</div>

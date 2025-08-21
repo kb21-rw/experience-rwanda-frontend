@@ -30,10 +30,10 @@ const InfoCard = ({ card, className }: InfoCardProps): ReactElement => {
       </div>
 
       <div className="px-6 pt-6 pb-3 space-y-3">
-        <h3 className="text-xl font-semibold text-white md:text-gray-900 transition-colors duration-200">
+        <h3 className="text-xl font-semibold text-gray-900 transition-colors duration-200">
           {card.title}
         </h3>
-        <p className="text-gray-300 md:text-gray-600 text-sm leading-relaxed">
+        <p className="text-gray-600 text-sm leading-relaxed">
           {card.description}
         </p>
       </div>
