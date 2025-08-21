@@ -89,7 +89,7 @@ const ContactForm = () => {
       <div>
         <textarea
           placeholder="Your Message"
-          className="border border-gray-125 bg-transparent rounded-md p-2 h-30 w-full"
+          className="border border-gray-125 bg-transparent text-sm p-3 h-30 w-full"
           data-testId="contact-message"
           {...register("message")}
         />
@@ -103,8 +103,9 @@ const ContactForm = () => {
         variant="primary"
         data-testId="contact-submit"
         disabled={isSubmitting}
+        className="text-xs"
       >
-        {isSubmitting ? "Sending..." : "Submit"}
+        {isSubmitting ? "Sending..." : "SEND REQUEST"}
       </Button>
     </form>
   );

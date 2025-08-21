@@ -16,13 +16,13 @@ const ContactPage = () => {
           <ContactForm />
         </div>
 
-        <div className="relative hidden lg:block z-20">
+        <div className="hidden h-3/4 lg:block z-20">
           <Image
             src="/uploads/contacttwo.png"
             alt="contact"
             width={1000}
             height={1000}
-            className="object-cover h-3/4 rounded-tl-2xl rounded-bl-2xl overflow-hidden"
+            className="object-cover h-full rounded-tl-2xl rounded-bl-2xl overflow-hidden"
           />
         </div>
       </div>
