@@ -1,11 +1,18 @@
 import Image from "next/image";
 import ContactForm from "./Form";
+import Header from "@/components/Header";
+import { HeaderVariant } from "@/enums/Header";
 
 const ContactPage = () => {
   return (
     <section className="py-25 lg:bg-site  relative">
-      <div className="content-wrapper grid grid-cols-1 lg:grid-cols-2">
-        <div className="relative z-10">
+      <div className="content-wrapper grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="text-white z-10">
+          <Header
+            title="Contact Us"
+            description="The harder you work for something, the greater you’ll feel when you achieve it."
+            variant={HeaderVariant.SECONDARY}
+          />
           <ContactForm />
         </div>
 

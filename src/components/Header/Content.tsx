@@ -13,7 +13,7 @@ const Content = ({ title, description, variant }: HeaderProps) => {
     "font-medium text-left": variant === "SECONDARY",
   });
   return (
-    <div className="flex flex-col gap-10 content-wrapper">
+    <div className="flex flex-col gap-10">
       <h2 className={`text-3xl ${styles}`}>{title}</h2>
       <p className="text-xl">{description}</p>
     </div>
