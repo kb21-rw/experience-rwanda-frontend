@@ -44,24 +44,32 @@ const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-full"
+      className="flex flex-col gap-4 w-full text-site-primary"
     >
-      <div>
+      <Input
+        type="text"
+        placeholder="Full names"
+        data-testId="contact-full-names"
+        {...register("name")}
+      />
+      {errors.name && (
+        <p className="text-red-600 text-sm">{errors.name.message}</p>
+      )}
+
+      <div className="grid grid-cols-2 w-full gap-4">
         <Input
-          type="text"
-          placeholder="Full names"
+          type="email"
+          placeholder="Your email"
           data-testId="contact-full-names"
           {...register("name")}
         />
         {errors.name && (
           <p className="text-red-600 text-sm">{errors.name.message}</p>
         )}
-      </div>
 
-      <div>
         <Input
-          type="email"
-          placeholder="Your email"
+          type="number"
+          placeholder="Your phone number"
           data-testId="contact-email"
           {...register("email")}
         />
@@ -69,7 +77,15 @@ const ContactForm = () => {
           <p className="text-red-600 text-sm">{errors.email.message}</p>
         )}
       </div>
-
+      <Input
+        type="text"
+        placeholder="Your subject"
+        data-testId="contact-email"
+        {...register("email")}
+      />
+      {errors.email && (
+        <p className="text-red-600 text-sm">{errors.email.message}</p>
+      )}
       <div>
         <textarea
           placeholder="Your Message"
