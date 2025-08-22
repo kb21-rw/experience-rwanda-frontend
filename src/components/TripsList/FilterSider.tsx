@@ -6,6 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { Separator } from '../ui/SideBar/separator';
 import { Slider } from '../ui/Slider/Slider';
+import { Button } from '../ui/Button';
 
 interface FilterCategory {
   id: string;
@@ -135,12 +136,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className }) => {
         )}
       </div>
 
-      {/* Past Trips Button */}
-      <div className="pt-4">
-        <button className="w-full bg-site-secondary hover:bg-site-secondary/90 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-          Past Trips
-        </button>
-      </div>
+     <div className="flex flex-col space-y-4">
+       <Button className="w-full">Past Trips</Button>
+       <Button className="w-full">Reset Filters</Button>
+     </div>
     </div>
   );
 };
