@@ -1,4 +1,5 @@
 export interface Trip {
+  id:string
   title: string;
   description: string;
   destination: string;
@@ -6,7 +7,12 @@ export interface Trip {
   returnTime: Date;
   totalSeats: number;
   totalBookedSeats?: number;
-  pricingOptions: PricingOption[];
+  pricingOptions: PricingOption[] | string;
+  currency: string;
+  coverImage: string;
+  priceTitle: string;
+  priceDescription: string;
+  
 }
 
 export interface PricingOption {

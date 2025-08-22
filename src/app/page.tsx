@@ -6,6 +6,7 @@ import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
 import LogoContent from "@/components/LogoContent";
 import LogoContentData from "./../data/logoContent.json";
+import TripsList from "@/components/TripsList";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
         description={tripData.description}
       />
       <LogoContent {...LogoContentData} />
+      <TripsList/>
     </>
   );
 }
