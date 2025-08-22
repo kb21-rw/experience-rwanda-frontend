@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '../ui/Button';
 import { cn } from '@/lib/utils';
 import { Separator } from '../ui/SideBar/separator';
 import { Slider } from '../ui/Slider/Slider';
-import { Button } from '../ui/Button';
+import { Checkbox } from "@/components/ui/checkbox"
 
 interface FilterCategory {
   id: string;
@@ -17,9 +17,11 @@ interface FilterCategory {
 
 interface FilterSidebarProps {
   className?: string;
+  tripsCount: number;
+  onClose?: () => void;
 }
 
-const FilterSidebar: React.FC<FilterSidebarProps> = ({ className }) => {
+const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, onClose }) => {
   const [categoriesExpanded, setCategoriesExpanded] = useState(true);
   const [priceExpanded, setPriceExpanded] = useState(true);
   const [priceRange, setPriceRange] = useState([100, 500]);
@@ -48,9 +50,14 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className }) => {
 
   return (
     <div className={cn(
-      "w-64 bg-site-primary text-white p-6 space-y-6",
+      "w-full lg:w-64 bg-site-primary text-white p-6 space-y-6",
       className
     )}>
+      {/* Mobile Header */}
+      <div className="lg:hidden mb-6">
+        <h2 className="text-lg font-semibold">Filters</h2>
+      </div>
+
       <div className="space-y-4">
         <button
           onClick={() => setCategoriesExpanded(!categoriesExpanded)}
@@ -74,8 +81,8 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className }) => {
                   <Checkbox
                     id={category.id}
                     checked={category.checked}
-                    onCheckedChange={(checked: boolean) => 
-                      handleCategoryChange(category.id, checked as boolean)
+                    onCheckedChange={(checked) => 
+                      handleCategoryChange(category.id, checked === true)
                     }
                     className="border-gray-400 data-[state=checked]:bg-site-secondary data-[state=checked]:border-site-secondary"
                   />
@@ -95,7 +102,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className }) => {
         )}
       </div>
 
-      <Separator className="bg-gray-600" />
+      <Separator className="bg-gray-200" />
 
       <div className="space-y-4">
         <button
@@ -129,17 +136,29 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className }) => {
               className="w-full"
             />
             
-            <div className="text-sm text-gray-300">
-              38 trips found
+            <div className="text-sm text-gray-200">
+              {tripsCount} trips found
             </div>
           </div>
         )}
       </div>
 
-     <div className="flex flex-col space-y-4">
-       <Button className="w-full">Past Trips</Button>
-       <Button className="w-full">Reset Filters</Button>
-     </div>
+      <div className="pt-4 space-y-3">
+        <Button variant="default" className="w-full">
+          Past trips
+        </Button>
+        
+        {/* Mobile Apply/Close Button */}
+        {onClose && (
+          <Button 
+            variant="outline" 
+            className="w-full lg:hidden border-site-secondary text-site-secondary hover:bg-site-secondary hover:text-white"
+            onClick={onClose}
+          >
+            Apply Filters
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
