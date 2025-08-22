@@ -3,8 +3,8 @@
 import { fetcher } from "@/lib/fetcher";
 import { Trip } from "@/types/trip";
 import useSWR from "swr";
-import RangeSlider from "../ui/Slider/RangeSlider";
 import ImageCard from "../ImageCardGrid/Card";
+import FilterSidebar from "./FilterSider";
 
 const TripsList = () => {
   const {
@@ -12,12 +12,12 @@ const TripsList = () => {
     error: tripsError,
     isLoading: tripsLoading,
   } = useSWR<Trip[]>(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`, fetcher);
-
+  
   console.log("Isloading", tripsLoading);
   console.log("Trips:", trips);
 
   if (tripsError) {
-    return <div>Error: {tripsError.message || "Failed to load trips"}</div>;
+    return <div>Error: {tripsError.message || 'Failed to load trips'}</div>;
   }
 
   if (tripsLoading || !trips) {
@@ -25,16 +25,17 @@ const TripsList = () => {
   }
 
   return (
-    <section>
-      <div className="content-wrapper md:py-25 py-12.5 font-plusjakarta">
-        <div>
-          <h2>TripsList</h2>
-          <p>Found {trips.length} trips</p>
-          <RangeSlider />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 bg-red-600">
+    <section className="min-h-screen bg-site">
+      <div className="grid grid-cols-9 gap-6 p-6">
+        <div className="col-span-2">
+          <FilterSidebar tripsCount={trips.length} />
+        </div>
+        <div className="col-span-7 font-plusjakarta">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {trips.map((trip) => (
               <ImageCard
                 key={trip.id}
+                id={trip.id}
                 title={trip.title}
                 coverImage={trip.coverImage}
                 pricingOptions={trip.pricingOptions}
