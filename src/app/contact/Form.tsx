@@ -46,46 +46,53 @@ const ContactForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 w-full "
     >
-      <Input
-        type="text"
-        placeholder="Your full-names"
-        data-testId="contact-full-names"
-        {...register("name")}
-      />
-      {errors.name && (
-        <p className="text-red-600 text-sm">{errors.name.message}</p>
-      )}
-
-      <div className="grid grid-cols-2 w-full gap-4">
+      <div>
         <Input
-          type="email"
-          placeholder="Your email"
+          type="text"
+          placeholder="Your full-names"
           data-testId="contact-full-names"
-          {...register("email")}
+          {...register("name")}
         />
-        {errors.email && (
-          <p className="text-red-600 text-sm">{errors.email.message}</p>
-        )}
-
-        <Input
-          type="number"
-          placeholder="Your phone number"
-          data-testId="contact-phone-number"
-          {...register("phone")}
-        />
-        {errors.phone && (
-          <p className="text-red-600 text-sm">{errors.phone.message}</p>
+        {errors.name && (
+          <p className="text-red-600 text-sm">{errors.name.message}</p>
         )}
       </div>
-      <Input
-        type="text"
-        placeholder="Your subject"
-        data-testId="contact-email"
-        {...register("subject")}
-      />
-      {errors.subject && (
-        <p className="text-red-600 text-sm">{errors.subject.message}</p>
-      )}
+
+      <div className="grid grid-cols-2 w-full gap-4">
+        <div>
+          <Input
+            type="email"
+            placeholder="Your email"
+            data-testId="contact-full-names"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-600 text-sm">{errors.email.message}</p>
+          )}
+        </div>
+        <div>
+          <Input
+            type="number"
+            placeholder="Your phone number"
+            data-testId="contact-phone-number"
+            {...register("phone")}
+          />
+          {errors.phone && (
+            <p className="text-red-600 text-sm">{errors.phone.message}</p>
+          )}
+        </div>
+      </div>
+      <div>
+        <Input
+          type="text"
+          placeholder="Your subject"
+          data-testId="contact-email"
+          {...register("subject")}
+        />
+        {errors.subject && (
+          <p className="text-red-600 text-sm">{errors.subject.message}</p>
+        )}
+      </div>
       <div>
         <textarea
           placeholder="Your Message"
