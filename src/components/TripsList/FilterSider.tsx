@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from 'react';
-import { ChevronUp, ChevronDown } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { cn } from '@/lib/utils';
-import { Separator } from '../ui/SideBar/separator';
-import { Slider } from '../ui/Slider/Slider';
-import { Checkbox } from "@/components/ui/checkbox"
+import { useState } from "react";
+import { ChevronUp, ChevronDown } from "lucide-react";
+import { Button } from "../ui/Button";
+import { cn } from "@/lib/utils";
+import { Separator } from "../ui/SideBar/separator";
+import { Slider } from "../ui/Slider/Slider";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface FilterCategory {
   id: string;
@@ -21,26 +21,38 @@ interface FilterSidebarProps {
   onClose?: () => void;
 }
 
-const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, onClose }) => {
+const FilterSidebar: React.FC<FilterSidebarProps> = ({
+  className,
+  tripsCount,
+  onClose,
+}) => {
   const [categoriesExpanded, setCategoriesExpanded] = useState(true);
   const [priceExpanded, setPriceExpanded] = useState(true);
   const [priceRange, setPriceRange] = useState([100, 500]);
-  
+
   const [categories, setCategories] = useState<FilterCategory[]>([
-    { id: 'national-parks', label: 'National Parks', count: 7, checked: false },
-    { id: 'culture-heritage', label: 'Culture & Heritage', count: 3, checked: true },
-    { id: 'historical', label: 'Historical', count: 9, checked: true },
-    { id: 'religious', label: 'Religious', count: 1, checked: false },
-    { id: 'hiking', label: 'Hiking', count: 49, checked: false },
-    { id: 'city-experiences', label: 'City Experiences', count: 48, checked: false },
-    { id: 'waterfalls', label: 'Waterfalls', count: 47, checked: false },
+    { id: "national-parks", label: "National Parks", count: 7, checked: false },
+    {
+      id: "culture-heritage",
+      label: "Culture & Heritage",
+      count: 3,
+      checked: true,
+    },
+    { id: "historical", label: "Historical", count: 9, checked: true },
+    { id: "religious", label: "Religious", count: 1, checked: false },
+    { id: "hiking", label: "Hiking", count: 49, checked: false },
+    {
+      id: "city-experiences",
+      label: "City Experiences",
+      count: 48,
+      checked: false,
+    },
+    { id: "waterfalls", label: "Waterfalls", count: 47, checked: false },
   ]);
 
   const handleCategoryChange = (categoryId: string, checked: boolean) => {
-    setCategories(prev => 
-      prev.map(cat => 
-        cat.id === categoryId ? { ...cat, checked } : cat
-      )
+    setCategories((prev) =>
+      prev.map((cat) => (cat.id === categoryId ? { ...cat, checked } : cat))
     );
   };
 
@@ -49,11 +61,12 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, on
   };
 
   return (
-    <div className={cn(
-      "w-full lg:w-64 bg-site-primary text-white p-6 space-y-6",
-      className
-    )}>
-      {/* Mobile Header */}
+    <div
+      className={cn(
+        "w-full lg:w-64 bg-site-primary text-white p-6 space-y-6",
+        className
+      )}
+    >
       <div className="lg:hidden mb-6">
         <h2 className="text-lg font-semibold">Filters</h2>
       </div>
@@ -72,16 +85,19 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, on
             <ChevronDown className="h-4 w-4" />
           )}
         </button>
-        
+
         {categoriesExpanded && (
           <div className="space-y-3">
             {categories.map((category) => (
-              <div key={category.id} className="flex items-center justify-between">
+              <div
+                key={category.id}
+                className="flex items-center justify-between"
+              >
                 <div className="flex items-center space-x-3">
                   <Checkbox
                     id={category.id}
                     checked={category.checked}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleCategoryChange(category.id, checked === true)
                     }
                     className="border-gray-400 data-[state=checked]:bg-site-secondary data-[state=checked]:border-site-secondary"
@@ -109,16 +125,14 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, on
           onClick={() => setPriceExpanded(!priceExpanded)}
           className="flex items-center justify-between w-full text-left"
         >
-          <h3 className="text-sm font-medium uppercase tracking-wide">
-            Price
-          </h3>
+          <h3 className="text-sm font-medium uppercase tracking-wide">Price</h3>
           {priceExpanded ? (
             <ChevronUp className="h-4 w-4" />
           ) : (
             <ChevronDown className="h-4 w-4" />
           )}
         </button>
-        
+
         {priceExpanded && (
           <div className="space-y-4">
             <div className="flex items-center justify-between text-sm">
@@ -126,7 +140,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, on
               <span>—</span>
               <span>Rwf {priceRange[1]}</span>
             </div>
-            
+
             <Slider
               value={priceRange}
               onValueChange={handlePriceChange}
@@ -135,7 +149,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, on
               step={10}
               className="w-full"
             />
-            
+
             <div className="text-sm text-gray-200">
               {tripsCount} trips found
             </div>
@@ -147,11 +161,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ className, tripsCount, on
         <Button variant="default" className="w-full">
           Past trips
         </Button>
-        
-        {/* Mobile Apply/Close Button */}
+
         {onClose && (
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="w-full lg:hidden border-site-secondary text-site-secondary hover:bg-site-secondary hover:text-white"
             onClick={onClose}
           >
