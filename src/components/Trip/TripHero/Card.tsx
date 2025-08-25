@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Trip } from "@/types/ImageCard";
 import Image from "next/image";
-import IconContent from "../ui/IconContent";
+import IconContent from "../../ui/IconContent";
 import Link from "next/link";
-import { Button } from "../ui/Button";
-import BookingPopup from "../ui/Popup";
+import { Button } from "../../ui/Button";
+import BookingPopup from "../../ui/Popup";
 import { createTripDetails } from "@/data/tripDetails";
 
 interface Props {
