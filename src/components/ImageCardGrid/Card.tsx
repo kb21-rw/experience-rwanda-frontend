@@ -16,19 +16,30 @@ const ImageCard = ({
   id: tripId,
   totalSeats,
   totalBookedSeats,
-  currency,
+  currency
 }: Trip): ReactElement => {
   const details = createTripDetails("Akagera", date, totalSeats);
   
   const getImageSrc = (imageUrl: string) => {
-    if (!imageUrl || imageUrl === "") return "/uploads/akagera.png";
-    if (imageUrl.startsWith("http")) return imageUrl;
-    if (imageUrl.startsWith("/uploads/")) return imageUrl;
+    if (!imageUrl || imageUrl.trim() === "" || imageUrl === "null" || imageUrl === "undefined") {
+      const images = [
+        "/uploads/akagera.png",
+        "/uploads/giraffe.jpg", 
+        "/uploads/tiger.jpg",
+        "/uploads/elephant.webp",
+        "/uploads/safaricar.png",
+        "/uploads/hero.jpg",
+        "/uploads/hand.png"
+      ];
+      return images[Math.floor(Math.random() * images.length)];
+    }
+    
     return `/uploads/${imageUrl}`;
   };
 
   const src = getImageSrc(url);
-  
+  const finalSrc = src || "/uploads/akagera.png";
+
   const priceAmount =
     Array.isArray(pricingOptions) && pricingOptions.length > 0
       ? pricingOptions.reduce(
@@ -52,7 +63,7 @@ const ImageCard = ({
         />
         <Image 
           className="object-cover" 
-          src={src} 
+          src={finalSrc} 
           alt={trip} 
           fill 
           priority
