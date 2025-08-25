@@ -14,7 +14,7 @@ export default function Home() {
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
       />
-      <CustomizedTrip/>
+      <CustomizedTrip />
       <Header
         id="about"
         title={aboutUsData.title}
