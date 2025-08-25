@@ -3,21 +3,27 @@ import Image from "next/image";
 import type { HeroContent } from "@/types/Hero";
 import Content from "./Content";
 
-const HeroContent = ({ id, imageUrl, content }: HeroContent) => {
+const HeroContent = ({ id, content }: HeroContent) => {
   return (
-    <section id={id} className="w-full h-[calc(100vh-7.75rem)]">
-      <div className="absolute -z-50 inset-0">
+    <section
+      id={id}
+      className="relative w-full h-screen bg-site flex items-center justify-center"
+    >
+      <div
+        className="absolute inset-0 md:top-0 md:left-1/2 md:-translate-x-1/2 md:inset-auto md:mt-48 lg:mt-20 md:h-40 md:w-40 
+      rounded-none md:rounded-full overflow-hidden shadow-none md:shadow-box"
+      >
         <Image
-          className="object-cover"
-          src={imageUrl}
-          alt={"backgroundImage"}
+          src="/uploads/hero.jpg"
+          alt={content.title}
           fill
+          className="object-cover opacity-50 md:opacity-100"
         />
+        <div className="absolute inset-0 bg-black/40 md:hidden" />
       </div>
-      <div className="content-wrapper">
-        <div className="md:w-1/2 w-full xl:pt-25 md:pt-12.5 pt-2">
-          <Content title={content.title} description={content.description} />
-        </div>
+
+      <div className="content-wrapper relative z-10 text-gray-125">
+        <Content title={content.title} description={content.description} />
       </div>
     </section>
   );
