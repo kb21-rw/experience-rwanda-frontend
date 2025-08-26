@@ -11,9 +11,9 @@ export default function CustomizedTripSection({
   images: string[];
 }) {
   return (
-    <section className="bg-[#43D9AD] font-Figtree py-16 px-6 ">
-      <div className="content-wrapper flex flex-col-reverse lg:flex-row items-start gap-8">
-        <div className="grid lg:grid-cols-2 gap-4 items-center">
+    <section className="bg-[#43D9AD] py-16 px-6 ">
+      <div className="content-wrapper flex flex-col-reverse lg:flex-row items-start gap-11">
+        <div className="grid lg:grid-cols-2 gap-11 items-center">
           <div className="h-full lg:row-span-2">
             <Image
               src={images[0]}
