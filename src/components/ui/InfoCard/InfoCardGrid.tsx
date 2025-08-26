@@ -12,15 +12,15 @@ import 'swiper/css/pagination';
 
 interface InfoCardGridProps {
 	cards: InfoCardType[];
-	title?: string;
-	description?: string;
+	title: string;
+	description: string;
 	className?: string;
 }
 
 const InfoCardGrid = ({ 
 	cards, 
-	title = "Discover Rwanda's Highlights",
-	description = "Explore the unique features and experiences that make Rwanda a must-visit destination",
+	title,
+	description,
 	className 
 }: InfoCardGridProps): ReactElement => {
 	const [currentIndex, setCurrentIndex] = useState(0);
