@@ -2,7 +2,7 @@ import { HeaderVariant } from "@/enums/Header";
 import Content from "./Content";
 
 interface HeaderProps {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   variant: HeaderVariant;
