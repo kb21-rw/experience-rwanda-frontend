@@ -1,20 +1,15 @@
 import Header from "@/components/Header";
+import { tripDetails } from "@/data/tripDetails";
 import { HeaderVariant } from "@/enums/Header";
 import React from "react";
 
-const header = {
-  title: "Book trip by ExperienceRW",
-  description:
-    "Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum",
-};
-
 const TripsPage = () => {
   return (
-    <section className="  bg-site text-white min-h-screen">
+    <section className="bg-site text-white min-h-screen">
       <div className="content-wrapper">
         <Header
-          title={header.title}
-          description={header.description}
+          title={tripDetails.header.title}
+          description={tripDetails.header.description}
           variant={HeaderVariant.PRIMARY}
         />
       </div>
