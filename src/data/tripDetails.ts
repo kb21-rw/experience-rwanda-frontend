@@ -21,3 +21,11 @@ export const createTripDetails = (
     content: `${totalSeats} Seats`,
   },
 ];
+
+export const tripDetails = {
+  header: {
+    title: "Book trip by ExperienceRW",
+    description:
+      "Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum",
+  },
+};
