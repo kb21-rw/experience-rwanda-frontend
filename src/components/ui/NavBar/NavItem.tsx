@@ -55,7 +55,7 @@ const NavItem: React.FC<NavItemProps> = ({
     <Link
       href={href}
       onClick={handleClick}
-      data-testid={data_test_id}
+      data-test-id={data_test_id}
       className={`px-1 py-2 font-medium transition-all duration-200 ${
         isActive 
           ? "text-green-700 underline underline-offset-4" 
