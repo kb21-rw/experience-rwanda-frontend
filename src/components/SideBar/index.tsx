@@ -79,7 +79,7 @@ export function AppSidebar() {
               <Separator className="mb-2.5" />
               <SidebarMenu className="gap-3 pt-4">
                 {filteredItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
+                  <SidebarMenuItem key={item.title} data-test-id={item.data_test_id}>
                     <SidebarMenuButton
                       className={
                         currentPath === item.url
@@ -109,7 +109,7 @@ export function AppSidebar() {
               className="bg-white text-black text-base font-semibold rounded-xl h-12"
             >
               <TbLogout2 />
-              {state === "expanded" ? <span>Log out</span> : null}
+              {state === "expanded" ? <span data-test-id="admin-log-out">Log out</span> : null}
             </Button>
           }
         </SidebarFooter>

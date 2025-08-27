@@ -1,0 +1,23 @@
+[
+    {
+        "action": "click",
+        "selector": "[data-test-id='dashboard-item']"
+    },
+    {
+        "action": "click",
+        "selector": "[data-test-id='trips-item']"
+
+    },
+    {
+        "action": "type",
+        "selector": "[data-test-id='admins-item']"
+    },
+    {
+        "action": "type",
+        "selector": "[data-test-id='invite-item']"
+    },
+    {
+        "action": "click",
+        "selector": "[data-test-id='admin-log-out']"
+    }
+]
