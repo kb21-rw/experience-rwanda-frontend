@@ -15,10 +15,6 @@
   },
   {
     "action": "click",
-    "selector": "[data-test-id='login-remember-me']"
-  },
-  {
-    "action": "click",
     "selector": "[data-test-id='dashboard-item']"
   },
   {
