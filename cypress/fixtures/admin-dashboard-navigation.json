@@ -1,41 +1,40 @@
-[ {
+[
+  {
     "action": "type",
     "selector": "[data-test-id='login-email']",
-    "value":"ngabonest@gmail.com"
-
-},
-{
+    "value": "ngabonest@gmail.com"
+  },
+  {
     "action": "type",
     "selector": "[data-test-id='login-password']",
-    "value":"admin123"
-},
-{
+    "value": "admin123"
+  },
+  {
     "action": "press",
     "selector": "[data-test-id='login-button']"
-},{
+  },
+  {
     "action": "click",
     "selector": "[data-test-id='login-remember-me']"
-},
-    {
-        "action": "click",
-        "selector": "[data-test-id='dashboard-item']"
-    },
-    {
-        "action": "click",
-        "selector": "[data-test-id='trips-item']"
-
-    },
-    {
-        "action": "type",
-        "selector": "[data-test-id='admins-item']"
-    },
-    {
-        "action": "type",
-        "selector": "[data-test-id='invite-item']"
-    },
-    {
-        "action": "click",
-        "selector": "[data-test-id='admin-log-out']"
-    },
-    
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='dashboard-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='trips-item']"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='admins-item']"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='invite-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='admin-log-out']"
+  }
 ]
