@@ -1,25 +1,32 @@
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
-import { forwardRef, ReactNode } from "react"
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+import { forwardRef, ReactNode } from "react";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow rounded-full hover:opacity-80",
-        outline: "border border-gray-700 bg-background shadow-sm hover:bg-primary hover:text-background",
-        secondary: "border border-gray-700 bg-background text-primary hover:bg-primary shadow-sm rounded-full hover:text-background",
-        primary: "border border-gray-700 bg-primary shadow-sm text-background hover:opacity-80",
+        primary:
+          " bg-site-secondary text-site-primary border border-site-secondary hover:bg-transparent hover:text-site-secondary",
+        secondary:
+          " bg-site-primary text-white border border-site-primary hover:bg-transparent hover:text-site-primary",
+        secondaryOutline:
+          " bg-transparent text-site-primary border border-site-primary hover:bg-site-primary hover:text-white",
+        outline:
+          " bg-transparent text-site-secondary border border-site-secondary hover:bg-site-secondary hover:text-site-primary",
+        default:
+          " bg-site-secondary text-site-primary border border-site-secondary",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        risk:"border border-gray-700 bg-red-500 shadow-sm text-white"
+        risk: "border border-red-700 bg-red-500 text-white  hover:bg-transparent hover:text-red-500",
+        outlineRisk:
+          " bg-transparent text-red-500 border border-red-500 hover:bg-red-500 hover:text-white",
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
+        default: "h-10 px-6 text-md font-semibold",
+        sm: "h-8 px-6 text-md font-semibold",
+        lg: "h-12 px-8 text-md font-semibold",
         icon: "h-9 w-9",
       },
     },
@@ -28,30 +35,33 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-  icon?: ReactNode 
-    }
+  asChild?: boolean;
+  icon?: ReactNode;
+}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, icon, children, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+  (
+    { className, variant, size, asChild = false, icon, children, ...props },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : "button";
     return (
       <Comp
         className={cn(buttonVariants({ variant, size }), className)}
         ref={ref}
         {...props}
       >
-        {icon && <span className="mr-1">{icon}</span>} 
+        {icon && <span className="mr-1">{icon}</span>}
         {children}
       </Comp>
-    )
+    );
   }
-)
-Button.displayName = "Button"
+);
+Button.displayName = "Button";
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };
