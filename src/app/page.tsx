@@ -6,6 +6,8 @@ import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
 import LogoContent from "@/components/LogoContent";
 import LogoContentData from "./../data/logoContent.json";
+import { InfoCardGrid } from "@/components/ui/InfoCard";
+import { rwandaHighlights } from "@/data/rwandaHighlights";
 
 export default function Home() {
   return (
@@ -22,6 +24,12 @@ export default function Home() {
         variant={aboutUsData.variant}
       />
 
+      <InfoCardGrid 
+        cards={rwandaHighlights}
+        title="Discover Rwanda's Highlights"
+        description="Explore the unique features and experiences that make Rwanda a must-visit destination"
+      />
+      
       <ImageCardGrid
         id="trips"
         title={tripData.title}
