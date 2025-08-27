@@ -4,6 +4,8 @@ Cypress.Commands.add("adminDashboardNavigation", function () {
   cy.fixture("admin-dashboard-navigation.json").then((data: Step[]) => {
     data.forEach((step) => {
       switch (step.action) {
+        case "press":
+          return cy.get(step.selector).click().wait(2000);
         case "click":
           return cy.get(step.selector).click().wait(2000);
       }
