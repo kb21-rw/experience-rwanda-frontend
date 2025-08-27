@@ -3,7 +3,7 @@ describe('Login admin', () => {
       cy.wait(100);
     });
     it('should login admin successful ', () => {
-      cy.loginForm();
+      cy.loginForm().wait(20000);
     });
   });
   
