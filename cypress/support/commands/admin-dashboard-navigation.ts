@@ -6,7 +6,7 @@ Cypress.Commands.add("adminDashboardNavigation", function () {
     data.forEach((step) => {
       switch (step.action) {
         case "type":
-          return cy.get(step.selector).type(step.value).wait(20000);
+          return cy.get(step.selector).should('be.visible').type(step.value).wait(20000);
         case "press":
           return cy.get(step.selector).click().wait(20000);
         case "click":
