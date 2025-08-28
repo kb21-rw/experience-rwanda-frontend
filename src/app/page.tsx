@@ -25,19 +25,19 @@ export default function Home() {
         variant={aboutUsData.variant}
       />
 
-      <InfoCardGrid 
+      <InfoCardGrid
         cards={rwandaHighlights}
         title="Discover Rwanda's Highlights"
         description="Explore the unique features and experiences that make Rwanda a must-visit destination"
       />
-      
+
       <ImageCardGrid
         id="trips"
         title={tripData.title}
         description={tripData.description}
       />
-      <CustomizedTrip />
       <LogoContent {...LogoContentData} />
+      <CustomizedTrip />
     </>
   );
 }
