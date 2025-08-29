@@ -72,7 +72,7 @@ const ContactForm = () => {
         </div>
         <div>
           <Input
-            type="number"
+            type="tel"
             placeholder="Your phone number"
             data-testId="contact-phone-number"
             {...register("phone")}
