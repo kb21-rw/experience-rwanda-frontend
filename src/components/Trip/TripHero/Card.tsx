@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Trip } from "@/types/ImageCard";
-import Image from "next/image";
+// import Image from "next/image";
 import IconContent from "../../ui/IconContent";
 import Link from "next/link";
-import { Button } from "../../ui/Button";
+// import { Button } from "../../ui/Button";
 import BookingPopup from "../../ui/Popup";
 import { createTripDetails } from "@/data/tripDetails";
 
@@ -24,22 +24,23 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   return (
     <>
       <div className="content-wrapper">
-        <div className="flex justify-between py-10 items-center">
+        <div className="flex flex-col justify-start gap-4 items-start">
           <Link href="/" className="text-base font-semibold">
             <span className="mr-1 font-semibold">←</span>Back
           </Link>
           <h1 className="text-center text-4xl font-bold">
             {tripDetails.title}
           </h1>
-          <Button
+          <p>{tripDetails.description}</p>
+          {/* <Button
             variant="default"
             onClick={() => setSelectedTrip(tripDetails.id)}
           >
             Book Now
-          </Button>
+          </Button> */}
         </div>
 
-        <div className="relative w-full md:h-[600px] mb-8">
+        {/* <div className="relative w-full md:h-[600px] mb-8">
           <Image
             src={tripDetails.coverImage}
             alt={tripDetails.title}
@@ -47,15 +48,15 @@ const TripHeroCard = ({ tripDetails }: Props) => {
             className="object-cover"
             priority
           />
-        </div>
+        </div> */}
 
-        <div className="gap-4 grid grid-cols-2 font-inter">
+        <div className="gap-4 grid grid-cols-2 font-inter mt-8">
           {details.map((detail, index) => (
             <IconContent
               key={index}
               icon={detail.icon}
               content={detail.content}
-              className="bg-black p-3 rounded-full text-white"
+              className="p-3 rounded-full text-white"
             />
           ))}
         </div>
