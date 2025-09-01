@@ -23,10 +23,6 @@ const Content = ({
   variant = HeaderVariant.PRIMARY,
 }: HeaderProps) => {
   return (
-
-    <div className="flex flex-col gap-10">
-      <h2 className={`text-3xl ${styles}`}>{title}</h2>
-      <p className="text-xl">{description}</p>
     <div className="flex flex-col gap-6">
       <h2
         className={clsx(
