@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Trip } from "@/types/ImageCard";
 import ImageCard from "@/components/ImageCardGrid/Card";
 import Link from "next/link";
@@ -21,14 +24,74 @@ async function getFeaturedTrips(): Promise<Trip[]> {
   }
 }
 
-const FeaturedTrips = async ({
+const FeaturedTrips = ({
   title = "Featured Trips",
   description = "Search trip that matches your personality. You will ave the best experiene ever",
 }: {
   title?: string;
   description?: string;
 }) => {
-  const trips = (await getFeaturedTrips()).slice(0, 6);
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        setLoading(true);
+        const tripsData = await getFeaturedTrips();
+        setTrips(tripsData.slice(0, 6));
+      } catch (err) {
+        console.error("Error fetching featured trips:", err);
+        setError(err instanceof Error ? err.message : "Failed to fetch trips");
+        setTrips([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrips();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="bg-white">
+        <div className="content-wrapper py-16 md:py-20">
+          <div className="mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              {title}
+            </h2>
+            <p className="text-base md:text-lg text-black">
+              {description}
+            </p>
+          </div>
+          <div className="flex justify-center items-center py-8">
+            <div className="text-lg">Loading featured trips...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="bg-white">
+        <div className="content-wrapper py-16 md:py-20">
+          <div className="mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              {title}
+            </h2>
+            <p className="text-base md:text-lg text-black">
+              {description}
+            </p>
+          </div>
+          <div className="flex justify-center items-center py-8">
+            <div className="text-lg text-red-600">Error: {error}</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-white">
