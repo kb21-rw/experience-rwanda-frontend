@@ -30,13 +30,6 @@ export default function Home() {
         title="Discover Rwanda's Highlights"
         description="Explore the unique features and experiences that make Rwanda a must-visit destination"
       />
-
-      <InfoCardGrid
-        cards={rwandaHighlights}
-        title="Discover Rwanda's Highlights"
-        description="Explore the unique features and experiences that make Rwanda a must-visit destination"
-      />
-
       <FeaturedTrips title={tripData.title} description={tripData.description} />
       <LogoContent {...LogoContentData} />
       <CustomizedTrip />
