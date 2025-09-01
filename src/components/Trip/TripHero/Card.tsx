@@ -19,6 +19,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   const details = createTripDetails(
     tripDetails.destination,
     tripDetails.departureTime,
+    tripDetails.returnTime,
     tripDetails.totalSeats
   );
   return (
@@ -50,7 +51,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           />
         </div> */}
 
-        <div className="gap-4 grid grid-cols-2 font-inter mt-8">
+        <div className="gap-2 grid grid-cols-2 font-inter mt-8">
           {details.map((detail, index) => (
             <IconContent
               key={index}

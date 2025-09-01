@@ -5,7 +5,8 @@ import { format } from "date-fns";
 
 export const createTripDetails = (
   destination: string,
-  date: string,
+  departureTime: string,
+  returnTime: string,
   totalSeats: number
 ) => [
   {
@@ -14,7 +15,11 @@ export const createTripDetails = (
   },
   {
     icon: FaCalendar,
-    content: format(new Date(date), "MMMM dd, yyyy"),
+    content: format(new Date(departureTime), "MMMM dd, yyyy"),
+  },
+  {
+    icon: FaCalendar,
+    content: format(new Date(returnTime), "MMMM dd, yyyy"),
   },
   {
     icon: MdAirlineSeatReclineExtra,
