@@ -44,7 +44,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
                 ))}
               </div>
             </div>}
-           {doNotForget && <div className="space-y-6">
+           {doNotForget && <div className="space-y-6 mb-10">
               <h2 className="font-bold text-2xl">Do not forget</h2>
               <p>{tripDetails.description}</p>
               <div className="px-4 grid grid-cols-2 gap-4">
@@ -59,7 +59,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
             </div>}
           </div>
 
-          <div className="md:col-start-4 md:col-end-7 md:row-start-1 md:row-end-4 order-1 overflow-hidden border w-auto h-auto flex flex-col">
+          <div className="md:col-start-4 md:col-end-7 md:row-start-1 md:row-end-4 order-1 overflow-hidden border flex flex-col">
             <Image
               src={tripDetails.coverImage}
               alt={tripDetails.title}
@@ -70,7 +70,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
           </div>
 
          
-          <div className="bg-site/30 md:col-start-4 md:col-end-7 md:row-start-4 md:row-end-5 order-3 p-6- rounded-lg">
+          <div className="bg-site/30 md:col-start-4 md:col-end-7 md:row-start-4 md:row-end-5 order-3">
             <h2 className="text-2xl font-bold text-white mb-4">
               Pricing Options
             </h2>
