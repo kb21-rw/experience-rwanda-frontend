@@ -15,6 +15,7 @@ interface SimpleMapProps {
   zoom?: number;
   height?: string;
   width?: string;
+  className?: string;
 }
 
 const Marker = ({ name }: Location) => (

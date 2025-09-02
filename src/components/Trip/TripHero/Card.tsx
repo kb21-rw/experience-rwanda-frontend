@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import { Trip } from "@/types/ImageCard";
-// import Image from "next/image";
 import IconContent from "../../ui/IconContent";
 import Link from "next/link";
-// import { Button } from "../../ui/Button";
 import BookingPopup from "../../ui/Popup";
 import { createTripDetails } from "@/data/tripDetails";
 
@@ -24,45 +22,26 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   );
   return (
     <>
-      <div className="content-wrapper">
-        <div className="flex flex-col justify-start gap-4 items-start">
-          <Link href="/" className="text-base font-semibold">
-            <span className="mr-1 font-semibold">←</span>Back
-          </Link>
-          <h1 className="text-center text-4xl font-bold">
-            {tripDetails.title}
-          </h1>
+      <div className="flex flex-col justify-start gap-4 items-start">
+        <Link href="/" className="hidden md:block text-base font-semibold">
+          <span className="mr-1 font-semibold">←</span>Back
+        </Link>
+        <div className="flex flex-col gap-2 justify-start items-start text-gray-200">
+          <h1 className="text-center text-3xl md:text-4xl font-bold">{tripDetails.title}</h1>
           <p>{tripDetails.description}</p>
-         
-        </div>
-
-        {/* <div className="relative w-full md:h-[600px] mb-8">
-          <Image
-            src={tripDetails.coverImage}
-            alt={tripDetails.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div> */}
-
-        <div className="gap-2 grid grid-cols-2 font-inter mt-8">
-          {details.map((detail, index) => (
-            <IconContent
-              key={index}
-              icon={detail.icon}
-              content={detail.content}
-              className="p-3 rounded-full text-white"
-            />
-          ))}
-        </div>
-
-        <div className="py-20">
-          <h2 className="text-2xl font-bold mt-8">Description</h2>
-          <p className="text-base mt-4">{tripDetails.description}</p>
         </div>
       </div>
 
+      <div className="gap-2 grid grid-cols-2 font-inter mt-8">
+        {details.map((detail, index) => (
+          <IconContent
+            key={index}
+            icon={detail.icon}
+            content={detail.content}
+            className="p-2 rounded-full text-white text-sm"
+          />
+        ))}
+      </div>
       {selectedTrip && (
         <BookingPopup
           tripId={selectedTrip}
