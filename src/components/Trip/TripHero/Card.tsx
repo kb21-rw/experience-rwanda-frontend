@@ -33,12 +33,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
             {tripDetails.title}
           </h1>
           <p>{tripDetails.description}</p>
-          {/* <Button
-            variant="default"
-            onClick={() => setSelectedTrip(tripDetails.id)}
-          >
-            Book Now
-          </Button> */}
+         
         </div>
 
         {/* <div className="relative w-full md:h-[600px] mb-8">
