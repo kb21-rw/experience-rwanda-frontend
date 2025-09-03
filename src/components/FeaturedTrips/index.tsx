@@ -16,9 +16,12 @@ async function getFeaturedTrips(): Promise<Trip[]> {
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/all?limit=6`, {
-      next: { tags: ["trips"] },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/trips/all?limit=6`,
+      {
+        next: { tags: ["trips"] },
+      }
+    );
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   }
@@ -27,7 +30,6 @@ async function getFeaturedTrips(): Promise<Trip[]> {
 const FeaturedTrips = ({
   title = "Featured Trips",
   description = "Search trip that matches your personality. You will have the best experience ever",
-  description = "Search trip that matches your personality. You will ave the best experiene ever",
 }: {
   title?: string;
   description?: string;
@@ -62,9 +64,7 @@ const FeaturedTrips = ({
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               {title}
             </h2>
-            <p className="text-base md:text-lg text-black">
-              {description}
-            </p>
+            <p className="text-base md:text-lg text-black">{description}</p>
           </div>
           <div className="flex justify-center items-center py-8">
             <div className="text-lg">Loading featured trips...</div>
@@ -82,9 +82,7 @@ const FeaturedTrips = ({
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               {title}
             </h2>
-            <p className="text-base md:text-lg text-black">
-              {description}
-            </p>
+            <p className="text-base md:text-lg text-black">{description}</p>
           </div>
           <div className="flex justify-center items-center py-8">
             <div className="text-lg text-red-600">Error: {error}</div>
@@ -101,9 +99,7 @@ const FeaturedTrips = ({
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             {title}
           </h2>
-          <p className="text-base md:text-lg text-black">
-            {description}
-          </p>
+          <p className="text-base md:text-lg text-black">{description}</p>
         </div>
 
         <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -113,7 +109,9 @@ const FeaturedTrips = ({
         </div>
         <div className="flex justify-center mt-10">
           <Link href="/trips">
-            <Button variant="default" className="px-6 py-3">View Trips</Button>
+            <Button variant="default" className="px-6 py-3">
+              View Trips
+            </Button>
           </Link>
         </div>
       </div>
