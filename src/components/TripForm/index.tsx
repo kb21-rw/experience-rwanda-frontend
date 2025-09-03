@@ -61,6 +61,7 @@ const TripForm = ({
                 name="title"
                 label="Title"
                 placeholder="Hike with vibes at Muhabura volcano"
+                data_test_id="title"
                 type="text"
                 icon={<MdOutlineTitle className="w-4 h-4" />}
               />
@@ -73,12 +74,14 @@ const TripForm = ({
                   type="datetime-local"
                   icon={<Calendar className="w-4 h-4 text-travel-blue" />}
                   minDate={now}
+                  data_test_id="departure-time"
                 />
 
                 <FormInput
                   form={form}
                   name="returnTime"
                   label="Return Time"
+                  data_test_id="return-time"
                   type="datetime-local"
                   icon={<Calendar className="w-4 h-4 text-travel-blue" />}
                   minDate={format(
@@ -92,6 +95,7 @@ const TripForm = ({
                 name="description"
                 label="Description"
                 placeholder="Enter trip description..."
+                data_test_id="trip-description"
                 type="textarea"
                 icon={<MdOutlineDescription className="w-4 h-4" />}
               />
@@ -101,6 +105,7 @@ const TripForm = ({
                   name="destination"
                   label="Destination"
                   placeholder="Musanze district"
+                  data_test_id="destination"
                   icon={<MapPin className="w-4 h-4" />}
                   type="text"
                 />
@@ -109,6 +114,7 @@ const TripForm = ({
                   name="totalSeats"
                   label="Seats"
                   placeholder="60 seats"
+                  data_test_id="total-seats"
                   icon={<Users className="w-4 h-4" />}
                   type="number"
                 />
@@ -132,12 +138,7 @@ const TripForm = ({
             </div>
 
             <div className="pt-20 flex justify-center">
-              <Button
-                className="w-1/2 py-5"
-                type="submit"
-                variant="primary"
-                data-test-id="submit-new-trip"
-              >
+              <Button className="w-1/2 py-5" type="submit" variant="primary" data-test-id="submit-new-trip">
                 {tripId ? "Update Trip" : "Create New Trip"}
               </Button>
             </div>

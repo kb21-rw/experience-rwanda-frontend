@@ -6,5 +6,7 @@ declare namespace Cypress {
     contactForm(): Chainable<void>;
     loginForm():Chainable<void>;
     adminDashboardNavigation():Chainable<void>;
+    createNewTrip():Chainable<void>;
+    
   }
 }

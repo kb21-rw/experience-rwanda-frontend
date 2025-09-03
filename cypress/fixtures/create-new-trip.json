@@ -1,0 +1,67 @@
+[
+  {
+    "action": "type",
+    "selector": "[data-test-id='login-email']",
+    "value": "rithakankindi@gmail.com"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='login-password']",
+    "value": "1234moxx"
+  },
+  {
+    "action": "press",
+    "selector": "[data-test-id='login-button']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='trips-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='create-new-trip']"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='title']",
+    "value": "trip 1"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='trip-description']",
+    "value": "for testing trip1 description"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='destination']",
+    "value": "MUSANZE"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='total-seats']",
+    "value": "3"
+  },
+  {
+    "action": "click and upload",
+    "selector": "[data-test-id='cover-image']",
+    "path": "files/cover.png"
+  },
+  {
+    "action": "click and upload",
+    "selector": "[data-test-id='gallery-image']",
+    "path": "files/gallery.jpg"
+  },
+  {
+    "action": "pick-date-1",
+    "selector": "[data-test-id='departure-time']"
+  },
+  {
+    "action": "pick-date-2",
+    "selector": "[data-test-id='return-time']"
+   
+  },
+  {
+    "action": "submit",
+    "selector": "[data-test-id='submit-new-trip']"
+  }
+]
