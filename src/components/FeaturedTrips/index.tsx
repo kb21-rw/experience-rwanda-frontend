@@ -26,6 +26,7 @@ async function getFeaturedTrips(): Promise<Trip[]> {
 
 const FeaturedTrips = ({
   title = "Featured Trips",
+  description = "Search trip that matches your personality. You will have the best experience ever",
   description = "Search trip that matches your personality. You will ave the best experiene ever",
 }: {
   title?: string;
@@ -121,4 +122,3 @@ const FeaturedTrips = ({
 };
 
 export default FeaturedTrips;
-
