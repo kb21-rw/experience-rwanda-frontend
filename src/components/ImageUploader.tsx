@@ -77,9 +77,10 @@ const ImageUploader = ({
     <div>
       <h3 className="text-lg font-semibold text-black mb-6">Trip Pictures</h3>
       <div className="flex gap-12 w-full">
-        <label className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-travel-blue/50 transition-all duration-200 cursor-pointer group w-full">
+        <label className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-travel-blue/50 transition-all duration-200 cursor-pointer group w-full" data-test-id="upload-cover-image">
           <input
             type="file"
+            data-test-id="cover-image"
             accept="image/*"
             onChange={(e) =>
               handleCoverImageChange(e.target.files?.[0] || null)
@@ -93,10 +94,11 @@ const ImageUploader = ({
             {/* or drag it here */}
           </p>
         </label>
-        <label className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-travel-blue/50 transition-all duration-200 cursor-pointer group w-full">
+        <label className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center hover:border-travel-blue/50 transition-all duration-200 cursor-pointer group w-full"data-test-id="upload-gallery-image">
           <input
             type="file"
             accept="image/*"
+            data-test-id="gallery-image"
             multiple
             onChange={(e) => handleGalleryImagesChange(e.target.files)}
             className="hidden"
