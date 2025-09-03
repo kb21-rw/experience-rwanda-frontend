@@ -21,6 +21,16 @@ const TripHeroCard = ({ tripDetails }: Props) => {
     tripDetails.departureTime,
     tripDetails.totalSeats
   );
+
+  const getImageSrc = (imageUrl: string) => {
+    if (!imageUrl || imageUrl === "") return "/uploads/akagera.png";
+    if (imageUrl.startsWith("http")) return imageUrl;
+    if (imageUrl.startsWith("/uploads/")) return imageUrl;
+    return `/uploads/${imageUrl}`;
+  };
+
+  const src = getImageSrc(tripDetails.coverImage);
+
   return (
     <>
       <div className="content-wrapper">
@@ -41,7 +51,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
 
         <div className="relative w-full md:h-[600px] mb-8">
           <Image
-            src={tripDetails.coverImage}
+            src={src}
             alt={tripDetails.title}
             fill
             className="object-cover"

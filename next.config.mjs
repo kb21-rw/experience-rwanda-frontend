@@ -12,6 +12,7 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
+    unoptimized: true,
   },
   webpack(config) {
     config.module.rules.push({
