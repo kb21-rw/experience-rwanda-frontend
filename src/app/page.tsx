@@ -1,7 +1,7 @@
 import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
 import tripData from "./../data/tripData.json";
-import ImageCardGrid from "../components/ImageCardGrid";
+import FeaturedTrips from "@/components/FeaturedTrips";
 import { aboutUsData } from "@/data/about";
 import Header from "@/components/Header";
 import CustomizedTrip from "@/components/CustomizedTrip";
@@ -30,12 +30,7 @@ export default function Home() {
         title="Discover Rwanda's Highlights"
         description="Explore the unique features and experiences that make Rwanda a must-visit destination"
       />
-
-      <ImageCardGrid
-        id="trips"
-        title={tripData.title}
-        description={tripData.description}
-      />
+      <FeaturedTrips title={tripData.title} description={tripData.description} />
       <LogoContent {...LogoContentData} />
       <CustomizedTrip />
     </>
