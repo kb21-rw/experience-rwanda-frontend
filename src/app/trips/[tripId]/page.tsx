@@ -20,7 +20,6 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
       <div>
         <TripHero tripDetails={tripDetails} />
       </div>
-      {/* <TripPackage title="Trip Packages" /> */}
       <GalleryGrid title="Gallery" />
     </main>
   );
