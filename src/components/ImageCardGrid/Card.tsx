@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { Trip } from "@/types/ImageCard";
 import Image from "next/image";
 import IconContent from "../ui/IconContent";
 import { createTripDetails } from "@/data/tripDetails";
@@ -7,38 +6,33 @@ import Tag from "./Tag";
 import { UsersIcon } from "lucide-react";
 import PriceTag from "./PriceTag";
 import Link from "next/link";
+import { PricingOption } from "@/types/trip";
 
-const ImageCard = ({
-  title: trip,
-  coverImage: url,
-  pricingOptions,
-  departureTime: date,
-  id: tripId,
-  totalSeats,
-  totalBookedSeats,
-  currency
-}: Trip): ReactElement => {
-  const details = createTripDetails("Akagera", date, totalSeats);
-  
-  const getImageSrc = (imageUrl: string) => {
-    if (!imageUrl || imageUrl.trim() === "" || imageUrl === "null" || imageUrl === "undefined") {
-      const images = [
-        "/uploads/akagera.png",
-        "/uploads/giraffe.jpg", 
-        "/uploads/tiger.jpg",
-        "/uploads/elephant.webp",
-        "/uploads/safaricar.png",
-        "/uploads/hero.jpg",
-        "/uploads/hand.png"
-      ];
-      return images[Math.floor(Math.random() * images.length)];
-    }
-    
-    return `/uploads/${imageUrl}`;
-  };
+type ImageCardProps = {
+  title: string;
+  coverImage: string;
+  pricingOptions: PricingOption[];
+  departureTime: string;
+  id: string;
+  totalSeats: number;
+  totalBookedSeats: number;
+  currency: string;
+  destination: string;
+};
 
-  const src = getImageSrc(url);
-  const finalSrc = src || "/uploads/akagera.png";
+const ImageCard = (tripData: ImageCardProps): ReactElement => {
+  const {
+    title: trip,
+    coverImage: url,
+    pricingOptions,
+    departureTime: date,
+    id: tripId,
+    totalSeats,
+    totalBookedSeats,
+    currency,
+    destination,
+  } = tripData;
+  const details = createTripDetails(destination, date, totalSeats);
 
   const priceAmount =
     Array.isArray(pricingOptions) && pricingOptions.length > 0
@@ -52,7 +46,7 @@ const ImageCard = ({
       <div className="relative w-full h-64">
         <Tag
           variant="default"
-          text="Wildlife adventures"
+          text="Wildlife adventuress"
           className="absolute top-4 left-4"
         />
         <Tag
@@ -61,13 +55,7 @@ const ImageCard = ({
           icon={<UsersIcon size={16} />}
           className="absolute bottom-4 right-4"
         />
-        <Image 
-          className="object-cover" 
-          src={finalSrc} 
-          alt={trip} 
-          fill 
-          priority
-        />
+        <Image className="object-cover" src={url} alt={trip} fill priority />
       </div>
       <div className="p-6 space-y-6">
         <h2 className="text-xl font-semibold text-black">{trip}</h2>
