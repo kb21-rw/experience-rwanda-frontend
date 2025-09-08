@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Trip } from "@/types/ImageCard";
 import IconContent from "../../ui/IconContent";
-import Link from "next/link";
+// import Link from "next/link";
 import BookingPopup from "../../ui/Popup";
 import { createTripDetails } from "@/data/tripDetails";
 
@@ -23,9 +23,9 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   return (
     <>
       <div className="flex flex-col justify-start gap-4 items-start">
-        <Link href="/" className="hidden md:block text-base font-semibold">
+        {/* <Link href="/" className="hidden md:block text-base font-semibold">
           <span className="mr-1 font-semibold">←</span>Back
-        </Link>
+        </Link> */}
         <div className="flex flex-col gap-2 justify-start items-start text-gray-200">
           <h1 className="text-center text-3xl md:text-4xl font-bold">{tripDetails.title}</h1>
           <p>{tripDetails.description}</p>
