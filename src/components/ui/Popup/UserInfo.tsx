@@ -3,7 +3,7 @@ import { Input } from "../Input";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { ClientData } from "@/types/Popup";
-import { PricingOption } from "@/types/ImageCard";
+import { PricingOption } from "@/types/trip";
 import { z } from "zod";
 import { UserInfoSchema } from "@/utils/schemas/bookingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -201,7 +201,7 @@ const UserInfoPopup = ({
           />
         </div>
 
-        <div className="mt-5 flex gap-5">
+        <div className="mt-5 flex flex-col md:flex-row gap-5">
           <Button
             type="submit"
             onClick={onCancel}
