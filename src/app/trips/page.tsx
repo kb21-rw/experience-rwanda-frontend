@@ -2,9 +2,15 @@ import Header from "@/components/Header";
 import { tripDetails } from "@/data/tripDetails";
 import { HeaderVariant } from "@/enums/Header";
 import React from "react";
-import TripsList from "@/components/TripsList";
+import TripsExplorer from "@/components/TripsList/TripsExplorer";
+import { Trip } from "@/types/trip";
 
-const TripsPage = () => {
+const TripsPage = async () => {
+  const tripsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`, {
+    cache: 'no-store' 
+  });
+  const trips: Trip[] = await tripsResponse.json();
+
   return (
     <section className="bg-site min-h-screen">
       <Header
@@ -13,7 +19,7 @@ const TripsPage = () => {
         variant={HeaderVariant.PRIMARY}
       />
 
-      <TripsList />
+      <TripsExplorer initialTrips={trips} />
     </section>
   );
 };
