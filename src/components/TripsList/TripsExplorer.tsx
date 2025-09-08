@@ -46,7 +46,7 @@ const AllTripsList = ({ initialTrips }: AllTripsListProps) => {
               <button
                 type="button"
                 onClick={() => handleSearch(searchQuery)}
-                className="h-11 w-11 sm:h-12 sm:w-12 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center"
+                className="h-11 w-11 sm:h-12 sm:w-12  bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center"
                 aria-label="Search"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>

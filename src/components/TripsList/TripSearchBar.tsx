@@ -39,7 +39,7 @@ const TripSearchBar = ({
           onChange={(e) => handleSearch(e.target.value)}
           onKeyDown={handleKeyPress}
           aria-label="Search trips"
-          className="pl-14 pr-12 md:pr-20 h-11 md:h-12 w-full text-base rounded-full bg-[#0F1F2A] text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 shadow-none"
+          className="pl-14 pr-12 md:pr-20 h-11 md:h-12 w-full text-base bg-[#0F1F2A] text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 shadow-none"
         />
         <ChevronDown className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
       </div>
