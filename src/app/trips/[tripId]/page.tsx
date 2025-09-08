@@ -116,17 +116,24 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
       </div>
 
       <div className="mt-12">
-        <Map
-          location={{
-            lat: -1.9441,
-            lng: 30.0619,
-            name: "Kigali, Rwanda",
-          }}
-          zoom={12}
-          height="400px"
-          width="100%"
-        />
-      </div>
+  <Map
+    locations={[
+      {
+        lat: tripDetails.fromLocation.latitude,
+        lng: tripDetails.fromLocation.longitude,
+        name: tripDetails.fromLocation.name,
+      },
+      {
+        lat: tripDetails.toLocation.latitude,
+        lng:tripDetails.toLocation.longitude,
+        name: tripDetails.toLocation.name,
+      },
+    ]}
+    zoom={10}
+    height="400px"
+    width="100%"
+  />
+</div>
     </section>
   );
 };

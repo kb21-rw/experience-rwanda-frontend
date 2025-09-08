@@ -1,4 +1,8 @@
+import { Booking } from "./Booking";
+
+
 export interface Trip {
+  id:string
   title: string;
   description: string;
   destination: string;
@@ -7,6 +11,17 @@ export interface Trip {
   totalSeats: number;
   totalBookedSeats?: number;
   pricingOptions: PricingOption[];
+  fromLocation: TripsLocation;
+  toLocation:TripsLocation,
+  coverImage: string;
+  currency: string;
+  tripDescription: string;
+  tripPackages: TripPackageType[];
+  priceTitle:string
+  bookings: Booking[]
+  priceDescription:string
+  status:boolean
+
 }
 
 export interface PricingOption {
@@ -36,4 +51,12 @@ export interface CheckSeatsResponse {
   status: TripStatus;
   success: boolean;
   message: string;
+}
+
+export interface TripsLocation{
+  id: string;
+  name: string;
+  description: string;
+  latitude: number;
+  longitude: number;
 }

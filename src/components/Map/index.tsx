@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import GoogleMapReact from "google-map-react";
 import { MapPin } from "lucide-react";
 
@@ -11,7 +10,7 @@ interface Location {
 }
 
 interface SimpleMapProps {
-  location: Location;
+  locations: Location[];
   zoom?: number;
   height?: string;
   width?: string;
@@ -33,21 +32,32 @@ const Marker = ({ name }: Location) => (
 );
 
 export default function Map({
-  location,
+  locations,
   zoom = 11,
   height = "100vh",
   width = "100%",
 }: SimpleMapProps) {
+  const defaultCenter = locations.length
+    ? { lat: locations[0].lat, lng: locations[0].lng }
+    : { lat: 0, lng: 0 };
+
   return (
     <div style={{ height, width }}>
       <GoogleMapReact
         bootstrapURLKeys={{
           key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || "",
         }}
-        defaultCenter={{ lat: location.lat, lng: location.lng }}
+        defaultCenter={defaultCenter}
         defaultZoom={zoom}
       >
-        <Marker lat={location.lat} lng={location.lng} name={location.name} />
+        {locations.map((loc, idx) => (
+          <Marker
+            key={idx}
+            lat={loc.lat}
+            lng={loc.lng}
+            name={loc.name}
+          />
+        ))}
       </GoogleMapReact>
     </div>
   );
