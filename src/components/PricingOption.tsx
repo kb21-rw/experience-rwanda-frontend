@@ -3,8 +3,8 @@ import React from "react";
 import { Label } from "@/components/ui/Label";
 import { Input } from "@/components/ui/Input";
 import type { PricingOption } from "@/types/trip";
-import { FieldErrors } from "react-hook-form";
-import { Trip } from "@/types/trip";
+// import { FieldErrors } from "react-hook-form";
+// import { Trip } from "@/types/trip";
 import { Card, CardContent } from "./ui/Card";
 import { Button } from "./ui/Button";
 import { Plus, X } from "lucide-react";
@@ -16,15 +16,15 @@ import {
 import { GiPriceTag } from "react-icons/gi";
 import { Textarea } from "./ui/textarea";
 
-interface PricingOptionProps {
-  pricingOptions: PricingOption[];
-  register: any;
-  remove: (index: number) => void;
-  append: (field: PricingOption) => void;
-  errors: FieldErrors<Trip>;
-}
+// interface PricingOptionProps {
+//   pricingOptions: PricingOption[];
+//   register: any;
+//   remove: (index: number) => void;
+//   append: (field: PricingOption) => void;
+//   errors: FieldErrors<Trip>;
+// }
 
-const PricingOption: React.FC<PricingOptionProps> = ({
+const PricingOption: React.FC<any> = ({
   pricingOptions,
   register,
   remove,
@@ -41,7 +41,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             append({
               id: "",
               name: "",
-              amount: "0",
+              amount: 0,
               description: "",
             })
           }
@@ -52,7 +52,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         </Button>
       </div>
       <div className="space-y-4 max-h-screen overflow-y-auto">
-        {pricingOptions.map((field, index) => (
+        {pricingOptions.map((field: any, index: any) => (
           <Card key={index} className="border border-muted/30">
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-4">
