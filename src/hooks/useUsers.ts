@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Trip } from "@/types/ImageCard";
 import { getData } from "@/utils/request";
+import { Trip } from "@/types/trip";
 
 const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/admins`;
 
-export const useAdmins= () => {
+export const useAdmins = () => {
   const [admins, setAdmins] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +23,6 @@ export const useAdmins= () => {
 
     fetchTrips();
   }, []);
-
 
   return { admins, setAdmins, loading, error };
 };
