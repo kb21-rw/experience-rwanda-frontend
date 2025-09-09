@@ -1,8 +1,6 @@
-import React from "react";
-
 const TermsOfService = () => {
   return (
-    <div className="min-h-screen relative text-white bg-[#191229]">
+    <div className="min-h-screen relative text-white bg-site">
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
@@ -11,7 +9,6 @@ const TermsOfService = () => {
             </h1>
             <p className=" text-lg">Last update: April 3, 2023</p>
           </div>
-
           <div className="max-w-4xl mx-auto space-y-12">
             <section className="terms-section">
               <h2 className="text-2xl font-semibold  mb-4">Introduction</h2>
