@@ -1,4 +1,4 @@
-import { Row } from "@/types/ImageCard";
+import { Row } from "@/types/trip";
 import TripList from "./TripList";
 
 const ImageCardGrid = async ({ title, description }: Omit<Row, "cards">) => {

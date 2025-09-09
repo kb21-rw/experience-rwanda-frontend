@@ -2,7 +2,6 @@
 import { useMemo, useState } from "react";
 import FilterAndSearch from "../FilterAndSearch";
 import ImageCard from "./Card";
-import { Trip } from "@/types/ImageCard";
 import SearchNotFound from "../ui/SearchNotFound";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Trip } from "@/types/trip";
 
 const defaultFilters = {
   location: "",
@@ -45,9 +45,10 @@ const TripList = ({ trips }: { trips: Trip[] }) => {
 
       const matchesPrice =
         filters.price.min !== "" && filters.price.max !== ""
-          ? Number(data.pricingOptions[0].amount) >=
+          ? Number(data?.pricingOptions?.[0]?.amount) >=
               Number(filters.price.min) &&
-            Number(data.pricingOptions[0].amount) <= Number(filters.price.max)
+            Number(data?.pricingOptions?.[0]?.amount) <=
+              Number(filters.price.max)
           : true;
 
       return (matchesLocation || matchesTitle) && matchesDate && matchesPrice;
@@ -73,13 +74,24 @@ const TripList = ({ trips }: { trips: Trip[] }) => {
   };
 
   return (
-    <div>
+    <div className="px-6 lg:px-56 bg-red-500">
       <FilterAndSearch form={form} onSubmit={onSubmit} />
       {filteredTrips.length >= 1 ? (
         <>
-          <div className="hidden md:grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
+          <div className="hidden md:grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10  bg-green-500">
             {filteredTrips.map((data: Trip) => (
-              <ImageCard key={data.id} {...data} />
+              <ImageCard
+                key={data.id}
+                title={data.title}
+                coverImage={data.coverImage}
+                pricingOptions={data.pricingOptions || []}
+                departureTime={data.departureTime}
+                id={data.id}
+                totalSeats={data.totalSeats}
+                totalBookedSeats={data.totalBookedSeats}
+                currency={data.currency}
+                destination={data.destination}
+              />
             ))}
           </div>
 
@@ -95,11 +107,21 @@ const TripList = ({ trips }: { trips: Trip[] }) => {
               pagination={{ clickable: true, dynamicBullets: true }}
               className="w-full"
               style={{ paddingBottom: "40px" }}
-           >
+            >
               {filteredTrips.map((data: Trip) => (
                 <SwiperSlide key={data.id}>
                   <div className="px-2">
-                    <ImageCard {...data} />
+                    <ImageCard
+                      title={data.title}
+                      coverImage={data.coverImage}
+                      pricingOptions={data.pricingOptions || []}
+                      departureTime={data.departureTime}
+                      id={data.id}
+                      totalSeats={data.totalSeats}
+                      totalBookedSeats={data.totalBookedSeats}
+                      currency={data.currency}
+                      destination={data.destination}
+                    />
                   </div>
                 </SwiperSlide>
               ))}

@@ -11,13 +11,13 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { useTrips } from "@/hooks/useTrips";
-import { Trip } from "@/types/ImageCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
 import { STATUS_CONFIG, ITEM_PER_PAGE } from "@/utils/constants";
 import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
 import TripNotFound from "./Card/NotFound";
 import { filterTrips, getStatusCounts } from "@/utils/tripFilters";
+import { Trip } from "@/types/trip";
 
 const TripTable = () => {
   const [currentPage, setCurrentPage] = useState(1);

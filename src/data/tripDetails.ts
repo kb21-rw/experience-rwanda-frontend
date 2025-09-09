@@ -24,8 +24,8 @@ export const createTripDetails = (
 
 export const tripDetails = {
   header: {
-    title: "Book trip by ExperienceRW",
+    title: "Your Gateway to Adventure",
     description:
-      "Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum  Lorem Ipsum Lorem Ipsum",
+      "Discover trips that take you through Rwanda’s stunning landscapes, lively culture, and fascinating history. Explore our selection of experiences and easily book your next adventure, all in one place.",
   },
 };

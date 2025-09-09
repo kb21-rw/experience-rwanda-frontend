@@ -127,7 +127,7 @@ const TripForm = ({
                 setDefaultGalleryImages={setDefaultGalleryImages}
               />
               <PricingOption
-                pricingOptions={pricingOptions}
+                pricingOptions={pricingOptions[0]}
                 register={form.register}
                 remove={remove}
                 append={append}
