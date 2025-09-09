@@ -9,8 +9,8 @@ import { ChevronDown } from "lucide-react";
 
 const Faqs = () => {
   return (
-    <section className="min-h-screen relative text-white bg-site">
-      <main className="pt-24 pb-16">
+    <main className="min-h-screen relative text-white bg-site">
+      <section className="pt-24 pb-16">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-4">
@@ -20,8 +20,8 @@ const Faqs = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 " id="faqs" >
-            {faqData.faqs.map((faq) => (
-              <Collapsible key={faq.question} className="border-b-0.5 border-gray-200 pb-4">
+            {faqData.faqs.map((faq, index) => (
+              <Collapsible key={index} className="border-b-0.5 border-gray-200 pb-4">
                 <CollapsibleTrigger asChild>
                   <button className="flex justify-between items-center w-full text-left font-semibold text-lg hover:text-gray-200">
                     <span>{faq.question}</span>
@@ -48,8 +48,8 @@ const Faqs = () => {
             <Button variant="outline">Contact</Button>
           </div>
         </div>
-      </main>
-    </section>
+      </section>
+    </main>
   );
 };
 
