@@ -18,6 +18,7 @@ import TripNotFound from "../../trips/Card/NotFound";
 import TableSkeleton from "@/components/ui/skeletons/TableSkeleton";
 import { useTrips } from "@/hooks/useTrips";
 import { useParams } from "next/navigation";
+import { Booking } from "@/types/Booking";
 
 const BookingList = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,7 +41,7 @@ const BookingList = () => {
       </div>
     );
   const filteredBookings =
-    trip?.bookings?.filter((booking) => {
+    trip?.bookings?.filter((booking: Booking) => {
       const keyword = searchQuery.toLowerCase();
       return (
         booking.id.toLowerCase().includes(keyword) ||
@@ -66,7 +67,7 @@ const BookingList = () => {
   const destination = trip.destination;
   const departureTime = trip.departureTime;
   const totalBookedSeats = trip.bookings.reduce(
-    (total, booking) => total + booking.bookedSeats,
+    (total: number, booking: Booking) => total + booking.bookedSeats,
     0
   );
   const totalSeats = trip.totalSeats;
@@ -85,7 +86,7 @@ const BookingList = () => {
           className="w-1/3"
         />
         <ExportPopover
-          data={paginatedBookings.map((booking, index) => ({
+          data={paginatedBookings.map((booking: Booking, index: number) => ({
             No: ((currentPage - 1) * bookingsPerPage + index + 1)
               .toString()
               .padStart(3, "0"),
@@ -111,7 +112,7 @@ const BookingList = () => {
         </TableHeader>
         {trip.bookings.length > 0 ? (
           <TableBody>
-            {paginatedBookings.map((booking, index) => (
+            {paginatedBookings.map((booking: Booking, index: number) => (
               <BookRow
                 key={booking.id}
                 booking={booking}

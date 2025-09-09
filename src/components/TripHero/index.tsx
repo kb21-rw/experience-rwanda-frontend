@@ -1,4 +1,4 @@
-import { Trip } from "@/types/ImageCard";
+import { Trip } from "@/types/trip";
 import TripHeroCard from "./Card";
 
 const TripHero = async ({ tripDetails }: { tripDetails: Trip }) => {
