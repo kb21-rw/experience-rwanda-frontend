@@ -5,12 +5,16 @@ interface HeaderProps {
   id?: string;
   title: string;
   description: string;
-  variant: HeaderVariant;
+  variant?: HeaderVariant;
 }
 
-const Header = ({ title, description, variant }: HeaderProps) => {
+const Header = ({
+  title,
+  description,
+  variant = HeaderVariant.PRIMARY,
+}: HeaderProps) => {
   return (
-    <section className="font-manrope w-full h-fit py-16">
+    <section className="px-6 lg:px-56 text-white mx-auto font-manrope w-full h-fit py-16">
       <Content title={title} description={description} variant={variant} />
     </section>
   );

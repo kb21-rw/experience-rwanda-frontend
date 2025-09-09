@@ -12,7 +12,6 @@ import { navbarData } from "@/data/navbarData";
 import { useScrollSections } from "@/hooks/useScrollSection";
 import { useToggle } from "@/hooks/useToogle";
 
-
 const NavBar: React.FC = () => {
   const { logo, navLinks } = navbarData;
   const pathname = usePathname();

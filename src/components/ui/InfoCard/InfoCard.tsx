@@ -1,18 +1,23 @@
 "use client";
 
 import { ReactElement } from "react";
-import { InfoCard as InfoCardType } from "@/types/ImageCard";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+interface Card {
+  image: string;
+  title: string;
+  description: string;
+}
+
 interface InfoCardProps {
-  card: InfoCardType;
+  card: Card;
   className?: string;
 }
 
 const InfoCard = ({ card, className }: InfoCardProps): ReactElement => {
   return (
-    <div 
+    <div
       className={cn(
         "group bg-transparent md:bg-white transition-all duration-300 cursor-pointer border-0 border-none outline-none shadow-none hover:shadow-none md:hover:scale-105",
         "",
@@ -20,8 +25,8 @@ const InfoCard = ({ card, className }: InfoCardProps): ReactElement => {
       )}
     >
       <div className="relative w-full h-60 md:h-48 rounded-none border-0 ring-0 outline-none">
-        <Image 
-          src={card.image} 
+        <Image
+          src={card.image}
           alt={card.title}
           fill
           className="object-cover transition-transform duration-300 md:group-hover:scale-110 rounded-none"
@@ -41,4 +46,4 @@ const InfoCard = ({ card, className }: InfoCardProps): ReactElement => {
   );
 };
 
-export default InfoCard; 
+export default InfoCard;

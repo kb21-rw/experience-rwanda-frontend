@@ -1,6 +1,6 @@
 import GalleryGrid from "@/components/GalleryGrid";
 import TripHero from "@/components/TripHero";
-import { Trip } from "@/types/ImageCard";
+import { Trip } from "@/types/trip";
 
 const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   const response = await fetch(
@@ -20,7 +20,6 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
       <div>
         <TripHero tripDetails={tripDetails} />
       </div>
-      {/* <TripPackage title="Trip Packages" /> */}
       <GalleryGrid title="Gallery" />
     </main>
   );

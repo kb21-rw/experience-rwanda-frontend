@@ -1,4 +1,4 @@
-import { Trip } from "@/types/ImageCard";
+import { Trip } from "@/types/trip";
 
 export const filterToStatus: Record<string, string> = {
   all: "ongoing",
