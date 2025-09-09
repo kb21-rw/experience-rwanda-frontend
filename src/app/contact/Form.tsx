@@ -84,19 +84,19 @@ const ContactForm = () => {
       </div>
       <div>
         <Input
-          type="email"
-          placeholder="Your email"
+          type="text"
+          placeholder="Your subject"
           data-test-id="contact-email"
-          {...register("email")}
+          {...register("subject")}
         />
-        {errors.email && (
-          <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+        {errors.subject && (
+          <p className="text-red-600 text-sm">{errors.subject.message}</p>
         )}
       </div>
       <div>
         <textarea
           placeholder="Your Message"
-          className="border border-gray-700 rounded-md p-2 h-40 w-full"
+          className="border border-gray-125 bg-transparent text-sm p-3 h-30 w-full"
           data-test-id="contact-message"
           {...register("message")}
         />
@@ -110,8 +110,9 @@ const ContactForm = () => {
         variant="primary"
         data-test-id="contact-submit"
         disabled={isSubmitting}
+        className="text-xs"
       >
-        {isSubmitting ? "Sending..." : "Submit"}
+        {isSubmitting ? "Sending..." : "SEND REQUEST"}
       </Button>
     </form>
   );
