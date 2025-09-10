@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/Button";
 import { TableCell, TableRow } from "@/components/ui/Table";
-import { Trip } from "@/types/ImageCard";
 import { Calendar, Edit, Eye, MapPin, MoreHorizontal } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import DeleteAlert from "@/components/DeleteAlert";
@@ -17,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { STATUS_CONFIG } from "@/utils/constants";
 import { useDeleteTrip } from "@/hooks/useDeleleTrip";
 import Spinner from "@/components/ui/Spinner";
+import { Trip } from "@/types/trip";
 
 interface Props {
   onDelete?: (id: string) => void;

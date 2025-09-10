@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Trip } from "@/types/ImageCard";
 import Image from "next/image";
 import IconContent from "../ui/IconContent";
 import Link from "next/link";
 import { Button } from "../ui/Button";
 import BookingPopup from "../ui/Popup";
 import { createTripDetails } from "@/data/tripDetails";
+import { Trip } from "@/types/trip";
 
 interface Props {
   tripDetails: Trip;
@@ -82,7 +82,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           setSelectedTrip={setSelectedTrip}
           priceTitle={tripDetails.priceTitle}
           priceDescription={tripDetails.priceDescription}
-          pricingOptions={tripDetails.pricingOptions}
+          pricingOptions={tripDetails.pricingOptions || []}
         />
       )}
     </>
