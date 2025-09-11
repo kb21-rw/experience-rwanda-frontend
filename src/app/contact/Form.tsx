@@ -44,35 +44,75 @@ const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-10 w-1/2 mx-auto mt-14.25"
+      className="flex flex-col gap-4 w-full "
     >
       <div>
-        <Input type="text" placeholder="Full names" data-test-id="contact-full-names" {...register("name")} />
+        <Input
+          type="text"
+          placeholder="Your full-names"
+          data-test-id="contact-full-names"
+          {...register("name")}
+        />
         {errors.name && (
-          <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>
+          <p className="text-red-600 text-sm">{errors.name.message}</p>
         )}
       </div>
 
+      <div className="grid grid-cols-2 w-full gap-4">
+        <div>
+          <Input
+            type="email"
+            placeholder="Your email"
+            data-testId="contact-full-names"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-600 text-sm">{errors.email.message}</p>
+          )}
+        </div>
+        <div>
+          <Input
+            type="tel"
+            placeholder="Your phone number"
+            data-testId="contact-phone-number"
+            {...register("phone")}
+          />
+          {errors.phone && (
+            <p className="text-red-600 text-sm">{errors.phone.message}</p>
+          )}
+        </div>
+      </div>
       <div>
-        <Input type="email" placeholder="Your email" data-test-id="contact-email" {...register("email")} />
-        {errors.email && (
-          <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+        <Input
+          type="text"
+          placeholder="Your subject"
+          data-test-id="contact-email"
+          {...register("subject")}
+        />
+        {errors.subject && (
+          <p className="text-red-600 text-sm">{errors.subject.message}</p>
         )}
       </div>
-
       <div>
         <textarea
           placeholder="Your Message"
-          className="border border-gray-700 rounded-md p-2 h-40 w-full" data-test-id="contact-message"
+          className="border border-gray-125 bg-transparent text-sm p-3 h-30 w-full"
+          data-test-id="contact-message"
           {...register("message")}
         />
         {errors.message && (
-          <p className="text-red-600 text-sm mt-1">{errors.message.message}</p>
+          <p className="text-red-600 text-sm">{errors.message.message}</p>
         )}
       </div>
 
-      <Button type="submit" variant="primary" data-test-id="contact-submit" disabled={isSubmitting}>
-        {isSubmitting ? "Sending..." : "Submit"}
+      <Button
+        type="submit"
+        variant="primary"
+        data-test-id="contact-submit"
+        disabled={isSubmitting}
+        className="text-xs"
+      >
+        {isSubmitting ? "Sending..." : "SEND REQUEST"}
       </Button>
     </form>
   );

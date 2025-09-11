@@ -1,116 +1,113 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import NavItem from "./NavItem";
-import MenuIcon from "../../../assets/MenuIcon";
-import CloseIcon from "../../../assets/CloseIcon";
-import { navbarData } from "@/data/navbarData";
+
+import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
-export type NavLink = {
-  sectionId: string;
-  label: string;
-  href: string;
-  data_test_id:string
-};
+import NavItem from "./NavItem";
+import { Button } from "../Button";
+import { navbarData } from "@/data/navbarData";
+import { useScrollSections } from "@/hooks/useScrollSection";
+import { useToggle } from "@/hooks/useToogle";
 
-export type NavData = {
-  logo: {
-    title: string;
-  };
-  navLinks: NavLink[];
-};
-
-const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+const NavBar: React.FC = () => {
   const { logo, navLinks } = navbarData;
   const pathname = usePathname();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = navLinks.map((link) =>
-        document.getElementById(link.sectionId)
-      );
-      const scrollPosition = window.scrollY + 100;
-      sections.forEach((section) => {
-        if (section) {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.offsetHeight;
-
-          if (
-            scrollPosition >= sectionTop &&
-            scrollPosition < sectionTop + sectionHeight
-          ) {
-            setActiveSection(section.id);
-          }
-        }
-      });
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    if (pathname === "/") {
-      setActiveSection("home");
-    } else {
-      setActiveSection(pathname);
-    }
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [navLinks, pathname]);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const { activeSection, scrolled } = useScrollSections(navLinks);
+  const { isOpen, toggle, close } = useToggle(false);
 
   return (
-    <nav className="bg-black text-white flex justify-between font-inter font-black p-6 md:px-32 md:py-12 md:flex md:justify-between md:items-center sticky top-0 z-50">
-      <Link href="/" className="text-lg">
-        <span>{logo.title}</span>
-      </Link>
-      <div className="hidden text-base md:space-x-12 md:flex md:justify-between md:items-center">
-        {navLinks.map((item: NavLink) => (
-          <NavItem
-            key={item.sectionId}
-            sectionId={item.sectionId}
-            href={item.href}
-            onClick={toggleMenu}
-            isActive={activeSection === item.sectionId}
-            data_test_id={item.data_test_id}
+    <>
+      <nav
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+          scrolled ? "bg-blue-700/95 backdrop-blur-md py-3" : "bg-blue-700 py-4"
+        }`}
+      >
+        <div className="content-wrapper flex justify-between items-center py-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2 group"
+            aria-label="Home"
           >
-            {item.label}
-          </NavItem>
-        ))}
-      </div>
-      <div className="flex justify-between items-center flex-col absolute right-6 space-x-4 md:hidden">
-        <button
-          aria-label={isOpen ? "close menu" : "open menu"}
-          onClick={toggleMenu}
-        >
-          {isOpen ? (
-            <CloseIcon className="w-6 h-6" />
-          ) : (
-            <MenuIcon className="w-6 h-6" />
-          )}
-        </button>
-      </div>
-      {isOpen && (
-        <div className="text-start flex w-full p-24 bg-black md:hidden">
-          <div className="flex absolute top-16 left-0 flex-col space-y-4 py-4 px-6">
-            {navLinks.map((item: NavLink) => (
+            <div className="relative w-8 h-8 transition-transform group-hover:scale-110">
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((item) => (
               <NavItem
                 key={item.sectionId}
-                sectionId={item.sectionId}
-                onClick={toggleMenu}
-                href={item.href}
+                {...item}
                 isActive={activeSection === item.sectionId}
-              >
-                {item.label}
-              </NavItem>
+                onClick={close}
+                href={item.href}
+              />
             ))}
           </div>
+
+          {pathname === "/" && (
+            <Link
+              href="/"
+              className="hidden md:inline-block bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
+            >
+              Book Trip
+            </Link>
+          )}
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="p-3 md:hidden text-green-700 hover:bg-green-700/20 rounded-none"
+            onClick={toggle}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            {isOpen ? (
+              <X className="w-10 h-10" />
+            ) : (
+              <Menu className="w-10 h-10" />
+            )}
+          </Button>
         </div>
-      )}
-    </nav>
+
+        {isOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-blue-700 border-t border-green-700/20 shadow-lg">
+            <div className="p-4 space-y-2">
+              {navLinks.map((item) => (
+                <NavItem
+                  key={item.sectionId}
+                  {...item}
+                  isActive={activeSection === item.sectionId}
+                  onClick={close}
+                  isMobile
+                  href={item.href}
+                />
+              ))}
+
+              {pathname === "/" && (
+                <Link
+                  href="/"
+                  className="block w-full text-center bg-green-700 hover:bg-green-700/90 text-blue-700 px-6 py-2 rounded-none transition-colors font-medium"
+                >
+                  Book Trip
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      <div className="h-16" />
+    </>
   );
 };
 

@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Trip } from "@/types/ImageCard";
 import Image from "next/image";
 import IconContent from "../ui/IconContent";
 import Link from "next/link";
 import { Button } from "../ui/Button";
 import BookingPopup from "../ui/Popup";
 import { createTripDetails } from "@/data/tripDetails";
+import { Trip } from "@/types/trip";
 
 interface Props {
   tripDetails: Trip;
@@ -19,9 +19,18 @@ const TripHeroCard = ({ tripDetails }: Props) => {
   const details = createTripDetails(
     tripDetails.destination,
     tripDetails.departureTime,
-    tripDetails.pricingOptions,
     tripDetails.totalSeats
   );
+
+  const getImageSrc = (imageUrl: string) => {
+    if (!imageUrl || imageUrl === "") return "/uploads/akagera.png";
+    if (imageUrl.startsWith("http")) return imageUrl;
+    if (imageUrl.startsWith("/uploads/")) return imageUrl;
+    return `/uploads/${imageUrl}`;
+  };
+
+  const src = getImageSrc(tripDetails.coverImage);
+
   return (
     <>
       <div className="content-wrapper">
@@ -42,7 +51,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
 
         <div className="relative w-full md:h-[600px] mb-8">
           <Image
-            src={tripDetails.coverImage}
+            src={src}
             alt={tripDetails.title}
             fill
             className="object-cover"
@@ -73,7 +82,7 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           setSelectedTrip={setSelectedTrip}
           priceTitle={tripDetails.priceTitle}
           priceDescription={tripDetails.priceDescription}
-          pricingOptions={tripDetails.pricingOptions}
+          pricingOptions={tripDetails.pricingOptions || []}
         />
       )}
     </>
