@@ -7,6 +7,7 @@ import LogoContent from "@/components/LogoContent";
 import LogoContentData from "./../data/logoContent.json";
 import { InfoCardGrid } from "@/components/ui/InfoCard";
 import { rwandaHighlights } from "@/data/rwandaHighlights";
+import CustomizedTrip from "@/components/CustomizedTrip";
 
 export default function Home() {
   return (
@@ -22,12 +23,12 @@ export default function Home() {
         title="Discover Rwanda's Highlights"
         description="Explore the unique features and experiences that make Rwanda a must-visit destination"
       />
-      <LogoContent {...LogoContentData} />
       <FeaturedTrips
         title={tripData.title}
         description={tripData.description}
       />
-      {/* <CustomizedTrip /> */}
+      <CustomizedTrip />
+      <LogoContent {...LogoContentData} />
     </>
   );
 }
