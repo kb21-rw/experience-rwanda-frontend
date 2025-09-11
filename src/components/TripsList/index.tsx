@@ -6,6 +6,7 @@ import ImageCard from "../ImageCardGrid/Card";
 const TripsList = async () => {
   const trips = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`);
   const data = await trips.json();
+  
   return (
     <section className="min-h-screen bg-site">
       <Trips tripsLength={data.length} />

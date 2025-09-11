@@ -1,15 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import Header from "@/components/Header";
 import { tripDetails } from "@/data/tripDetails";
 import { HeaderVariant } from "@/enums/Header";
-import { useState } from "react";
 import TripsList from "@/components/TripsList";
 import TripLocationBadge from "@/components/ui/LocationBagde";
 import { tripLocation } from "@/data/location";
 
 const TripsPage = () => {
   const [activeLocation, setActiveLocation] = useState<string>(tripLocation[0]);
+
+  const handleBadgeClick = (location: string) => {
+    setActiveLocation(location);
+  };
 
   return (
     <section className="bg-site min-h-screen">
@@ -22,10 +26,10 @@ const TripsPage = () => {
       <div className="flex justify-start md:justify-center gap-3 overflow-x-auto p-2 scrollbar-hide">
         {tripLocation.map((location) => (
           <TripLocationBadge
-            key={location}
+            key={location} 
             location={location}
             isActive={location === activeLocation}
-            onClick={() => setActiveLocation(location)}
+            onClick={() => handleBadgeClick(location)}
           />
         ))}
       </div>
