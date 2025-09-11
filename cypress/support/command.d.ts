@@ -4,6 +4,7 @@ declare namespace Cypress {
     interface Chainable {
       navigationLinks(): Chainable<void>;
       contactForm(): Chainable<void>;
+      loginForm():Chainable<void>;
     }
   }
   

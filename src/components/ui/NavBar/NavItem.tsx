@@ -21,7 +21,7 @@ const NavItem: React.FC<NavItemProps> = ({
   isActive = false,
   isMobile = false,
 }) => {
-  const isPageName = href.includes("#") || href === "/"
+  const isPageName = href.includes("#") || href === "/";
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isPageName) {
       e.preventDefault();
@@ -55,10 +55,10 @@ const NavItem: React.FC<NavItemProps> = ({
     <Link
       href={href}
       onClick={handleClick}
-      data-testid={data_test_id}
+      data-test-id={data_test_id}
       className={`px-1 py-2 font-medium transition-all duration-200 ${
-        isActive 
-          ? "text-green-700 underline underline-offset-4" 
+        isActive
+          ? "text-green-700 underline underline-offset-4"
           : "text-green-700 hover:scale-110 hover:font-semibold"
       }`}
       aria-current={isActive ? "page" : undefined}
