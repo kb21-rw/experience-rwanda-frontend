@@ -36,13 +36,10 @@ const TripForm = ({
     setDefaultGalleryImages,
     setDefaultCoverImage,
   } = useTripFormSubmit(defaultValues, tripId);
-  const {
-    fields: pricingOptions,
-    append,
-    remove,
-  } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "pricingOptions",
+    keyName: "id",
   });
 
   useEffect(() => {
@@ -51,7 +48,6 @@ const TripForm = ({
   }, [form.setValue, defaultCoverImage, defaultGalleryImages, form]);
 
   const now = format(new Date(), "yyyy-MM-dd'T'HH:mm");
-
   return (
     <Card className="shadow-lg border-0 bg-gradient-to-br from-background to-secondary/20">
       <CardContent className="p-8">
@@ -133,7 +129,7 @@ const TripForm = ({
                 setDefaultGalleryImages={setDefaultGalleryImages}
               />
               <PricingOption
-                pricingOptions={pricingOptions[0]}
+                pricingOptions={fields}
                 register={form.register}
                 remove={remove}
                 append={append}
@@ -142,7 +138,12 @@ const TripForm = ({
             </div>
 
             <div className="pt-20 flex justify-center">
-              <Button className="w-1/2 py-5" type="submit" variant="primary" data-test-id="submit-new-trip">
+              <Button
+                className="w-1/2 py-5"
+                type="submit"
+                variant="primary"
+                data-test-id="submit-new-trip"
+              >
                 {tripId ? "Update Trip" : "Create New Trip"}
               </Button>
             </div>
