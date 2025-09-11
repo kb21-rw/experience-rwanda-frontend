@@ -63,7 +63,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
   return (
     <div
       className={cn(
-        "w-full lg:w-64 bg-site-primary text-white p-6 space-y-6",
+        "w-full lg:w-64 bg-site-primary text-white space-y-6",
         className
       )}
     >
