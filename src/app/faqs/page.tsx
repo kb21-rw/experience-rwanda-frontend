@@ -19,24 +19,29 @@ const Faqs = () => {
             <p className="text-lg text-gray-300">{faqData.description}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 " id="faqs" >
-            {faqData.faqs.map((faq, index) => (
-              <Collapsible key={index} className="border-b-0.5 border-gray-200 pb-4">
-                <CollapsibleTrigger asChild>
-                  <button className="flex justify-between items-center w-full text-left font-semibold text-lg hover:text-gray-200">
-                    <span>{faq.question}</span>
-                    <ChevronDown className="h-5 w-5 shrink-0 transition-transform data-[state=open]:rotate-180" />
-                  </button>
-                </CollapsibleTrigger>
+          <div className="max-w-4xl mx-auto space-y-4" id="faqs">
+  {faqData.faqs.map((faq, index) => (
+    <Collapsible 
+      key={index} 
+      className="border border-gray-600/30 rounded-lg bg-gray-800/20 backdrop-blur-sm"
+    >
+      <CollapsibleTrigger asChild>
+        <button className="flex justify-between items-center w-full text-left font-semibold text-lg hover:text-gray-200 p-6 transition-colors">
+          <span className="pr-4">{faq.question}</span>
+          <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-200 data-[state=open]:rotate-180" />
+        </button>
+      </CollapsibleTrigger>
 
-                <CollapsibleContent>
-                  <p className="mt-3 text-gray-400 text-base leading-relaxed text-justify">
-                    {faq.answer}
-                  </p>
-                </CollapsibleContent>
-              </Collapsible>
-            ))}
-          </div>
+      <CollapsibleContent className="overflow-hidden">
+        <div className="px-6 pb-6">
+          <p className="text-gray-300 text-base leading-relaxed">
+            {faq.answer}
+          </p>
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  ))}
+</div>
 
           <div className="text-center mt-20">
             <h2 className="text-2xl md:text-3xl font-bold mb-3">
