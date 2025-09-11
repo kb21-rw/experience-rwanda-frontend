@@ -8,6 +8,7 @@ import Link from "next/link";
 import SearchNotFound from "../ui/SearchNotFound";
 import FilterSidebar from "./FilterSider";
 import Trips from "./Trips";
+import {Button} from "@/components/ui/Button";
 
 interface AllTripsListProps {
   initialTrips: Trip[];
@@ -19,13 +20,21 @@ const AllTripsList = ({ initialTrips }: AllTripsListProps) => {
 
   const filteredTrips = useMemo(() => {
     if (!searchQuery.trim()) return trips;
-    const query = searchQuery.toLowerCase().trim();
+    const tokens = searchQuery
+      .toLowerCase()
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
     return trips.filter((trip) => {
-      const matchesTitle = trip.title.toLowerCase().includes(query);
-      const matchesDestination = trip.destination.toLowerCase().includes(query);
-      const matchesDescription = trip.description?.toLowerCase().includes(query) || false;
-      const matchesCategory = trip.priceTitle?.toLowerCase().includes(query) || false;
-      return matchesTitle || matchesDestination || matchesDescription || matchesCategory;
+      const title = trip.title?.toLowerCase() || "";
+      const destination = trip.destination?.toLowerCase() || "";
+
+    
+      const matchesTitle = tokens.every((t) => title.includes(t));
+      const matchesDestination = tokens.every((t) => destination.includes(t));
+
+      return matchesTitle || matchesDestination;
     });
   }, [trips, searchQuery]);
 
@@ -43,21 +52,21 @@ const AllTripsList = ({ initialTrips }: AllTripsListProps) => {
                 placeholder="Search by title, location, or activity..."
                 className="w-full"
               />
-              <button
+              <Button
                 type="button"
                 onClick={() => handleSearch(searchQuery)}
-                className="h-11 w-11 sm:h-12 sm:w-12  bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center"
+                className="h-11 w-11 sm:h-12 sm:w-12 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center"
                 aria-label="Search"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              </button>
-              <Link href="/customized-trip" className="hidden md:inline-flex">
-                <button
+              </Button>
+              <Link href="/contact" className="hidden md:inline-flex">
+                <Button
                   type="button"
                   className="h-12 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium"
                 >
                   Customized Trip
-                </button>
+                </Button>
               </Link>
             </div>
             {searchQuery && (
