@@ -49,7 +49,11 @@ const ContactForm = () => {
       <div>
         <Input
           type="text"
+<<<<<<< HEAD
           placeholder="Full names"
+=======
+          placeholder="Your full-names"
+>>>>>>> dev
           data-test-id="contact-full-names"
           {...register("name")}
         />
