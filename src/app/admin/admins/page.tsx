@@ -1,5 +1,5 @@
 "use client";
-import AdminList from "./AdminList";
+import AdminList from "./components/AdminList";
 
 const Admins = () => {
   return (
