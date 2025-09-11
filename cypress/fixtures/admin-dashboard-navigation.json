@@ -1,0 +1,36 @@
+[
+  {
+    "action": "type",
+    "selector": "[data-test-id='login-email']",
+    "value": "rithakankindi@gmail.com"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='login-password']",
+    "value": "1234moxx"
+  },
+  {
+    "action": "press",
+    "selector": "[data-test-id='login-button']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='dashboard-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='trips-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='admins-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='invite-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='admin-log-out']"
+  }
+]
