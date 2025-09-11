@@ -200,7 +200,7 @@ const UserInfoPopup = ({
           />
         </div>
 
-        <div className="mt-5 flex gap-5">
+        <div className="mt-5 flex flex-col md:flex-row gap-5">
           <Button
             type="submit"
             onClick={onCancel}
