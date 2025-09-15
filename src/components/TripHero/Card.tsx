@@ -83,6 +83,11 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           priceTitle={tripDetails.priceTitle}
           priceDescription={tripDetails.priceDescription}
           pricingOptions={tripDetails.pricingOptions || []}
+          tripTitle={tripDetails.title}
+          destination={tripDetails.destination}
+          departureTime={tripDetails.departureTime}
+          returnTime={tripDetails.returnTime}
+          currency={tripDetails.currency}
         />
       )}
     </>

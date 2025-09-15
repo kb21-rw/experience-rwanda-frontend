@@ -13,7 +13,7 @@ const PaymentPopup = ({
   clientData,
   tripId,
 }: {
-  setCurrentStep: Dispatch<SetStateAction<"userInfo" | "payment">>;
+  setCurrentStep: Dispatch<SetStateAction<"userInfo" | "summary" | "payment">>;
   clientData?: ClientData;
   tripId: string;
 }) => {
