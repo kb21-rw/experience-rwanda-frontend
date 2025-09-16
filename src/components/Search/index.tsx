@@ -31,7 +31,6 @@ const Search = ({ onSearch, className, placeholder, showClearButton = true }: Se
       <Input
         type="text"
         placeholder={placeholder}
-        className={`pl-10 ${showClearButton && searchQuery ? 'pr-10' : ''} h-12`}
         value={searchQuery}
         onChange={(e) => {
           setSearchQuery(e.target.value);

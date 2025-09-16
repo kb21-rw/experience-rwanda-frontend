@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Search as SearchIcon} from "lucide-react";
 
@@ -17,16 +17,16 @@ const TripSearchBar = ({
 }: TripSearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearch = useCallback((value: string) => {
+  const handleSearch = (value: string) => {
     setSearchQuery(value);
     onSearch(value);
-  }, [onSearch]);
+  };
 
-  const handleKeyPress = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       onSearch(searchQuery);
     }
-  }, [searchQuery, onSearch]);
+  };
 
   return (
     <div className={`relative w-full ${className}`}>

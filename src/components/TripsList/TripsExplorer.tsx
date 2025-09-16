@@ -11,11 +11,11 @@ import Trips from "./Trips";
 import {Button} from "@/components/ui/Button";
 
 interface AllTripsListProps {
-  initialTrips: Trip[];
+  defaultTrips: Trip[];
 }
 
-const AllTripsList = ({ initialTrips }: AllTripsListProps) => {
-  const [trips] = useState<Trip[]>(initialTrips);
+const AllTripsList = ({ defaultTrips }: AllTripsListProps) => {
+  const [trips] = useState<Trip[]>(defaultTrips);
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTrips = useMemo(() => {
@@ -31,8 +31,8 @@ const AllTripsList = ({ initialTrips }: AllTripsListProps) => {
       const destination = trip.destination?.toLowerCase() || "";
 
     
-      const matchesTitle = tokens.every((t) => title.includes(t));
-      const matchesDestination = tokens.every((t) => destination.includes(t));
+      const matchesTitle = tokens.every((token) => title.includes(token));
+      const matchesDestination = tokens.every((token) => destination.includes(token));
 
       return matchesTitle || matchesDestination;
     });
