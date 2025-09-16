@@ -20,6 +20,7 @@ export const EmailInput = ({ register, errors }: EmailInputProps) => (
       id="email"
       type="email"
       placeholder="experiencerwanda@gmail.com"
+      data-test-id="login-email"
       {...register("email")}
       className="w-full rounded-md"
       autoComplete="email"

@@ -1,11 +1,13 @@
 import HeroContent from "@/components/HeroContent";
 import heroData from "./../data/heroData.json";
 import tripData from "./../data/tripData.json";
-import ImageCardGrid from "../components/ImageCardGrid";
-import { aboutUsData } from "@/data/about";
-import Header from "@/components/Header";
+import FeaturedTrips from "@/components/FeaturedTrips";
+// import CustomizedTrip from "@/components/CustomizedTrip";
 import LogoContent from "@/components/LogoContent";
 import LogoContentData from "./../data/logoContent.json";
+import { InfoCardGrid } from "@/components/ui/InfoCard";
+import { rwandaHighlights } from "@/data/rwandaHighlights";
+import CustomizedTrip from "@/components/CustomizedTrip";
 
 export default function Home() {
   return (
@@ -15,18 +17,17 @@ export default function Home() {
         imageUrl={heroData.imageUrl}
         content={{ title: heroData.title, description: heroData.description }}
       />
-      <Header
-        id="about"
-        title={aboutUsData.title}
-        description={aboutUsData.description}
-        variant={aboutUsData.variant}
-      />
 
-      <ImageCardGrid
-        id="trips"
+      <InfoCardGrid
+        cards={rwandaHighlights}
+        title="Discover Rwanda's Highlights"
+        description="Explore the unique features and experiences that make Rwanda a must-visit destination"
+      />
+      <FeaturedTrips
         title={tripData.title}
         description={tripData.description}
       />
+      <CustomizedTrip />
       <LogoContent {...LogoContentData} />
     </>
   );

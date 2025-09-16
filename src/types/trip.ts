@@ -1,35 +1,49 @@
 import { Booking } from "./Booking";
 
+export type PricingOption = {
+  id: string;
+  name: string;
+  amount: number;
+  description: string;
+};
 
-export interface Trip {
-  id:string
+export type Trip = {
+  id: string;
+  title: string;
+  description?: string;
+  destination: string;
+  departureTime: string;
+  returnTime: string;
+  pricingOptions?: PricingOption[];
+  totalBookedSeats: number;
+  totalSeats: number;
+  currency: string;
+  coverImage: string;
+  priceTitle: string;
+  priceDescription: string;
+  bookings: Booking[];
+  status:
+    | "fully-booked"
+    | "completed"
+    | "canceled"
+    | "ongoing"
+    | "canceled"
+    | "available";
+  onDelete?: (id: string) => void;
+};
+
+export type Row = {
+  id: string;
   title: string;
   description: string;
-  destination: string;
-  departureTime: Date;
-  returnTime: Date;
-  totalSeats: number;
-  totalBookedSeats?: number;
-  pricingOptions: PricingOption[];
-  fromLocation: TripsLocation;
-  toLocation:TripsLocation,
-  coverImage: string;
-  currency: string;
-  tripDescription: string;
-  tripPackages: TripPackageType[];
-  priceTitle:string
-  bookings: Booking[]
-  priceDescription:string
-  status:boolean
+};
 
-}
-
-export interface PricingOption {
+export type InfoCard = {
   id: string;
-  amount: string;
-  name: string;
-  description?: string;
-}
+  title: string;
+  description: string;
+  image: string;
+};
 
 export interface TripPackageType {
   id: number;
@@ -53,7 +67,7 @@ export interface CheckSeatsResponse {
   message: string;
 }
 
-export interface TripsLocation{
+export interface TripsLocation {
   id: string;
   name: string;
   description: string;

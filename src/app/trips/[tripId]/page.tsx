@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Map from "@/components/Map";
 import TripHero from "@/components/Trip/TripHero";
 import IconContent from "@/components/ui/IconContent";
@@ -8,6 +9,11 @@ import Link from "next/link";
 import { FaRunning } from "react-icons/fa";
 import Image from "next/image";
 import TripBookingWrapper from "@/components/Trip/TripBookingWrapper";
+=======
+import GalleryGrid from "@/components/GalleryGrid";
+import TripHero from "@/components/TripHero";
+import { Trip } from "@/types/trip";
+>>>>>>> origin
 
 const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   const response = await fetch(
@@ -114,6 +120,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
 
       <div className="mt-12">
   <Map
@@ -135,6 +142,10 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   />
 </div>
     </section>
+=======
+      <GalleryGrid title="Gallery" />
+    </main>
+>>>>>>> origin
   );
 };
 

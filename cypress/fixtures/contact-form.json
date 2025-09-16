@@ -1,26 +1,26 @@
 [
     {
         "action": "click",
-        "selector": "[data-testId='contact']"
+        "selector": "[data-test-id='contact']"
     },
     {
         "action": "type",
-        "selector": "[data-testId='contact-full-names']",
+        "selector": "[data-test-id='contact-full-names']",
         "value": "test test"
 
     },
     {
         "action": "type",
-        "selector": "[data-testid='contact-email']",
+        "selector": "[data-test-id='contact-email']",
         "value":"test@gmail.com"
     },
     {
         "action": "type",
-        "selector": "[data-testId='contact-message']",
+        "selector": "[data-test-id='contact-message']",
         "value":"Just for testing"
     },
     {
         "action": "click",
-        "selector": "[data-testId='contact-submit']"
+        "selector": "[data-test-id='contact-submit']"
     }
 ]

@@ -1,18 +1,18 @@
 [
     {
       "action": "click",
-      "selector": "[data-testId='home']"
+      "selector": "[data-test-id='home']"
     },
     {
         "action": "click",
-        "selector": "[data-testId='about']"
+        "selector": "[data-test-id='about']"
     },
     {
         "action": "click",
-        "selector": "[data-testId='trips']"
+        "selector": "[data-test-id='trips']"
     },
     {
         "action": "click",
-        "selector": "[data-testId='contact']"
+        "selector": "[data-test-id='contact']"
     }
 ]
