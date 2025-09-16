@@ -6,7 +6,7 @@ import TripsList from "@/components/TripsList";
 
 const TripsPage = () => {
   return (
-    <section className="bg-site min-h-screen">
+    <section className= "content-wrapper min-h-screen">
       <Header
         title={tripDetails.header.title}
         description={tripDetails.header.description}

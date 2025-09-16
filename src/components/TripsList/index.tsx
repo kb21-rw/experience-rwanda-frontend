@@ -7,9 +7,9 @@ const TripsList = async () => {
   const trips = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`);
   const data = await trips.json();
   return (
-    <section className="min-h-screen bg-site">
+    <section className="bg-site border">
       <Trips tripsLength={data.length} />
-      <div className="grid grid-cols-1 lg:grid-cols-9 gap-6 lg:p-16 p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-9 gap-6">
         <div className="hidden lg:block lg:col-span-2">
           <FilterSidebar tripsCount={data.length} />
         </div>
