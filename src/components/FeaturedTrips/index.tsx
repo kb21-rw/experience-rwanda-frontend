@@ -2,6 +2,8 @@ import ImageCard from "@/components/ImageCardGrid/Card";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Trip } from "@/types/trip";
+import Header from "../Header";
+import { HeaderVariant } from "@/enums/Header";
 
 const FeaturedTrips = async ({
   title = "Featured Trips",
@@ -14,14 +16,13 @@ const FeaturedTrips = async ({
   const data = await res.json();
 
   return (
-    <section className="bg-white">
+    <section>
       <div className="content-wrapper py-16 md:py-20">
-        <div className="mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            {title}
-          </h2>
-          <p className="text-base md:text-lg text-black">{description}</p>
-        </div>
+        <Header
+          title={title}
+          description={description}
+          variant={HeaderVariant.SECONDARY}
+        />
 
         <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {data.map((trip: Trip) => (
