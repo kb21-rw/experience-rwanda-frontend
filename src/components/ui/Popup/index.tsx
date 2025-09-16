@@ -5,19 +5,7 @@ import Summary from "./Summary";
 import { ClientData } from "@/types/Popup";
 import { PricingOption } from "@/types/trip";
 
-const Popup = ({
-  tripId,
-  setSelectedTrip,
-  priceTitle,
-  priceDescription,
-  pricingOptions,
-  // new props for summary display
-  tripTitle,
-  destination,
-  departureTime,
-  returnTime,
-  currency,
-}: {
+type popupProps = {
   tripId: string;
   setSelectedTrip: Dispatch<SetStateAction<string | null>>;
   priceTitle: string;
@@ -28,7 +16,20 @@ const Popup = ({
   departureTime: string;
   returnTime: string;
   currency: string;
-}) => {
+}
+
+const Popup = ({
+  tripId,
+  setSelectedTrip,
+  priceTitle,
+  priceDescription,
+  pricingOptions,
+  tripTitle,
+  destination,
+  departureTime,
+  returnTime,
+  currency,
+}:popupProps ) => {
   const [currentStep, setCurrentStep] = useState<
     "userInfo" | "summary" | "payment"
   >(
