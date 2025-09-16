@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-import Map from "@/components/Map";
 import TripHero from "@/components/Trip/TripHero";
 import IconContent from "@/components/ui/IconContent";
 import { activities } from "@/data/activities";
@@ -9,11 +7,6 @@ import Link from "next/link";
 import { FaRunning } from "react-icons/fa";
 import Image from "next/image";
 import TripBookingWrapper from "@/components/Trip/TripBookingWrapper";
-=======
-import GalleryGrid from "@/components/GalleryGrid";
-import TripHero from "@/components/TripHero";
-import { Trip } from "@/types/trip";
->>>>>>> origin
 
 const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   const response = await fetch(
@@ -60,7 +53,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
                 Pricing Options
               </h2>
               <div className="space-y-3 mb-6">
-                {tripDetails.pricingOptions.map((option: PricingOption) => (
+                {tripDetails.pricingOptions?.map((option: PricingOption) => (
                   <div
                     key={option.id}
                     className="grid grid-cols-2 first-letter:items-center justify-between gap-4"
@@ -120,32 +113,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-
-      <div className="mt-12">
-  <Map
-    locations={[
-      {
-        lat: tripDetails.fromLocation.latitude,
-        lng: tripDetails.fromLocation.longitude,
-        name: tripDetails.fromLocation.name,
-      },
-      {
-        lat: tripDetails.toLocation.latitude,
-        lng:tripDetails.toLocation.longitude,
-        name: tripDetails.toLocation.name,
-      },
-    ]}
-    zoom={10}
-    height="400px"
-    width="100%"
-  />
-</div>
     </section>
-=======
-      <GalleryGrid title="Gallery" />
-    </main>
->>>>>>> origin
   );
 };
 
