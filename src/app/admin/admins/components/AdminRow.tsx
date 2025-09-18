@@ -95,7 +95,7 @@ const AdminRow = ({
         <TableCell>{displayId}</TableCell>
         <TableCell className="flex items-center gap-2">
           <Avatar>
-            <AvatarFallback>
+            <AvatarFallback className="text-black">
               {getNameInitials(admin?.name || "Not Available")}
             </AvatarFallback>
           </Avatar>

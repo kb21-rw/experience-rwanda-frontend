@@ -185,7 +185,7 @@ const AdminList = () => {
         </Table>
       </div>
       {paginatedAdmins.length > 0 && (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center text-black">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
