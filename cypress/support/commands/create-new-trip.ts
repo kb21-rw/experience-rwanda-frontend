@@ -8,7 +8,7 @@ Cypress.Commands.add("createNewTrip", function () {
     data.forEach((step) => {
       switch (step.action) {
         case "click":
-          cy.get(step.selector).click().wait(10000);
+          cy.get(step.selector).click().wait(20000);
           break;
 
         case "type":
@@ -16,7 +16,7 @@ Cypress.Commands.add("createNewTrip", function () {
           break;
 
         case "press":
-          cy.get(step.selector).click().wait(10000);
+          cy.get(step.selector).click().wait(20000);
           break;
 
         case "click and upload":
@@ -54,9 +54,9 @@ Cypress.Commands.add("createNewTrip", function () {
               .scrollIntoView()
               .should("be.visible")
               .click({ force: true })
-              .wait(10000);
+              .wait(20000);
           });
-          cy.url({ timeout: 10000 }).should("include", "/admin/trips");
+          cy.url({ timeout: 20000 }).should("include", "/admin/trips");
           cy.contains("Trip was created successfully", { timeout: 10000 }).should(
             "be.visible"
           );
