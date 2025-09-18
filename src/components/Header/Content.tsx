@@ -13,7 +13,7 @@ const headingStyles: Record<HeaderVariant, string> = {
 };
 
 const descriptionStyles: Record<HeaderVariant, string> = {
-  [HeaderVariant.PRIMARY]: "text-center",
+  [HeaderVariant.PRIMARY]: "text-center md:w-2/3 md:mx-auto",
   [HeaderVariant.SECONDARY]: "text-left",
 };
 

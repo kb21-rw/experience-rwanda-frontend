@@ -1,0 +1,1 @@
+export const tripLocation = ["Sothern province", "Nothern province", "Eastern province", "Western province", "Kigali city"];
