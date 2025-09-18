@@ -3,7 +3,7 @@ import { Step } from "../types";
 
 Cypress.Commands.add("createNewTrip", function () {
   cy.fixture("create-new-trip.json").then((data: Step[]) => {
-    cy.visit("http://localhost:3000/login?redirect=/admin");
+    cy.visit("/login?redirect=/admin");
 
     data.forEach((step) => {
       switch (step.action) {
