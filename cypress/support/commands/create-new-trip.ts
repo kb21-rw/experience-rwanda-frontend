@@ -4,48 +4,63 @@ import { Step } from "../types";
 Cypress.Commands.add("createNewTrip", function () {
   cy.fixture("create-new-trip.json").then((data: Step[]) => {
     cy.visit("http://localhost:3000/login?redirect=/admin");
+
     data.forEach((step) => {
       switch (step.action) {
         case "click":
-          return cy.get(step.selector).click().wait(20000);
+          cy.get(step.selector).click().wait(10000);
+          break;
+
         case "type":
-          return cy
-            .get(step.selector)
-            .should("be.visible")
-            .type(step.value)
-            .wait(20000);
+          cy.get(step.selector).should("be.visible").clear().type(step.value);
+          break;
+
         case "press":
-          return cy.get(step.selector).click().wait(20000);
+          cy.get(step.selector).click().wait(10000);
+          break;
+
         case "click and upload":
-          return cy
-            .get(step.selector)
+          cy.get(step.selector)
             .should("exist")
             .attachFile(step.path, { force: true });
-        case "pick-date-1":
-          const now = new Date();
-          const isoString = now.toISOString().slice(0, 16);
-          return cy
-            .get(step.selector)
-            .invoke("val", isoString)
-            .trigger("input")
-            .trigger("change");
-        case "pick-date-2":
-          const returnTime = new Date();
-          returnTime.setDate(returnTime.getDate() + 1);
+          break;
 
-          return cy
-            .get(step.selector)
-            .invoke("val", returnTime.toISOString().slice(0, 16))
-            .trigger("input")
-            .trigger("change");
+          case "pick-date-1":
+            const departureDate = new Date();
+            departureDate.setDate(departureDate.getDate() + 1); 
+            const depISO = departureDate.toISOString().slice(0, 16);
+            cy.get(step.selector)
+              .should("be.visible")
+              .clear() 
+              .type(depISO) 
+              .trigger("change"); 
+            break;
+          
+          case "pick-date-2":
+            const returnDate = new Date();
+            returnDate.setDate(returnDate.getDate() + 3); 
+            const retISO = returnDate.toISOString().slice(0, 16);
+            cy.get(step.selector)
+              .should("be.visible")
+              .clear()
+              .type(retISO)
+              .trigger("change");
+            break;
 
         case "submit":
-          return cy
-            .get(step.selector)
-            .scrollIntoView()
-            .should("be.visible")
-            .click()
-            .wait(1000);
+          cy.get(step.selector).within(() => {
+            cy.get("button")
+              .contains("Create New Trip")
+              .scrollIntoView()
+              .should("be.visible")
+              .click({ force: true })
+              .wait(10000);
+          });
+          cy.url({ timeout: 10000 }).should("include", "/admin/trips");
+          cy.contains("Trip was created successfully", { timeout: 10000 }).should(
+            "be.visible"
+          );
+          break;
       }
     });
   });

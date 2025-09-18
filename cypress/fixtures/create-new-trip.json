@@ -24,22 +24,41 @@
   {
     "action": "type",
     "selector": "[data-test-id='title']",
-    "value": "trip 1"
+    "value": "Hike with vibes at Nyungwe volcano"
   },
   {
     "action": "type",
     "selector": "[data-test-id='trip-description']",
-    "value": "for testing trip1 description"
+    "value": "Enjoy a thrilling hike with amazing views of the volcano."
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='pricing-button']"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='pricing-option-name']",
+    "value": "Standard"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='pricing-amount']",
+    "value": "5055"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='pricing-short-description']",
+    "value": "Just for testing"
   },
   {
     "action": "type",
     "selector": "[data-test-id='destination']",
-    "value": "MUSANZE"
+    "value": "Musanze district"
   },
   {
     "action": "type",
     "selector": "[data-test-id='total-seats']",
-    "value": "3"
+    "value": "60"
   },
   {
     "action": "click and upload",
@@ -58,10 +77,9 @@
   {
     "action": "pick-date-2",
     "selector": "[data-test-id='return-time']"
-   
   },
   {
     "action": "submit",
-    "selector": "[data-test-id='submit-new-trip']"
+    "selector": "[data-test-id='create-new-trip-form']"
   }
 ]

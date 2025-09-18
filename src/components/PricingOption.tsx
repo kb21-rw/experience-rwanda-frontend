@@ -44,6 +44,7 @@ const PricingOption = ({
       <div className="flex items-center justify-between mb-4">
         <Button
           type="button"
+          data-test-id="pricing-button"
           onClick={() =>
             append({
               id: "",
@@ -91,6 +92,7 @@ const PricingOption = ({
                       {...register(`pricingOptions.${index}.name`)}
                       className="w-full p-2 border border-black rounded-md"
                       placeholder="Option name"
+                      data-test-id="pricing-option-name"
                     />
                     {errors?.pricingOptions?.[index]?.name && (
                       <p className="text-red-500 text-sm mt-1">
@@ -113,6 +115,7 @@ const PricingOption = ({
                       {...register(`pricingOptions.${index}.amount`)}
                       className="w-full p-2 border border-black rounded-md"
                       placeholder="Amount in RWF"
+                      data-test-id="pricing-amount"
                     />
                   </div>
                 </div>
@@ -128,6 +131,7 @@ const PricingOption = ({
                     {...register(`pricingOptions.${index}.description`)}
                     className="w-full p-2 border border-black rounded-md"
                     placeholder="Short description"
+                    data-test-id="pricing-short-description"
                   />
                 </div>
               </div>

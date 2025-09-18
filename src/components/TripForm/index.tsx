@@ -54,7 +54,7 @@ const TripForm = ({
         <FormProvider {...form}>
           <form
             onSubmit={form.handleSubmit((data) => onSubmit(data, form.reset))}
-          >
+          data-test-id="create-new-trip-form">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <FormInput
                 form={form}
