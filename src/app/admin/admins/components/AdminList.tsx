@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
-import AdminRow from "./components/AdminRow";
+import AdminRow from "./AdminRow";
 import Search from "@/components/Search";
 
 import { Admin } from "@/types/Admin";
@@ -25,7 +25,7 @@ import { fetcher } from "@/lib/fetcher";
 import { hasPermission } from "@/auth/rbac";
 import { ExportPopover } from "@/components/ui/ExportPopover";
 import { ADMIN_HEADERS } from "@/utils/constants";
-import NotFound from "../trips/Card/NotFound";
+import NotFound from "../../trips/Card/NotFound";
 
 const AdminList = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -185,7 +185,7 @@ const AdminList = () => {
         </Table>
       </div>
       {paginatedAdmins.length > 0 && (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center text-black">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

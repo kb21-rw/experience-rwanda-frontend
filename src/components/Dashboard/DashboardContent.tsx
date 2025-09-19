@@ -16,7 +16,7 @@ const DashboardContent = ({
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <div className="text-lg text-gray-600">Loading dashboard data...</div>
+        <div className="text-lg text-white">Loading dashboard data...</div>
       </div>
     );
   }
@@ -32,7 +32,7 @@ const DashboardContent = ({
   if (!data) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <div className="text-lg text-gray-600">No dashboard data available</div>
+        <div className="text-lg text-white">No dashboard data available</div>
       </div>
     );
   }
@@ -41,8 +41,8 @@ const DashboardContent = ({
     {
       title: "Total Trips",
       total: data.trips.total,
-      icon: <Book className="text-gray-600" size={26} />,
-      href: "/admin/trips", 
+      icon: <Book className="text-white" size={26} />,
+      href: "/admin/trips",
       statuses: [
         {
           count: data.trips.upcoming,
@@ -67,8 +67,8 @@ const DashboardContent = ({
     {
       title: "Total Users",
       total: data.admins.length,
-      icon: <Users className="text-gray-600" size={26} />,
-      href: "/admin/admins", 
+      icon: <Users className="text-white" size={26} />,
+      href: "/admin/admins",
       statuses: [
         {
           count: data.admins.filter((admin) => admin.role === "SUPER_ADMIN")
@@ -91,10 +91,10 @@ const DashboardContent = ({
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-white mb-2">
           Welcome to Experience Rwanda
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-white">
           Manage trips, bookings, and users seamlessly from one central
           dashboard. Stay organized and keep everything running smoothly.
         </p>
@@ -108,7 +108,7 @@ const DashboardContent = ({
             total={card.total}
             icon={card.icon}
             statuses={card.statuses}
-            href={card.href} 
+            href={card.href}
           />
         ))}
       </div>
