@@ -7,7 +7,6 @@ import {
   Separator,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -56,19 +55,28 @@ export function AppSidebar() {
       )}
 
       <Sidebar collapsible={isMobile ? "offcanvas" : "icon"} className="z-20">
-        <SidebarContent className="bg-black text-white">
-          <SidebarGroup className="gap-6">
+        <SidebarContent className="bg-black overflow-hidden text-white">
+          <SidebarGroup className="gap-6 ">
             <div
               className={`mt-8 flex ${
-                state === "expanded" ? "flex-row items-start" : "flex-col"
-              } gap-2`}
+                state === "expanded"
+                  ? "flex-row items-start  justify-between"
+                  : "flex-col gap-2"
+              }`}
             >
               {state === "expanded" && (
-                <SidebarGroupLabel className="text-white max-w-[80%] p-0">
-                  Experience Rwanda Admin Panel
-                </SidebarGroupLabel>
+                <div>
+                  <h2 className="text-lg font-semibold text-white">
+                    Experience Rwanda
+                  </h2>
+                  <p className="text-sm text-white/70">Admin Panel</p>
+                </div>
               )}
-              <Button onClick={toggleSidebar}>
+              <Button
+                className="w-fit p-1"
+                variant="ghost"
+                onClick={toggleSidebar}
+              >
                 <LuPanelLeftClose />
               </Button>
             </div>
@@ -79,7 +87,10 @@ export function AppSidebar() {
               <Separator className="mb-2.5" />
               <SidebarMenu className="gap-3 pt-4">
                 {filteredItems.map((item) => (
-                  <SidebarMenuItem key={item.title} data-test-id={item.data_test_id}>
+                  <SidebarMenuItem
+                    key={item.title}
+                    data-test-id={item.data_test_id}
+                  >
                     <SidebarMenuButton
                       className={
                         currentPath === item.url
@@ -109,7 +120,9 @@ export function AppSidebar() {
               className="bg-white text-black text-base font-semibold rounded-xl h-12"
             >
               <TbLogout2 />
-              {state === "expanded" ? <span data-test-id="admin-log-out">Log out</span> : null}
+              {state === "expanded" ? (
+                <span data-test-id="admin-log-out">Log out</span>
+              ) : null}
             </Button>
           }
         </SidebarFooter>
