@@ -20,17 +20,20 @@ type FormData = Omit<
 
 const FormInput = ({
   placeholder,
+  data_test_id,
   name,
   label,
   type,
   minDate,
   form,
   icon,
+  
 }: {
   form: UseFormReturn<any>;
   name: Path<FormData>;
   label: string;
   placeholder?: string;
+  data_test_id?: string;
   type: "text" | "textarea" | "number" | "datetime-local";
   icon?: React.ReactNode;
   minDate?: string;
@@ -50,6 +53,7 @@ const FormInput = ({
               type={type}
               minDate={minDate}
               placeholder={placeholder}
+              data_test_id={data_test_id}
               field={field}
             />
           </FormControl>
@@ -64,17 +68,20 @@ const InputComponent = ({
   type,
   field,
   placeholder,
+  data_test_id,
   minDate,
 }: {
   type: "text" | "textarea" | "number" | "time" | "datetime-local";
   field: ControllerRenderProps<any, Path<any>>;
   placeholder?: string;
+  data_test_id?: string;
   minDate?: string;
 }) => {
   if (type === "textarea")
     return (
       <Textarea
         placeholder={placeholder}
+        data-test-id={data_test_id}
         rows={4}
         className="w-full px-3 py-2 border border-black rounded-md"
         {...field}
@@ -85,6 +92,7 @@ const InputComponent = ({
       <Input
         id={field.name}
         type="datetime-local"
+        data-test-id={data_test_id}
         value={field.value}
         onChange={(e) => field.onChange(e.target.value)}
         min={minDate}
@@ -95,6 +103,7 @@ const InputComponent = ({
     <Input
       type={type}
       placeholder={placeholder}
+      data-test-id={data_test_id}
       className="w-full px-3 border border-black rounded-md"
       {...field}
     />

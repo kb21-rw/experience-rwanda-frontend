@@ -18,6 +18,7 @@ const TripsPage = () => {
           size="lg"
           onClick={() => router.push("/admin/new-trip")}
           className="shadow-elegant"
+          data-test-id="create-new-trip"
         >
           <Plus className="w-5 h-5" />
           Create New Trip

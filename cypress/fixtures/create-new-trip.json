@@ -1,0 +1,85 @@
+[
+  {
+    "action": "type",
+    "selector": "[data-test-id='login-email']",
+    "value": "rithakankindi@gmail.com"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='login-password']",
+    "value": "1234moxx"
+  },
+  {
+    "action": "press",
+    "selector": "[data-test-id='login-button']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='trips-item']"
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='create-new-trip']"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='title']",
+    "value": "Hike with vibes at Nyungwe volcano"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='trip-description']",
+    "value": "Enjoy a thrilling hike with amazing views of the volcano."
+  },
+  {
+    "action": "click",
+    "selector": "[data-test-id='pricing-button']"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='pricing-option-name']",
+    "value": "Standard"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='pricing-amount']",
+    "value": "5055"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='pricing-short-description']",
+    "value": "Just for testing"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='destination']",
+    "value": "Musanze district"
+  },
+  {
+    "action": "type",
+    "selector": "[data-test-id='total-seats']",
+    "value": "60"
+  },
+  {
+    "action": "click and upload",
+    "selector": "[data-test-id='cover-image']",
+    "path": "files/cover.png"
+  },
+  {
+    "action": "click and upload",
+    "selector": "[data-test-id='gallery-image']",
+    "path": "files/gallery.jpg"
+  },
+  {
+    "action": "pick-date-1",
+    "selector": "[data-test-id='departure-time']"
+  },
+  {
+    "action": "pick-date-2",
+    "selector": "[data-test-id='return-time']"
+  },
+  {
+    "action": "submit",
+    "selector": "[data-test-id='create-new-trip-form']"
+  }
+]
