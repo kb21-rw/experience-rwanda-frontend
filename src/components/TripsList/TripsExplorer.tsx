@@ -11,22 +11,22 @@ import Trips from "./Trips";
 import {Button} from "@/components/ui/Button";
 
 interface AllTripsListProps {
-  defaultTrips: Trip[];
+  defaultTrips?: Trip[];
 }
 
-const AllTripsList = ({ defaultTrips }: AllTripsListProps) => {
-  const [trips] = useState<Trip[]>(defaultTrips);
+const AllTripsList = ({ defaultTrips = [] }: AllTripsListProps) => {
+  const baseTrips: Trip[] = Array.isArray(defaultTrips) ? defaultTrips : [];
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTrips = useMemo(() => {
-    if (!searchQuery.trim()) return trips;
+    if (!searchQuery.trim()) return baseTrips;
     const tokens = searchQuery
       .toLowerCase()
       .trim()
       .split(/\s+/)
       .filter(Boolean);
 
-    return trips.filter((trip) => {
+    return baseTrips.filter((trip) => {
       const title = trip.title?.toLowerCase() || "";
       const destination = trip.destination?.toLowerCase() || "";
 
@@ -36,7 +36,7 @@ const AllTripsList = ({ defaultTrips }: AllTripsListProps) => {
 
       return matchesTitle || matchesDestination;
     });
-  }, [trips, searchQuery]);
+  }, [baseTrips, searchQuery]);
 
   const handleSearch = (query: string) => setSearchQuery(query);
   const handleClearSearch = () => setSearchQuery("");
