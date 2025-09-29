@@ -2,9 +2,7 @@
 import React from "react";
 import { Label } from "@/components/ui/Label";
 import { Input } from "@/components/ui/Input";
-import type { PricingOption } from "@/types/trip";
-import { FieldErrors } from "react-hook-form";
-import { Trip } from "@/types/trip";
+import type { PricingOption, Trip } from "@/types/trip";
 import { Card, CardContent } from "./ui/Card";
 import { Button } from "./ui/Button";
 import { Plus, X } from "lucide-react";
@@ -15,22 +13,31 @@ import {
 } from "react-icons/md";
 import { GiPriceTag } from "react-icons/gi";
 import { Textarea } from "./ui/textarea";
+import {
+  FieldArrayWithId,
+  FieldErrors,
+  UseFieldArrayAppend,
+  UseFormRegister,
+} from "react-hook-form";
+import { tripSchema } from "@/utils/schemas/tripSchema";
+import { z } from "zod";
 
+type FormData = z.infer<typeof tripSchema>;
 interface PricingOptionProps {
-  pricingOptions: PricingOption[];
-  register: any;
+  pricingOptions: FieldArrayWithId<FormData>[];
+  register: UseFormRegister<any>;
   remove: (index: number) => void;
-  append: (field: PricingOption) => void;
+  append: UseFieldArrayAppend<FormData>;
   errors: FieldErrors<Trip>;
 }
 
-const PricingOption: React.FC<PricingOptionProps> = ({
+const PricingOption = ({
   pricingOptions,
   register,
   remove,
   append,
   errors,
-}) => {
+}: PricingOptionProps) => {
   return (
     <div className="">
       <h3 className="text-lg font-semibold text-black mb-4">Pricing Options</h3>
@@ -41,7 +48,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
             append({
               id: "",
               name: "",
-              amount: "0",
+              amount: "",
               description: "",
             })
           }
@@ -52,7 +59,7 @@ const PricingOption: React.FC<PricingOptionProps> = ({
         </Button>
       </div>
       <div className="space-y-4 max-h-screen overflow-y-auto">
-        {pricingOptions.map((field, index) => (
+        {pricingOptions?.map((field, index) => (
           <Card key={index} className="border border-muted/30">
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-4">

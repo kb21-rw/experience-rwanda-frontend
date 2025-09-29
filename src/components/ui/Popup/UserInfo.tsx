@@ -3,7 +3,6 @@ import { Input } from "../Input";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { ClientData } from "@/types/Popup";
-import { PricingOption } from "@/types/ImageCard";
 import { z } from "zod";
 import { UserInfoSchema } from "@/utils/schemas/bookingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +24,7 @@ import {
 } from "@/components/ui/Select";
 import { Counter } from "@/components/Counter";
 import { Loader2 } from "lucide-react";
-import { CheckSeatsResponse, TripStatus } from "@/types/trip";
+import { CheckSeatsResponse, PricingOption, TripStatus } from "@/types/trip";
 
 const UserInfoPopup = ({
   setCurrentStep,
@@ -201,7 +200,7 @@ const UserInfoPopup = ({
           />
         </div>
 
-        <div className="mt-5 flex gap-5">
+        <div className="mt-5 flex flex-col md:flex-row gap-5">
           <Button
             type="submit"
             onClick={onCancel}

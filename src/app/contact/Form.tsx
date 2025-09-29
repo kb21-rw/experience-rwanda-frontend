@@ -50,7 +50,7 @@ const ContactForm = () => {
         <Input
           type="text"
           placeholder="Your full-names"
-          data-testId="contact-full-names"
+          data-test-id="contact-full-names"
           {...register("name")}
         />
         {errors.name && (
@@ -86,7 +86,7 @@ const ContactForm = () => {
         <Input
           type="text"
           placeholder="Your subject"
-          data-testId="contact-email"
+          data-test-id="contact-email"
           {...register("subject")}
         />
         {errors.subject && (
@@ -97,7 +97,7 @@ const ContactForm = () => {
         <textarea
           placeholder="Your Message"
           className="border border-gray-125 bg-transparent text-sm p-3 h-30 w-full"
-          data-testId="contact-message"
+          data-test-id="contact-message"
           {...register("message")}
         />
         {errors.message && (
@@ -108,7 +108,7 @@ const ContactForm = () => {
       <Button
         type="submit"
         variant="primary"
-        data-testId="contact-submit"
+        data-test-id="contact-submit"
         disabled={isSubmitting}
         className="text-xs"
       >

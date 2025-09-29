@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <AuthProvider>
         <Toastify />
         <AppSidebar />
-        <main className="flex-1 w-full">{children}</main>
+        <main className="flex-1 w-full text-white">{children}</main>
       </AuthProvider>
     </SidebarProvider>
   );

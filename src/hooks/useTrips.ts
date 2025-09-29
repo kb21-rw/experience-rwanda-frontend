@@ -1,4 +1,4 @@
-import { Trip } from "@/types/ImageCard";
+import { Trip } from "@/types/trip";
 import useSWR from "swr";
 
 const fetcher = (url: string) =>
