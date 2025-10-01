@@ -1,0 +1,1 @@
+export const activities= ["Hicking", "Cycling", "Running", "Swimming", "Walking", "Biking"]

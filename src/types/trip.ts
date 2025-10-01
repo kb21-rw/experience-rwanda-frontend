@@ -66,3 +66,11 @@ export interface CheckSeatsResponse {
   success: boolean;
   message: string;
 }
+
+export interface TripsLocation {
+  id: string;
+  name: string;
+  description: string;
+  latitude: number;
+  longitude: number;
+}
