@@ -1,0 +1,1 @@
+export const doNotForget = ["Refillable water bottle", "Rain coat", "Rain shoes"];

@@ -1,5 +1,5 @@
 "use client";
-import NewTripForm from "../../../components/TripForm";
+import NewTripForm from "../../../components/Trip/TripForm";
 
 const CreateTrip = () => {
   return (

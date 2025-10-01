@@ -1,4 +1,4 @@
-import NewTripForm from "@/components/TripForm";
+import NewTripForm from "@/components/Trip/TripForm";
 import { PricingOption } from "@/types/trip";
 import { tripSchema } from "@/utils/schemas/tripSchema";
 import { z } from "zod";
