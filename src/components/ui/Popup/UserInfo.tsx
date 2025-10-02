@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Input } from "../Input";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { ClientData } from "@/types/Popup";
+import { PricingOption, Trip } from "@/types/trip";
 import { z } from "zod";
 import { UserInfoSchema } from "@/utils/schemas/bookingSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,7 +25,7 @@ import {
 } from "@/components/ui/Select";
 import { Counter } from "@/components/Counter";
 import { Loader2 } from "lucide-react";
-import { CheckSeatsResponse, PricingOption, TripStatus } from "@/types/trip";
+import { CheckSeatsResponse, TripStatus } from "@/types/trip";
 
 const UserInfoPopup = ({
   setCurrentStep,
@@ -37,7 +38,7 @@ const UserInfoPopup = ({
 }: {
   setCurrentStep: Dispatch<SetStateAction<"userInfo" | "payment">>;
   setClientData: Dispatch<SetStateAction<ClientData | undefined>>;
-  clientData: ClientData | undefined;
+  clientData?: ClientData;
   priceTitle: string;
   priceDescription: string;
   pricingOptions: PricingOption[];
@@ -54,13 +55,36 @@ const UserInfoPopup = ({
       bookedSeats: 1,
     },
   });
+
   const [checkingAvailability, setCheckingAvailability] = useState(false);
+  const [availableSeats, setAvailableSeats] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchTripSeats = async () => {
+      try {
+        const trips = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`);
+        const currentTrip = trips.data.find((trip: Trip) => trip.id === tripId);
+
+        if (currentTrip) {
+          const seatsLeft = currentTrip.totalSeats - currentTrip.totalBookedSeats;
+          setAvailableSeats(seatsLeft);
+        }
+      } catch (error) {
+        console.error("Error fetching trip seats", error);
+        setAvailableSeats(1); 
+      }
+    };
+
+    fetchTripSeats();
+  }, [tripId]);
+
   const onSubmit: SubmitHandler<ClientData> = async (data) => {
     setCheckingAvailability(true);
     try {
       const checkSeats = await axios.get<CheckSeatsResponse>(
         `${process.env.NEXT_PUBLIC_API_URL}/trips/${tripId}/check-availability?seats=${data.bookedSeats}`
       );
+
       if (
         !checkSeats.data.success &&
         checkSeats.data.status === TripStatus.NO_ENOUGH_SEATS
@@ -69,16 +93,15 @@ const UserInfoPopup = ({
           type: "manual",
           message: checkSeats.data.message,
         });
-
         return;
       } else if (!checkSeats.data.success) {
         form.setError("root", {
           type: "manual",
           message: checkSeats.data.message,
         });
-
         return;
       }
+
       setClientData(data);
       setCurrentStep("payment");
     } catch (error: unknown) {
@@ -93,23 +116,27 @@ const UserInfoPopup = ({
       setCheckingAvailability(false);
     }
   };
+
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <h2 className="text-3xl font-bold text-center mb-10">
           User Information
         </h2>
+
         {form.formState.errors.root && (
           <div className="mb-4 rounded-lg border border-red-500 bg-red-100 px-4 py-2 text-sm text-red-700 text-center w-auto">
             {form.formState.errors.root.message}
           </div>
         )}
+
         {checkingAvailability && (
           <div className="mb-4 flex items-center justify-center gap-2 text-blue-600 text-sm">
             <Loader2 className="animate-spin h-4 w-4" />
             Checking trip availability...
           </div>
         )}
+
         <div className="space-y-4 font-inter">
           <FormField
             control={form.control}
@@ -124,6 +151,7 @@ const UserInfoPopup = ({
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="email"
@@ -137,6 +165,7 @@ const UserInfoPopup = ({
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="phoneNumber"
@@ -150,6 +179,7 @@ const UserInfoPopup = ({
               </FormItem>
             )}
           />
+
           {pricingOptions.length > 1 && (
             <FormField
               control={form.control}
@@ -180,6 +210,7 @@ const UserInfoPopup = ({
               )}
             />
           )}
+
           <FormField
             control={form.control}
             name="bookedSeats"
@@ -191,9 +222,14 @@ const UserInfoPopup = ({
                     value={field.value}
                     onChange={field.onChange}
                     min={1}
-                    max={10}
+                    max={availableSeats ?? 1}
                   />
                 </FormControl>
+                {availableSeats !== null && (
+                  <FormDescription>
+                    {availableSeats} seats available
+                  </FormDescription>
+                )}
                 <FormMessage />
               </FormItem>
             )}
@@ -202,7 +238,7 @@ const UserInfoPopup = ({
 
         <div className="mt-5 flex flex-col md:flex-row gap-5">
           <Button
-            type="submit"
+            type="button"
             onClick={onCancel}
             variant="secondary"
             className="w-full"
