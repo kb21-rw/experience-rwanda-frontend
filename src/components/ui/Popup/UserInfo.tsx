@@ -59,7 +59,6 @@ const UserInfoPopup = ({
   const [checkingAvailability, setCheckingAvailability] = useState(false);
   const [availableSeats, setAvailableSeats] = useState<number | null>(null);
 
-  // ✅ Fetch available seats when component mounts
   useEffect(() => {
     const fetchTripSeats = async () => {
       try {
@@ -72,7 +71,7 @@ const UserInfoPopup = ({
         }
       } catch (error) {
         console.error("Error fetching trip seats", error);
-        setAvailableSeats(1); // fallback
+        setAvailableSeats(1); 
       }
     };
 
@@ -223,7 +222,7 @@ const UserInfoPopup = ({
                     value={field.value}
                     onChange={field.onChange}
                     min={1}
-                    max={availableSeats ?? 1} // ✅ dynamic max
+                    max={availableSeats ?? 1}
                   />
                 </FormControl>
                 {availableSeats !== null && (

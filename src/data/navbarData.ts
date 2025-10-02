@@ -43,11 +43,5 @@ export const navbarData: NavbarData = {
       sectionId: "contact",
       label: "Contact us",
     },
-    {
-      href:"/faqs",
-      data_test_id: "faqs",
-      sectionId: "faqs",
-      label: "FAQs",
-    }
   ],
 };
