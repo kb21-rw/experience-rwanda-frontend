@@ -11,7 +11,9 @@ interface FooterProps {
 const FooterLinks = ({ title, links }: FooterProps) => {
   return (
     <div>
-      <h3 className="text-lg font-semibold mb-4">{title}</h3>
+      <h3 className="text-lg text-site-secondary font-semibold mb-4">
+        {title}
+      </h3>
       <div className="navigation flex flex-col gap-3 items-start">
         {links.map((link, index) => (
           <Link
