@@ -1,12 +1,13 @@
 import TripHero from "@/components/Trip/TripHero";
 import IconContent from "@/components/ui/IconContent";
 import { activities } from "@/data/activities";
-import { PricingOption, Trip } from "@/types/ImageCard";
+import { Trip } from "@/types/trip";
 import Image from "next/image";
 import { FaRunning } from "react-icons/fa";
 import TripBookingWrapper from "@/components/Trip/TripBookingWrapper";
 import Map from "@/components/Map";
 import { doNotForget } from "@/data/doNotForget";
+import PricingOption from "@/components/PricingOption";
 
 const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   const response = await fetch(
@@ -21,7 +22,6 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
   }
 
   const tripDetails: Trip = await response.json();
-  console.log("_____________________", tripDetails);
 
   return (
     <section className="min-h-screen bg-site text-gray-125 pt-8 md:pt-12 lg:pt-16">
@@ -73,7 +73,7 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
               Pricing Options
             </h2>
             <div className="space-y-3 mb-6">
-              {tripDetails.pricingOptions.map((option: PricingOption) => (
+              {tripDetails.pricingOptions?.map((option: PricingOption) => (
                 <div
                   key={option.id}
                   className="flex items-center justify-start gap-8"
@@ -95,11 +95,13 @@ const TripDetailsPage = async ({ params }: { params: { tripId: string } }) => {
       </div>
 
       <Map
-        location={{
-          lat: -1.9441,
-          lng: 30.0619,
-          name: "Kigali, Rwanda",
-        }}
+        locations={[
+          {
+            lat: -1.9441,
+            lng: 30.0619,
+            name: "Kigali, Rwanda",
+          },
+        ]}
         zoom={12}
         height="400px"
         width="100%"

@@ -32,6 +32,7 @@ const FeaturedTrips = async ({
               coverImage={trip.coverImage}
               pricingOptions={trip.pricingOptions || []}
               departureTime={trip.departureTime}
+              returnTime={trip?.returnTime}
               id={trip.id}
               totalSeats={trip.totalSeats}
               totalBookedSeats={trip.totalBookedSeats}

@@ -1,0 +1,33 @@
+{
+  "default_branch": "dev",
+  "branches": [
+    "dev",
+    "ft/changing-text-color-on-footer",
+    "ft/e2e-create-new-trip",
+    "ft/restore-dashboard",
+    "ft/search-trips",
+    "ft/trip-details",
+    "fx/checkout-card",
+    "origin"
+  ],
+  "parent": {
+    "dev": null,
+    "ft/changing-text-color-on-footer": "dev",
+    "ft/e2e-create-new-trip": "dev",
+    "ft/restore-dashboard": "dev",
+    "ft/search-trips": "dev",
+    "ft/trip-details": "dev",
+    "fx/checkout-card": "dev",
+    "origin": "dev"
+  },
+  "order": [
+    "dev",
+    "ft/changing-text-color-on-footer",
+    "ft/e2e-create-new-trip",
+    "ft/restore-dashboard",
+    "ft/search-trips",
+    "ft/trip-details",
+    "fx/checkout-card",
+    "origin"
+  ]
+}
