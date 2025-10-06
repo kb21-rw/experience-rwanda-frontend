@@ -13,6 +13,7 @@ type ImageCardProps = {
   coverImage: string;
   pricingOptions: PricingOption[];
   departureTime: string;
+  returnTime: string;
   id: string;
   totalSeats: number;
   totalBookedSeats: number;
@@ -25,14 +26,20 @@ const ImageCard = (tripData: ImageCardProps): ReactElement => {
     title: trip,
     coverImage: url,
     pricingOptions,
-    departureTime: date,
+    departureTime,
+    returnTime,
     id: tripId,
     totalSeats,
     totalBookedSeats,
     currency,
     destination,
   } = tripData;
-  const details = createTripDetails(destination, date, totalSeats);
+  const details = createTripDetails(
+    destination,
+    departureTime,
+    returnTime,
+    totalSeats
+  );
 
   const priceAmount =
     Array.isArray(pricingOptions) && pricingOptions.length > 0

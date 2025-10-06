@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import BookingPopup from "@/components/ui/Popup";
-import { Trip } from "@/types/ImageCard";
+import { Trip } from "@/types/trip";
 import { useState } from "react";
 
 interface TripBookingWrapperProps {
@@ -14,13 +14,10 @@ const TripBookingWrapper = ({ tripDetails }: TripBookingWrapperProps) => {
 
   return (
     <>
-      <Button
-        variant="default"
-        onClick={() => setSelectedTrip(tripDetails.id)}
-      >
+      <Button variant="default" onClick={() => setSelectedTrip(tripDetails.id)}>
         Book Now
       </Button>
-      
+
       {selectedTrip && (
         <BookingPopup
           tripId={selectedTrip}

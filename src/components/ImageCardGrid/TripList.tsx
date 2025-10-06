@@ -86,6 +86,7 @@ const TripList = ({ trips }: { trips: Trip[] }) => {
                 coverImage={data.coverImage}
                 pricingOptions={data.pricingOptions || []}
                 departureTime={data.departureTime}
+                returnTime={data.returnTime}
                 id={data.id}
                 totalSeats={data.totalSeats}
                 totalBookedSeats={data.totalBookedSeats}
@@ -116,6 +117,7 @@ const TripList = ({ trips }: { trips: Trip[] }) => {
                       coverImage={data.coverImage}
                       pricingOptions={data.pricingOptions || []}
                       departureTime={data.departureTime}
+                      returnTime={data.returnTime}
                       id={data.id}
                       totalSeats={data.totalSeats}
                       totalBookedSeats={data.totalBookedSeats}
