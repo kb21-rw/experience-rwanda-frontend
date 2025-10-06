@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Trip } from "@/types/ImageCard";
+import { Trip } from "@/types/trip";
 import IconContent from "../../ui/IconContent";
 // import Link from "next/link";
 import BookingPopup from "../../ui/Popup";
@@ -27,7 +27,9 @@ const TripHeroCard = ({ tripDetails }: Props) => {
           <span className="mr-1 font-semibold">←</span>Back
         </Link> */}
         <div className="flex flex-col gap-2 justify-start items-start text-gray-200">
-          <h1 className="text-center text-3xl md:text-4xl font-bold">{tripDetails.title}</h1>
+          <h1 className="text-center text-3xl md:text-4xl font-bold">
+            {tripDetails.title}
+          </h1>
           <p>{tripDetails.description}</p>
         </div>
       </div>
