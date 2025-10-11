@@ -35,7 +35,7 @@ const UserInfoPopup = ({
   onCancel,
   tripId,
 }: {
-  setCurrentStep: Dispatch<SetStateAction<"userInfo" | "payment">>;
+  setCurrentStep: Dispatch<SetStateAction<"userInfo" | "summary" | "payment">>;
   setClientData: Dispatch<SetStateAction<ClientData | undefined>>;
   clientData: ClientData | undefined;
   priceTitle: string;
@@ -80,7 +80,7 @@ const UserInfoPopup = ({
         return;
       }
       setClientData(data);
-      setCurrentStep("payment");
+      setCurrentStep("summary");
     } catch (error: unknown) {
       form.setError("root", {
         type: "manual",

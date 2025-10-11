@@ -1,8 +1,22 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import UserInfo from "./UserInfo";
 import PaymentPopup from "./Payment";
+import Summary from "./Summary";
 import { ClientData } from "@/types/Popup";
 import { PricingOption } from "@/types/trip";
+
+type popupProps = {
+  tripId: string;
+  setSelectedTrip: Dispatch<SetStateAction<string | null>>;
+  priceTitle: string;
+  priceDescription: string;
+  pricingOptions: PricingOption[];
+  tripTitle: string;
+  destination: string;
+  departureTime: string;
+  returnTime: string;
+  currency: string;
+}
 
 const Popup = ({
   tripId,
@@ -10,14 +24,15 @@ const Popup = ({
   priceTitle,
   priceDescription,
   pricingOptions,
-}: {
-  tripId: string;
-  setSelectedTrip: Dispatch<SetStateAction<string | null>>;
-  priceTitle: string;
-  priceDescription: string;
-  pricingOptions: PricingOption[];
-}) => {
-  const [currentStep, setCurrentStep] = useState<"userInfo" | "payment">(
+  tripTitle,
+  destination,
+  departureTime,
+  returnTime,
+  currency,
+}:popupProps ) => {
+  const [currentStep, setCurrentStep] = useState<
+    "userInfo" | "summary" | "payment"
+  >(
     "userInfo"
   );
   const [clientData, setClientData] = useState<ClientData | undefined>();
@@ -38,6 +53,17 @@ const Popup = ({
               pricingOptions={pricingOptions}
               onCancel={() => setSelectedTrip(null)}
               tripId={tripId}
+            />
+          ) : currentStep === "summary" ? (
+            <Summary
+              setCurrentStep={setCurrentStep}
+              clientData={clientData}
+              pricingOptions={pricingOptions}
+              tripTitle={tripTitle}
+              destination={destination}
+              departureTime={departureTime}
+              returnTime={returnTime}
+              currency={currency}
             />
           ) : (
             <PaymentPopup
