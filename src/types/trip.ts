@@ -14,7 +14,7 @@ export type Trip = {
   destination: string;
   departureTime: string;
   returnTime: string;
-  pricingOptions?: PricingOption[];
+  pricingOptions: PricingOption[];
   totalBookedSeats: number;
   totalSeats: number;
   currency: string;
