@@ -1,41 +1,28 @@
-"use client";
-
-import { useState } from "react";
 import Header from "@/components/Header";
 import { tripDetails } from "@/data/tripDetails";
 import { HeaderVariant } from "@/enums/Header";
+import TripsExplorer from "@/components/TripsList/TripsExplorer";
+import { Trip } from "@/types/trip";
 import TripsList from "@/components/TripsList";
-import TripLocationBadge from "@/components/ui/LocationBagde";
-import { tripLocation } from "@/data/location";
 
-const TripsPage = () => {
-  const [activeLocation, setActiveLocation] = useState<string>(tripLocation[0]);
-
-  const handleBadgeClick = (location: string) => {
-    setActiveLocation(location);
-  };
-
+const TripsPage = async () => {
+  const tripsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trips/all`, {
+    cache: 'no-store'
+  });
+  const trips: Trip[] = await tripsResponse.json();
+  
   return (
-    <section className= "content-wrapper min-h-screen">
+    <>
       <Header
         title={tripDetails.header.title}
         description={tripDetails.header.description}
         variant={HeaderVariant.PRIMARY}
       />
 
-      <div className="flex justify-start md:justify-center gap-3 overflow-x-auto p-2 scrollbar-hide">
-        {tripLocation.map((location) => (
-          <TripLocationBadge
-            key={location} 
-            location={location}
-            isActive={location === activeLocation}
-            onClick={() => handleBadgeClick(location)}
-          />
-        ))}
-      </div>
+      <TripsExplorer defaultTrips={trips} />
 
       <TripsList />
-    </section>
+    </>
   );
 };
 
